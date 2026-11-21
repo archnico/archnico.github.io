@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-9 • Digital Twin Orizzontale • v1.0</title>
+<title>TORRE H-9 • Digital Twin Orizzontale • v1.1</title>
 <style>
 :root{color-scheme:dark;--bg:#09131b;--panel:#0d1c27;--panel2:#132733;--line:#2d4550;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--orange:#f5aa62;--red:#e78b86;--blue:#71b7ec;--green:#88d8b0}
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
@@ -33,7 +33,7 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
 </head>
 <body>
 <div class="shell">
-<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Digital twin compatto · µATX/OEM · cornice universale</span></div></div></div><div class="status"><span class="pill accent">● ANTEPRIMA HTML INTERATTIVA</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.0 · 21 NOV 2026</span></div></header>
+<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Digital twin compatto · µATX/OEM · cornice universale</span></div></div></div><div class="status"><span class="pill accent">● ANTEPRIMA HTML INTERATTIVA</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.1 · 21 NOV 2026</span></div></header>
 <div class="layout">
   <aside class="left">
     <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per zoom · clicca un componente per ispezionarlo.</p></div>
@@ -51,14 +51,47 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
     <div class="section" id="tower-tools"><div class="label">05 / Torre completa</div><h3 class="section-title">Posizioni modulari</h3><div class="btn-grid"><button class="button active" data-count="9">H-9 · 9</button><button class="button" data-count="7">H-7 · 7</button></div><p class="help">7 sedi PC progettuali: n1, n2, n3 conosciuti; gli altri sono placeholder per candidati di via Cairoli (P556/2, M93p, Q556). Le sedi 8–9 restano vuote e riconfigurabili per GPU o altre funzioni. Nessun donor futuro è considerato acquisito.</p></div>
     <div class="section" id="fit-status"><div class="label">Compatibilità meccanica</div><div class="detail"><h3>µATX sì come obiettivo, non ancora certificata</h3><p>Profilo massimo µATX: <strong>244 × 244 mm</strong>. In una cornice 280 × 280 mm rimangono solo 36 mm lordi totali per quel piano, prima di traversi, I/O e cavi. La quota nominale resta <strong>provvisoria</strong>, non uno STL esecutivo.</p><div class="badges"><span class="tiny">ATX 305 mm esclusa</span><span class="tiny">dissipatore da misurare</span><span class="tiny">riser GPU separato</span></div></div></div>
     <div class="section" id="tower-extraction"><div class="label">06 / Smontaggio della torre</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide" id="extract">↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div></div>
-    <div class="section"><div class="label">07 / Strati grafici</div><div class="row-control"><span>GPU futura (fantasma)</span><button class="switch" id="gpuPreview" aria-label="Simula GPU nella sede 8"></button></div><div class="row-control"><span>Etichette tecniche</span><button class="switch" id="labels"></button></div><div class="row-control"><span>Callout flottanti</span><button class="switch" id="callouts"></button></div><div class="row-control"><span>Vista semitrasparente</span><button class="switch" id="xray"></button></div><div class="row-control"><span>Dischi laterali</span><button class="switch on" id="disks"></button></div><div class="row-control"><span>Alimentazione e cavi</span><button class="switch on" id="wiring"></button></div><div class="row-control"><span>Griglia di misura</span><button class="switch on" id="grid"></button></div></div>
+    <div class="section"><div class="label">07 / Strati grafici</div><div class="row-control"><span>Isola scheletro portante</span><button class="switch" id="skeleton" aria-label="Isola lo scheletro portante"></button></div><div class="row-control"><span>GPU futura (fantasma)</span><button class="switch" id="gpuPreview" aria-label="Simula GPU nella sede 8"></button></div><div class="row-control"><span>Etichette tecniche</span><button class="switch" id="labels"></button></div><div class="row-control"><span>Callout flottanti</span><button class="switch" id="callouts"></button></div><div class="row-control"><span>Vista semitrasparente</span><button class="switch" id="xray"></button></div><div class="row-control"><span>Dischi laterali</span><button class="switch on" id="disks"></button></div><div class="row-control"><span>Alimentazione e cavi</span><button class="switch on" id="wiring"></button></div><div class="row-control"><span>Griglia di misura</span><button class="switch on" id="grid"></button></div></div>
+    <div class="section" id="rigidity-panel">
+      <div class="label">09 / Verifica preliminare di rigidezza</div>
+      <h3 class="section-title">Sollecitazione del telaio portante</h3>
+      <div class="input-row"><span>Massa totale ipotizzata</span><b class="num" id="mass-label">25 kg</b></div>
+      <input type="range" id="mass-slider" min="10" max="40" step="1" value="25" aria-label="Massa totale di studio in chilogrammi">
+      <div class="detail">
+        <ul class="spec-list">
+          <li><span id="old-span-title">Longherone precedente (879 mm)</span><span id="old-sag" class="num">—</span></li>
+          <li><span>Con appoggi ogni ≤192 mm</span><span id="new-sag" class="num">—</span></li>
+          <li><span>Cassetto 5 kg concentrati (luce 192 mm)</span><span id="point-sag" class="num">—</span></li>
+          <li><span>Tensione di flessione trave</span><span id="bending-stress" class="num">—</span></li>
+          <li><span>Maniglia · 4 kg, fattore dinamico ×3</span><span id="handle-sag" class="num">—</span></li>
+          <li><span>Ribaltamento laterale · 30 N</span><span id="tip-factor" class="num">—</span></li>
+        </ul>
+        <p class="micro" id="rigid-notes">Calcolo travi semplicemente appoggiate; E efficace PETG 800 MPa ipotizzato; 2 longheroni 14 × 22 mm; non è FEA, non verifica giunti né creep.</p>
+      </div>
+      <p class="help">Il vecchio valore a 879 mm è un <b>indicatore di progetto fuori campo elastico lineare</b>, non una freccia fisica prevedibile. La freccia a 192 mm è soltanto uno screening delle travi: non certifica l'insieme.</p>
+    </div>
+    <div class="section" id="structural-inventory"><div class="label">10 / Parti strutturali obbligatorie</div><div class="detail">
+      <ul class="spec-list">
+        <li><span>Telaio base</span><span>2 longheroni + traverse ripetute</span></li>
+        <li><span>Appoggi</span><span>14–16 piedi distribuiti</span></li>
+        <li><span>Antisvergolamento</span><span>X inferiori e posteriori</span></li>
+        <li><span>Spina dorsale</span><span>trave + montanti posteriori</span></li>
+        <li><span>Giunti segmentati</span><span>piastre doppie + M4 metalliche</span></li>
+        <li><span>Ogni cassetto</span><span>8 saette corte + 4 sedi positive</span></li>
+        <li><span>Sollevamento</span><span>maniglia avvitata + fermo anti-lift</span></li>
+        <li><span>PCB e dischi</span><span>inserti + boccole e ritegni</span></li>
+        <li><span>Cavi e PSU</span><span>fermacavi e ancoraggio autonomo</span></li>
+      </ul>
+      <p class="micro">Da misurare e provare: spessori reali dei giunti, torsione dell'insieme, creep a caldo, interferenze elettroniche, fissaggi PSU, GPU e sfilamento sotto carico. Vietato chiamarlo pronto da stampare senza prototipo.</p>
+      </div>
+    </div>
     <div class="section" id="tower-focus"><div class="label">08 / Focus rapido</div><div class="btn-grid"><button class="button" data-focus="P1">Modulo P1</button><button class="button" data-focus="FRAME">Telaio</button><button class="button" data-focus="STORAGE">Dischi</button><button class="button" data-focus="POWER">Servizi</button><button class="button wide" id="inspect-gpu">▧ Esamina GPU futura in sede standard</button></div><p class="help">I colori identificano i nodi; gli inserti non sono pezzi di produzione. P8 e P9 conservano identica interfaccia meccanica anche quando restano vuote.</p></div>
   </aside>
   <section class="viewport" id="vp" aria-label="Modello tecnico interattivo della torre orizzontale">
     <canvas id="c"></canvas>
     <div class="overlay-title"><strong id="scene-title">TORRE H-9 • COMPATTA E COMPLETA</strong><small id="scene-subtitle">7 sedi modulari · 2 riserve vuote · schede µATX/OEM e laptop · HDD laterali · I/O posteriore</small></div>
     <div class="hint"><span>↔ Ruota</span><span>⊕ Zoom</span><span>◉ Seleziona</span></div>
-    <div class="viewmark">CORNICE UNICA · 80 × 280 × 280 MM (BOZZA)<br>GPU FUTURA · NON INSTALLATA<br>QUOTE E FORI ANCORA DA VERIFICARE</div>
+    <div class="viewmark">CORNICE UNICA · 80 × 280 × 280 MM (BOZZA)<br>PIEDI RAVVICINATI + CONTROVENTI + GIUNTI<br>PROVE FISICHE ANCORA NECESSARIE</div>
     <div class="tooltip" id="tooltip"></div>
     <div class="callout-layer" id="callout-layer"></div>
   </section>
@@ -79,14 +112,14 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
     <div class="section"><div class="label">BOM minima indicativa</div><div class="detail"><ul class="bom-list"><li><span>Stampa 3D comune</span><span>cornice modulare, guide, maniglia, giunti</span></li><li><span>Stampa 3D specifica</span><span>inserto n1 / n2 / n3 / P556/2 / M93p / mini / GPU</span></li><li><span>Commerciale</span><span>alimentatori, cavi, ventole</span></li><li><span>Ferramenta</span><span>viti, rondelle, distanziali</span></li></ul><p class="micro">Questa anteprima serve a discutere la forma finale. Non sostituisce un CAD meccanico né una distinta esecutiva definitiva.</p></div></div>
   </aside>
 </div>
-<footer><div class="footer-left"><span class="dot"></span><span>v1.0 · HTML autonomo, funziona offline · dettaglio al clic</span></div><span class="warning">Concept, non STL: fori, flussi aria, PSU e GPU da validare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
+<footer><div class="footer-left"><span class="dot"></span><span>v1.1 · revisione strutturale · modello e stime non certificate</span></div><span class="warning">Verifica numerica preliminare, non prova meccanica o STL esecutivo</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
 </div>
 <script>
 (()=>{'use strict';
 const canvas=document.getElementById('c'),vp=document.getElementById('vp'),ctx=canvas.getContext('2d'),tip=document.getElementById('tooltip'),callLayer=document.getElementById('callout-layer');
 const $=id=>document.getElementById(id);
 const C={frame:'#60bea9',frame2:'#3f7675',corner:'#dda55e',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570',ram:'#5ca59f',dark:'#15262e',silver:'#bcced1',green:'#8ad28e'};
-const state={n:9,mode:'tower',variant:'h81',yaw:2.36,pitch:.52,zoom:1,explode:0,drawerExplode:42,drawerLayer:'all',drawerSeat:true,xray:false,labels:false,callouts:false,gpuPreview:false,disks:true,wiring:true,grid:true,selected:'',lifted:null};
+const state={n:9,mode:'tower',variant:'h81',yaw:2.36,pitch:.52,zoom:1,explode:0,drawerExplode:42,drawerLayer:'all',drawerSeat:true,xray:false,labels:false,callouts:false,gpuPreview:false,skeleton:false,loadKg:25,disks:true,wiring:true,grid:true,selected:'',lifted:null};
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,cam;
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const callouts=[
@@ -111,6 +144,30 @@ function pushBox(x,y,z,sx,sy,sz,color,group='',name='',opa=1){
  const normals=[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]];
  for(let k=0;k<6;k++)faces.push({p:fs[k].map(i=>p[i]),color,group,name,opa,normal:normals[k]});
 }
+// Prisma a sezione quadrata orientato in 3D. A differenza delle linee wire,
+// i diagonali seguenti hanno spessore e superfici fisiche visibili.
+function pushStrut(a,b,section,color,group,name,opa=1){
+ const d=b.map((v,i)=>v-a[i]),len=Math.hypot(...d);if(len<.001)return;
+ const u=d.map(v=>v/len),ref=Math.abs(u[2])<.85?[0,0,1]:[0,1,0];
+ const cross=(p,q)=>[p[1]*q[2]-p[2]*q[1],p[2]*q[0]-p[0]*q[2],p[0]*q[1]-p[1]*q[0]];
+ let e=cross(u,ref),m=Math.hypot(...e);e=e.map(v=>v/m);
+ const f=cross(u,e),r=section/2;
+ const ring=p=>[[-1,-1],[1,-1],[1,1],[-1,1]].map(([i,j])=>p.map((v,k)=>v+r*(i*e[k]+j*f[k])));
+ const p=[...ring(a),...ring(b)];
+ const fs=[[0,1,2,3],[7,6,5,4],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]];
+ for(const face of fs){const poly=face.map(i=>p[i]);faces.push({p:poly,color,group,name,opa,normal:e});}
+}
+// Diagonali segmentate entro 165mm: ogni giunto richiede fissaggi metallici.
+function segmentedStrut(a,b,section,color,group,name){
+ const L=Math.hypot(...a.map((v,i)=>b[i]-v)),n=Math.max(1,Math.ceil(L/165));
+ const at=t=>a.map((v,i)=>v+(b[i]-v)*t);
+ for(let j=0;j<n;j++)pushStrut(at(j/n),at((j+1)/n),section,color,group,name+' · pezzo '+(j+1)+'/'+n,.98);
+ for(let j=1;j<n;j++){
+   const t=j/n,half=12/L;
+   pushStrut(at(t-half),at(t+half),section+4,'#b8bfc1',group,'Doppia piastra M4 diagonale · da dimensionare',.99);
+ }
+}
+
 function wire(points,color='#7ec6bd',width=1,group='',dash=[],opa=1){lines.push({points,color,width,group,dash,opa})}
 function text3(pos,value,color='#bdd6d8',size=11,group=''){labels.push({pos,value,color,size,group})}
 function handle(x,y,z,id){wire([[x-2,y-27,z-4],[x-2,y-27,z+20],[x-2,y+27,z+20],[x-2,y+27,z-4]],C.corner,4,id);pushBox(x-5,y-29,z+17,10,58,7,C.corner,id,'Maniglia superiore · '+id,.96)}
@@ -432,6 +489,24 @@ function variantCarrier(k,x0,y0,z0,explode,group){
  }
  // bottom carrier floor strips: not a closed plate, and on notebook thicker isolated mounting pads
   for(let j=0;j<3;j++)box(-outer+7,28+j*(D-56)/2,5,2*(outer-7),8,7,acc,group,'Costola universale',.98);
+   // Saette ai quattro angoli (due facce laterali). Pezzi corti <100mm.
+   // Stabilizzano i nodi del rettangolo senza attraversare l'area della PCB.
+   for(const xx of [-outer+5,outer-5])for(const yy of [16,D-16]){
+      const front=yy< D/2, y2=front?yy+53:yy-53;
+      pushStrut([x0+xx,y0+yy,z0+31],[x0+xx,y0+y2,z0+84],7,acc,group,'Saetta inferiore stampata',.98);
+      pushStrut([x0+xx,y0+yy,z0+HH-27],[x0+xx,y0+y2,z0+HH-81],7,acc,group,'Saetta superiore stampata',.98);
+      box(xx-4,yy-5,25,9,12,14,'#bbc3c0',group,'Nodo con due viti M4 (indicativo)',.94);
+   }
+   // Rinforzi di giunzione ai segmenti: linguetta NON autosufficiente.
+   for(const yy of [8,D-14])for(const xx of [-outer,outer-10]){
+      box(xx-2,yy-2,135+sp*.18,14,13,27,'#b4c1c3',group,'Doppia piastra di giunzione M4',.94);
+      for(const dz of [141,153])box(xx+8,yy+2,dz+sp*.18,4,5,5,'#e8e8db',group,'Vite / inserto metallico M4',1);
+   }
+   // Quattro tacche di appoggio positive a gravità su basi fisse.
+   for(const yy of [12,D-17])for(const xx of [-outer,outer-13]){
+      box(xx,yy,0,13,12,13,acc,group,'Piede chiavettato del cassetto',1);
+      box(xx-2,yy-3,-7,17,18,6,C.frame2,group,'Scarpa di riscontro anti-taglio',.95);
+   }
   // Inserto stampabile: diverso per scheda, ma NON cambia l'inviluppo del cassetto.
   if(k==='h81'){
     for(const zz of [43,248])box(-12,44,zz,8,166,11,'#d8b781',group,'Traversa distanziali H81M-E',.97);
@@ -449,7 +524,11 @@ function variantCarrier(k,x0,y0,z0,explode,group){
     box(-13,40,57,12,24,19,'#c8a8e4',group,'Base connettore riser PCIe (futuro)',1);
     box(-16,226,74,15,27,88,'#b2bac1',group,'Staffa uscite GPU al retro',.98);
   }else if(k==='p556'){
-    for(const zz of [29,259])box(-27,20,zz,7,244,8,'#83c9a3',group,'Barra fori µATX · passo da misurare',.97);
+    for(const zz of [29,259]){
+      box(-27,20,zz,7,122,8,'#83c9a3',group,'Barra inferiore µATX sezione A',.97);
+      box(-27,142,zz,7,122,8,'#83c9a3',group,'Barra inferiore µATX sezione B',.97);
+      box(-29,134,zz-3,11,16,14,'#bbc2bb',group,'Giunto M4 su inserto µATX',.98);
+    }
     for(const yy of [20,255])for(const zz of [27,257])box(-24,yy,zz,10,8,9,'#c0bc96',group,'Asola distanziale µATX · candidata',1);
     wire([[x0-36,y0+20,z0+266],[x0+32,y0+20,z0+266]],'#e58e82',2,group,[5,3]);
     box(-25,D-29,92,8,12,98,'#c5a578',group,'Finestra I/O · spazio critico',.9);
@@ -473,6 +552,7 @@ function variantCarrier(k,x0,y0,z0,explode,group){
  const hz=HH-8+sp*.50;
  box(-18,D*.5-35,hz,36,70,8,acc,group,'Maniglia superiore stampabile');
  box(-20,D*.5-36,hz-23,10,10,25,acc,group,'Staffa maniglia');box(10,D*.5+25,hz-23,10,10,25,acc,group,'Staffa maniglia');
+  for(const yy of [D*.5-31,D*.5+30])box(-6,yy,hz-20,12,5,8,C.silver,group,'Perno passante e rondella maniglia M4',1);
 }
  if(hardwareVisible){
    box(-30,D*.5-15,HH-25,60,24,8,C.silver,group,'Fermo anti-sollevamento',.9);
@@ -482,7 +562,7 @@ function variantCarrier(k,x0,y0,z0,explode,group){
    }
  }
  // clamp guides visible in printed modes only
- if(state.drawerSeat&&printed){for(const x of [-outer-6,outer-3])box(x,-5,-9,10,D+10,12,C.frame,group,'Sede di appoggio fissa',.85)}
+ if(state.drawerSeat&&printed){for(const x of [-outer-6,outer-3])box(x,-5,-11,10,D+10,11,C.frame,group,'Sede fissa a contatto con piede',.85)}
  const padY = k==='gpu'?39:k==='h81'?38:k==='mini'?42:k==='p556'?16:k==='m93'?27:isLap?16:28;
  const padZ = k==='gpu'?68:k==='h81'?30:k==='mini'?60:k==='p556'?14:k==='m93'?32:k==='hp'?57:47;
  if(boardVisible)familyBoard(k,x0-23+sp*.6,y0+padY,z0+padZ,group);
@@ -506,7 +586,10 @@ function makeAltDrawer(){faces=[];lines=[];labels=[];const k=state.variant;varia
 }
 function moduleV7(i){const map=['h81','lap','hp','mini','p556','m93','mini'];const k=map[i],id='P'+(i+1),cx=178+(i+.5)*96,zlift=state.explode*(i%2?1.3:1.65)+(state.lifted===id?155:0);
  // receiver grooves are fixed in the chassis, not telescopic drawer slides
- pushBox(cx-41,54,43,10,267,11,C.frame,id,'Scanalatura di posa',.92);pushBox(cx+31,54,43,10,267,11,C.frame,id,'Scanalatura di posa',.92);
+ pushBox(cx-41,70,60,10,290,12,C.frame,id,'Scarpa sinistra z72 · contatto',.98);pushBox(cx+31,70,60,10,290,12,C.frame,id,'Scarpa destra z72 · contatto',.98);
+  pushBox(cx-44,74,65,16,16,13,'#b8c7c8','FRAME','Orecchia torre fermo anti-lift',1);
+  pushBox(cx+28,74,65,16,16,13,'#b8c7c8','FRAME','Seconda orecchia torre fermo anti-lift',1);
+  pushBox(cx-48,84,71,20,5,6,'#e0d8ba','FRAME','Spina manuale anti-lift',1);
  // All variants occupy the SAME external envelope; µATX max remains a fit study
  variantCarrier(k,cx,76,72+zlift,0,id);
   // Sede I/O che resta visibile sul retro; i laptop non hanno la mascherina ATX.
@@ -522,14 +605,73 @@ function moduleV7(i){const map=['h81','lap','hp','mini','p556','m93','mini'];con
  return cx;
 }
 function make(){if(state.mode==='compare')return makeCompare();if(state.mode==='drawer')return makeAltDrawer();faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;if(state.grid){for(let x=-100;x<width+200;x+=100)wire([[x,-80,-15],[x,510,-15]],'#234451',.7,'GRID',[],.7);for(let y=-80;y<550;y+=100)wire([[-90,y,-15],[width+90,y,-15]],'#234451',.7,'GRID',[],.7)}
- pushBox(5,16,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale anteriore',.99);pushBox(5,411,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale posteriore',.99);pushBox(5,17,11,18,405,25,C.frame2,'FRAME','Trave laterale sinistra',.97);pushBox(width-23,17,11,18,405,25,C.frame2,'FRAME','Trave laterale destra',.97);
- for(let i=0;i<=state.n;i++){const x=178+i*96;pushBox(x-5,17,22,10,407,19,C.frame,'FRAME','Traversa di campata',.9);pushBox(x-7,18,42,14,31,12,C.corner,'FRAME','Giunto anteriore',.93);pushBox(x-7,393,42,14,31,12,C.corner,'FRAME','Giunto posteriore',.93)}
- for(let x of [23,163,limit+15,width-23])for(let y of [25,404])pushBox(x-12,y-13,0,24,27,13,'#2e5660','FRAME','Piede antivibrante',1);
+ for(let xa=5;xa<width-5;xa+=175){let l=Math.min(175,width-5-xa);
+   pushBox(xa,16,21,l,14,22,C.frame,'FRAME','Segmento longherone frontale',.99);
+   pushBox(xa,411,21,l,14,22,C.frame,'FRAME','Segmento longherone posteriore',.99);
+  }
+  for(const xx of [5,width-23])for(let yy=17;yy<422;yy+=135){
+   pushBox(xx,yy,11,18,Math.min(135,422-yy),25,C.frame2,'FRAME','Segmento trave di testata',.97);
+   if(yy>17)pushBox(xx-3,yy-9,8,24,18,29,'#a6b9b8','FRAME','Giunto M4 trave di testata',.99);
+  }
+ for(let i=0;i<=state.n;i++){const x=178+i*96;
+   for(let yy=17;yy<424;yy+=140)pushBox(x-5,yy,22,10,Math.min(140,424-yy),19,C.frame,'FRAME','Segmento traversa stampabile',.95);
+   for(const yy of [157,297])pushBox(x-9,yy-11,18,18,22,27,'#a6b9b8','FRAME','Giunto doppia piastra M4 traversa',.98);
+   pushBox(x-7,18,42,14,31,12,C.corner,'FRAME','Giunto anteriore',.93);pushBox(x-7,393,42,14,31,12,C.corner,'FRAME','Giunto posteriore',.93)
+  }
+ // Piedi per ogni 2 passi modulari (max 192 mm), non soltanto alle estremità.
+  const footXs=[23,163];for(let x=355;x<width-23;x+=192)footXs.push(x);footXs.push(width-23);
+  for(const x of footXs)for(const y of [25,404]){
+    pushBox(x-14,y-15,0,28,30,14,'#345d68','FRAME','Piede antivibrante ripartito',1);
+    pushBox(x-12,y-11,14,24,21,9,'#afbfbd','FRAME','Boccola di ancoraggio piede',.98);
+  }
+  // Giunti di travi di stampa: segmenti da ≤ 175 mm con piastre doppie M4.
+  for(let x=175;x<width-28;x+=175){
+    for(const y of [16,410]){
+      pushBox(x-12,y-5,16,24,24,30,'#81b5b1','FRAME','Collare / doppia piastra M4 su longherone',.96);
+      for(const dx of [-7,7])pushBox(x+dx,y+17,28,5,4,7,'#e1e7e1','FRAME','Vite M4 per giunto',1);
+    }
+  }
+  // Controventi inferiori in X: trasmettono il taglio fra longheroni anteriori e posteriori.
+  const bays=[];for(let x=163;x+192<width-24;x+=192)bays.push([x,x+192]);
+  for(const [xa,xb] of bays){
+    segmentedStrut([xa,37,7],[xb,404,7],8,'#7dc8ba','FRAME','Controvento X inferiore A');
+    segmentedStrut([xa,404,17],[xb,37,17],8,'#7dc8ba','FRAME','Controvento X inferiore B');
+  }
+  // Spina dorsale posteriore: montanti, trave e saette in piano X/Z.
+  // Rimane nel corridoio posteriore senza chiudere sopra i cassetti estraibili.
+  const rearY=402;
+  for(let xa=163;xa<limit;xa+=165)pushBox(xa,rearY,294,Math.min(165,limit-xa),11,16,C.frame2,'FRAME','Segmento trave superiore dorsale',.97);
+  for(let xa=328;xa<limit;xa+=165)pushBox(xa-10,rearY-2,291,20,15,22,'#a6b9b8','FRAME','Doppia giunzione M4 dorsale',.97);
+  for(let x=163;x<=limit+1;x+=192){
+    pushBox(x-7,rearY,45,14,11,132,C.frame2,'FRAME','Montante posteriore pezzo A',.98);
+    pushBox(x-7,rearY,177,14,11,132,C.frame2,'FRAME','Montante posteriore pezzo B',.98);
+    pushBox(x-10,rearY-3,161,20,17,30,'#a6b9b8','FRAME','Giunto M4 montante posteriore',.98);
+    pushBox(x-12,rearY-3,38,24,17,25,C.corner,'FRAME','Piede montante posteriore con 2 M4',1);
+  }
+  for(let x=163;x+192<=limit+1;x+=192){
+    segmentedStrut([x+8,rearY+6,62],[x+184,rearY+6,287],10,'#d0ae70','FRAME','Saetta posteriore A');
+    segmentedStrut([x+8,rearY+6,287],[x+184,rearY+6,62],10,'#d0ae70','FRAME','Saetta posteriore B');
+  }
+
  diskBank('left',width);diskBank('right',width);pushBox(146,43,25,11,339,18,C.frame,'FRAME','Spina divisoria banco dischi / compute',.97);pushBox(limit+10,43,25,11,339,18,C.frame,'FRAME','Spina divisoria compute / banco dischi',.97);
+  // Le cartucce HDD NON possono gravare su un solo piatto: triangoli e ritegni indipendenti.
+  for(const side of [14,width-156])for(const yy of [55,337]){
+    pushStrut([side,yy,42],[side+129,yy,128],9,'#74a99e','FRAME','Saetta sostegno banco HDD',.97);
+    pushBox(side,yy-9,36,129,18,11,C.frame2,'FRAME','Piastra base banco HDD avvitata',.98);
+    pushBox(side,yy-6,122,129,12,12,C.frame2,'FRAME','Traversa superiore HDD con nodo di saetta',.98);
+    for(const xx of [side,side+129])pushBox(xx-5,yy-6,43,10,12,79,C.frame2,'FRAME','Montante lato HDD · nodo superiore/inferiore',.99);
+  }
+  // Punti di fissaggio per alimentatori CERTIFICATI e fermacavi (non impianto AC progettato).
+  for(let i=0;i<state.n;i++){
+    const cx=178+(i+.5)*96;
+    pushBox(cx-23,403,68,46,11,7,'#7a9b9f','FRAME','Staffa servizi / fermacavo strain-relief',.94);
+    pushBox(cx-8,414,66,16,9,8,'#b8c7c8','FRAME','Morsetto serracavo rimovibile',.95);
+  }
+
  for(let i=0;i<state.n;i++)i<7?moduleV7(i):emptyModule(i);
  if(state.wiring){pushBox(52,429,50,width-104,11,15,C.cable,'POWER','Canalina posteriore protetta',.92);pushBox(width-92,415,53,53,27,31,C.psu,'POWER','Modulo distribuzione AC protetto',.98);pushBox(width-30,434,62,18,6,10,C.orange,'POWER','Ingresso rete AC',1)}
  wire([[0,-46,0],[width,-46,0]],C.orange,1,'DIM',[5,4]);wire([[0,-58,-8],[0,-34,8]],C.orange,1,'DIM');wire([[width,-58,-8],[width,-34,8]],C.orange,1,'DIM');text3([width/2,-47,5],`${width.toLocaleString('it-IT')} mm`,C.accent,11,'DIM');text3([width*.5,465,50],'RETRO · LAN / USB / AC',C.metal,10,'DIM');text3([width*.5,-7,52],'FRONTE · ACCESSO AI MODULI',C.metal,10,'DIM');
- $('dimw').textContent=width.toLocaleString('it-IT')+' mm';$('width-label').textContent='larghezza totale H-'+state.n;$('height-name').textContent='Altezza con moduli inseriti';$('pitch-name').textContent='Passo delle cartucce';$('depth-value').textContent='440 mm';$('height-value').textContent='~ 395 mm (ingombro di studio)';$('pitch-value').textContent='96 mm';$('variant-pill').textContent=state.n===9?'7 SEDI PC + 2 RISERVE POLIVALENTI':'7 SEDI PC · NESSUNA RISERVA';callouts.find(c=>c.id==='co-power').anchor=[width-66,428,118];callouts.find(c=>c.id==='co-frame').anchor=[width*0.5,20,60];return width;}
+ $('dimw').textContent=width.toLocaleString('it-IT')+' mm';$('width-label').textContent='larghezza totale H-'+state.n;$('height-name').textContent='Altezza con moduli inseriti';$('pitch-name').textContent='Passo delle cartucce';$('depth-value').textContent='440 mm';$('height-value').textContent='~ 395 mm (ingombro di studio)';$('pitch-value').textContent='96 mm';$('variant-pill').textContent=state.n===9?'7 SEDI PC + 2 RISERVE POLIVALENTI · STRUTTURA V1.1':'7 SEDI PC · NESSUNA RISERVA';callouts.find(c=>c.id==='co-power').anchor=[width-66,428,118];callouts.find(c=>c.id==='co-frame').anchor=[width*0.5,20,60];return width;}
 function basis(){const a=state.yaw,e=state.pitch,dir=[Math.sin(a)*Math.cos(e),Math.cos(a)*Math.cos(e),Math.sin(e)];return {right:[Math.cos(a),-Math.sin(a),0],up:[-Math.sin(a)*Math.sin(e),-Math.cos(a)*Math.sin(e),Math.cos(e)],dir}}
 function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
 function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],depth=dot(v,cam.b.dir),scale=cam.base/(1-depth/cam.distance);return {x:W/2+dot(v,cam.b.right)*scale,y:H/2-dot(v,cam.b.up)*scale,depth,scale};}
@@ -542,12 +684,35 @@ function updateCallouts(){for(const c of [...callouts,...detailCallouts]){
  c.el.style.left=`${p.x+(c.offset?.[0]||0)}px`;c.el.style.top=`${p.y+(c.offset?.[1]||0)}px`;
  c.el.classList.toggle('active',state.selected===c.group);
 }}
+function recalcRigidity(){
+ // PRUDENZA: screening travi elastiche, non FEA (vincoli e giunti sconosciuti).
+ const kg=state.loadKg,E=800,b=14,h=22,I=b*h*h*h/12;
+ const length=356+state.n*96,oldSpan=state.n===9?879:702;
+ const q=kg*9.81/(2*length); // N/mm per longherone, carico uniformemente ripartito
+ const defl=(L)=>5*q*Math.pow(L,4)/(384*E*I);
+ const sigma=(L)=>(q*L*L/8)*(h/2)/I;
+ const old=defl(oldSpan),now=defl(192),stress=sigma(192);
+ const pointLoad=5*9.81/2,pointSag=pointLoad*Math.pow(192,3)/(48*E*I);
+ // maniglia: 4 kg × 3g dinamico, trave 36×8 mm, luce 70 mm.
+ const P=4*9.81*3,Ihandle=36*Math.pow(8,3)/12;
+ const handle=P*Math.pow(70,3)/(48*E*Ihandle);
+ // Forza di ribaltamento ideale in Y: massa baricentrata, braccio 220mm,
+ // spinta a 395mm dal piano appoggi. Il vero baricentro resta ignoto.
+ const Ftip=kg*9.81*(440/2)/395;
+ $('mass-label').textContent=kg+' kg';$('old-span-title').textContent='Longherone precedente ('+oldSpan+' mm)';
+ $('old-sag').textContent=old.toFixed(1)+' mm*';
+ $('new-sag').textContent=now.toFixed(3)+' mm';$('point-sag').textContent=pointSag.toFixed(3)+' mm';
+ $('bending-stress').textContent=stress.toFixed(2)+' MPa';
+ $('handle-sag').textContent=handle.toFixed(3)+' mm';
+ $('tip-factor').textContent=(Ftip/30).toFixed(1)+'× ideale';
+ $('rigid-notes').textContent='PETG Eeff 0,8 GPa assunto · 2 × 14×22 mm · piedi ≤192 mm · formula di Eulero-Bernoulli. *879 mm fuori campo delle piccole deformazioni. Giunti, torsione, creep, vite e caldo non verificati.';
+}
 function redraw(){const width=make(),b=basis(),drawer=state.mode==='drawer',comparison=state.mode==='compare';
  const dimScale=(drawer?clamp(Math.min(W/480,H/430),.35,2.6):comparison?clamp(Math.min(W/1610,H/520),.20,1.55):clamp(Math.min(W/(width*1.26),H/620),.18,1.75))*state.zoom;
  cam={b,center:drawer?[0,V[state.variant].carrier[1]*.5,V[state.variant].carrier[2]*.52]:comparison?[0,174,165]:[width/2,210,170],distance:drawer?950:comparison?2100:Math.max(1100,width*1.55),base:dimScale};ctx.clearRect(0,0,W,H);const grd=ctx.createRadialGradient(W*.5,H*.45,90,W*.5,H*.45,Math.max(W,H)*.75);grd.addColorStop(0,'#15303c');grd.addColorStop(1,'#0a1620');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
- const ordered=[];for(const f of faces){const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({...f,center,pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],b.dir)})}ordered.sort((a,z)=>a.depth-z.depth);pick=[];const light=[.36,-.54,.77];
+ const ordered=[];for(const f of faces){if(state.skeleton&&state.mode==='tower'&&!['FRAME','DIM'].includes(f.group))continue;const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({...f,center,pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],b.dir)})}ordered.sort((a,z)=>a.depth-z.depth);pick=[];const light=[.36,-.54,.77];
  for(const f of ordered){if(f.group==='GRID')continue;const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.14);let opacity=f.opa;if(state.xray && (f.group==='FRAME'||/^P\d/.test(f.group)))opacity*=.28;const chosen=f.group===state.selected;ctx.fillStyle=tint(f.color,chosen?Math.min(bright*1.18,1.3):bright,opacity);ctx.fill(path);ctx.lineWidth=chosen?1.15:.55;ctx.strokeStyle=chosen?'rgba(255,221,148,.85)':'rgba(2,16,25,.48)';ctx.stroke(path);if(f.group && f.group!=='DIM')pick.push({path,group:f.group,name:f.name});}
- const orderedLines=lines.map(l=>({...l,pp:l.points.map(projection),depth:l.points.reduce((acc,p)=>acc+dot([p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],b.dir)/l.points.length,0)})).sort((a,b)=>a.depth-b.depth);
+ const orderedLines=lines.filter(l=>!state.skeleton||state.mode!=='tower'||['FRAME','DIM','GRID'].includes(l.group)).map(l=>({...l,pp:l.points.map(projection),depth:l.points.reduce((acc,p)=>acc+dot([p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],b.dir)/l.points.length,0)})).sort((a,b)=>a.depth-b.depth);
  for(const l of orderedLines){if(l.group==='GRID'&&!state.grid)continue;ctx.beginPath();l.pp.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.lineWidth=l.width*(state.selected===l.group?1.6:1)*Math.min(1.65,Math.max(.7,state.zoom));ctx.strokeStyle=tint(l.color,1,l.opa*(state.xray&&l.group==='FRAME'?.38:1));ctx.setLineDash(l.dash);ctx.stroke();ctx.setLineDash([])}
  if(state.labels){for(const l of labels){const p=projection(l.pos);ctx.save();ctx.font=`${l.size<12?'600':'800'} ${l.size}px system-ui, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';const m=ctx.measureText(l.value).width;ctx.fillStyle=l.group==='DIM'?'#0e2630cf':'#0c222dc5';ctx.fillRect(p.x-m/2-5,p.y-9,m+10,18);ctx.fillStyle=l.color;ctx.fillText(l.value,p.x,p.y);ctx.restore()}}
  const orig={x:W-69,y:76},axis=[[80,0,0,'X','#f5aa62'],[0,80,0,'Y','#6dd9d0'],[0,0,80,'Z','#93b3ef']];for(const ax of axis){let p=projection([cam.center[0]+ax[0],cam.center[1]+ax[1],cam.center[2]+ax[2]]),c=projection(cam.center);let dx=(p.x-c.x)*.45,dy=(p.y-c.y)*.45;let k=25/Math.max(5,Math.hypot(dx,dy));dx*=k;dy*=k;ctx.strokeStyle=ax[4];ctx.fillStyle=ax[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(orig.x,orig.y);ctx.lineTo(orig.x+dx,orig.y+dy);ctx.stroke();ctx.font='700 11px system-ui';ctx.fillText(ax[3],orig.x+dx*1.29,orig.y+dy*1.29)}
@@ -602,7 +767,7 @@ function select(id,openPanel=true){if(openPanel)$('detail-panel').hidden=false;i
   else if(/^S\d$/.test(id)){const gpu=id==='S8';t=gpu?'S8 · Riserva GPU / telefoni':'S9 · Riserva universale';d=gpu?'La guida è VUOTA. Inserto compatto GPU a prova solo illustrativa: possibile GTX 1050 Ti 75 W senza 6-pin, riser PCIe e alimentatore da verificare. Nessuna GPU installata. Anche questa sede può ospitare telefoni o altre funzioni.':'La seconda sede è VUOTA. Stesso identico innesto, compatibile con un diverso inserto, anche per GPU / telefoni / espansione.';tt=['cornice universale','riserva vuota','GPU futura'];if(gpu){$('drawer-specs').innerHTML=`<li><span>Guide</span><span>identiche P1–P9</span></li><li><span>Opzione</span><span>GPU / telefono / espansione</span></li><li><span>GPU installata</span><span>NO</span></li>`;$('mb-specs').innerHTML=`<li><span>GPU candidata</span><span>GTX 1050 Ti senza 6-pin</span></li><li><span>Alimentazione</span><span>75 W / PSU da verificare</span></li><li><span>Collegamento</span><span>riser PCIe da validare</span></li>`;}}
   else if(id==='STORAGE'){t='Banchi HDD laterali';d='Le zone dischi sono separate dalle schede madri: così si manutengono e si ampliano senza toccare il blocco compute.';tt=['3,5" / 2,5"','accesso laterale','modulare']}
   else if(id==='POWER'){t='Servizi elettrici e I/O';d='Canalina posteriore, alimentatori commerciali e retro servizi continuo. Da progettare con componenti certificati e protezioni adeguate.';tt=['retro','cavi disconnettibili','non esecutivo']}
-  else if(id==='FRAME'){t='Telaio segmentato';d='Travi longitudinali, campate ripetute e giunti stampabili/fissati: architettura aperta e manutenzionabile, ancora da validare sul piano meccanico.';tt=['aperto','modulare','da verificare']}
+  else if(id==='FRAME'){t='Telaio portante controventato';d='Percorso di carico: PCB → inserto → scarpe cassetto → traverse di campata → due longheroni anteriori/posteriori → piedi ogni ≤192 mm. Le X inferiori impediscono lo svergolamento nel piano e la vertebra posteriore impedisce lo spanciamento laterale. Giunti stampati con piastre doppie e viti metalliche M4. Resta necessario il prototipo.';tt=['appoggi ravvicinati','X inferiori','vertebra posteriore','M4']}
   else {t='Torre H-9';d='Digital twin preliminare orientato alla manutenzione, con più dettaglio sul cassetto e sulla scheda madre.';tt=[]}
   updateSpecs(id);
  }
@@ -632,10 +797,10 @@ $('drawer-pieces').onclick=()=>{$('drawer-explode').value=72;$('drawer-explode')
 document.querySelectorAll('[data-drawer-layer]').forEach(el=>el.onclick=()=>{state.drawerLayer=el.dataset.drawerLayer;buttonGroup('[data-drawer-layer]',el);redraw()});
 $('drawer-seat').onclick=e=>{state.drawerSeat=!state.drawerSeat;e.currentTarget.classList.toggle('on',state.drawerSeat);redraw()};
 document.querySelectorAll('[data-part]').forEach(el=>el.onclick=()=>select(el.dataset.part));
-document.querySelectorAll('[data-view]').forEach(el=>el.onclick=()=>view(el.dataset.view));$('fit').onclick=()=>{state.zoom=1;redraw()};document.querySelectorAll('[data-count]').forEach(el=>el.onclick=()=>{state.n=+el.dataset.count;state.lifted=null;buttonGroup('[data-count]',el);redraw()});$('explode').oninput=e=>{state.explode=+e.target.value*1.1;$('explabel').textContent=e.target.value+'%';redraw()};$('extract').onclick=()=>{if(!/^P\d$/.test(state.selected))select('P1');state.lifted=state.lifted===state.selected?null:state.selected;redraw()};$('reset').onclick=()=>{state.explode=0;state.lifted=null;$('explode').value=0;$('explabel').textContent='0%';redraw()};for(const id of ['labels','callouts','xray','disks','wiring','grid','gpuPreview'])$(id).onclick=e=>{state[id]=!state[id];e.currentTarget.classList.toggle('on',state[id]);redraw()};document.querySelectorAll('[data-focus]').forEach(el=>el.onclick=()=>select(el.dataset.focus));
+document.querySelectorAll('[data-view]').forEach(el=>el.onclick=()=>view(el.dataset.view));$('fit').onclick=()=>{state.zoom=1;redraw()};document.querySelectorAll('[data-count]').forEach(el=>el.onclick=()=>{state.n=+el.dataset.count;state.lifted=null;buttonGroup('[data-count]',el);recalcRigidity();redraw()});$('explode').oninput=e=>{state.explode=+e.target.value*1.1;$('explabel').textContent=e.target.value+'%';redraw()};$('extract').onclick=()=>{if(!/^P\d$/.test(state.selected))select('P1');state.lifted=state.lifted===state.selected?null:state.selected;redraw()};$('reset').onclick=()=>{state.explode=0;state.lifted=null;$('explode').value=0;$('explabel').textContent='0%';redraw()};for(const id of ['labels','callouts','xray','disks','wiring','grid','gpuPreview','skeleton'])$(id).onclick=e=>{state[id]=!state[id];e.currentTarget.classList.toggle('on',state[id]);redraw()};document.querySelectorAll('[data-focus]').forEach(el=>el.onclick=()=>select(el.dataset.focus));
 vp.addEventListener('pointerdown',e=>{if(e.button!==0)return;vp.setPointerCapture(e.pointerId);drag={sx:e.clientX,sy:e.clientY,yaw:state.yaw,pitch:state.pitch,moved:false};vp.classList.add('dragging')});
 vp.addEventListener('pointermove',e=>{const rect=vp.getBoundingClientRect(),px=e.clientX-rect.left,py=e.clientY-rect.top;if(drag){const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;state.yaw=drag.yaw-dx*.007;state.pitch=clamp(drag.pitch+dy*.006,-.22,1.54);redraw();tip.style.opacity=0}else{let hit=null;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,px,py)){hit=pick[i];break}}tip.style.opacity=0;}});
-vp.addEventListener('pointerup',e=>{if(!drag)return;let clicked=!drag.moved;drag=null;vp.classList.remove('dragging');if(clicked){const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x,y)){select(pick[i].group);break}}}});vp.addEventListener('pointercancel',()=>{drag=null;vp.classList.remove('dragging')});vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});vp.addEventListener('wheel',e=>{e.preventDefault();state.zoom=clamp(state.zoom*Math.exp(-e.deltaY*.0012),.45,3.3);redraw()},{passive:false});window.addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();if(k==='r')view('iso');if(k==='1')view('iso');if(k==='2')view('top');if(k==='+')state.zoom=clamp(state.zoom*1.15,.45,3.3);if(k==='-')state.zoom=clamp(state.zoom/1.15,.45,3.3);redraw()});new ResizeObserver(dimensions).observe(vp);dimensions();updateSceneMode();
+vp.addEventListener('pointerup',e=>{if(!drag)return;let clicked=!drag.moved;drag=null;vp.classList.remove('dragging');if(clicked){const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x,y)){select(pick[i].group);break}}}});vp.addEventListener('pointercancel',()=>{drag=null;vp.classList.remove('dragging')});vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});vp.addEventListener('wheel',e=>{e.preventDefault();state.zoom=clamp(state.zoom*Math.exp(-e.deltaY*.0012),.45,3.3);redraw()},{passive:false});window.addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();if(k==='r')view('iso');if(k==='1')view('iso');if(k==='2')view('top');if(k==='+')state.zoom=clamp(state.zoom*1.15,.45,3.3);if(k==='-')state.zoom=clamp(state.zoom/1.15,.45,3.3);redraw()});$('mass-slider').addEventListener('input',e=>{state.loadKg=Number(e.target.value);recalcRigidity()});recalcRigidity();new ResizeObserver(dimensions).observe(vp);dimensions();updateSceneMode();
 })();
 </script>
 </body>
