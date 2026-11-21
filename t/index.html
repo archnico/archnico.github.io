@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-9 • V1.7.1 · Orientamento Torre e subwoofer</title>
+<title>TORRE H-9 • V1.7.2 · Audio nel multilivello e sedia orientata</title>
 <style>
 :root{color-scheme:dark;--bg:#0a121b;--panel:#0d1c27;--panel2:#132733;--line:#2c4451;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--blue:#56a4e5;--orange:#f5aa62;--red:#e78b86}
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
@@ -32,7 +32,7 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
 </head>
 <body>
 <div class="shell">
-<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.7 · 21 NOV 2026</span></div></header>
+<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.7.2 · 21 NOV 2026</span></div></header>
 <div class="layout">
 <aside class="left">
   <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per ingrandire · clicca un componente per ispezionarlo.</p></div>
@@ -58,7 +58,7 @@ const $=id=>document.getElementById(id);
 const C={guide:'#81d6d8',guide2:'#2e858f',frame:'#5bb49e',frame2:'#447c77',corner:'#dfa962',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570',ups:'#465665',upsFace:'#627888',upsBackup:'#63c7bb',upsSurge:'#d7a65f'};
 const state={n:9,yaw:2.36,pitch:.52,zoom:1,explode:0,xray:false,labels:true,disks:true,wiring:true,grid:true,dims:true,clearance:true,selected:null,selectedName:'',focusIndex:0,scene:'tower',lifted:null,locked:true,showUPS:true,loadEstimate:450};
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={WHITECAB:'Mobile bianco',LIP:'Spalletta a U',ADAPTER:'Kit adattatore rimovibile',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'Mobile bianco',LIP:'Spalletta a U',ADAPTER:'Kit adattatore rimovibile',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 function refreshPartPicker(){
  const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)))];
  ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
@@ -528,12 +528,16 @@ function roomScene(){
  pushBox(1237,154,190,3,71,55,C.upsFace,'UPS','Pannello LCD anteriore UPS accessibile',1);
  for(let j=0;j<4;j++)pushBox(1651,154,26+j*48,4,25,24,'#66acaf','UPSPORT','Uscita IEC con batteria (schema)',1);
  // A destra della scrivania: TUTTI e tre con lato lungo parallelo al muro y=0.
- pushBox(1970,94,0,520,340,980,'#7f553a','RACK','Mobile multilivello · L 520 mm lungo la parete, P 340 mm',.92);
- for(const z of [20,220,490,770])pushBox(1982,106,z,496,316,23,'#6c4832','RACK','Ripiano del mobile multilivello',.98);
- pushBox(2035,157,245,340,238,189,'#dde3e6','PRINTER','Brother HL-1110 nel mobile multilivello · 340 × 238 × 189 mm',1);
- pushBox(2000,137,515,220,160,58,'#1f2f38','RACKMODEM','Modem / router nel mobile multilivello · 220 × 160 × 58 mm ipotetici',1);
- pushBox(2290,158,512,70,90,210,'#1f2326','AUDIOLEFT','Satellite audio nel mobile multilivello',1);
- pushBox(2390,158,512,70,90,210,'#1f2326','AUDIORIGHT','Altro satellite audio nel mobile multilivello',1);
+ // Scaffale aperto: veri montanti e ripiani, non un volume pieno che nasconde le apparecchiature.
+ for(const x of [1970,2472])for(const y of [94,416])pushBox(x,y,0,18,18,980,'#7f553a','RACK','Montante del mobile multilivello, L 520 × P 340 × H 980 mm stimati',1);
+ for(const z of [20,220,490,770])pushBox(1970,94,z,520,340,23,'#6c4832','RACK','Ripiano aperto del mobile multilivello',.98);
+ pushBox(2035,157,243,340,238,189,'#dde3e6','PRINTER','Brother HL-1110 nel mobile multilivello · 340 × 238 × 189 mm',1);
+ pushBox(2000,137,513,220,160,58,'#1f2f38','RACKMODEM','Modem / router nel mobile multilivello · 220 × 160 × 58 mm ipotetici',1);
+ // Tutti i quattro satelliti già presenti nel modello, ciascuno su un ripiano e rivolto verso la stanza.
+ for(const [x,y,z,h,id,n] of [[2290,158,513,210,'AUDIOLEFT',1],[2390,158,513,210,'AUDIORIGHT',2],[2070,190,793,175,'DESKSATLEFT',3],[2320,190,793,175,'DESKSATRIGHT',4]]){
+  pushBox(x,y,z,70,90,h,'#1f2326',id,`Satellite audio ${n} nel multilivello`,1);
+  pushBox(x+6,y+90,z+10,58,3,h-20,'#46525a',id,`Griglia frontale satellite ${n}`,1);
+ }
  pushBox(2600,95,0,400,260,540,'#6e452f','DARKDRAWER','Cassettiera autonoma a terra · lato lungo 400 mm addossato alla parete',.98);
  for(const z of [90,180,270,360,450])pushBox(2604,349,z,392,5,55,'#81563b','DARKDRAWER','Frontale cassetto indipendente',1);
  pushBox(2670,135,540,260,180,360,'#24272b','SUBWOOFER','Subwoofer sopra la cassettiera · ingombro 260 × 180 × 360 mm',1);
@@ -595,13 +599,11 @@ function roomScene(){
  rotBox(1234+24*(-Math.sin(midAngle)),195+24*Math.cos(midAngle),978,550,5,331,midAngle,'#345f83','MONMID','Schermo intermedio sospeso',.99);
  const [px,py]=pt(365,70);
  rotBox(px,py,808,360,250,22,ang-.08,'#2d3136','LAPTOP','Laptop chiuso / dock sulla scrivania',.97);
- const [spx,spy]=pt(-430,70),[sdx,sdy]=pt(430,70);
- rotBox(spx,spy,808,70,90,175,ang+.05,'#1f2326','DESKSATLEFT','Satellite audio da scrivania sinistro',.97);
- rotBox(sdx,sdy,808,70,90,175,ang-.05,'#1f2326','DESKSATRIGHT','Satellite audio da scrivania destro',.97);
  // SEDIA GAMING: rappresentazione geometrica articolata (non un blocco pieno).
  // La scheda del prodotto Amazon non e' stata associata in modo verificato a questo modello:
  // ingombri prudenziali, sedia reale da identificare con precisione.
- const ccx=1730,ccy=1700,chairAngle=2.37;
+ // Il fronte locale della seduta è -Y; orientarlo verso il centro del monitor HDMI (690,600).
+ const ccx=1730,ccy=1700,chairAngle=Math.atan2(690-ccx,ccy-600);
  const cpt=(lx,ly)=>[ccx+lx*Math.cos(chairAngle)-ly*Math.sin(chairAngle),ccy+lx*Math.sin(chairAngle)+ly*Math.cos(chairAngle)];
  // Base stellare con CINQUE razze e cinque ruote; piantone centrale.
  pushBox(ccx-49,ccy-49,64,98,98,60,'#56606b','CHAIR','Mozzo a cinque razze della sedia',1);
@@ -615,12 +617,15 @@ function roomScene(){
  pushBox(ccx-37,ccy-37,120,74,74,350,'#82909a','CHAIR','Colonna a gas regolabile della sedia',.98);
  pushBox(ccx-132,ccy-107,440,264,214,40,'#212932','CHAIR','Meccanismo seduta e piastra inclinazione',.99);
  rotBox(ccx,ccy,478,540,515,87,chairAngle,'#2e3744','CHAIR','Seduta imbottita, sagomata con guance laterali',1);
- rotBox(ccx,ccy-10,559,466,445,21,chairAngle,'#42606c','CHAIR','Cuscino seduta e rivestimento',.99);
+ const [seatX,seatY]=cpt(0,-10);
+ rotBox(seatX,seatY,559,466,445,21,chairAngle,'#42606c','CHAIR','Cuscino seduta e rivestimento',.99);
  // Schienale dietro al bacino e due fianchetti laterali con cuscino lombare.
  const [bx,by]=cpt(0,235);
  rotBox(bx,by,558,525,118,673,chairAngle,'#2d3946','CHAIR','Schienale alto da sedia gaming',.99);
- rotBox(bx,by-4,650,436,105,463,chairAngle,'#43515b','CHAIR','Schiena interna imbottita',.99);
- rotBox(bx,by-8,758,335,112,92,chairAngle,'#7a8e94','CHAIR','Cuscino lombare',.99);
+ const [backX,backY]=cpt(0,205);
+ rotBox(backX,backY,650,436,105,463,chairAngle,'#43515b','CHAIR','Schiena interna imbottita',.99);
+ const [lumX,lumY]=cpt(0,160);
+ rotBox(lumX,lumY,758,335,112,92,chairAngle,'#7a8e94','CHAIR','Cuscino lombare',.99);
  for(const u of [-1,1]){
   const [ax,ay]=cpt(u*270,-3);
   pushBox(ax-23,ay-23,535,46,46,178,'#687782','CHAIR','Colonnina bracciolo regolabile',.98);
@@ -829,17 +834,17 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='ACFLEX'){t='Bretella AC di servizio';d='Tracciato schematico della linea dal muro all’UPS e dall’UPS alle utenze selezionate. I cavi non devono passare sotto ruote o spigoli: verificare lunghezza, spine IEC e connettori prima del montaggio.';tt=['commerciale certificato','niente attraversamenti a pavimento']}
  else if(id==='NETPATCH'){t='Patch Ethernet / bretella di servizio';d='Cavo LAN separato dalla rete elettrica, con riccio di servizio e scollegamento prima di sollevare le cartucce. I percorsi nel browser rappresentano la destinazione, non una posa esecutiva.';tt=['CAT6','scollegare per estrazione']}
   else if(id==='PLATFORM'){t='Piattaforma strutturale rialzata (legacy)';d='Pannello ipotetico lungo 1320 mm, profondo 450 mm e spesso 18 mm; distanziato di 26 mm dal piano del mobile per superare i bordini. Sei riscontri interni e tre traverse trasversali schematiche trasferiscono il peso al mobile; il carico agisce anche sulle sporgenze. NON stampare una piattaforma portante così senza calcolo: verificare mensola, struttura mobile, rinforzi metallici/legno, ribaltamento e portata complessiva.';tt=['1320 × 450 × 18 mm','rialzo 26 mm','~55 mm sbalzo / lato','progetto da collaudare']}
-  else if(id==='RACKMODEM'){t='Modem nel multilivello';d='Router appoggiato su ripiano arieggiato insieme alla stampante e a parte dell’audio. Alimentazione e connessioni devono rimanere accessibili e separate dal cablaggio IEC dell’UPS.';tt=['nel mobile multilivello','accesso ai cavi']}
+  else if(id==='RACKMODEM'){t='Modem nel multilivello';d='Router appoggiato su ripiano arieggiato insieme alla stampante e a tutti i satelliti audio. Alimentazione e connessioni devono rimanere accessibili e separate dal cablaggio IEC dell’UPS.';tt=['nel mobile multilivello','accesso ai cavi']}
   else if(id==='WHITECAB'){t='Mobile bianco · unica base Torre';d='Mobile esistente con ingombro fotografico stimato 1500 × 320 × 500 mm. Il retro e i due lati hanno bordini rialzati: nel rendering altezza ipotetica 16 mm. La Torre H-9 da 1220 × 429 × 334 mm siede sopra un piano rigido rialzato, con sbalzo circa 55 mm su entrambi i lati in profondità. Portata, stabilità, piano e tasselli vanno rilevati e provati prima di installare hardware.';tt=['L 1500 P 320 mm','bordini da misurare','portata sconosciuta','no carico senza verifica']}
   else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
   else if(id==='PRINTER'){t='Brother HL-1110 nel multilivello';d='Ingombro nominale 340 × 238 × 189 mm. Si trova sul ripiano inferiore del mobile multilivello, non sul mobile bianco né sulla cassettiera. Lasciare libera la corsa della carta e l’apertura delle coperture.';tt=['340 × 238 × 189 mm','nel mobile multilivello']}
   else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
   else if(id==='SUBWOOFER'){t='Subwoofer sulla cassettiera';d='Subwoofer stimato 260 × 180 × 360 mm, spostato sopra la cassettiera a destra della scrivania. In questo assetto libera il pavimento e resta vicino al rack audio; va comunque verificata la stabilità dinamica e l’eventuale trasmissione di vibrazioni al mobile.';tt=['sopra cassettiera','vibrazioni da verificare']}
-  else if(id==='AUDIOLEFT'){t='Satellite audio laterale';d='Satellite del sistema audio visto sulle foto, stimato circa 70 × 90 × 210 mm. Qui resta vicino al subwoofer sul mobile basso.';tt=['7 × 9 × 21 cm','stima']}
-  else if(id==='AUDIORIGHT'){t='Satellite audio laterale';d='Secondo satellite audio sul mobile basso. La coppia grande resta laterale, mentre due satelliti piccoli aggiuntivi vanno sulla scrivania per l’ascolto ravvicinato.';tt=['7 × 9 × 21 cm','stima']}
-  else if(id==='RACK'){t='Mobile multilivello alla parete destra';d='Ripiano a più livelli orientato con lato lungo 520 mm aderente al muro, profondità 340 mm indicativa. Ospita Brother HL-1110, router e parte dell’audio; il VGA resta fissato al muro, non sul mobile.';tt=['520×340 mm stimati','stampante / router / audio','VGA sul muro']}
+  else if(id==='AUDIOLEFT'){t='Satellite 1 · multilivello';d='Satellite grande stimato 70 × 90 × 210 mm sul ripiano centrale, vicino al router.';tt=['7 × 9 × 21 cm','ripiano centrale']}
+  else if(id==='AUDIORIGHT'){t='Satellite 2 · multilivello';d='Secondo satellite grande accanto al primo, sul ripiano centrale.';tt=['7 × 9 × 21 cm','ripiano centrale']}
+  else if(id==='RACK'){t='Mobile multilivello alla parete destra';d='Ripiano a più livelli orientato con lato lungo 520 mm aderente al muro, profondità 340 mm indicativa. Ospita Brother HL-1110, router e tutti e quattro i satelliti audio; il VGA resta fissato al muro, non sul mobile.';tt=['520×340 mm stimati','stampante / router / audio','VGA sul muro']}
   else if(id==='DESK'){t='Scrivania diagonale';d='Disposizione proposta più efficiente: scrivania ruotata di circa 45° verso l’angolo della stanza. Questo migliora il campo visivo dei tre monitor e libera entrambi i fianchi per stampante e cablaggi.';tt=['orientamento 45°','setup principale']}
-  else if(id==='CHAIR'){t='Sedia gaming a 5 razze';d='Modello 3D dettagliato con cinque ruote, piantone a gas, seduta, schienale alto, cuscino lombare, poggiatesta e due braccioli. Ingombro prudenziale circa 70 cm alla base e 120–135 cm di altezza. La corrispondenza con il tuo ASIN Amazon B07TYJDM5M non è verificata: non attribuire al prodotto queste quote.';tt=['5 ruote visibili','braccioli, lombare, poggiatesta','misure da confermare']}
+  else if(id==='CHAIR'){t='Sedia gaming a 5 razze';d='Modello 3D dettagliato con cinque ruote, piantone a gas, seduta, schienale alto, cuscino lombare, poggiatesta e due braccioli. Ingombro prudenziale circa 70 cm alla base e 120–135 cm di altezza. La corrispondenza con il tuo ASIN Amazon B07TYJDM5M non è verificata: non attribuire al prodotto queste quote.';tt=['orientata al monitor centrale','braccioli, lombare, poggiatesta','misure da confermare']}
   else if(id==='ARMCENTER'){t='Braccio VESA · monitor centrale';d='Ancora alla breve parete diagonale, con snodo e piastra VESA. Sbraccio di studio ~45 cm. Verificare materiale, portata della parete (lo smusso potrebbe non essere strutturale), staffa e peso reale dello schermo prima di forare.';tt=['ancoraggio sullo smusso','portata da verificare','nessun piedistallo']}
   else if(id==='ARMLEFT'){t='Braccio VESA · monitor VGA';d='Piastra sulla parete sinistra, con due sezioni snodate e attacco VESA. Posizione e sbraccio di studio; non appoggia sul tavolo.';tt=['parete sinistra','VESA da controllare','nessun piedistallo']}
   else if(id==='ARMRIGHT'){t='Braccio VESA · terzo monitor';d='Piastra sulla parete posteriore, braccio articolato e attacco VESA. Il monitor di dimensione intermedia non pesa sulla scrivania.';tt=['parete posteriore','sbraccio da verificare','nessun piedistallo']}
@@ -848,8 +853,8 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='MONMID'){t='Terzo monitor intermedio';d='Schermo di dimensioni intermedie tra il VGA Acer e il monitor/TV HDMI: stima progettuale circa 590 mm di larghezza, equivalente grossomodo a un 24–25 pollici; è fissato a parete tramite braccio.';tt=['~24–25”','dimensione intermedia']}
   else if(id==='LAPTOP'){t='Laptop in appoggio';d='Portatile aperto sul lato destro, in funzione di quarto schermo occasionale, test o controllo nodi. In un uso quotidiano può restare chiuso su supporto verticale.';tt=['supporto lavoro','lato destro']}
   else if(id==='AUDIOCENTER'){t='Speaker centrale da scrivania';d='Piccolo speaker orizzontale sotto il monitor principale, stimato circa 240 × 80 × 75 mm. Aiuta a concentrare l’audio vicino all’utente senza rubare troppo spazio.';tt=['24 × 8 × 7,5 cm','stima']}
-  else if(id==='DESKSATLEFT'){t='Satellite sinistro su scrivania';d='Satellite vicino all’ascolto, collocato a sinistra della tastiera per una scena sonora più coerente nella posizione di lavoro ruotata verso l’angolo.';tt=['near-field','sinistra']}
-  else if(id==='DESKSATRIGHT'){t='Satellite destro su scrivania';d='Satellite destro near-field sulla scrivania. Insieme a quello sinistro e allo speaker centrale crea un setup più leggibile durante lavoro e call.';tt=['near-field','destra']}
+  else if(id==='DESKSATLEFT'){t='Satellite 3 · multilivello';d='Satellite piccolo precedentemente sulla scrivania, ora sul ripiano superiore.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
+  else if(id==='DESKSATRIGHT'){t='Satellite 4 · multilivello';d='Altro satellite piccolo, ora sul ripiano superiore; il piano della scrivania resta libero.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
  else if(id==='FRAME'){t='Telaio portante stampabile';d='Travi longitudinali, traverse segmentate, giunti, supporti intermedi e piedini antivibranti. L’incastro geometrico deve essere accompagnato da adeguata ritenuta meccanica e verifica della deformazione.';tt=['segmentato','stampabile','resistenza da testare']}
  else {t='Torre H-9';d='Elemento del modello orientativo.';tt=[]}
  title.textContent=t;desc.textContent=d;$('part-specific').textContent=name ? 'Elemento preciso: '+name : 'Selezione del sottosistema';
@@ -863,7 +868,7 @@ function view(v){if(v==='iso'){state.yaw=2.36;state.pitch=.52}else if(v==='top')
 function scene(mode){state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
  if(mode==='room'){state.yaw=.82;state.pitch=.57;state.xray=true;$('xray').classList.add('on')}else if(mode==='cabinet'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}else if(mode==='standalone'){state.yaw=1.44;state.pitch=.48;state.xray=false;$('xray').classList.remove('on')}else if(mode==='lipdetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.36;state.pitch=.52}
  if(mode==='room'||mode==='workstation'){state.dims=false;$('dims').classList.remove('on')}else if(['cabinet','standalone','lipdetail'].includes(mode)){state.dims=true;$('dims').classList.add('on')}
- const names={tower:['TORRE H-9 · quote e appoggi','1220 × 429 × 334 mm · ingombro nominale H-9'],rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti solo nelle sedi inferiori'],module:['CARTUCCIA · 6 distanziali e X completa','Scheda su M3 metallici, adapter stampato dietro'],supports:['FISSAGGIO PCB · vista dal retro','X stampata continua + 6 distanziali metallici + 4 puntoni al telaio'],joint:['INCASTRO · contatti reali','Fondo su z=52, spalle su z=89 mm; estrazione illustrata, fermi nascosti'],guides:['GUIDE ALTE · vincolo anti-oscillazione','Doppia guida fissa frontale/posteriore; binari fuori dal passaggio verticale'],ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],room:['ANGOLO STANZA · UNA TORRE H-9','Torre sul mobile bianco, UPS a terra e tre mobili lungo la parete destra'],cabinet:['TORRE H-9 · ADATTATORE E SPALLETTA U','Rialzo rimovibile sopra 3 bordini, carico solo sul piano interno del mobile'],standalone:['TORRE H-9 · AUTO-PORTANTE','Medesima Torre senza mobile, con pattini laterali opzionali'],lipdetail:['SPALLETTA U · 3 LATI, FRONTE LIBERO','Vista esplosa +110 mm: sei appoggi sul piano interno e piastra rimovibile'],workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']};
+ const names={tower:['TORRE H-9 · quote e appoggi','1220 × 429 × 334 mm · ingombro nominale H-9'],rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti solo nelle sedi inferiori'],module:['CARTUCCIA · 6 distanziali e X completa','Scheda su M3 metallici, adapter stampato dietro'],supports:['FISSAGGIO PCB · vista dal retro','X stampata continua + 6 distanziali metallici + 4 puntoni al telaio'],joint:['INCASTRO · contatti reali','Fondo su z=52, spalle su z=89 mm; estrazione illustrata, fermi nascosti'],guides:['GUIDE ALTE · vincolo anti-oscillazione','Doppia guida fissa frontale/posteriore; binari fuori dal passaggio verticale'],ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],room:['ANGOLO STANZA · UNA TORRE H-9','Torre sul mobile bianco, quattro satelliti nel multilivello, sedia orientata ai monitor'],cabinet:['TORRE H-9 · ADATTATORE E SPALLETTA U','Rialzo rimovibile sopra 3 bordini, carico solo sul piano interno del mobile'],standalone:['TORRE H-9 · AUTO-PORTANTE','Medesima Torre senza mobile, con pattini laterali opzionali'],lipdetail:['SPALLETTA U · 3 LATI, FRONTE LIBERO','Vista esplosa +110 mm: sei appoggi sul piano interno e piastra rimovibile'],workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']};
  $('scene-caption').textContent=names[mode][0];$('scene-subtitle').textContent=names[mode][1];
  buttonGroup('[data-scene]',document.querySelector(`[data-scene="${mode}"]`));clearSelection();
 }
