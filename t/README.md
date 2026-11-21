@@ -2,10 +2,21 @@
 
 **Link canonico:** https://archnico.github.io/t/
 
-**Sorgente da aggiornare:** `t/index.html` nel repository pubblico `archnico/archnico.github.io` (branch `main`).
+**Sorgente:** `t/index.html` nel repository pubblico `archnico/archnico.github.io` (branch `main`).
 
-## Regola di pubblicazione
+**Versione corrente:** **v1.1 — 21 novembre 2026**
 
-Ogni modifica approvata all'anteprima HTML deve essere salvata direttamente in `t/index.html` con un commit nello stesso intervento, mantenendo invariato il link pubblico. GitHub Pages pubblica automaticamente i commit al branch sorgente; verificare HTTP 200, il titolo e almeno un elemento dell'interfaccia dopo il deploy. Non pubblicare nuovi file con nomi di versione come destinazione principale, non sostituire l'index della homepage del repository, e non introdurre dipendenze esterne non necessarie.
+## Canone di pubblicazione
 
-La versione corrente (iniziale): **v0.7, 21 novembre 2026**. Le versioni successive devono essere indicate nell'HTML e nei messaggi di commit. L'HTML e' un modello concettuale ingegneristico interattivo, non ancora un CAD parametrico pronto per la stampa.
+Ogni modifica approvata dell'anteprima HTML va salvata direttamente in `t/index.html` con un commit; il link pubblico rimane invariato. GitHub Pages pubblica il branch `main`. Dopo il deploy controllare la versione effettivamente raggiungibile. Non sostituire la homepage del repository e non aggiungere dipendenze esterne per il viewer.
+
+## Canone meccanico
+
+Torre orizzontale, sette cassetti PC più due baie libere polivalenti, **tutte le cornici uguali 80 × 280 × 280 mm nominali**; per ogni scheda varia unicamente l'inserto donor-specific. Moduli estraibili verso l'alto a cavi scollegati, dischi laterali e servizi posteriori.
+
+La **v1.1** aggiunge appoggi distribuiti (luce massima nominale 192 mm), controventi inferiori e posteriori, giunti stampabili con piastre e M4, saette dei cassetti, ritegni anti-sollevamento e punti di ancoraggio dei servizi. Sono **disegni e verifiche preliminari, non STL esecutivi**.
+
+- **Relazione:** [Verifica preliminare di rigidità](rigidita.md).
+- **Calcoli riproducibili:** [rigidita_test.py](rigidita_test.py).
+
+**Cosa manca prima della stampa definitiva:** prove sui giunti stampati, torsione, creep e calore, dimensioni e fori dei donor, flussi d'aria, baricentro, montaggi GPU, compatibilità PSU e protezione elettrica.
