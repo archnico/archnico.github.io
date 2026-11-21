@@ -72,3 +72,17 @@ Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.i
 - Corretto hit-test: in vista semitrasparente le pareti non devono coprire la selezione dei mobili e dei bracci visibili; pareti/pavimento selezionabili soltanto se nessun altro oggetto è in primo piano.
 - Test Chromium/Playwright con sintassi JS e 9 scene su desktop 1500×950 e mobile 390×780, 0 errori; selezione del terzo monitor e del braccio centrale verificata.
 - Il modello è **concept non certificato**, nessun nuovo componente è stato acquistato, nessuna fotografia privata dell'angolo PC è stata caricata nel repo pubblico.
+
+## v1.6 — una sola Torre H-9 sul mobile bianco (21 novembre 2026)
+
+**Layout stanza**: ottagono schematico ingombro 4300×4300 mm, smussi da 350 mm (ipotesi). Torre H-9 **una sola**, il modello meccanico originario in scala 1:1 (7 PC + 2 bay riconfigurabili), riportato sulla superficie del mobile bianco. Rimosso il parallelepipedo del vecchio PC tower a pavimento e rimossa la piazzola vuota che simulava una seconda Torre.
+
+**Quote nominali**: mobile bianco 1500 L × 320 P × 500 H mm (stima foto, non misura diretta); torre 1220 L × 429 P × 334 H mm, base inserita nella stanza ruotata di 90° per seguire la lunghezza del mobile. Piattaforma concettuale 1320 L × 450 P × 18 spessore mm, centrata sul mobile: sbalzo 65 mm davanti e dietro, 6 riscontri di appoggio con rialzo nominale 26 mm e 3 traverse inferiori. Bordini del mobile **posteriore e laterali** 16 mm di altezza *ipotizzata*, non misurata. Torre sopra la piattaforma a z=544 mm (complessivamente altezza ~878 mm da pavimento, esclusa estrazione). I piedi effettivi della Torre cadono in parte fuori dalla profondità originale di 320 mm: le sole parti stampate NON costituiscono una soluzione sicura. **Prima del montaggio: misurare bordini e top, identificare l'intelaiatura portante del mobile, stimare/pesare massa totale, progettare traversi adeguati e ritenuta antiribaltamento, test carico e flessione della piattaforma, accesso cavi e corsa d'estrazione.** Preferire piattaforma rinforzata in legno/metallo dimensionata da prova rispetto a stampa 3D portante non verificata.
+
+**UPS** PowerWalker VI 1500 CSW IEC (candidato non acquistato) separato e verticale a pavimento accanto alla Torre, ingombro reale 99×410×280 mm e 13,1 kg; non viene portato dal mobile bianco.
+
+**Parete destra della scrivania**: mobile multilivello 520 lungo parete × 340 profondo mm con stampante Brother HL-1110, modem e parte impianto audio; cassettiera scura autonoma 400 lungo parete × 260 profondo mm; subwoofer a terra 260 lungo parete × 180 profondo mm. Queste misure degli arredi sono stime, non rilievi verificati. Nessun altro PC desktop a pavimento nella scena.
+
+**Monitor** tre schermi esclusivamente su bracci a muro. In pianta, le sagome esterne 2D hanno distanza minima simulata circa 19 mm (VGA↔HDMI) e 15 mm (HDMI↔intermedio), senza intersezioni; da verificare in 3D per sbracci, peso, attacco VESA, vibrazioni e capacità portante della parete diagonale. La piccola parete smussata resta una ipotesi materiale: non autorizza perforazioni.
+
+**UI/test**: nuova vista `Torre sul mobile` separata da `Angolo stanza` e `Bracci a muro`; i componenti individuali della Torre restano cliccabili, così come mobile, bordini, piastra e UPS. Verificati parser JS, Chromium/Playwright con 10 scene su desktop 1550×950 e mobile 390×800, zero errori runtime; clic testati su mobile, UPS e modulo adattatore A5. Foto della casa private, mai committate nel repository pubblico.
