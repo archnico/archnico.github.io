@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-9 • Digital Twin Orizzontale • v0.9</title>
+<title>TORRE H-9 • Digital Twin Orizzontale • v1.0</title>
 <style>
 :root{color-scheme:dark;--bg:#09131b;--panel:#0d1c27;--panel2:#132733;--line:#2d4550;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--orange:#f5aa62;--red:#e78b86;--blue:#71b7ec;--green:#88d8b0}
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
@@ -33,29 +33,32 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
 </head>
 <body>
 <div class="shell">
-<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Digital twin compatto · cornice unica</span></div></div></div><div class="status"><span class="pill accent">● ANTEPRIMA HTML INTERATTIVA</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V0.9 · 21 NOV 2026</span></div></header>
+<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Digital twin compatto · µATX/OEM · cornice universale</span></div></div></div><div class="status"><span class="pill accent">● ANTEPRIMA HTML INTERATTIVA</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.0 · 21 NOV 2026</span></div></header>
 <div class="layout">
   <aside class="left">
     <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per zoom · clicca un componente per ispezionarlo.</p></div>
-    <div class="section"><div class="label">02 / Scala del modello</div><h3 class="section-title">Scegli cosa esaminare</h3><div class="btn-grid"><button class="button active accent" data-mode="tower">▦ Torre completa</button><button class="button" data-mode="drawer">▤ Singolo cassetto</button><button class="button wide" data-mode="compare">▥ Confronta gli inserti</button></div><p class="help">TORRE COMPLETA all'apertura: 7 campate PC + 2 sedi polivalenti, banchi HDD e retro servizi. Cornice identica per ogni posizione: 80 × 280 × 280 mm nominali; cambia soltanto l'inserto stampato per la motherboard.</p></div>
+    <div class="section"><div class="label">02 / Scala del modello</div><h3 class="section-title">Scegli cosa esaminare</h3><div class="btn-grid"><button class="button active accent" data-mode="tower">▦ Torre completa</button><button class="button" data-mode="drawer">▤ Singolo cassetto</button><button class="button wide" data-mode="compare">▥ Confronta gli inserti</button></div><p class="help">La Torre si apre completa e compatta: 7 sedi PC + 2 riserve polivalenti, dischi ai lati e servizi posteriori. Tutte le cornici sono identiche (80 × 280 × 280 mm, BOZZA); cambiano soltanto le piastre interne. Target micro-ATX/OEM, non full-size ATX.</p></div>
     <div class="section" id="variants-panel"><div class="label">03 / Schede e cassetti</div><h3 class="section-title">Profili fisici a confronto</h3><div class="variant-buttons">
       <button class="variant-option active" data-variant="h81"><span class="variant-dot" style="background:#d9a95f"></span><span><b>n1 · ASUS H81M-E</b><small>µATX reale · i3-4130 · ~16 GiB</small></span></button>
       <button class="variant-option" data-variant="lap"><span class="variant-dot" style="background:#57a7c7"></span><span><b>n2 · laptop i5-5200U</b><small>~12 GiB · HDD 500 · USB 8+4 TB</small></span></button>
       <button class="variant-option" data-variant="hp"><span class="variant-dot" style="background:#4d86d8"></span><span><b>n3 · HP 250 G4</b><small>N3050 · 4 GiB · SSD 120</small></span></button>
       <button class="variant-option" data-variant="mini"><span class="variant-dot" style="background:#8aa89d"></span><span><b>Mini desktop Q556*</b><small>profilo compatto futuro</small></span></button>
+      <button class="variant-option" data-variant="p556"><span class="variant-dot" style="background:#79b39a"></span><span><b>Fujitsu P556/2 · candidato</b><small>D3400-U µATX · 2 DDR4 · 3 SATA</small></span></button>
+      <button class="variant-option" data-variant="m93"><span class="variant-dot" style="background:#88a5c7"></span><span><b>Lenovo M93p Tower · candidato</b><small>OEM · 4 DDR3 · PCIe x16</small></span></button>
       <button class="variant-option" data-variant="gpu"><span class="variant-dot" style="background:#ad7ad2"></span><span><b>GPU futura · GTX 1050 Ti*</b><small>inserto GPU, non installata; nessun 6-pin</small></span></button>
-    </div><p class="help">n1 / n2 / n3: dati hardware noti, geometria specifica delle PCB da verificare sui donor. La GPU è soltanto una previsione: nessuna installazione in questa versione.</p><div class="btn-grid"><button class="button wide" id="inspect-selected">↗ Apri cassetto selezionato</button></div></div>
+    </div><p class="help">n1 / n2 / n3: hardware noto ma posizione dei fori e ingombri da misurare. P556/2 e M93p: famiglie candidate, NON inventario confermato. GPU futura: solo simulazione, nessuna GPU installata.</p><div class="btn-grid"><button class="button wide" id="inspect-selected">↗ Apri cassetto selezionato</button></div></div>
     <div class="section" id="drawer-tools"><div class="label">04 / Esploso del cassetto</div><div class="input-row"><span>Distanza fra i pezzi</span><b id="drawer-explode-label" class="num">42%</b></div><input id="drawer-explode" type="range" min="0" max="100" value="42"><div class="btn-grid" style="margin-top:12px"><button class="button" id="drawer-assemble">◉ Assemblato</button><button class="button active" id="drawer-pieces">↗ Esploso</button></div><h3 class="section-title" style="margin-top:14px">Strati del cassetto</h3><div class="btn-grid"><button class="button active" data-drawer-layer="all">Tutto</button><button class="button" data-drawer-layer="print">Solo stampa 3D</button><button class="button" data-drawer-layer="board">Solo PCB</button><button class="button" data-drawer-layer="hardware">Viti/distanziali</button></div><div class="row-control" style="margin-top:12px"><span>Mostra sede di innesto</span><button class="switch on" id="drawer-seat"></button></div></div>
-    <div class="section" id="tower-tools"><div class="label">05 / Torre completa</div><h3 class="section-title">Posizioni modulari</h3><div class="btn-grid"><button class="button active" data-count="9">H-9 · 9</button><button class="button" data-count="7">H-7 · 7</button></div><p class="help">Sette sedi PC progettuali: n1, n2, n3 identificati; quattro donor futuri illustrativi. Le sedi 8–9 restano vuote e riconfigurabili per GPU, telefoni o espansione.</p></div>
+    <div class="section" id="tower-tools"><div class="label">05 / Torre completa</div><h3 class="section-title">Posizioni modulari</h3><div class="btn-grid"><button class="button active" data-count="9">H-9 · 9</button><button class="button" data-count="7">H-7 · 7</button></div><p class="help">7 sedi PC progettuali: n1, n2, n3 conosciuti; gli altri sono placeholder per candidati di via Cairoli (P556/2, M93p, Q556). Le sedi 8–9 restano vuote e riconfigurabili per GPU o altre funzioni. Nessun donor futuro è considerato acquisito.</p></div>
+    <div class="section" id="fit-status"><div class="label">Compatibilità meccanica</div><div class="detail"><h3>µATX sì come obiettivo, non ancora certificata</h3><p>Profilo massimo µATX: <strong>244 × 244 mm</strong>. In una cornice 280 × 280 mm rimangono solo 36 mm lordi totali per quel piano, prima di traversi, I/O e cavi. La quota nominale resta <strong>provvisoria</strong>, non uno STL esecutivo.</p><div class="badges"><span class="tiny">ATX 305 mm esclusa</span><span class="tiny">dissipatore da misurare</span><span class="tiny">riser GPU separato</span></div></div></div>
     <div class="section" id="tower-extraction"><div class="label">06 / Smontaggio della torre</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide" id="extract">↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div></div>
     <div class="section"><div class="label">07 / Strati grafici</div><div class="row-control"><span>GPU futura (fantasma)</span><button class="switch" id="gpuPreview" aria-label="Simula GPU nella sede 8"></button></div><div class="row-control"><span>Etichette tecniche</span><button class="switch" id="labels"></button></div><div class="row-control"><span>Callout flottanti</span><button class="switch" id="callouts"></button></div><div class="row-control"><span>Vista semitrasparente</span><button class="switch" id="xray"></button></div><div class="row-control"><span>Dischi laterali</span><button class="switch on" id="disks"></button></div><div class="row-control"><span>Alimentazione e cavi</span><button class="switch on" id="wiring"></button></div><div class="row-control"><span>Griglia di misura</span><button class="switch on" id="grid"></button></div></div>
     <div class="section" id="tower-focus"><div class="label">08 / Focus rapido</div><div class="btn-grid"><button class="button" data-focus="P1">Modulo P1</button><button class="button" data-focus="FRAME">Telaio</button><button class="button" data-focus="STORAGE">Dischi</button><button class="button" data-focus="POWER">Servizi</button><button class="button wide" id="inspect-gpu">▧ Esamina GPU futura in sede standard</button></div><p class="help">I colori identificano i nodi; gli inserti non sono pezzi di produzione. P8 e P9 conservano identica interfaccia meccanica anche quando restano vuote.</p></div>
   </aside>
   <section class="viewport" id="vp" aria-label="Modello tecnico interattivo della torre orizzontale">
     <canvas id="c"></canvas>
-    <div class="overlay-title"><strong id="scene-title">TORRE H-9 • COMPATTA E COMPLETA</strong><small id="scene-subtitle">7 sedi PC · 2 guide polivalenti vuote · banchi HDD · I/O sul retro</small></div>
+    <div class="overlay-title"><strong id="scene-title">TORRE H-9 • COMPATTA E COMPLETA</strong><small id="scene-subtitle">7 sedi modulari · 2 riserve vuote · schede µATX/OEM e laptop · HDD laterali · I/O posteriore</small></div>
     <div class="hint"><span>↔ Ruota</span><span>⊕ Zoom</span><span>◉ Seleziona</span></div>
-    <div class="viewmark">CORNICE UNICA · 80 × 280 × 280 MM<br>GPU FUTURA · NON INSTALLATA<br>QUOTE E FORI ANCORA DA VERIFICARE</div>
+    <div class="viewmark">CORNICE UNICA · 80 × 280 × 280 MM (BOZZA)<br>GPU FUTURA · NON INSTALLATA<br>QUOTE E FORI ANCORA DA VERIFICARE</div>
     <div class="tooltip" id="tooltip"></div>
     <div class="callout-layer" id="callout-layer"></div>
   </section>
@@ -69,13 +72,14 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
       <button class="part-button" data-part="BOARD"><b>04</b><span>Scheda madre</span></button>
       <button class="part-button" data-part="HARDWARE"><b>05</b><span>Viti + distanziali</span></button>
       <button class="part-button" data-part="GUIDE"><b>06</b><span>Sede in torre</span></button>
-    </div><p class="micro">La suddivisione è dimostrativa. Non usare gli ingombri o i fori come STL esecutivi; verificare sul donor e sulla stampante.</p></div>
+    </div><p class="micro">La cornice resta identica per ogni posizione. La µATX 244×244 è un limite di prova: la compatibilità reale di travi, porte e dissipazione NON è ancora garantita. Nessuno STL esecutivo qui.</p></div>
     <div class="section"><div class="label">Architettura del carrier</div><div class="detail diagram"><svg viewBox="0 0 280 165" aria-label="Schema semplificato del cassetto stampabile"><rect x="34" y="28" width="148" height="106" rx="10" fill="#d9a95f" opacity=".16" stroke="#f3bd6f"/><rect x="50" y="44" width="116" height="72" rx="4" fill="#204753" stroke="#5cbba9"/><rect x="72" y="18" width="70" height="14" rx="4" fill="#d9a95f"/><rect x="44" y="54" width="6" height="62" fill="#d9a95f"/><rect x="166" y="54" width="6" height="62" fill="#d9a95f"/><circle cx="93" cy="84" r="13" fill="#93abb6"/><rect x="122" y="60" width="12" height="40" fill="#4d8891"/><rect x="138" y="60" width="12" height="40" fill="#4d8891"/><line x1="182" y1="25" x2="246" y2="15" stroke="#8adccb" stroke-width="1.3"/><line x1="171" y1="80" x2="252" y2="80" stroke="#8adccb" stroke-width="1.3"/><line x1="65" y1="134" x2="18" y2="148" stroke="#8adccb" stroke-width="1.3"/><line x1="50" y1="104" x2="12" y2="104" stroke="#8adccb" stroke-width="1.3"/><text x="249" y="18" fill="#dffbf4" font-size="9" text-anchor="end">maniglia superiore</text><text x="252" y="76" fill="#dffbf4" font-size="9" text-anchor="end">scheda madre</text><text x="18" y="102" fill="#dffbf4" font-size="9">feritoie</text><text x="18" y="157" fill="#dffbf4" font-size="9">base irrigidita</text></svg><ul class="spec-list" id="drawer-specs"><li><span>Cornice standard</span><span>80 × 280 × 280 mm</span></li><li><span>Parti comuni</span><span>2 fianchi + 2 traverse + maniglia</span></li><li><span>Inserto dedicato</span><span>piastra/staffa specifica per ogni scheda</span></li><li><span>Ferramenta</span><span>viti M3 / M4 + distanziali</span></li></ul></div></div>
     <div class="section"><div class="label">Motherboard • dettagli fisici</div><div class="detail"><ul class="spec-list" id="mb-specs"><li><span>Formato di riferimento</span><span>ASUS H81M-E n1 · 175 × 226 mm</span></li><li><span>Blocchi rappresentati</span><span>CPU, RAM, I/O, SATA, PCIe</span></li><li><span>Montaggio</span><span>distanziali metallici</span></li><li><span>Raffreddamento</span><span>dissipatore compatto + ventilazione</span></li></ul><div class="chips"><div class="chip">cornice standard</div><div class="chip">inserto dedicato</div><div class="chip">hardware reale quando noto</div><div class="chip">I/O sul retro</div></div></div></div>
-    <div class="section"><div class="label">BOM minima indicativa</div><div class="detail"><ul class="bom-list"><li><span>Stampa 3D comune</span><span>cornice modulare, guide, maniglia, giunti</span></li><li><span>Stampa 3D specifica</span><span>inserto n1 / n2 / n3 / mini / ATX</span></li><li><span>Commerciale</span><span>alimentatori, cavi, ventole</span></li><li><span>Ferramenta</span><span>viti, rondelle, distanziali</span></li></ul><p class="micro">Questa anteprima serve a discutere la forma finale. Non sostituisce un CAD meccanico né una distinta esecutiva definitiva.</p></div></div>
+    <div class="section"><div class="label">Fonti e dati mancanti</div><div class="detail"><p>Questi sono dati di <strong>famiglia di prodotto</strong>, non prove dell'hardware posseduto o recuperato.</p><p><a href="https://gzhls.at/blob/ldb/1/8/a/7/66adb659550a218ff809ce012f80d5318848.pdf" target="_blank" rel="noreferrer" style="color:#a3e5db">Fujitsu P556/2 · scheda D3400-U µATX</a></p><p><a href="https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_M93_M93p_Tower/ThinkCentre_M93_M93p_Tower_Spec.PDF" target="_blank" rel="noreferrer" style="color:#a3e5db">Lenovo M93/M93p Tower · specifiche PSREF</a></p><p class="micro">Prima di generare STL: misura dimensioni PCB, fori, altezza dissipatori, ingombro della RAM, porte posteriori, connettori alimentazione, curve dei cavi e flusso d'aria.</p></div></div>
+    <div class="section"><div class="label">BOM minima indicativa</div><div class="detail"><ul class="bom-list"><li><span>Stampa 3D comune</span><span>cornice modulare, guide, maniglia, giunti</span></li><li><span>Stampa 3D specifica</span><span>inserto n1 / n2 / n3 / P556/2 / M93p / mini / GPU</span></li><li><span>Commerciale</span><span>alimentatori, cavi, ventole</span></li><li><span>Ferramenta</span><span>viti, rondelle, distanziali</span></li></ul><p class="micro">Questa anteprima serve a discutere la forma finale. Non sostituisce un CAD meccanico né una distinta esecutiva definitiva.</p></div></div>
   </aside>
 </div>
-<footer><div class="footer-left"><span class="dot"></span><span>v0.9 · HTML autonomo, funziona offline · dettaglio al clic</span></div><span class="warning">Concept, non STL: fori, flussi aria, PSU e GPU da validare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
+<footer><div class="footer-left"><span class="dot"></span><span>v1.0 · HTML autonomo, funziona offline · dettaglio al clic</span></div><span class="warning">Concept, non STL: fori, flussi aria, PSU e GPU da validare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
 </div>
 <script>
 (()=>{'use strict';
@@ -316,17 +320,18 @@ function makeDrawer(){
 }
 
 
-// v0.7: compare physical motherboard geometries, with scale in mm.
-// Verified exact board sizes: ASUS H81M-E and ATX standard. Donor-specific laptop
-// outlines and Q556 dimensions are illustrative, NEVER a measured footprint.
+// v1.0: same outside envelope for every carrier. Verified family-level
+// specs are NOT measured donor footprints. Max µATX 244x244 is a clash test.
 const V={
+ p556:{id:'p556',node:'Cairoli?',name:'Fujitsu Esprimo P556/2 · candidato',desc:'Famiglia candidata da via Cairoli, NON identificata sul posto. Fujitsu P556/2 con motherboard D3400-U micro-ATX (dimensioni reali di questa PCB ancora ignote), LGA1151, 2 DIMM DDR4 e 3 SATA; il mockup usa il caso limite 244 × 244 mm per evidenziare interferenze ai bordi.',dims:'µATX ≤244 × 244 mm (limite)',size:[244,244],carrier:[80,280,280],color:'#265444',accent:'#79b39a',colorName:'verde salvia · candidato',badge:'CANDIDATO • NON ACQUISITO',fit:'VERIFICA CRITICA 244 × 244',printed:'Cornice comune + sottopiastra µATX con asole regolabili',certainty:'Form factor µATX, 2 DDR4, 3 SATA, LGA1151 da datasheet Fujitsu; impronta, fori e altezza reale della singola scheda non misurati. Connettori e cavi possono interferire con le traverse.',arch:'Desktop µATX · D3400-U',details:['Intel LGA1151 (CPU ignota)','2 DIMM DDR4 (capacità ignota)'],storage:'3 porte SATA (dischi reali ignoti)',memory:'2 DDR4',io:'I/O posteriore OEM; cablaggio da misurare'},
+ m93:{id:'m93',node:'Cairoli?',name:'Lenovo ThinkCentre M93/M93p Tower · candidato',desc:'Famiglia candidata da via Cairoli, NON identificata fisicamente. Il modello Tower ha quattro alloggiamenti DDR3, chipset Q87, PCIe x16 e tre SATA secondo PSREF Lenovo. Forma, fori e connettori di alimentazione sono OEM: questo profilo è una sagoma di studio, non una scheda scansionata.',dims:'~215 × 230 mm (sagoma NON misurata)',size:[215,230],carrier:[80,280,280],color:'#314d63',accent:'#88a5c7',colorName:'acciaio azzurro · candidato',badge:'OEM • SAGOMA DI STUDIO',fit:'CORNICE COMUNE, FORI OEM',printed:'Cornice comune + adattatore OEM Lenovo asolato',certainty:'Quattro DIMM DDR3 e PCIe x16 indicati da PSREF Lenovo M93/M93p Tower; footprint, fori e connettore PSU esatto non verificati sul donor.',arch:'Desktop OEM Lenovo Q87',details:['Intel Core 4ª gen (CPU ignota)','4 slot DDR3, fino a 32 GB'],storage:'3 porte SATA; dischi ignoti',memory:'4 DDR3',io:'VGA + 2 DisplayPort + USB + LAN (configurazione Tower)'},
  gpu:{id:'gpu',node:'G?',name:'GPU futura · GTX 1050 Ti (ipotesi)',desc:'Inserto GPU intercambiabile: stesso volume esterno e stesso innesto delle altre cartucce. Anteprima di una GTX 1050 Ti compatta a 75 W, tassativamente versione senza 6-pin, NON posseduta né installata. Alimentazione e connessione PCIe mediante riser vanno verificate; PSU di n1 non approvato. Se una GPU supera l’inviluppo, non si finge che entri: servono due sedi o un nuovo vincolo progettuale.',dims:'~ 190 × 115 mm (esempio)',size:[190,115],carrier:[80,280,280],color:'#24303a',accent:'#ad7ad2',colorName:'viola studio GPU',badge:'FUTURO • NON INSTALLATA',fit:'CORNICE STANDARD • DA VERIFICARE',printed:'Cornice standard + adattatore PCIe / riser separato',certainty:'Solo famiglia GPU e obiettivo: ingombro esatto, dissipazione, riser e requisiti PSU da verificare sul modello acquistato.',arch:'Scheda grafica PCIe',details:['GTX 1050 Ti ipotetica','75 W da slot (variante senza 6-pin)'],storage:'nessuno',memory:'VRAM GPU (non acquistata)',io:'uscite video posteriori · riser PCIe verso host'},
  h81:{id:'h81',node:'n1',name:'n1 · ASUS H81M-E',desc:'Desktop reale di n1: motherboard ASUS H81M-E con i3-4130, circa 16 GiB DDR3 e storage locale SSD 256 + HDD 500. Il cassetto mantiene la stessa cornice esterna degli altri nodi, ma usa un inserto interno specifico per questa µATX.',dims:'175 × 226 mm',size:[175,226],carrier:[80,280,280],color:'#222d2b',accent:'#d9a95f',colorName:'ambra sabbia',badge:'DATI REALI NODO',fit:'CORNICE STANDARD + INSERTO n1',printed:'Cornice standard + piastra H81M-E + battuta I/O',certainty:'Quote PCB note dal manuale ASUS; restano da misurare fori, dissipatore e punti di fissaggio sul donor.',arch:'Desktop µATX',details:['i3-4130','~16 GiB DDR3'],storage:'SSD 256 + HDD 500',memory:'2 DIMM DDR3',io:'I/O ATX posteriore + SATA interni'},
  mini:{id:'mini',node:'fx',name:'Mini desktop Q556*',desc:'Profilo compatto futuro tipo mini desktop: serve per studiare un inserto alternativo per PCB più piccole. Anche qui la cornice esterna resta identica; cambia solo il supporto interno.',dims:'~ 174 × 173 mm',size:[174,173],carrier:[80,280,280],color:'#26573e',accent:'#8aa89d',colorName:'verde salvia',badge:'BOZZA FUTURA',fit:'CORNICE STANDARD + INSERTO mini',printed:'Cornice standard + staffa mini desktop',certainty:'Profilo ispirato alla famiglia Q556: quote e fori ancora indicative.',arch:'Mini desktop',details:['layout compatto','RAM / socket da verificare'],storage:'eventuale M.2 / SATA',memory:'layout compatto',io:'I/O su più bordi'},
  hp:{id:'hp',node:'n3',name:'n3 · HP 250 G4',desc:'Nodo n3/Harbor: scheda notebook HP 250 G4 con Celeron N3050, 4 GiB RAM e SSD da 120 GB. La cornice resta quella modulare comune, mentre il supporto interno viene sagomato sulla board a L e sull’hardware leggero del portatile.',dims:'~ 248 × 151 mm',size:[248,151],carrier:[80,280,280],color:'#294e7b',accent:'#4d86d8',colorName:'blu harbor',badge:'DATI NODO REALI PARZIALI',fit:'CORNICE STANDARD + INSERTO n3',printed:'Cornice standard + supporto sagomato HP 250 G4',certainty:'Famiglia macchina, CPU, RAM e SSD noti; outline PCB, fori e posizione esatta delle porte restano da misurare.',arch:'Laptop entry-level',details:['Celeron N3050','4 GiB RAM'],storage:'SSD 120',memory:'RAM laptop / SO-DIMM da confermare',io:'Porte laptop sul bordo + storage 2,5"'},
  lap:{id:'lap',node:'n2',name:'n2 · laptop i5-5200U',desc:'Nodo n2 di classe laptop/server: CPU mobile i5-5200U, circa 12 GiB RAM complessivi, HDD interno da 500 GB e due dischi USB esterni da 8 TB e 4 TB. Il telaio esterno resta standard; cambia l’inserto sagomato con appoggi puntuali, flat e supporto 2,5".',dims:'~ 228 × 176 mm',size:[228,176],carrier:[80,280,280],color:'#254b60',accent:'#57a7c7',colorName:'azzurro petrolio',badge:'DATI NODO PARZIALI',fit:'CORNICE STANDARD + INSERTO n2',printed:'Cornice standard + supporto sagomato n2 + slitta 2,5"',certainty:'CPU, RAM totale e storage del nodo sono noti; impronta PCB, fori e posizione precisa dei connettori restano da rilevare.',arch:'Laptop / mobile board',details:['i5-5200U','~12 GiB RAM totali'],storage:'HDD 500 interno · USB 8 TB + 4 TB esterni',memory:'RAM mobile (ripartizione da verificare)',io:'Porte laptop sul bordo + flat interni'}
 };
-const V_ORDER=['h81','lap','hp','mini','gpu'];
+const V_ORDER=['h81','p556','m93','lap','hp'];
 function pushPolyX(x,points,thick,color,group,name,opa=1){
  const left=points.map(p=>[x,p[0],p[1]]),right=points.map(p=>[x+thick,p[0],p[1]]);
  faces.push({p:left,color,group,name,opa,normal:[-1,0,0]});faces.push({p:right,color,group,name,opa,normal:[1,0,0]});
@@ -351,6 +356,7 @@ function familyBoard(k,x,y0,z0,id){
  let outline=[];
  if(k==='hp')outline=[[0,0],[104,0],[104,28],[120,28],[120,69],[227,69],[248,84],[248,142],[232,151],[176,151],[176,136],[114,136],[114,151],[12,151],[12,130],[0,130]];
  else if(k==='lap')outline=[[0,0],[96,0],[96,17],[133,17],[133,0],[212,0],[228,17],[228,115],[196,115],[196,176],[13,176],[0,158]];
+ else if(k==='m93')outline=[[0,0],[Y,0],[Y,Z-20],[Y-24,Z-20],[Y-24,Z],[26,Z],[26,Z-10],[0,Z-10]];
  else outline=[[0,0],[Y,0],[Y,Z],[0,Z]];
  pushPolyX(bx,outline.map(([y,z])=>[y0+y,z0+z]),2.3,v.color,id,v.name+' · PCB',1);
  const face=bx+3;
@@ -360,28 +366,29 @@ function familyBoard(k,x,y0,z0,id){
  for(let i=0;i<23;i++){const yy=y0+20+(i*37)%(Y-37),zz=z0+14+(i*41)%(Z-30);if((k==='hp'&&yy-y0>105&&zz-z0<75)||(k==='lap'&&yy-y0>98&&yy-y0<132&&zz-z0<25))continue;
   wire([[face,yy,zz],[face,yy+5,zz],[face,yy+5,zz+5]],i%4===0?'#7c9e9c':'#417d84',.62,id)}
  // two main families: desktop LGA vs notebook BGA with heat-pipes
- if(['atx','h81','mini'].includes(k)){
-   const cy=y0+(k==='atx'?155:k==='h81'?100:98),cz=z0+(k==='atx'?158:k==='h81'?135:105),s=k==='mini'?45:53;
+ if(['h81','mini','p556','m93'].includes(k)){
+   const cy=y0+(k==='m93'?122:k==='p556'?122:k==='h81'?100:98),cz=z0+(k==='m93'?137:k==='p556'?144:k==='h81'?135:105),s=k==='mini'?45:53;
    pushBox(face,cy-s/2,cz-s/2,6,s,s,'#8e999b',id,'Socket CPU LGA',.98);
    pushBox(face+6,cy-s*.39,cz-s*.39,11,s*.78,s*.78,'#435966',id,'IHS CPU',1);
    pushBox(face+18,cy-s*.33,cz-s*.33,11,s*.66,s*.66,C.silver,id,'Dissipatore CPU',.99);
    for(let i=0;i<6;i++)pushBox(face+19+i*2,cy-s*.31,cz-s*.31,1,s*.62,s*.62,'#7f9c9c',id,'Lamelle dissipatore',.93);
    fan(face+32,cy,cz,k==='mini'?16:20,id);
-   const nr=k==='atx'?4:2;
+   const nr=k==='m93'?4:2;
    for(let r=0;r<nr;r++){
-     let ry=y0+(k==='mini'?23:21)+r*(k==='atx'?14:17),rz=z0+(k==='mini'?50:95);
+     let ry=y0+(k==='mini'?23:k==='m93'?20:21)+r*(k==='m93'?12:17),rz=z0+(k==='mini'?50:k==='p556'?96:95);
      pushBox(face,ry,rz,7,6,k==='mini'?84:130,k==='h81'?'#dfbd67':'#578779',id,'Modulo DIMM',.97);
      for(let j=0;j<7;j++)pushBox(face+7,ry,rz+8+j*(k==='mini'?10:16),2,6,6,C.chip,id,'Chip RAM',1);
    }
-   let slots=k==='atx'?4:k==='h81'?3:0;
-   for(let r=0;r<slots;r++)pushBox(face,y0+(k==='atx'?104:23),z0+24+r*(k==='atx'?16:14),9,k==='atx'?156:132,7,r===0?'#d6c299':'#27343f',id,'PCIe / espansione',.99);
-   for(let r=0;r<(k==='atx'?6:k==='h81'?4:2);r++)pushBox(face+1,y0+Y-21,z0+27+r*11,8,11,8,'#bd995f',id,'SATA / storage',1);
-   pushBox(face+1,y0+8,z0+Z-69,12,12,48,C.dark,id,'24-pin ATX / alimentazione',.98);
+   let slots=k==='m93'?3:k==='p556'?3:k==='h81'?3:0;
+   for(let r=0;r<slots;r++)pushBox(face,y0+(k==='m93'?82:k==='p556'?90:23),z0+24+r*(k==='m93'?17:14),9,k==='m93'?135:k==='p556'?136:132,7,r===0?'#d6c299':'#27343f',id,'PCIe / espansione',.99);
+   for(let r=0;r<(k==='h81'?4:k==='p556'?3:k==='m93'?3:2);r++)pushBox(face+1,y0+Y-21,z0+27+r*11,8,11,8,'#bd995f',id,'SATA / storage',1);
+   pushBox(face+1,y0+8,z0+Z-69,12,12,48,C.dark,id,k==='m93'?'Alimentazione OEM Lenovo · connettore da verificare':'24-pin ATX / alimentazione da verificare',.98);
    pushBox(face+2,y0+Y-12,z0+Z-102,14,14,81,C.metal,id,'I/O posteriore',.94);
    for(let q=0;q<4;q++)pushBox(face+15,y0+Y-11,z0+Z-95+q*15,8,8,10,q===3?C.green:C.plug,id,'USB / LAN',.98);
    // M.2 common on some compact boards; only a stylized option, not confirmed on Q556 donor
    if(k==='mini'){pushBox(face+2,y0+55,z0+17,5,76,17,'#3a6a5f',id,'Storage M.2 (schematic)',.99);pushBox(face+7,y0+90,z0+18,3,20,14,'#263d3a',id,'Controller SSD',1)}
-   if(k==='atx')for(let j=0;j<3;j++)pushBox(face+1,y0+228+j*15,z0+93,10,10,19,'#3c4e59',id,'PCIe controller / chipset',.95);
+   if(k==='m93')for(let j=0;j<2;j++)pushBox(face+1,y0+160+j*15,z0+87,10,10,17,'#3c4e59',id,'Chipset Q87 / controllo OEM',.95);
+   if(k==='p556')pushBox(face+1,y0+174,z0+82,9,24,23,'#354d54',id,'Chipset Intel H110',.95);
  }else{
    // Low-profile soldered processor and integrated laptop thermal solution
    const cy=y0+(k==='hp'?67:98),cz=z0+(k==='hp'?90:105),fanY=y0+(k==='hp'?194:193),fanZ=z0+(k==='hp'?105:140);
@@ -407,10 +414,10 @@ function familyBoard(k,x,y0,z0,id){
 }
 function variantCarrier(k,x0,y0,z0,explode,group){
  const v=V[k],D=v.carrier[1],HH=v.carrier[2],t=explode/100,sp=t*65;const isLap=k==='hp'||k==='lap';
- const outer=35;const layer=state.mode==='drawer'?state.drawerLayer:'all',printed=layer==='all'||layer==='print',boardVisible=layer==='all'||layer==='board',hardwareVisible=layer==='all'||layer==='hardware';
+ const outer=40;const layer=state.mode==='drawer'?state.drawerLayer:'all',printed=layer==='all'||layer==='print',boardVisible=layer==='all'||layer==='board',hardwareVisible=layer==='all'||layer==='hardware';
  const box=(x,y,z,sx,sy,sz,color,g=group,n='Supporto 3D',opa=1)=>pushBox(x0+x,y0+y,z0+z,sx,sy,sz,color,g,n,opa);
  // four slender corner beams, NOT a solid closed box
- const acc=v.accent|| (k==='atx'?'#ba7a56':isLap?'#658d9d':k==='mini'?'#76af9c':'#d6aa67');
+ const acc=v.accent || (isLap?'#658d9d':k==='mini'?'#76af9c':'#d6aa67');
  if(printed){
  for(const y of [7,D-15]){
   const low=Math.min(148,(HH-30)*.51),top=(HH-30)-low;
@@ -441,6 +448,15 @@ function variantCarrier(k,x0,y0,z0,explode,group){
     box(-18,37,160,14,192,13,'#8b6aaa',group,'Traversa antivibrazione GPU',.97);
     box(-13,40,57,12,24,19,'#c8a8e4',group,'Base connettore riser PCIe (futuro)',1);
     box(-16,226,74,15,27,88,'#b2bac1',group,'Staffa uscite GPU al retro',.98);
+  }else if(k==='p556'){
+    for(const zz of [29,259])box(-27,20,zz,7,244,8,'#83c9a3',group,'Barra fori µATX · passo da misurare',.97);
+    for(const yy of [20,255])for(const zz of [27,257])box(-24,yy,zz,10,8,9,'#c0bc96',group,'Asola distanziale µATX · candidata',1);
+    wire([[x0-36,y0+20,z0+266],[x0+32,y0+20,z0+266]],'#e58e82',2,group,[5,3]);
+    box(-25,D-29,92,8,12,98,'#c5a578',group,'Finestra I/O · spazio critico',.9);
+  }else if(k==='m93'){
+    for(const zz of [40,252])box(-25,27,zz,7,216,9,'#85a6d2',group,'Traversa adattatore OEM Lenovo',.96);
+    for(const yy of [37,106,219])box(-25,yy,54,12,14,13,'#b3bcca',group,'Appoggio specifico OEM · da misurare',1);
+    box(-22,D-29,82,8,15,114,'#a4aab6',group,'Placca I/O Lenovo · da profilare',.95);
   }else{
     for(const yy of [45,90,175])box(-17,yy,61,12,55,12,'#8cb6a4',group,'Adattatore mini desktop da personalizzare',.98);
     box(-17,58,121,8,170,10,'#7fbaa5',group,'Traversa compatta mini-ITX / Q556',.96);
@@ -467,19 +483,19 @@ function variantCarrier(k,x0,y0,z0,explode,group){
  }
  // clamp guides visible in printed modes only
  if(state.drawerSeat&&printed){for(const x of [-outer-6,outer-3])box(x,-5,-9,10,D+10,12,C.frame,group,'Sede di appoggio fissa',.85)}
- const padY = k==='gpu'?39:k==='h81'?38:k==='mini'?42:isLap?16:28;
- const padZ = k==='gpu'?68:k==='h81'?30:k==='mini'?60:k==='hp'?57:47;
- if(boardVisible)familyBoard(k,x0+5+sp*.6,y0+padY,z0+padZ,group);
+ const padY = k==='gpu'?39:k==='h81'?38:k==='mini'?42:k==='p556'?16:k==='m93'?27:isLap?16:28;
+ const padZ = k==='gpu'?68:k==='h81'?30:k==='mini'?60:k==='p556'?14:k==='m93'?32:k==='hp'?57:47;
+ if(boardVisible)familyBoard(k,x0-23+sp*.6,y0+padY,z0+padZ,group);
  if(t>0&&printed){ // ghost indicating extraction of printed parts
   wire([[x0-26,y0+D/2,z0+HH-20],[x0-26,y0+D/2,z0+HH-20+sp]],C.accent,1.2,group,[4,5]);
  }
- if(state.mode!=='tower'&&(printed||boardVisible))text3([x0,y0+D/2,z0+HH+44+sp*.5],v.name,k==='atx'?'#eda894':C.accent,11,group);
+ if(state.mode!=='tower'&&(printed||boardVisible))text3([x0,y0+D/2,z0+HH+44+sp*.5],v.name,v.accent||C.accent,11,group);
 }
 function makeCompare(){faces=[];lines=[];labels=[];const positions=[560,280,0,-280,-560];
  for(let i=0;i<V_ORDER.length;i++){const k=V_ORDER[i],p=V[k];variantCarrier(k,positions[i],12,0,0,'V_'+k);text3([positions[i],150,-32],(i+1)+'  '+p.dims,C.metal,10,'V_'+k);}
  for(let x=-685;x<685;x+=100)wire([[x,-45,-36],[x,380,-36]],'#234451',.7,'GRID',[],.65);
  for(let y=-40;y<380;y+=100)wire([[-680,y,-36],[680,y,-36]],'#234451',.7,'GRID',[],.65);
- $('dimw').textContent='5 profili';$('width-label').textContent='stessa cornice esterna, inserti diversi';$('depth-value').textContent='80 mm';$('height-value').textContent='280 mm + maniglia';$('pitch-value').textContent='96 mm per tutti';$('height-name').textContent='Cornice standard';$('pitch-name').textContent='Interfaccia torre';$('variant-pill').textContent='NODI REALI + GPU FUTURA';return 1460;
+ $('dimw').textContent='5 PCB';$('width-label').textContent='stessa cornice esterna, inserti diversi';$('depth-value').textContent='80 mm';$('height-value').textContent='280 mm + maniglia';$('pitch-value').textContent='96 mm per tutti';$('height-name').textContent='Cornice standard';$('pitch-name').textContent='Interfaccia torre';$('variant-pill').textContent='3 NODI NOTI + 2 FAMIGLIE CANDIDATE';return 1460;
 }
 function makeAltDrawer(){faces=[];lines=[];labels=[];const k=state.variant;variantCarrier(k,0,0,0,state.drawerExplode,'BOARD');const v=V[k];
  const D=v.carrier[1],HH=v.carrier[2];
@@ -488,10 +504,10 @@ function makeAltDrawer(){faces=[];lines=[];labels=[];const k=state.variant;varia
  text3([30,D+10,HH+35],v.badge,v.id==='gpu'?'#bc96dd':C.accent,11,'BOARD');
  $('dimw').textContent=v.carrier.join(' × ')+' mm';$('width-label').textContent='cornice esterna comune · quote non esecutive';$('depth-value').textContent=D+' mm';$('height-value').textContent=HH+' mm + maniglia';$('pitch-value').textContent='96 mm (interfaccia comune)';$('height-name').textContent='Altezza cornice';$('pitch-name').textContent='Passo in torre';$('variant-pill').textContent=(v.node+' · '+v.name).toUpperCase();return 480;
 }
-function moduleV7(i){const map=['h81','lap','hp','mini','mini','mini','mini'];const k=map[i],id='P'+(i+1),cx=178+(i+.5)*96,zlift=state.explode*(i%2?1.3:1.65)+(state.lifted===id?155:0);
+function moduleV7(i){const map=['h81','lap','hp','mini','p556','m93','mini'];const k=map[i],id='P'+(i+1),cx=178+(i+.5)*96,zlift=state.explode*(i%2?1.3:1.65)+(state.lifted===id?155:0);
  // receiver grooves are fixed in the chassis, not telescopic drawer slides
  pushBox(cx-41,54,43,10,267,11,C.frame,id,'Scanalatura di posa',.92);pushBox(cx+31,54,43,10,267,11,C.frame,id,'Scanalatura di posa',.92);
- // all non-ATX variants occupy the same external envelope for swappability
+ // All variants occupy the SAME external envelope; µATX max remains a fit study
  variantCarrier(k,cx,76,72+zlift,0,id);
   // Sede I/O che resta visibile sul retro; i laptop non hanno la mascherina ATX.
   if(zlift<70){
@@ -545,10 +561,10 @@ function updateBoardSketch(v){
  const svg=document.querySelector('.diagram svg');if(!svg)return;
  const poly=v.id==='gpu'?'53,50 223,50 223,109 53,109':v.id==='hp'?'50,24 123,24 123,43 143,43 143,70 220,70 225,128 171,128 171,118 70,118 50,110':
   v.id==='lap'?'48,24 119,24 119,40 143,40 143,24 215,24 225,40 225,100 194,100 194,129 60,129 48,114':
-  v.id==='mini'?'72,30 192,30 192,130 72,130':v.id==='atx'?'60,16 205,16 205,145 60,145':'70,20 187,20 187,141 70,141';
- const lp=v.id==='hp'||v.id==='lap',mini=v.id==='mini',gpu=v.id==='gpu';
+  v.id==='mini'?'72,30 192,30 192,130 72,130':v.id==='p556'?'47,17 210,17 210,142 47,142':v.id==='m93'?'60,20 206,20 206,119 184,119 184,142 60,142':'70,20 187,20 187,141 70,141';
+ const lp=v.id==='hp'||v.id==='lap',mini=v.id==='mini',gpu=v.id==='gpu',desktopOEM=['p556','m93'].includes(v.id);
  const cpu=lp?[128,81]:mini?[139,72]:[130,70];
- const mem=gpu?`<rect x="56" y="105" width="120" height="6" fill="#d8be7d"/>`:lp?`<rect x="75" y="103" width="53" height="10" rx="2" fill="#608b79" stroke="#b5d5c6"/>`:
+ const mem=gpu?`<rect x="56" y="105" width="120" height="6" fill="#d8be7d"/>`:v.id==='m93'?`<rect x="160" y="50" width="6" height="62" fill="#6fbd9a"/><rect x="170" y="50" width="6" height="62" fill="#6fbd9a"/><rect x="180" y="50" width="6" height="62" fill="#6fbd9a"/><rect x="190" y="50" width="6" height="62" fill="#6fbd9a"/>`:lp?`<rect x="75" y="103" width="53" height="10" rx="2" fill="#608b79" stroke="#b5d5c6"/>`:
   `<rect x="170" y="50" width="7" height="62" fill="#6fbd9a"/><rect x="182" y="50" width="7" height="62" fill="#6fbd9a"/>`;
  const io=gpu?`<rect x="214" y="55" width="14" height="46" fill="#adb7c6"/>`:lp?`<rect x="209" y="85" width="23" height="13" rx="2" fill="#a6bfd0"/><rect x="209" y="104" width="20" height="10" rx="2" fill="#7dabc7"/>`:
   `<rect x="47" y="34" width="22" height="55" rx="2" fill="#a9bcc3"/>`;
@@ -582,7 +598,7 @@ function select(id,openPanel=true){if(openPanel)$('detail-panel').hidden=false;i
   $('mb-specs').innerHTML=`<li><span>PCB rappresentato</span><span>ASUS H81M-E · 175 × 226 mm</span></li><li><span>CPU e RAM</span><span>con dissipatore e DIMM</span></li><li><span>Cablaggio</span><span>ATX / SATA / I/O sul retro</span></li><li><span>Posizione fori</span><span>da verificare sul donatore</span></li>`;
   document.querySelectorAll('[data-part]').forEach(el=>el.classList.toggle('active',el.dataset.part===id));
  }else{
-  if(/^P\d$/.test(id)){const i=Number(id.slice(1))-1,v=V[['h81','lap','hp','mini','mini','mini','mini'][i]];t=`${id} · ${i<3?v.name:'Nodo futuro · hardware da identificare'}`;d=(i<3?v.desc:'Campata PC predisposta con carrier identico agli altri, ma la motherboard qui rappresentata è un mockup da futuro donor.')+' Il supporto interno è un pezzo diverso dalla cornice standard.';tt=['cornice 80×280×280','inserto specifico','I/O sul retro'];if(i<3){$('drawer-specs').innerHTML=`<li><span>Parte comune</span><span>cornice 80 × 280 × 280 mm</span></li><li><span>Inserto</span><span>${v.printed}</span></li><li><span>Colore</span><span>${v.colorName}</span></li>`;$('mb-specs').innerHTML=`<li><span>PCB</span><span>${v.dims} (${v.certainty})</span></li><li><span>CPU / RAM</span><span>${v.details.join(' · ')}</span></li><li><span>Storage nodo</span><span>${v.storage}</span></li>`}}
+  if(/^P\d$/.test(id)){const i=Number(id.slice(1))-1,v=V[['h81','lap','hp','mini','p556','m93','mini'][i]];t=`${id} · ${i<3?v.name:(i===4||i===5?v.name:'Nodo futuro · hardware da identificare')}`;d=(i<3?v.desc:(i===4||i===5?v.desc:'Campata PC predisposta con carrier identico agli altri, ma la motherboard qui rappresentata è un mockup da futuro donor, non acquisito.'))+' Il supporto interno è un pezzo diverso dalla cornice standard.';tt=['cornice 80×280×280','inserto specifico','I/O sul retro'];if(i<3||i===4||i===5){$('drawer-specs').innerHTML=`<li><span>Parte comune</span><span>cornice 80 × 280 × 280 mm</span></li><li><span>Inserto</span><span>${v.printed}</span></li><li><span>Colore</span><span>${v.colorName}</span></li>`;$('mb-specs').innerHTML=`<li><span>PCB</span><span>${v.dims} (${v.certainty})</span></li><li><span>CPU / RAM</span><span>${v.details.join(' · ')}</span></li><li><span>Storage nodo</span><span>${v.storage}</span></li>`}}
   else if(/^S\d$/.test(id)){const gpu=id==='S8';t=gpu?'S8 · Riserva GPU / telefoni':'S9 · Riserva universale';d=gpu?'La guida è VUOTA. Inserto compatto GPU a prova solo illustrativa: possibile GTX 1050 Ti 75 W senza 6-pin, riser PCIe e alimentatore da verificare. Nessuna GPU installata. Anche questa sede può ospitare telefoni o altre funzioni.':'La seconda sede è VUOTA. Stesso identico innesto, compatibile con un diverso inserto, anche per GPU / telefoni / espansione.';tt=['cornice universale','riserva vuota','GPU futura'];if(gpu){$('drawer-specs').innerHTML=`<li><span>Guide</span><span>identiche P1–P9</span></li><li><span>Opzione</span><span>GPU / telefono / espansione</span></li><li><span>GPU installata</span><span>NO</span></li>`;$('mb-specs').innerHTML=`<li><span>GPU candidata</span><span>GTX 1050 Ti senza 6-pin</span></li><li><span>Alimentazione</span><span>75 W / PSU da verificare</span></li><li><span>Collegamento</span><span>riser PCIe da validare</span></li>`;}}
   else if(id==='STORAGE'){t='Banchi HDD laterali';d='Le zone dischi sono separate dalle schede madri: così si manutengono e si ampliano senza toccare il blocco compute.';tt=['3,5" / 2,5"','accesso laterale','modulare']}
   else if(id==='POWER'){t='Servizi elettrici e I/O';d='Canalina posteriore, alimentatori commerciali e retro servizi continuo. Da progettare con componenti certificati e protezioni adeguate.';tt=['retro','cavi disconnettibili','non esecutivo']}
@@ -599,7 +615,7 @@ function updateSceneMode(){
  $('drawer-tools').style.display=drawer?'block':'none';$('tower-tools').style.display=tower?'block':'none';$('tower-extraction').style.display=tower?'block':'none';$('tower-focus').style.display=tower?'block':'none';
  $('part-inventory').style.display='none';
  $('scene-title').textContent=tower?'TORRE H-9 • ORIZZONTALE COMPATTA':drawer?`CASSETTO ${V[state.variant].name.toUpperCase()} • DETTAGLIO`: 'CORNICE UNIVERSALE • INSERTI DIVERSI';
- $('scene-subtitle').textContent=tower?'7 sedi PC · 2 guide vuote polivalenti · banchi HDD · I/O sul retro':drawer?'Cornice standard + inserto dedicato · quote indicative':'n1/n2/n3 reali · donor futuri · GPU solo come progetto';
+ $('scene-subtitle').textContent=tower?'7 sedi PC · 2 riserve vuote · dischi laterali · micro-ATX/OEM':drawer?'Cornice standard + inserto dedicato · quote indicative':'n1 reale · Fujitsu e Lenovo candidati · n2/n3 laptop · GPU separata';
  document.querySelectorAll('[data-mode]').forEach(el=>el.classList.toggle('active',el.dataset.mode===state.mode));
  state.zoom=1;state.yaw=drawer?1.93:comparison?2.53:2.36;state.pitch=drawer?.46:comparison?.32:.52;
  select(tower?'P1':state.variant,false);$('detail-panel').hidden=true;
