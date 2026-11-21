@@ -104,3 +104,8 @@ Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.i
 **UI**: 12 scene (inclusa spalletta esplosa e Torre autonoma), nuove schede tecniche cliccabili per ADAPTER, STANDPAD, LIP, OUTLETAC, OUTLETLAN, ACDUCT, NETDUCT, ACFLEX, NETPATCH. Aggiunto selettore alfabetico nella barra laterale per accedere anche ai componenti nascosti. Test Chromium/Playwright desktop e mobile: zero errori JS in 12 scene; test selezione automatizzato su gruppi di mobili, moduli, adattatore, prese e canalette. Quote in vista stanza spente per default per ridurre affollamento, riattivabili dal menu.
 
 **Nessuna prova fisica** di carico, rigidità, torsione, ribaltamento o isolamento elettrico è stata eseguita; il modello resta concettuale e NON è un CAD pronto per fabbricazione. Nessuna fotografia della casa caricata su GitHub.
+
+## v1.7.1 — verso corretto e subwoofer (21 novembre 2026)
+- **Vista ambientale e Torre sul mobile:** identica Torre H-9, ruotata affinché la faccia posteriore I/O sia rivolta verso la parete, non verso il centro della stanza; rimane il fronte accessibile dalla stanza. Trasformazione della mesh usata solo nel posizionamento ambientale; nessuna modifica alla carpenteria autonoma.
+- **Subwoofer** stimato 260×180×360 mm collocato **sopra** la cassettiera autonoma (top z=540 mm). Verificare appoggio, stabilità, eventuali vibrazioni, portata e cablaggi prima di eseguire la disposizione.
+- Nessuna modifica a UPS, modularità H-9, piastre adattatrici, spalletta a U o canalette.
