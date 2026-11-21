@@ -3,936 +3,400 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-7 • V2.1 · Ventilazione modulare</title>
+<title>TORRE H-7 R-1 · CANDIDATO CONDIZIONALE · anteprima 3D offline</title>
 <style>
-:root{color-scheme:dark;--bg:#0a121b;--panel:#0d1c27;--panel2:#132733;--line:#2c4451;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--blue:#56a4e5;--orange:#f5aa62;--red:#e78b86}
-*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
-.shell{height:100vh;min-height:610px;display:grid;grid-template-rows:76px minmax(0,1fr) 56px;background:radial-gradient(ellipse at 55% 45%,#16303b 0%,#0b1520 54%,#091019 100%)}
-header{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:17px 26px;border-bottom:1px solid #2d45505b;background:linear-gradient(90deg,#0e202b,#0a141e);z-index:1}
-.brand{display:flex;gap:15px;align-items:center}.logo{height:40px;width:40px;display:grid;place-items:center;background:#123b43;border:1px solid #368b87;border-radius:11px;font-size:23px;color:#9ce6d8}.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);font-weight:800}.heading{font-size:21px;line-height:1.2;font-weight:750;letter-spacing:-.04em;margin-top:2px}.heading span{color:#acc5ca;font-weight:400}.status{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.pill{border:1px solid #38535a;color:#a5bec4;background:#1b303a;padding:7px 11px;border-radius:100px;font-size:11px;white-space:nowrap}.pill.accent{border-color:#35786f;color:#98e8d5;background:#173631}
-.layout{display:grid;grid-template-columns:225px minmax(500px,1fr);min-height:0;height:100%;overflow:hidden;position:relative}
-aside{z-index:2;background:#0d1b25e6;padding:22px 19px;overflow:auto;border-right:1px solid #30475366}
-.right{position:absolute;right:20px;top:20px;width:285px;max-height:calc(100% - 45px);overflow:auto;z-index:8;border:1px solid #4b7781;border-radius:14px;background:#0d202cf6;box-shadow:0 12px 42px #0008;backdrop-filter:blur(14px)}[hidden]{display:none!important}.close{float:right;border:1px solid #49626b;border-radius:7px;background:#173440;color:#e2f4f2;padding:4px 8px}.selected-note{font-size:10px;color:#80b6b5;letter-spacing:.1em;text-transform:uppercase}.scene-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.scene-btn{font-size:11px}.scene-btn.active{border-color:#e1ae69;background:#4d3d2b;color:#ffe2aa}.legend-mini{font-size:10px;color:#96abb5;line-height:1.8}
-.label{font-size:10px;color:#80abb4;letter-spacing:.17em;text-transform:uppercase;font-weight:800;margin-bottom:12px}.section{margin-bottom:25px}.section-title{font-size:13px;font-weight:750;margin:0 0 10px}.help{font-size:11px;line-height:1.65;color:var(--muted)}
-.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.button{border:1px solid #33505a;background:#142b36;color:#bad4d8;border-radius:9px;padding:10px 7px;font-size:11px;font-weight:700;transition:.15s}.button:hover{background:#214451;color:#fff}.button:disabled{opacity:.42;cursor:not-allowed}.button.active{border-color:#5bbdaa;background:#16433f;color:#d5fff5}.button.wide{grid-column:1 / -1}.button.accent{border-color:#b7904c;background:#4e3826;color:#ffe7bc}
-.row-control{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;gap:9px;font-size:11px;color:#d4e6e8}.switch{height:21px;width:37px;border:1px solid #49626b;border-radius:100px;background:#1b333e;position:relative;flex:none;transition:.15s}.switch:before{content:"";position:absolute;top:3px;left:4px;width:13px;height:13px;border-radius:100%;background:#86a0a7;transition:.15s}.switch.on{border-color:#40b9a0;background:#1e6657}.switch.on:before{left:18px;background:#d3fff3}.input-row{display:flex;justify-content:space-between;font-size:11px;color:#c0d7db;margin:0 0 10px}input[type=range]{accent-color:#62cdbc;width:100%;height:4px;cursor:pointer}.sep{height:1px;background:#27434b;margin:18px 0}
-.viewport{position:relative;min-width:0;min-height:0;overflow:hidden;touch-action:none;cursor:grab}.viewport.dragging{cursor:grabbing}canvas{width:100%;height:100%;display:block;touch-action:none}.viewport:after{content:"";pointer-events:none;position:absolute;inset:24px;border:1px solid #35515a35;border-radius:14px}
-.overlay-title{position:absolute;top:25px;left:27px;pointer-events:none}.overlay-title strong{font-size:17px;display:block;letter-spacing:.015em}.overlay-title small{display:block;margin-top:5px;color:#81aab4;font-size:11px;letter-spacing:.04em}
-.hint{position:absolute;bottom:24px;left:27px;display:flex;align-items:center;gap:13px;color:#9ab5bd;font-size:11px;pointer-events:none}.hint span{background:#1c323cb2;border:1px solid #35545b;border-radius:6px;padding:6px 9px}
-.viewmark{position:absolute;bottom:25px;right:25px;color:#77969e;font-size:10px;letter-spacing:.11em;text-align:right;pointer-events:none;line-height:1.9}
-.tooltip{position:absolute;z-index:5;pointer-events:none;max-width:260px;box-shadow:0 8px 24px #0008;padding:8px 10px;background:#062329ed;color:#ddfff4;border:1px solid #4d9d92;border-radius:8px;font-size:11px;line-height:1.4;opacity:0;transition:opacity .13s}
-.num{font-variant-numeric:tabular-nums}.big{font-size:29px;font-weight:750;letter-spacing:-.05em;line-height:1.2;color:#e9f7f4}.small-note{font-size:10px;color:#7897a1;line-height:1.55;margin:8px 0 0}.stat{padding:12px 0;border-bottom:1px solid #203d45}.stat .value{font-size:15px;font-weight:750;color:#d8f3ed;margin-top:5px}.stat .name{font-size:10px;color:#82a8b0;letter-spacing:.09em;text-transform:uppercase}
-.legend{display:grid;grid-template-columns:12px 1fr;gap:10px 8px;align-items:center;font-size:11px;color:#bed2d6}.sw{height:9px;width:9px;border-radius:2px}.detail{border:1px solid #34545b;background:linear-gradient(145deg,#14313c,#10222d);border-radius:13px;padding:13px;margin:10px 0}.detail h3{font-size:13px;margin:0 0 8px}.detail p{font-size:11px;color:#9dbec4;line-height:1.6;margin:0 0 12px}.badges{display:flex;gap:5px;flex-wrap:wrap}.tiny{font-size:10px;padding:4px 7px;border-radius:6px;background:#29464d;color:#b9e7df}
-footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 26px;background:#0b1820;border-top:1px solid #2d455077;font-size:11px;color:#86a4ac}.footer-left{display:flex;align-items:center;gap:8px}.dot{width:6px;height:6px;background:#75d1b1;border-radius:50%}.warning{color:#d6b783}.kbd{border:1px solid #36515b;padding:3px 5px;border-radius:4px;color:#b0cbd0}
-@media(max-width:1150px){.layout{grid-template-columns:207px minmax(350px,1fr)}aside{padding:17px 13px}.heading{font-size:18px}.pill:last-child{display:none}}
-@media(max-width:850px){.shell{height:auto;min-height:100vh;grid-template-rows:auto auto auto}.layout{display:flex;flex-direction:column;height:auto;overflow:visible}.viewport{height:min(65vh,570px);min-height:420px;order:0}.left{order:1;border-right:0;border-top:1px solid #304753;display:grid;grid-template-columns:1fr 1fr;gap:20px}.right{position:absolute;right:8px;top:8px;width:min(310px,calc(100% - 18px));max-height:70%;display:block}header{padding:16px}.status{display:none}footer{padding:14px;flex-wrap:wrap}.overlay-title{top:20px;left:18px}.hint{left:16px;bottom:14px}}
-@media(max-width:540px){.left,.right{display:block}.viewport{min-height:360px;height:53vh}.heading{font-size:15px}.overlay-title strong{font-size:14px}.hint span:last-child{display:none}}
-.power-meter{height:7px;background:#233a45;border-radius:10px;overflow:hidden;margin:10px 0}.power-meter-fill{height:100%;background:#6ed2bb;transition:width .2s}.power-meter-fill.over{background:#f5aa62}a{overflow-wrap:anywhere}
+:root{color-scheme:dark;--bg:#08121a;--panel:#0c1d27;--panel2:#112833;--line:#28434e;--text:#e2f0ef;--muted:#8aa7b0;--aqua:#66d3c1;--yellow:#ffc969;--blue:#6aa9d8;--orange:#e2a662;--red:#e0847f;--green:#78c79a}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}button{cursor:pointer}
+.shell{height:100vh;min-height:620px;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+.banner{background:repeating-linear-gradient(45deg,#4a2b12,#4a2b12 14px,#553315 14px,#553315 28px);color:#ffe6b8;text-align:center;font-weight:750;letter-spacing:.06em;padding:8px 12px;font-size:12px;border-bottom:1px solid #a9772e}
+header{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:13px 22px;border-bottom:1px solid #28434e;background:linear-gradient(90deg,#0d202a,#09151d)}
+.brand{display:flex;gap:12px;align-items:center}.logo{height:38px;width:38px;display:grid;place-items:center;background:#10343c;border:1px solid #2f7c76;border-radius:10px;font-size:21px;color:#9ce6d8}
+.eyebrow{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--aqua);font-weight:800}.heading{font-size:19px;font-weight:750;letter-spacing:-.03em;margin-top:2px}.heading span{color:#a9c2c7;font-weight:400}
+.status{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pill{border:1px solid #35505b;color:#a5bec4;background:#162b35;padding:6px 10px;border-radius:100px;font-size:11px;white-space:nowrap}.pill.accent{border-color:#35786f;color:#98e8d5;background:#14302c}.pill.warn{border-color:#9a6b2b;color:#ffd79a;background:#3a2a17}
+.layout{display:grid;grid-template-columns:236px minmax(420px,1fr);min-height:0;height:100%;position:relative}
+aside{background:#0b1a23;padding:16px 15px;overflow:auto;border-right:1px solid #28434e}
+.label{font-size:9px;color:#79a7af;letter-spacing:.18em;text-transform:uppercase;font-weight:800;margin-bottom:9px}.section{margin-bottom:22px}.section-title{font-size:12px;font-weight:750;margin:0 0 8px}
+.scene-grid{display:grid;grid-template-columns:1fr;gap:6px}.button{border:1px solid #2c4a55;background:#122a35;color:#bcd4d8;border-radius:8px;padding:8px 9px;font-size:11px;font-weight:650;text-align:left;transition:.14s}.button:hover{background:#1d3f4b;color:#fff}.button.active{border-color:#dda85c;background:#42321f;color:#ffe0aa}.button.accent{border-color:#b7904c;background:#3d2c1c;color:#ffe1ad}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.input-row{display:flex;justify-content:space-between;font-size:11px;color:#c3d8db;margin:0 0 7px}input[type=range]{accent-color:#62cdbc;width:100%;height:4px;cursor:pointer}
+select{width:100%;background:#122a35;color:#e3f1f1;border:1px solid #34545b;border-radius:8px;padding:8px;font-size:12px}
+.help{font-size:10.5px;line-height:1.6;color:var(--muted);margin:9px 0 0}.help b{color:#bcd7d9}.sep{height:1px;background:#213c45;margin:16px 0}
+.row-control{display:flex;align-items:center;justify-content:space-between;margin:0 0 8px;gap:8px;font-size:11px;color:#cfe0e2}.switch{height:20px;width:36px;border:1px solid #45606a;border-radius:100px;background:#1a313c;position:relative;flex:none;transition:.14s}.switch:before{content:"";position:absolute;top:3px;left:4px;width:12px;height:12px;border-radius:100%;background:#859da5;transition:.14s}.switch.on{border-color:#3bb79f;background:#1b5e50}.switch.on:before{left:17px;background:#d5fff3}
+.viewport{position:relative;min-width:0;min-height:0;overflow:hidden;touch-action:none;cursor:grab;background:radial-gradient(ellipse at 52% 42%,#14303b 0%,#0a1822 60%,#071017 100%)}.viewport.dragging{cursor:grabbing}canvas{width:100%;height:100%;display:block;touch-action:none}
+.overlay-title{position:absolute;top:20px;left:22px;pointer-events:none}.overlay-title strong{font-size:16px;display:block}.overlay-title small{display:block;margin-top:4px;color:#84afb8;font-size:10.5px;max-width:480px;line-height:1.45}
+.hint{position:absolute;bottom:18px;left:22px;display:flex;gap:9px;color:#9ab5bd;font-size:10px;pointer-events:none;flex-wrap:wrap}.hint span{background:#173039b8;border:1px solid #32515a;border-radius:6px;padding:5px 8px}
+.viewmark{position:absolute;bottom:18px;right:20px;color:#6f9099;font-size:9px;letter-spacing:.1em;text-align:right;line-height:1.8;pointer-events:none}
+.inspector{position:absolute;right:16px;top:16px;width:280px;max-height:calc(100% - 32px);overflow:auto;z-index:5;border:1px solid #44727b;border-radius:13px;background:#0c202cf2;box-shadow:0 12px 40px #0009}[hidden]{display:none!important}
+.close{float:right;border:1px solid #49626b;border-radius:6px;background:#173440;color:#e2f4f2;padding:3px 7px;font-size:11px}.selected-note{font-size:9px;color:#80b6b5;letter-spacing:.12em;text-transform:uppercase}.detail h3{font-size:13px;margin:8px 0}.detail p{font-size:11px;color:#9dbec4;line-height:1.6;margin:0 0 10px}
+.badge{font-size:9px;padding:3px 7px;border-radius:6px;display:inline-block;font-weight:700;letter-spacing:.04em}.b-official{background:#17463f;color:#8ee4c9;border:1px solid #2e8f78}.b-design{background:#173a4e;color:#a8d4f0;border:1px solid #316b8f}.b-photo{background:#3d3220;color:#f0cf97;border:1px solid #8a6d35}.b-unmeasured{background:#43272a;color:#f0aba6;border:1px solid #8a4744}
+.legend-mini{font-size:9.5px;color:#97afb5;line-height:1.9}.k{display:inline-block;height:9px;width:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+footer{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 20px;background:#0a171f;border-top:1px solid #28434e;font-size:10.5px;color:#89a5ad;flex-wrap:wrap}.warning{color:#d6b783}.kbd{border:1px solid #35505b;padding:2px 5px;border-radius:4px;color:#b0cbd0}
+@media(max-width:900px){.layout{grid-template-columns:1fr;height:auto}.viewport{height:min(62vh,560px);min-height:380px;order:0}aside{order:1;border-right:0;border-top:1px solid #28434e}.inspector{position:relative;right:auto;top:auto;width:auto;margin:12px;max-height:none}.status .pill:not(.accent){display:none}}
 </style>
 </head>
 <body>
+<div class="review-ribbon" style="padding:8px 16px;background:#302719;color:#ffe3ac;text-align:center;font:600 12px/1.5 system-ui">H-7 R-1 · 21 novembre 2026 · candidato di progetto, non esecutivo · <a href="v2.1.html" style="color:#ffe3ac">Archivio v2.1 (viste storiche)</a> · <a href="r1.html" style="color:#ffe3ac">Scheda tecnica R-1</a></div>
 <div class="shell">
-<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-7 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC · NESSUN VANO EXTRA</span><span class="pill">V2.1 · 21 NOV 2026</span></div></header>
+<div class="banner" id="banner">CANDIDATO CONDIZIONALE — NON STAMPARE / NON ORDINARE — G0–G4 APERTI</div>
+<header>
+  <div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-7 R-1 <span>— studio 3D offline · 7 cartucce</span></div></div></div>
+  <div class="status"><span class="pill accent">● ANTEPRIMA NON VINCOLANTE</span><span class="pill">R-1 · 21 NOV 2026</span><span class="pill warn">G0–G4 APERTI</span></div>
+</header>
 <div class="layout">
-<aside class="left">
-  <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per ingrandire · clicca un componente per ispezionarlo.</p></div>
-  <div class="section"><div class="label">02 / Dettagli meccanici</div><div class="scene-grid"><button class="button scene-btn active" data-scene="tower">◈ Torre intera</button><button class="button scene-btn" data-scene="thermal">❄ Ventilazione</button><button class="button scene-btn" data-scene="rear">▤ Retro tecnico</button><button class="button scene-btn" data-scene="module">▥ Modulo isolato</button><button class="button scene-btn" data-scene="supports">⚙ Fissaggio scheda</button><button class="button scene-btn" data-scene="joint">⌑ Incastro</button><button class="button scene-btn" data-scene="guides">⊞ Guide alte</button><button class="button scene-btn" data-scene="ups">▣ UPS laterale</button><button class="button scene-btn" data-scene="room">⌂ Angolo stanza</button><button class="button scene-btn" data-scene="workstation">◎ Bracci a muro</button><button class="button scene-btn" data-scene="cabinet">▣ Torre sul mobile</button><button class="button scene-btn" data-scene="lipdetail">⌑ Spalletta a U</button><button class="button scene-btn" data-scene="standalone">▥ Torre autonoma</button></div><p class="help">ANGOLO STANZA: una sola Torre sopra il mobile bianco, tre monitor a muro, prese LAN/230 V e due canalette. TORRE SUL MOBILE: spalletta a U e adattatore. TORRE AUTONOMA: stesso telaio, senza mobile, con scarpe opzionali antiribaltamento. ARANCIO: cartuccia e adattatore. TURCHESE: guide alte fisse, collegate a traverse perimetrali. VERDE: controventi bassi posteriori. Prese posteriori accessibili; quote di studio in mm.</p></div>
-  <div class="section"><div class="label">03 / Configurazione</div><h3 class="section-title">Posizioni modulari</h3><p class="help"><b>7 vani PC fissi · passo 96 mm.</b> Due banchi dischi laterali conservati. Nessun vano GPU o telefoni. GPU futura su supporto indipendente esterno, collegamento PCIe specifico del nodo da verificare. Nessuna GPU o dock installati.</p><p class="help">Telaio 1028 × 429 × 334 mm; piastra rimovibile 1130 × 450 × 18 mm (studio). Mobile stimato 1500 × 320 × 500 mm. Spazio posteriore nominale ~136 mm tra muro e piastra; nessun carico sulle spallette.</p><div class="row-control"><span>UPS laterale autonomo</span><button class="switch on" id="showUPS" aria-label="Mostra UPS laterale"></button></div><p class="help">L’UPS non occupa un vano PC e <b>non grava sulla stampa</b>: 13,1 kg sul piano di appoggio, aperto davanti e ai lati.</p></div>
-  <div class="section"><div class="label">03B / Termica</div><h3 class="section-title">6 ventole frontali · PWM 140 mm</h3><p class="help">4 compute + 2 HDD, ingresso dal fronte, uscita libera in alto e dietro. P14 PWM PST candidato (140×140×27 mm, 123,76 m³/h nominali, 0,12 A a 12 V). <a href="https://www.arctic.de/en/P14-PWM-PST/ACFAN00125A/" style="color:#90d9ca" target="_blank" rel="noopener noreferrer">Scheda tecnica</a>. Portata reale da misurare.</p><div class="row-control"><span>Ventole installate (concept)</span><button class="switch on" id="cooling" aria-label="Mostra ventole"></button></div><div class="row-control"><span>Percorsi d’aria indicativi</span><button class="switch" id="airflow" aria-label="Mostra flussi aria"></button></div><div class="input-row"><span>Calore ipotetico</span><b id="heat-label">450 W</b></div><input id="heat" type="range" min="100" max="800" step="25" value="450" aria-label="Carico termico ipotetico"><div class="input-row"><span>ΔT aria obiettivo</span><b id="delta-label">8 °C</b></div><input id="delta" type="range" min="4" max="15" step="1" value="8" aria-label="Aumento temperatura aria"><p class="help" id="thermal-result" aria-live="polite"></p><p class="help">Non CFD. La portata nominale in aria libera non certifica il raffreddamento. Alimentazione 12 V separata, griglie su entrambi i lati, cavi bassi e tachimetri indipendenti; dissipatori CPU originali da mantenere.</p></div><div class="section"><div class="label">04 / Smontaggio</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide accent" id="unlock">🔓 Sblocca due fermi / vano</button><button class="button wide" id="extract" disabled>↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div><p class="help" id="lock-status" aria-live="polite">Fermi anteriori e posteriori inseriti; estrazione bloccata (simulazione). Prima dell’estrazione reale scollegare tutti i cavi.</p></div>
-  <div class="section"><div class="label">05 / Dimensionamento elettrico</div><h3 class="section-title">UPS candidato · PowerWalker VI 1500 CSW IEC</h3><p class="help">1.500 VA · 900 W · 99 × 410 × 280 mm · 13,1 kg. 4 prese IEC con batteria + 4 solo sovratensioni. <a href="https://powerwalker.com/product/10121124/" target="_blank" rel="noopener noreferrer" style="color:#90d9ca">Scheda produttore</a>.</p><div class="input-row"><span>Carico ipotetico (non misurato)</span><b id="load-label">450 / 900 W</b></div><input id="load" type="range" min="100" max="900" step="50" value="450" aria-label="Simula carico elettrico UPS"><div class="power-meter"><div class="power-meter-fill" id="load-bar" style="width:50%"></div></div><p class="help" id="load-warning">Da verificare con wattmetro, inclusi spunti all’avvio. Protezione selettiva, non tutti i sette PC.</p></div>
-  <div class="section"><div class="label">06 / Ispezione componenti</div><h3 class="section-title">Seleziona qualsiasi elemento</h3><select id="part-picker" aria-label="Scegli componente del modello" style="width:100%;background:#142b36;color:#e3f1f1;border:1px solid #35545b;border-radius:8px;padding:10px;margin-bottom:6px;font-size:12px"><option value="">Seleziona un componente…</option></select><p class="help">Utile per selezionare anche gli elementi nascosti dietro il telaio o le pareti semitrasparenti. Le descrizioni appaiono soltanto dopo la selezione.</p></div>
-  <div class="section"><div class="label">07 / Strati</div><div class="row-control"><span>Etichetta del selezionato</span><button class="switch on" id="labels" aria-label="Mostra etichette"></button></div><div class="row-control"><span>Vista semitrasparente</span><button class="switch" id="xray" aria-label="Attiva trasparenza"></button></div><div class="row-control"><span>Dischi laterali</span><button class="switch on" id="disks" aria-label="Mostra dischi"></button></div><div class="row-control"><span>Alimentazione e cavi</span><button class="switch on" id="wiring" aria-label="Mostra cavi"></button></div><div class="row-control"><span>Griglia di misura</span><button class="switch on" id="grid" aria-label="Mostra griglia"></button></div><div class="row-control"><span>Quote in millimetri</span><button class="switch on" id="dims" aria-label="Mostra quote in millimetri"></button></div><div class="row-control"><span>Fascia libera delle prese</span><button class="switch on" id="clearance" aria-label="Mostra fascia posteriore di accesso alle prese"></button></div></div>
+<aside>
+  <div class="section"><div class="label">01 / Scene</div><div class="scene-grid" id="scene-grid"></div></div>
+  <div class="section"><div class="label">02 / Estrazione verticale</div><div class="input-row"><span>Sollevamento</span><b id="lift-label" class="num">0 mm</b></div><input id="lift" type="range" min="0" max="100" value="0" aria-label="Sollevamento cartuccia"><div class="input-row" style="margin-top:8px"><span>Modulo</span></div><select id="carrier-pick" aria-label="Scegli la cartuccia"></select><p class="help" id="lift-note">Trascina il cursore in “Esploso / estrazione”: la guida anti-oscillazione è divisa e confinata ai montanti, quindi la corsa in X[6,20] resta libera.</p></div>
+  <div class="section"><div class="label">03 / Strati</div>
+    <div class="row-control"><span>Ventole F1–F6</span><button class="switch on" id="sw-fans" aria-label="Mostra ventole"></button></div>
+    <div class="row-control"><span>Banchi dischi</span><button class="switch on" id="sw-disks" aria-label="Mostra dischi"></button></div>
+    <div class="row-control"><span>Etichette</span><button class="switch on" id="sw-labels" aria-label="Mostra etichette"></button></div>
+    <div class="row-control"><span>Flussi aria (indicativi)</span><button class="switch" id="sw-air" aria-label="Mostra flussi"></button></div>
+    <div class="row-control"><span>Griglia 100 mm</span><button class="switch" id="sw-grid" aria-label="Mostra griglia"></button></div>
+  </div>
+  <div class="section"><div class="label">04 / Ispezione</div><select id="part-pick" aria-label="Scegli componente"><option value="">Seleziona un componente…</option></select><p class="help">Clicca un pezzo nel modello o sceglilo dall'elenco. Ogni scheda riporta una provenienza: ufficiale / studio / foto (non inclusa) / da misurare.</p></div>
+  <div class="section"><div class="label">05 / R-1 · Materiali</div><p class="help"><b>Alluminio 2020 pretagliato</b> per il telaio; <b>multistrato di betulla</b> per la base; <b>PETG</b> solo per interfacce, guide, inserti e campioni. Nessuna produzione in serie prima del rilievo.</p></div><div class="section"><div class="label">05B / Criteri (dopo i gate)</div><p class="help">Budget 25 · robustezza 25 · assemblaggio 20 · manutenzione 15 · raffreddamento 10 · estetica 5.<br>Priorità: n1 60% · interfaccia globale 25% · configurazione futura 15%.<br><b>Valutazione preliminare:</b> preferita struttura ibrida; nessun punteggio sostituisce misure, prove o preventivi.</p></div>
+  <div class="section"><div class="label">06 / Gate</div><div class="btn-grid"><button class="button" data-gate="G0">G0 rilievo</button><button class="button" data-gate="G1">G1 campioni</button><button class="button" data-gate="G2">G2 prototipo</button><button class="button" data-gate="G3">G3 collaudo</button></div><button class="button accent" data-gate="G4" style="width:100%;margin-top:6px">G4 approvazione · APERTO</button><p class="help">Tutti i gate sono APERTI. Nessuna misura fisica, stampa campione, prova di carico, verifica di messa a terra o termica è stata eseguita.</p></div>
 </aside>
-<section class="viewport" id="vp" aria-label="Modello tecnico interattivo della torre orizzontale"><canvas id="c"></canvas><div class="overlay-title"><strong id="scene-caption">TORRE H-7 · vista generale</strong><small id="scene-subtitle">Clicca un pezzo per leggere la scheda tecnica</small></div><div class="hint"><span>↔ Ruota</span><span>⊕ Zoom</span><span>◉ Seleziona / Esc deseleziona</span></div><div class="viewmark">QUOTE DI PROGETTO IN MM<br>NON ANCORA CAD VALIDATO / NON STAMPARE</div><div class="tooltip" id="tooltip"></div></section>
-<aside class="right" id="inspector" hidden aria-live="polite">
-  <div class="section" style="margin-bottom:12px"><button class="close" id="close-inspector" aria-label="Chiudi dettagli">✕</button><div class="selected-note">COMPONENTE SELEZIONATO</div><div class="detail"><h3 id="part-title"></h3><p id="part-desc"></p><div class="badges" id="part-tags"></div></div><div class="small-note" id="part-specific"></div></div>
-  <div class="legend-mini"><span style="color:#73cdb6">■</span> telaio & sede fissa &nbsp; <span style="color:#e2ab65">■</span> cartuccia estraibile &nbsp; <span style="color:#6aa9ca">■</span> I/O &nbsp; <span style="color:#d48580">■</span> elettrico</div>
-</aside>
+<section class="viewport" id="vp" aria-label="Modello tecnico interattivo Torre H-7"><canvas id="c"></canvas>
+  <div class="overlay-title"><strong id="scene-title">TORRE H-7 · assieme</strong><small id="scene-sub">Clicca un componente per la scheda · valori di studio in mm, non misurati</small></div>
+  <div class="hint"><span>↔ trascina: ruota</span><span>⊕ rotella: zoom</span><span>◉ clic: ispeziona</span><span>R: reset</span></div>
+  <div class="viewmark">VALORI DI STUDIO · NON CAD ESECUTIVO<br>NON STAMPARE / NON ORDINARE</div>
+</section>
+<aside class="inspector" id="inspector" hidden aria-live="polite"><button class="close" id="close-insp">✕</button><div class="selected-note">Componente selezionato</div><div class="detail"><h3 id="part-title"></h3><p id="part-desc"></p><div id="part-badge"></div></div><div class="legend-mini" style="margin-top:12px"><span class="k" style="background:#5bb49e"></span>telaio / sedi &nbsp;<span class="k" style="background:#e2a662"></span>cartuccia / insert &nbsp;<span class="k" style="background:#6aa9d8"></span>I/O &nbsp;<span class="k" style="background:#e0847f"></span>elettrico / ventole</div></aside>
 </div>
-<footer><div class="footer-left"><span class="dot"></span><span>Anteprima GitHub Pages · clic per le schede dei componenti</span></div><span class="warning">v2.1 · H-7 / ventilazione da collaudare · UPS candidato, nessun acquisto effettuato · carichi e ingombri dei cavi da verificare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
+<footer><span>● Anteprima illustrativa R-1 · geometria schematica, non CAD esecutivo · quote da rilevare</span><span class="warning">Correzioni C-1 / C-2a / C-3 illustrate; B3a/B3b nel CAD candidato · corridoio retro ~136 mm non verificato · UPS candidato, nessun acquisto</span></footer>
 </div>
 <script>
 (()=>{'use strict';
-const canvas=document.getElementById('c'),vp=document.getElementById('vp'),ctx=canvas.getContext('2d'),tip=document.getElementById('tooltip');
 const $=id=>document.getElementById(id);
-const C={guide:'#81d6d8',guide2:'#2e858f',frame:'#5bb49e',frame2:'#447c77',corner:'#dfa962',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570',ups:'#465665',upsFace:'#627888',upsBackup:'#63c7bb',upsSurge:'#d7a65f'};
-const state={n:7,yaw:2.36,pitch:.52,zoom:1,explode:0,xray:false,labels:true,disks:true,wiring:true,grid:true,dims:true,clearance:true,selected:null,selectedName:'',focusIndex:0,scene:'tower',lifted:null,locked:true,showUPS:true,loadEstimate:450,cooling:true,airflow:false,heat:450,delta:8};
-let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={F1:"Ventola HDD sinistra",F2:"Ventola compute 1",F3:"Ventola compute 2",F4:"Ventola compute 3",F5:"Ventola compute 4",F6:"Ventola HDD destra",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'Mobile bianco',LIP:'Spalletta a U',ADAPTER:'Kit adattatore rimovibile',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
-function refreshPartPicker(){
- const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)))];
- ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
- const signature=state.scene+'|'+ids.join(',');
- const el=$('part-picker');
- if(signature!==partsFingerprint){
-  partsFingerprint=signature;el.replaceChildren();
-  const opt=document.createElement('option');opt.value='';opt.textContent='Seleziona un componente…';el.appendChild(opt);
-  for(const id of ids){const o=document.createElement('option');o.value=id;o.textContent=partDescriptions[id]||(id.startsWith('P')?'Modulo PC '+id:id.startsWith('A')?'Adattatore '+id:id);el.appendChild(o)}
- }
- el.value=state.selected&&ids.includes(state.selected)?state.selected:'';
-}
+const canvas=$('c'),ctx=canvas.getContext('2d'),vp=$('vp');
+const CARRIERS=['P1','P2','P3','P4','P5','P6','P7'];
+const FANS=[[89,133,'F1'],[262,152,'F2'],[430,152,'F3'],[598,152,'F4'],[766,152,'F5'],[939,133,'F6']];
+const BODY={L:1028,D:429,H:334,Z0:569};
+const PLATE={L:1130,D:450,T:18};
+const PITCH=96,END=178,BAND=80;
 
-const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-// Nominal dimensions verified for 10121124; 100 mm rear routing is an ASSUMED design reserve,
-// not a PowerWalker-mandated ventilation clearance. No load is transferred to printed parts.
-const UPS={w:99,d:410,h:280,mass:13.1,W:900,VA:1500,batterySockets:4,surgeOnly:4,sideGap:66,serviceRear:110};
-function rgb(hex){const a=hex.replace('#','');return [parseInt(a.slice(0,2),16),parseInt(a.slice(2,4),16),parseInt(a.slice(4,6),16)]}
-function tint(color,k,alpha=1){const x=rgb(color).map(c=>clamp(Math.round(c*k),0,255));return `rgba(${x[0]},${x[1]},${x[2]},${alpha})`}
-function pushBox(x,y,z,sx,sy,sz,color,group='',name='',opa=1,emphasis=false){
- const p=[[x,y,z],[x+sx,y,z],[x+sx,y+sy,z],[x,y+sy,z],[x,y,z+sz],[x+sx,y,z+sz],[x+sx,y+sy,z+sz],[x,y+sy,z+sz]];
+const C={frame:'#5bb49e',frame2:'#447c77',seat:'#7fc4a8',brace:'#4a9e86',guide:'#e2a662',
+  insert:'#d8904f',pcb:'#2b6670',disk:'#6b8f9c',diskEdge:'#b3c7c8',psu:'#546873',
+  io:'#6aa9d8',cable:'#e0847f',fan:'#8cb9a6',air:'#7fd6c6',plate:'#8a9aa0',
+  ups:'#465665',floor:'#202e35',ghost:'#e0807b',green:'#78c79a'};
+
+// Provenance: official = da specifica scritta; design = valore di studio/candidato;
+// photo = foto NON inclusa (nessuna foto privata); unmeasured = da rilevare (G0).
+const PARTS={
+ FRAME:{t:'Telaio aperto',b:'design',d:'Struttura ibrida proposta: profilati in alluminio 2020 pretagliati, base in multistrato di betulla e interfacce PETG. Sezioni e giunti nell’anteprima sono schematici. Cornice modulare H-7: 1028 × 429 × 334 mm. Sette vani, passo 96 mm, fasce terminali 178 mm per lato (178 + 7×96 + 178 = 1028). Traverse alte e basse, nessun cassetto scorrevole. Vecchi vani extra non presenti.'},
+ GUIDE:{t:'Guida anti-oscillazione (C-1)',b:'design',d:'Correzione C-1: la barra continua X[0,80] Y[121.5,127.5] Z[245,251] è SPLITTA e confinata ai montanti X[0,6] e X[74,80]. Nessun materiale attraversa la corsa dell’insert in X[6,20]: l’estrazione verticale resta possibile. Resistenza dei nuovi fermi NON verificata (G2).'},
+ SEAT:{t:'Doppia sede inferiore',b:'design',d:'Sedi doppie su due lati del vano, dato di appoggio = Z=10 mm (top sede). Le quote 249×239 mm della cornice mobile sono illustrative: le schede donatrici e i dissipatori reali devono essere rilevati prima di congelare l’interfaccia (G0).'},
+ BRACE:{t:'Controvento basso posteriore (C-3)',b:'design',d:'Correzione C-3: spostato da Z[7,13] a Z[4,10], top affiorante con la sede a Z=10. Rimuove la collisione di 72 mm³ con la barra inferiore dell’insert. Funzione di controvento ancora da verificare (G2).'},
+ INSERT:{t:'Insert / adattatore specifico',b:'design',d:'Correzione C-2a: altezza esterna dell’insert ridotta da Z=238 a Z=232 mm. Finestra telaio 251 mm; sede top 10 → guida bottom 245 = 235 mm disponibili, 232 lasciano 3 mm di gioco nominale. Il CAD R-1 include una chiave asimmetrica anti-errato inserimento (B3a); non rappresentata in dettaglio in questa vista. Conflitto irrisolto 251 vs 239 (carrier_z vs pannello_z) richiede rilievo reale (G0).'},
+ BOARD:{t:'Scheda illustrativa 249×239 mm',b:'unmeasured',d:'Ingombro illustrativo della cornice mobile, NON una dichiarazione di compatibilità ATX/microATX. Donori reali, porte, dissipatori e ingombri da misurare; G0 aperto.'},
+ LATCH:{t:'Fermi rimovibili (2 per cartuccia)',b:'design',d:'Due fermi per cartuccia: scollegare TUTTI i cavi prima del sollevamento. Forza di rilascio obiettivo <30 N, NON misurata. Nessun uso di utensili elettrici previsto.'},
+ PLATE:{t:'Piastra rimovibile',b:'design',d:'1130 × 450 × 18 mm, quota superiore 569 mm da terra. Centrata: 185 mm liberi per estremità del mobile stimato, 236 mm per estremità del corpo. Multistrato di betulla candidato, tagliato su misura; appoggi, spessore e portata da verificare. Non stampa 3D portante.'},
+ DISK_L:{t:'Banco dischi sinistro',b:'unmeasured',d:'Quattro sedi illustrative per banco, HDD 3.5" da 178 mm di fascia terminale. Capacità, massa, alimentazione e connessione reali da definire. SSD su supporto rimovibile / insert freddo.'},
+ DISK_R:{t:'Banco dischi destro',b:'unmeasured',d:'Quattro sedi illustrative. Stesse incertezze del banco sinistro: inventario dischi, assorbimento, vibrazioni e accesso da verificare prima di qualsiasi ordine.'},
+ PSU:{t:'Alimentatori commerciali',b:'design',d:'PSU commerciali chiusi su ripiano indipendente ventilato, MAI dentro una cartuccia. Nessuna distribuzione AC artigianale o stampata, nessun alimentatore aperto.'},
+ IO:{t:'Retro I/O verso il muro',b:'design',d:'Prese posteriori rivolte al muro, fronte alla stanza. Corridoio di servizio nominale ~136 mm (NON verificato). Accesso dal retro dimostrato al meglio per P1: P2–P7 NON dimostrati. Porte di disconnessione da portare sul bordo alto/posteriore.'},
+ FANMOUNT:{t:'Supporti ventole rimovibili',b:'design',d:'Sei ventole candidate Arctic P14 PWM PST, 140×140×27 mm, centri (x,z): F1(89,133) F2(262,152) F3(430,152) F4(598,152) F5(766,152) F6(939,133). 4 compute + 2 HDD, ingresso fronte, uscita libera alto/retro. 0,72 A / 8,64 W totali; alimentazione 12 V separata ≥2 A indicativa; tachimetri separati. NON è CFD.'},
+ AIR:{t:'Percorsi aria (desiderati)',b:'design',d:'Frecce indicano solo LA DIREZIONE DESIDERATA, non linee di flusso calcolate. Nessuna curva P-Q di sistema, dissipatori reali o misure di ricircolo. Il calcolatore termico è un bilancio globale, non CFD.'},
+ UPS:{t:'UPS candidato a pavimento',b:'official',d:'PowerWalker VI 1500 CSW IEC — 1500 VA / 900 W, 99 × 410 × 280 mm, 13,1 kg. Quattro IEC C13 con batteria + quattro solo protezione. A terra vicino alle prese, MAI sulla piastra. Nessuna promessa che tutti i sette PC siano a batteria. Nessun acquisto eseguito.'},
+ FOOT:{t:'Piedi / fissaggio antiribaltamento',b:'unmeasured',d:'Dieci piedi (cinque coppie); ultimo montante alto aggiunto a campata 7. Quattro pattini opzionali per installazione autonoma. Ancoraggio antiribaltamento obbligatorio, portata e stabilità da validare sulla struttura reale.'},
+ CABINET:{t:'Mobile bianco (non raffigurato)',b:'photo',d:'Supporto generico, non rilevato. Distanza dal muro, dimensioni utili, appoggi e portata da verificare.'},
+ FLOOR:{t:'Pavimento / piano di appoggio',b:'photo',d:'Riferimento visivo soltanto: quote e ingombri sono valori di studio.'}
+};
+
+const SCENES=[
+ ['assembled','◈ Torre H-7 (assembled)','Torre H-7 · assieme','Sette cartucce P1–P7, telaio aperto, ventole F1–F6, due banchi dischi, UPS a terra.'],
+ ['rear','▤ Retro I/O','Retro I/O verso il muro','Corridoio di servizio nominale ~136 mm (non verificato). Accesso P2–P7 non dimostrato.'],
+ ['vent','❄ Ventilazione','Ventilazione modulare','Sei ventole frontali, ingresso dal fronte e uscita libera in alto/retro. Direzioni desiderate, non CFD.'],
+ ['module','▥ Modulo isolato / insert','Modulo isolato · cornice + insert','Cartuccia singola: cornice universale e adattatore specifico evidenziati.'],
+ ['corrections','⚙ Correzioni C-1/C-2a/C-3','Correzioni geometriche C-1 / C-2a / C-3','Guida splitta ai montanti, insert 232 mm, controvento ribassato. Ipotesi, non misure.'],
+ ['exploded','↑ Esploso / estrazione','Estrazione verticale corretta','Corsa libera in X[6,20]: la guida divisa ai montanti non blocca il sollevamento.'],
+ ['standalone','▣ Autonomo a pavimento','Autonomo a pavimento','Stesso telaio sui propri piedi, nessun adattatore, UPS a fianco. Pattini opzionali da testare.']
+];
+
+const state={scene:'assembled',yaw:2.42,pitch:0.42,zoom:1,lift:0,carrier:'P1',
+  fans:true,disks:true,labels:true,air:false,grid:false,selected:'',selectedName:''};
+let W=0,H=0,DPR=1,faces=[],lines=[],labels=[],pick=[];
+
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function tint(hex,k,alpha){const a=hex.replace('#','');const r=clamp(Math.round(parseInt(a.slice(0,2),16)*k),0,255),g=clamp(Math.round(parseInt(a.slice(2,4),16)*k),0,255),b=clamp(Math.round(parseInt(a.slice(4,6),16)*k),0,255);return`rgba(${r},${g},${b},${alpha===undefined?1:alpha})`}
+function box(x,y,z,dx,dy,dz,color,group,opacity){
+ const p=[[x,y,z],[x+dx,y,z],[x+dx,y+dy,z],[x,y+dy,z],[x,y,z+dz],[x+dx,y,z+dz],[x+dx,y+dy,z+dz],[x,y+dy,z+dz]];
  const fs=[[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
- for(let k=0;k<6;k++){faces.push({p:fs[k].map(i=>p[i]),color,group,name,opa,emphasis,normal:[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]][k]})}
+ const ns=[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]];
+ for(let k=0;k<6;k++)faces.push({p:fs[k].map(i=>p[i]),color:color,group:group||'',opacity:opacity===undefined?1:opacity,normal:ns[k]});
 }
-// A physical, printable brace represented as a complete rectangular-section prism.
-// For the YZ plane it sits behind the motherboard, not across its component face.
-function beamYZ(x,y1,z1,y2,z2,web=7,thick=5,color=C.corner,group='ADAPTER',name='Diagonale stampata completa'){
- const dy=y2-y1,dz=z2-z1,L=Math.hypot(dy,dz);if(L<1)return;
- const py=-dz/L*web/2,pz=dy/L*web/2;
- const b=[[x,y1+py,z1+pz],[x,y2+py,z2+pz],[x,y2-py,z2-pz],[x,y1-py,z1-pz]];
- prism([...b,...b.map(v=>[v[0]+thick,v[1],v[2]])],color,group,name);
+function prism(p,color,group,opacity){
+ const fs=[[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
+ for(const f of fs)faces.push({p:f.map(i=>p[i]),color:color,group:group||'',opacity:opacity===undefined?1:opacity,normal:[.3,-.4,.86]});
 }
-function beamXZ(y,x1,z1,x2,z2,web=8,thick=10,color=C.frame2,group='BACKBONE',name='Diagonale posteriore bassa'){
- const dx=x2-x1,dz=z2-z1,L=Math.hypot(dx,dz);if(L<1)return;
- const px=-dz/L*web/2,pz=dx/L*web/2;
- const b=[[x1+px,y,z1+pz],[x2+px,y,z2+pz],[x2-px,y,z2-pz],[x1-px,y,z1-pz]];
- prism([...b,...b.map(v=>[v[0],v[1]+thick,v[2]])],color,group,name);
-}
-function prism(p,color,group,name){
- const f=[[0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]];
- for(const a of f){faces.push({p:a.map(i=>p[i]),color,group,name,opa:1,emphasis:false,normal:[.22,-.35,.92]})}
-}
-// Solid rectangular objects with the same rendering/picking model as the Torre.
-// Used by the room layout to rotate desk, monitors and chair in the horizontal plane.
-function polyPrism(p,color,group,name,opa=1,emphasis=false){
- const f=[[0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]];
- const normals=[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]];
- for(let i=0;i<f.length;i++) faces.push({p:f[i].map(j=>p[j]),color,group,name,opa,emphasis,normal:normals[i]});
-}
-function rotBox(cx,cy,z,w,d,h,angle,color,group='',name='',opa=1,emphasis=false){
- const hw=w/2,hd=d/2,cs=Math.cos(angle),sn=Math.sin(angle);
- const bottom=[[-hw,-hd],[hw,-hd],[hw,hd],[-hw,hd]].map(([x,y])=>[cx+x*cs-y*sn,cy+x*sn+y*cs,z]);
- const top=bottom.map(([x,y])=>[x,y,z+h]);
- polyPrism([...bottom,...top],color,group,name,opa,emphasis);
-}
-// Dimension geometry and extension lines are fixed in world millimetres; no fake measurements.
-function dimension(a,b,label,offset,color=C.accent){
- if(!state.dims)return;
- const v=p=>p.map((q,i)=>q+offset[i]);const aa=v(a),bb=v(b),d=b.map((q,i)=>q-a[i]);
- wire([a,aa],color,.8,'DIM',[3,4],.68);wire([b,bb],color,.8,'DIM',[3,4],.68);
- wire([aa,bb],color,1.25,'DIM',[],.96);
- const nonzero=offset.findIndex(x=>Math.abs(x)>0);const j=nonzero>=0?nonzero:(Math.abs(d[0])>0?1:0);
- for(const p of [aa,bb]){const u=[...p],v=[...p];u[j]-=5;v[j]+=5;wire([u,v],color,1.5,'DIM')}
- text3(aa.map((q,i)=>(q+bb[i])/2),label,color,11,'DIM');
-}
-function wire(points,color='#7ec6bd',width=1,group='',dash=[],opa=1){lines.push({points,color,width,group,dash,opa})}
-function text3(pos,value,color='#bdd6d8',size=11,group='',code=''){labels.push({pos,value,color,size,group,code})}
-function fastener(x,y,z,group,name){
- pushBox(x-3,y-3,z-1.5,6,6,3,'#cbd7d5',group,name,1);
- wire([[x-2,y-2,z+2],[x+2,y+2,z+2]],'#34464e',1.15,group);
- wire([[x-2,y+2,z+2],[x+2,y-2,z+2]],'#34464e',1.15,group);
-}
-// Actual load path of BOTH lower cradles, not free-floating U receivers.
-// Dock -> transverse printed web -> two fixed longitudinal rails -> bay-edge crosspieces -> base beams.
-function cradleLoadPath(cx){
- for(const sy of [71,291]){
-  pushBox(cx-41,sy+9,39,82,13,13,C.frame,'DOCK','Traversino inferiore collegato ai due longheroni fissi e alla sede centrale',1);
-  for(const side of [-1,1]){
-   const x=side<0?cx-52:cx+30;
-   pushBox(x,sy+7,32,22,17,17,C.frame2,'DOCK','Nodo di trasferimento carico: traversa campata -> longherone -> sede',1);
-  }
- }
-}
-function dockSocket(cx,y,id){
- // A U-shaped, open-top receiver.  External cheeks stay on the frame when the cartridge lifts.
- pushBox(cx-17,y,49,7,30,40,C.frame2,'DOCK','Sede femmina fissa: guancia sinistra',1);
- pushBox(cx+10,y,49,7,30,40,C.frame2,'DOCK','Sede femmina fissa: guancia destra',1);
- pushBox(cx-17,y,46,34,30,6,C.frame,'DOCK','Fondo di battuta della sede',1);
- pushBox(cx-21,y+2,49,4,26,27,C.frame,'DOCK','Nervatura laterale fissa',1);
- pushBox(cx+17,y+2,49,4,26,27,C.frame,'DOCK','Nervatura laterale fissa',1);
- for(const d of [-12,12])fastener(cx+d,y+15,86,'DOCK','Fissaggio sede/traversa (schema)');
-}
-function fitTongue(cx,y,z,id){
- pushBox(cx-8,y+4,52+z,16,22,36,C.corner,id,'Maschio fino al fondo della sede: contatto a quota 52',1,true);
- pushBox(cx-14,y+3,89+z,28,25,7,'#f6c67e',id,'Spalla di appoggio: contatto sopra guance a quota 89',1,true);
- pushBox(cx-8,y+7,52+z,16,16,5,'#a87345',id,'Smusso illustrativo: superficie inferiore d’appoggio',1);
- // Triangular web from each male seat into the moving lower carrier rail.
- const yy=y<180?y+41:y-24;
- beamYZ(cx-8,y+15,85+z,yy,78+z,8,5,C.corner,id,'Costola triangolare stampata: linguetta -> longherone inferiore');
- beamYZ(cx+3,y+15,85+z,yy,78+z,8,5,C.corner,id,'Seconda costola: ripartisce lo sforzo senza affaticare il solo maschio');
-}
-function lockPin(cx,y,id,station){
- // Removable crossbar is ABOVE the moving shoulder, not interpenetrating it.
- // Shoulder z=89..96; crossbar underside z=100: 4 mm illustrative lift play.
- for(const d of [-23,17])pushBox(cx+d,y-8,84,6,12,22,C.frame2,'LOCK',`Staffa fissa fermo ${station}`,1);
- pushBox(cx-22,y-6,100,45,7,5,C.metal,'LOCK',`Spina anti-sollevamento ${station}: libera sopra la spalla di 4 mm`,1);
- pushBox(cx+21,y-9,98,7,13,10,C.orange,'LOCK',`Presa manuale fermo ${station}`,1);
- fastener(cx+24,y-2,109,'LOCK',`Testa del fermo ${station}, non vite sulla scheda`);
-}
-// TWO POINTS OF LATERAL RESTRAINT per cartridge: front and back, high above the bottom sockets.
-// Carrier verticals: x = cx-4..cx+4.  Receiver cheeks: x <= cx-6 and x >= cx+6.
-// Nominal lateral free gap = 2 mm per side; PROTOTYPE TARGET, not a manufacturing clearance.
-function upperGuide(cx,station, id){
- const front=station==='front';const y=front?71:309, ybase=front?59:332;
- for(const side of [-1,1]){
-  const cheekX=side<0?cx-13.5:cx+6;
-  pushBox(cheekX,y,191,7.5,17,97,C.guide,'GUIDE',`Guancia fissa ${station}: fessura 12 mm / montante 8 mm`,1);
-  // Short, PRINTED gusset tying the cheek to the continuous OUTBOARD top tie-bar.
-  const earX=side<0?cx-14:cx+6;
-  pushBox(earX,front?63:323,245,8,13,25,C.guide2,'GUIDE',`Nodo guida ${station} -> traversa alta esterna`,1);
-  fastener(side<0?cx-10:cx+10,front?66:338,257,'GUIDE','Bulloneria o incastro rinforzato: da dimensionare');
- }
- // Contrast line marks the freely-open TOP; nothing crosses the cartridge's vertical lifting path.
- wire([[cx-6,y+8,288],[cx+6,y+8,288]],'#c3edf0',1,'GUIDE',[3,3],.8);
-}
-// Top tie-bars lie OUTSIDE cartridge footprint y=74..323; no obstacle over the handles.
-// Their 96 mm printed sections need tested shear/moment-resisting joints, not only snap fit.
-function guideBridge(width){
- const n=state.n, left=178,step=96;
- for(const station of ['front','back']){
-  const y=station==='front'?56:332;
-  for(let i=0;i<n;i++){
-   pushBox(left+i*step,y,251,step,11,17,C.frame2,'GUIDEFRAME',`Traversa alta ${station} stampabile a segmenti da 96 mm`,.99);
-   if(i>0)pushBox(left+i*step-11,y-1,247,22,13,25,C.guide2,'GUIDEFRAME',`Giunto di taglio/flessione sul bordo campata ${i}`,1);
-  }
-  // Uprights every third bay transfer top side loads to the lower perimeter frame.
-  for(const i of [...new Set([0,3,6,n])]){
-   const x=left+i*step;
-   pushBox(x-7,y,43,14,13,225,C.frame2,'GUIDEFRAME',`Montante per traversa ${station}: bordo tra tre campate`,1);
-   pushBox(x-15,y-4,39,30,21,18,C.frame,'GUIDEFRAME','Piede montante e giunto col telaio inferiore',1);
-   beamXZ(y+1,x-26,44,x-4,166,8,9,C.frame,'GUIDEFRAME','Nervatura inclinata verso sinistra');
-   beamXZ(y+1,x+4,166,x+26,44,8,9,C.frame,'GUIDEFRAME','Nervatura inclinata verso destra');
-  }
- }
-}
-function rearSkeleton(width){
- // Load path: tongues -> base receiving sockets -> longitudinal beams -> feet.
- // High X braces were REMOVED: they would intersect I/O/service corridor z=120..230.
- // Only slim posts stand at bay boundaries; tall tie stays above the highest I/O panel.
- const xs=[178];for(let i=3;i<state.n;i+=3)xs.push(178+i*96);xs.push(178+state.n*96);
- for(const x of xs){
-  pushBox(x-7,386,30,14,13,279,C.frame2,'BACKBONE','Montante stretto sul confine tra i vani (non appoggio delle cartucce)',.97);
-  pushBox(x-17,382,27,34,23,19,C.frame,'BACKBONE','Piede di montante sulla trave posteriore',1);
-  pushBox(x-15,381,298,30,21,14,C.frame,'BACKBONE','Nodo della traversa alta, sopra le prese',1);
-  for(const z of [40,302])fastener(x,404,z,'BACKBONE','Connessione montante/trave · concettuale');
- }
- // Fully joined low triangulated pairs, all under z=112; cables/ports start above z=126.
- for(let k=0;k<xs.length-1;k++){
-  const x1=xs[k]+10,x2=xs[k+1]-10,m=(x1+x2)/2;
-  beamXZ(384,x1,38,m,104,7,10,'#67b39d','BACKBONE','Controvento basso A: estremi collegati a trave e nodo');
-  beamXZ(384,m,104,x2,38,7,10,'#67b39d','BACKBONE','Controvento basso B: estremi collegati a trave e nodo');
-  pushBox(m-10,383,94,20,13,16,C.frame,'BACKBONE','Piastra centrale di continuità del controvento basso',1);
-  for(const x of [x1,m,x2])pushBox(x-9,384,30,18,13,17,C.frame,'BACKBONE','Piastra di innesto al traverso posteriore',1);
- }
- pushBox(163,383,309,width-326,13,12,C.frame,'BACKBONE','Traversa superiore continua SOLO sopra il corridoio I/O',.96);
- pushBox(163,380,40,width-326,13,13,C.frame2,'BACKBONE','Trave posteriore di base: porta i montanti, NON i cassetti',1);
- // Permanent visual representation of the unobstructed connector band.
- if(state.clearance){
-   for(const z of [118,238])wire([[178,435,z],[178+state.n*96,435,z]],'#70c5e7',1.3,'CLEAR',[9,5],.9);
-   for(const x of [178,178+state.n*96])wire([[x,435,118],[x,435,238]],'#70c5e7',1,'CLEAR',[9,5],.8);
-   if(state.dims)text3([178+state.n*96/2,435,251],'CORRIDOIO PRESE 118–238 mm','#8ad6f3',10,'DIM');
- }
-}
-function rearPanel(cx,id){
- // I/O service patch faces the back; no exposed backplane/mains shown.
- pushBox(cx-36,416,155,72,7,54,C.metal,'IO','Piastra I/O posteriore rimovibile · '+id,.97);
- pushBox(cx-31,423,179,22,4,16,'#193f4b','IO','RJ45 / LAN · '+id,1);
- pushBox(cx-28,427,184,16,2,6,'#88d39f','IO','Contatti LAN · '+id,1);
- for(let j=0;j<2;j++){
-  pushBox(cx-3+j*18,423,180,14,4,9,'#145a7a','IO','Porta USB · '+id,1);
-  pushBox(cx-1+j*18,428,182,10,1.5,4,'#99cfe9','IO','Linguetta USB · '+id,1);
- }
- pushBox(cx-31,423,162,60,3,7,'#334f5d','IO','Scarico trazione cablaggi · '+id,1);
- if(state.wiring)for(let j=0;j<3;j++)wire([[cx-26+j*22,416,170],[cx-26+j*22,382,154],[cx-9+j*11,328,183]],C.plug,1.5,'IO');
-}
-function handle(x,y,z,id){
- // Large inverted-U handle, rigid carrier: no sliding mechanical guides
- wire([[x-2,y-27,z-4],[x-2,y-27,z+20],[x-2,y+27,z+20],[x-2,y+27,z-4]],C.corner,4,id);
- pushBox(x-5,y-29,z+17,10,58,7,C.corner,id,'Maniglia · '+id,.95,true);
-}
-function fan(x,y,z,r,id){
- const pts=[];for(let a=0;a<=24;a++){let t=2*Math.PI*a/24;pts.push([x,y+Math.cos(t)*r,z+Math.sin(t)*r])}
- wire(pts,C.fan,1.65,id);for(let j=0;j<6;j++){const t=j*Math.PI/3;wire([[x,y+4*Math.cos(t),z+4*Math.sin(t)],[x,y+(r-4)*Math.cos(t+.33),z+(r-4)*Math.sin(t+.33)]],C.fan,1,id)}
-}
-function diskBank(side,n,width){if(!state.disks)return;const x0=side==='left'?24:width-145;
- pushBox(x0-11,48,42,140,300,7,C.frame2,'STORAGE',`Banco HDD ${side}`,1);
- for(let i=0;i<4;i++){const x=x0+i*30;
-  pushBox(x,82,63,24,190,100,C.disk,'STORAGE','HDD 3,5″ · alloggiamento '+(side==='left'?i+1:i+5),.98);
-  pushBox(x-1,75,61,26,13,105,C.diskEdge,'STORAGE','Cartuccia HDD estraibile',.95);
-  pushBox(x+3,103,165,18,146,3,C.metal,'STORAGE','Copertura disco',.95);
-  pushBox(x+3,115,171,18,36,2,'#8cb9bd','STORAGE','Indicazione HDD',.9);
-  wire([[x+12,74,168],[x+12,74,183],[x+12,92,183]],C.corner,2.5,'STORAGE');
- }
- text3([x0+55,160,210],side==='left'?'HDD • A':'HDD • B',C.metal,11,'STORAGE');
-}
-function module(i,wx){const id='P'+(i+1),aid='A'+(i+1),cx=178+(i+.5)*96,zlift=state.explode*(i%2?1.3:1.65)+(state.lifted===id?155:0)+(state.scene==='joint'?44:0);const z=zlift;const s=i%3;
- // fixed receiving cradles and vertical anti-shear slots
- pushBox(cx-40,52,43,8,270,9,C.frame,'DOCK','Longherone fisso sinistro · '+id,1);
- pushBox(cx+32,52,43,8,270,9,C.frame,'DOCK','Longherone fisso destro · '+id,1);
- pushBox(cx-41,65,50,12,31,13,C.frame2,'DOCK','Battuta anteriore fissa',1);
- pushBox(cx+29,296,50,12,31,13,C.frame2,'DOCK','Battuta posteriore fissa',1);
- cradleLoadPath(cx);
- for(const socketY of [71,291]){dockSocket(cx,socketY,id);fitTongue(cx,socketY,z,id)}
- for(const station of ['front','back'])upperGuide(cx,station,id);
- if(state.locked&&state.scene!=='joint'){lockPin(cx,86,id,'anteriore');lockPin(cx,306,id,'posteriore')}
- // carrier perimeter, partly rail-like, with board held on standoffs
- pushBox(cx-4,74,72+z,8,249,9,C.corner,id,'Traversa inferiore portante · '+id,.98,true);
- pushBox(cx-4,74,81+z,8,8,231,C.corner,id,'Montante cartuccia · '+id,.98,true);
- pushBox(cx-4,315,81+z,8,8,231,C.corner,id,'Montante cartuccia · '+id,.98,true);
- pushBox(cx-4,74,304+z,8,249,7,C.corner,id,'Traversa superiore · '+id,.98,true);
- // The board-specific adapter is introduced below, after actual illustrative board size is known.
- handle(cx,192,310+z,id);
- // board adapt to donor specific height sizes while retaining identical carrier outer envelope
- const bpY=88+(s===1?10:0),bpZ=94+(s===2?25:0),bph=(s===2?179:204),bpD=(s===1?208:224);
- // PRINTED ADAPTER (orange): complete X behind the PCB, attached at all four corners.
- // Neither the printed X nor the carrier directly touches the copper traces.
- const ay1=bpY+9,ay2=bpY+bpD-9,az1=bpZ+10+z,az2=bpZ+bph-10+z;
- for(const y of [ay1,ay2]){
-  pushBox(cx-21,y-4,az1-4,8,8,az2-az1+8,C.corner,aid,'Montante adapter stampato dietro i punti di fissaggio',1);
-  for(const hh of [az1,az2])pushBox(cx-23,y-6,hh-6,12,12,12,C.corner,aid,'Nodo stampato pieno, diagonali unite',1);
- }
- beamYZ(cx-24,ay1,az1,ay2,az2,7,5,C.corner,aid,'Diagonale 1/2 completa dell’adattatore');
- beamYZ(cx-24,ay1,az2,ay2,az1,7,5,C.corner,aid,'Diagonale 2/2 completa dell’adattatore');
- pushBox(cx-25,(ay1+ay2)/2-7,(az1+az2)/2-7,10,14,14,'#eec384',aid,'Nodo centrale integrato delle due diagonali',1);
- // Six distinct support positions: printed boss at x<= -11.5; metal standoff
- // spans x=-11.5..-1.5; motherboard (3 mm) begins x=-1.5; screws are outside x=+1.5.
- // These are NOT real hole coordinates until the donor motherboard is surveyed.
- for(const y of [ay1+8,ay2-8])for(const h of [az1+8,(az1+az2)/2,az2-8]){
-  pushBox(cx-17.5,y-5,h-5,6,10,10,C.corner,aid,'Piazzola stampata adapter / appoggio distanziatore',1);
-  pushBox(cx-11.5,y-2.5,h-2.5,10,5,5,'#cbd7d5',aid,'Distanziatore metallico M3 da 10 mm · schema',1);
-  pushBox(cx+1.5,y-3,h-3,3.5,6,6,'#e4d8a9',aid,'Testa vite M3 sul foro reale da verificare',1);
-  wire([[cx+4,y-2.5,h],[cx+4,y+2.5,h]],'#5a6264',1,id);
- }
- // Four printed tie-struts make continuous load transmission from the X adapter
- // into the cartridge's bottom and top longitudinal rails (not through the rear frame).
- for(const y of [ay1,ay2]){
-   pushBox(cx-20,y-5,76+z,18,10,az1-(76+z)+5,C.corner,aid,'Puntone inferiore: adattatore -> traversa bassa cartuccia',1);
-   pushBox(cx-20,y-5,az2-5,18,10,310+z-az2+5,C.corner,aid,'Puntone superiore: adattatore -> traversa alta cartuccia',1);
- }
- // Load path from adapter into the mobile cartridge: four feet integral to the perimeter.
- for(const y of [ay1,ay2])for(const h of [az1,az2]){
-   pushBox(cx-23,y-5,h-5,19,10,10,C.corner,aid,'Braccetto solidale a telaio mobile: carico PCB -> cartuccia',1);
- }
- pushBox(cx-1.5,bpY,bpZ+z,3,bpD,bph,C.pcb,id,'Scheda madre · '+id,state.scene==='supports'?.22:.94);
- // silkscreen copper traces, cpu and socket
- for(let j=0;j<7;j++){const yy=bpY+16+j*27;wire([[cx+2,yy,bpZ+14+z],[cx+2,yy+16,bpZ+14+z],[cx+2,yy+16,bpZ+22+j%4*10+z]],'#3d8790',.85,id)}
- pushBox(cx+2,bpY+93,bpZ+70+z,8,60,56,C.chip,id,'CPU / socket · '+id,.95);
- pushBox(cx+10,bpY+100,bpZ+77+z,22,46,44,C.metal,id,'Dissipatore CPU · '+id,.95);
- for(let f=0;f<7;f++)pushBox(cx+12+f*2.5,bpY+103,bpZ+80+z,1.2,40,38,'#abc3c1',id,'Lamelle dissipatore',.93);
- fan(cx+36,bpY+122,bpZ+97+z,19,id);
- // RAM banks
- for(let j=0;j<2;j++){
-  pushBox(cx+3,bpY+42+j*16,bpZ+66+z,7,7,98,C.pcb2,id,'Modulo RAM',.96);
-  for(let k=0;k<6;k++)pushBox(cx+10,bpY+42+j*16,bpZ+73+k*14+z,1,7,8,C.chip,id,'Chip RAM',.95)
- }
- // peripheral chips / sockets / front IO
- pushBox(cx+3,bpY+156,bpZ+25+z,7,40,29,'#172d36',id,'Chipset',.95);
- pushBox(cx+3,bpY+24,bpZ+15+z,7,54,10,C.metal,id,'Slot PCIe',.94);
- pushBox(cx+3,bpY+24,bpZ+29+z,7,54,10,C.metal,id,'Connettore espansione',.94);
- pushBox(cx-6,bpY+bpD-18,bpZ+30+z,5,14,90,C.metal,id,'Piastra porte motherboard',.94);
- for(let k=0;k<5;k++)pushBox(cx+2,bpY+115+k*12,bpZ+28+z,3,8,6,'#487c89',id,'Chip di servizio della scheda',.98);
- pushBox(cx+2,bpY+65,bpZ+158+z,4,58,9,'#d6d2a6',id,'Connettore ATX / alimentazione',.95);
- // rear cable down to PSU individual: simple, deliberately not a proprietary backplane
- if(state.wiring && zlift<5){wire([[cx+1,315,163+z],[cx+1,332,163+z],[cx+1,347,118],[cx+1,404,118]],C.cable,2.5,'POWER');
- wire([[cx-10,318,197+z],[cx-10,338,197+z],[cx-10,401,141]],C.plug,1.7,'POWER');}
- // PSU commercial individual, along rear bench, serviced independently
- if(state.wiring){pushBox(cx-32,345,57,64,55,50,C.psu,'POWER','Alimentatore commerciale individuale · '+id,.99);
-  pushBox(cx-27,344,63,19,2,35,C.metal,'POWER','Griglia PSU',.93);
-  for(let j=0;j<4;j++)wire([[cx-25+j*4,343,64],[cx-25+j*4,343,93]],'#284755',.8,'POWER');
-  pushBox(cx-31,403,126,64,6,13,C.plug,'POWER','Porte posteriori LAN / USB · '+id,.96);
-  pushBox(cx-24,409,129,12,4,6,'#9cd6a9','POWER','LAN',1);
-  pushBox(cx+4,409,129,14,4,6,'#8bc5e8','POWER','USB',1);
- }
- rearPanel(cx,id);
- text3([cx,191,343+z],id,C.accent,12,id,id);
- return cx;
+function wire(a,b,color,group,width,dash,opacity){lines.push({p:[a,b],color:color,group:group||'',width:width||1,dash:dash||[],opacity:opacity===undefined?1:opacity})}
+function text3(pos,value,color,size,group){labels.push({pos:pos,value:value,color:color||'#bdd6d8',size:size||11,group:group||''})}
+function dim(a,b,label,offset,color){
+ const c=color||C.guide;const v=p=>p.map((q,i)=>q+(offset?offset[i]:0));const aa=v(a),bb=v(b);
+ wire(a,aa,c,'DIM',.8,[3,4],.7);wire(b,bb,c,'DIM',.8,[3,4],.7);wire(aa,bb,c,'DIM',1.2,[],.95);
+ const idx=offset?offset.findIndex(x=>Math.abs(x)>0):-1;const j=idx>=0?idx:(Math.abs(b[0]-a[0])>0?1:0);
+ for(const p of [aa,bb]){const u=[...p],w=[...p];u[j]-=4;w[j]+=4;wire(u,w,c,'DIM',1.4)}
+ text3(aa.map((q,i)=>(q+bb[i])/2),label,c,11,'DIM');
 }
 
-function upsSidecar(width){
- if(!state.showUPS)return;
- const x=width+UPS.sideGap,y=8,h=UPS.h,z=3;
- // Floor-mounted commercial UPS. Printed markers only define the installation footprint.
- // NO printed cantilever, NO fabricated mains bus, NO overhead enclosure; not a battery drawer.
- for(const px of [x-10,x+UPS.w+4])for(const py of [y-5,y+UPS.d-9]){
-  pushBox(px,py,0,7,15,5,'#557f83','UPSLOC','Marcatore stampato di posizione (non portante)',1);
+function carrierStart(i){return END+(PITCH-BAND)/2+i*PITCH}
+function liftOffset(i){return state.scene==='exploded'&&CARRIERS[i]===state.carrier?state.lift/100*140:0}
+
+function buildChassis(showPlate){
+ const L=BODY.L,D=BODY.D,Z=BODY.Z0,H=BODY.H;
+ // longitudinal base + top beams
+ for(const y of [8,D-20]){box(0,y,Z,L,12,12,C.frame2,'FRAME');box(0,y,Z+H-12,L,12,12,C.frame2,'FRAME')}
+ // end posts and inter-bay posts
+ const posts=[0,END,END+PITCH,END+2*PITCH,END+3*PITCH,END+4*PITCH,END+5*PITCH,END+6*PITCH,L-12];
+ for(const x of posts)box(x,8,Z,12,D-16,H,C.frame,'FRAME');
+ // rear low longitudinal rail
+ box(0,D-20,Z+2,L,10,6,C.brace,'FRAME');
+ // feet (ten = five pairs)
+ for(let k=0;k<5;k++){const x=90+k*212;for(const y of [40,D-70])box(x,y,Z-14,26,26,14,C.psu,'FOOT')}
+ if(showPlate){box((BODY.L-PLATE.L)/2,(D-PLATE.D)/2,Z-PLATE.T,PLATE.L,PLATE.D,PLATE.T,C.plate,'PLATE')}
+ else{for(const x of [70,L-140])for(const y of [50,D-110])box(x,y,Z-30,70,60,30,C.foot||'#3d4f57','FOOT')}
+}
+
+function buildCarrier(i){
+ const id=CARRIERS[i],x0=carrierStart(i),y0=74,z0=BODY.Z0,dz=liftOffset(i);
+ const g='CAR_'+id;
+ const B=(lx,ly,lz,sx,sy,sz,col,grp)=>box(x0+lx,y0+ly,z0+lz+dz,sx,sy,sz,col,grp||g);
+ // side posts
+ B(0,0,0,6,249,251,C.frame);
+ B(74,0,0,6,249,251,C.frame);
+ // lower front / rear rails
+ B(0,0,0,80,8,10,C.frame2);
+ B(0,241,0,80,8,10,C.frame2);
+ // double lower seats (top at Z=10)
+ B(6,8,7,68,12,3,C.seat,'SEAT');
+ B(6,229,7,68,12,3,C.seat,'SEAT');
+ // C-3 rear low counterbrace Z[4,10], top flush with seat top
+ B(6,241,4,68,8,6,C.brace,'BRACE');
+ // C-1 top anti-oscillation guide, split to side posts only
+ B(0,121.5,245,6,6,6,C.guide,'GUIDE');
+ B(74,121.5,245,6,6,6,C.guide,'GUIDE');
+ // insert (C-2a outer height 232) + illustrative board
+ const sep=state.scene==='module'?36:0;
+ if(state.scene==='corrections'){
+   box(x0+6,y0+8,z0+10+dz,68,233,222,C.insert,'INSERT',.82);
+   box(x0+6,y0+8,z0+10+dz,68,233,3,C.ghost,'BOARD',.45);
+   text3([x0+40,y0+125,z0+240+dz],'C-2a: 232 mm',C.guide,11,'INSERT');
+   text3([x0+40,y0+125,z0+252+dz],'illustrativo 239 → G0',C.ghost,10,'BOARD');
+ }else{
+   B(6+sep,8,10,68,233,222,C.insert,'INSERT');
+   B(10+sep,12,14,60,225,8,C.pcb,'BOARD');
  }
- // Floor landing shadow — outline only; equipment's 13.1 kg goes into the ground.
- wire([[x-13,y-12,0],[x+UPS.w+13,y-12,0],[x+UPS.w+13,y+UPS.d+12,0],[x-13,y+UPS.d+12,0],[x-13,y-12,0]],'#668f9c',1.3,'UPSLOC',[6,5]);
- // Upright factory-built UPS; all surfaces remain free, left/right ventilation unblocked.
- pushBox(x,y,z,UPS.w,UPS.d,UPS.h,C.ups,'UPS','PowerWalker VI 1500 CSW IEC · apparecchio commerciale, non costruito in 3D',1);
- pushBox(x+6,y-1,z+18,UPS.w-12,3,UPS.h-36,C.upsFace,'UPS','Pannello frontale e accesso batteria da mantenere raggiungibili',1);
- pushBox(x+19,y-2,z+195,61,2,39,'#103746','UPS','Display LCD anteriore UPS',1);
- pushBox(x+25,y-3,z+216,49,1,6,'#70c7b4','UPS','Barra display UPS',1);
- pushBox(x+24,y-3,z+202,35,1,5,'#87c4b6','UPS','Indicatori LCD',1);
- pushBox(x+43,y-3,z+178,14,2,14,'#193d4a','UPS','Tasto ON/OFF commerciale accessibile',1);
- for(const xx of [x-1,x+UPS.w]){
-  for(let i=0;i<10;i++){
-   pushBox(xx,82+i*22,z+90,1.5,12,75,'#78919e','UPS','Griglie laterali · lasciare libere',.92);
+ // two removable latches at the front
+ B(20,71,120,10,7,6,C.guide,'LATCH');
+ B(50,71,120,10,7,6,C.guide,'LATCH');
+ // I/O at rear wall side
+ B(30,247,120,20,3,40,C.io,'IO');
+ wire([x0+31,y0+250,z0+140+dz],[x0+31,y0+265,z0+140+dz],C.cable,'IO',1,[3,3],.8);
+ wire([x0+49,y0+250,z0+140+dz],[x0+49,y0+265,z0+140+dz],C.cable,'IO',1,[3,3],.8);
+}
+
+function buildDisks(){
+ for(const side of ['L','R']){
+  const g='DISK_'+side;
+  const x0=side==='L'?20:BODY.L-132;
+  const grp=side==='L'?C.disk:C.disk;
+  box(x0-8,120,BODY.Z0+14,124,150,6,C.frame2,g);
+  for(let k=0;k<4;k++){
+   const z=BODY.Z0+24+k*36;
+   box(x0,124,z,104,142,24,grp,g);
+   box(x0+2,126,z+24,100,138,2,C.diskEdge,g);
+   wire([x0+104,140,z+12],[x0+118,140,z+12],C.cable,g,1.2);
   }
- }
- // Back service face toward the rear: 8 IEC C13 divided into 4 BACKUP and 4 SURGE ONLY.
- pushBox(x+5,y+UPS.d,z+32,UPS.w-10,4,UPS.h-46,'#283f4c','UPSPORT','Retro commerciale UPS · uscite IEC C13',1);
- for(let i=0;i<8;i++){
-  const col=Math.floor(i/4),row=i%4;
-  const sx=x+14+col*50,sz=z+95+row*36;
-  pushBox(sx,y+UPS.d+4,sz,27,3,19,col===0?C.upsBackup:C.upsSurge,'UPSPORT',col===0?`IEC ${row+1} · CON BATTERIA`:`IEC ${row+5} · SOLO PROTEZIONE SOVRATENSIONI`,1);
-  pushBox(sx+4,y+UPS.d+7,sz+5,19,1.5,8,'#172c37','UPSPORT','Presa IEC C13',1);
- }
- pushBox(x+42,y+UPS.d+4,z+50,18,3,13,'#ddd4a9','UPSPORT','Ingresso rete IEC C14 · connessione certificata',1);
- pushBox(x+14,y+UPS.d+4,z+50,14,3,11,'#81c3d2','UPSPORT','USB HID verso un host NUT, non USB di alimentazione',1);
- // Rear cable-bend/service corridor; intentionally not an enclosed chassis volume.
- const yy=y+UPS.d+10;
- wire([[x-16,yy,0],[x+UPS.w+16,yy,0],[x+UPS.w+16,535,0],[x-16,535,0],[x-16,yy,0]],'#d6ac70',1.5,'UPSCLEAR',[8,5]);
- for(let k=0;k<4;k++)wire([[x+19,y+UPS.d+9,z+111+k*36],[x+19,468,z+117+k*31],[x+2,500,z+90+k*29]],'#66c0b2',1.35,'UPSCABLE',[5,3]);
- wire([[x+50,y+UPS.d+8,z+55],[x+51,495,z+65],[x+65,518,z+65]],'#df9983',1.7,'UPSCABLE',[4,3]);
- // OPEN side gap between chassis and UPS, not a wall or pressure-loaded connector.
- wire([[width+8,12,0],[x-8,12,0],[x-8,410,0],[width+8,410,0],[width+8,12,0]],'#5cbcb7',1.0,'UPSCLEAR',[4,8],.65);
- if(state.dims){
-  dimension([x,y-14,15],[x+UPS.w,y-14,15],'99 mm · L UPS',[0,-36,0],'#e5ba83');
-  dimension([x+UPS.w+9,y,10],[x+UPS.w+9,y+UPS.d,10],'410 mm · P UPS',[46,0,0],'#a9d0de');
-  dimension([x+UPS.w+6,y,3],[x+UPS.w+6,y,283],'280 mm · H UPS',[65,0,0],'#a1c5f3');
-  dimension([width,100,20],[x,100,20],'66 mm · intercapedine libera',[0,0,70],'#86dbd1');
-  dimension([x+UPS.w+15,y+UPS.d,0],[x+UPS.w+15,535,0],'~117 mm · accesso cavi',[68,0,0],'#e5ba83');
-  text3([x+UPS.w/2,215,302],'13,1 kg → PAVIMENTO',C.accent,10,'DIM');
-  text3([x+UPS.w/2,490,25],'DIETRO LIBERO · IEC + USB',C.accent,10,'DIM');
  }
 }
 
-// Inserimento 1:1 dei dettagli della vera Torre H-7 nell'allestimento ambientale.
-// L'assemblaggio usa la STESSA funzione meccanica dell'anteprima isolata, nessuna seconda torre.
-// Cooling kit attached to the fixed FRONT beam, not to the extractable carriers.
-// Nominal y=16..49; holders are outside the moving carrier footprint y=74..323.
-const FAN_LAYOUT=[{x:89,z:133,hdd:true},{x:262,z:152},{x:430,z:152},{x:598,z:152},{x:766,z:152},{x:939,z:133,hdd:true}];
-function fanHousing(cx,cz,id){
- const dark='#344954',rim='#597981',blade='#8eb9bd',metal='#a8c5ca';
- const p=(angle,r,y)=>[cx+Math.cos(angle)*r,y,cz+Math.sin(angle)*r];
- // Square frame surrounding a circular open aperture, extrusion 27 mm (y=18..45).
- for(let i=0;i<32;i++){
-  const a=2*Math.PI*i/32,b=2*Math.PI*(i+1)/32,outer=t=>70/Math.max(Math.abs(Math.cos(t)),Math.abs(Math.sin(t)));
-  const q=[p(a,outer(a),18),p(b,outer(b),18),p(b,63,18),p(a,63,18)];
-  polyPrism([...q,...q.map(v=>[v[0],45,v[2]])],dark,id,'Scocca 140×140×27 mm · '+id,.99);
+function buildFans(){
+ for(const [fx,fz,id] of FANS){
+  const x=fx-70,y=18,z=BODY.Z0+fz-70;
+  box(x,y,z,140,27,140,C.fan,'FANMOUNT',.9);
+  box(x+56,y-1,z+56,28,29,28,C.frame2,'FANMOUNT');
+  for(let k=0;k<4;k++){
+   const a=k*Math.PI/2;
+   wire([fx,y+14,fz+BODY.Z0],[fx+52*Math.cos(a),y+14,fz+BODY.Z0+52*Math.sin(a)],C.frame2,'FANMOUNT',2);
+  }
+  text3([fx,y-6,z+150],id,C.frame2,10,'FANMOUNT');
  }
- // Rotor and stylized curved blades in the XZ plane; not a blade design for manufacture.
- for(let i=0;i<20;i++){const a=i*2*Math.PI/20,b=(i+1)*2*Math.PI/20;
-  faces.push({p:[[cx,32,cz],p(a,20,32),p(b,20,32)],color:metal,group:id,name:'Mozzo rotore · '+id,opa:1,normal:[0,-1,0]});}
- for(let i=0;i<7;i++){const a=i*2*Math.PI/7,pts=[p(a,18,32),p(a+.22,48,32),p(a+.43,60,32),p(a+.83,56,32),p(a+.52,36,32),p(a+.49,18,32)];
-  faces.push({p:pts,color:blade,group:id,name:'Girante illustrativa · '+id,opa:1,normal:[0,-1,0]});}
- // Guard outlines at both faces, no bare accessible blades. Geometry indicative, select actual guards.
- for(const yy of [16,47]){
-  for(const r of [22,35,48,61,67])wire(Array.from({length:33},(_,i)=>p(i*2*Math.PI/32,r,yy)),rim,1.05,id);
-  for(let k=0;k<4;k++){const a=k*Math.PI/2+Math.PI/4;wire([p(a,65,yy),p(a+Math.PI,65,yy)],metal,1,id);}
- }
- for(const u of [-1,1])for(const v of [-1,1])pushBox(cx+u*62-2.5,16,cz+v*62-2.5,5,2,5,metal,id,'Fissaggio griglia / ventola · '+id,1);
- // Two seat brackets per fan fixed to front beam; metal fasteners and retention TBD.
- for(const u of [-1,1]){const x=cx+u*60;
-  pushBox(x-5,16,43,10,14,cz-70-43,'#679f94','FANMOUNT','Staffa removibile fissata alla trave anteriore; verifica carico e vibrazioni',1);
-  pushBox(x-6,16,35,12,14,12,'#679f94','FANMOUNT','Scarpa di fissaggio alla trave, accoppiamento intenzionale',1);
-  pushBox(x-5,18,cz-70,10,27,4,'#679f94','FANMOUNT','Battuta inferiore della ventola; viti da dimensionare',1);
- }
-}
-function airArrow(pts,col){wire(pts,col,2.6,'AIRFLOW',[],.87);const a=pts.at(-2),b=pts.at(-1),dx=b[0]-a[0],dy=b[1]-a[1],dz=b[2]-a[2],L=Math.hypot(dx,dy,dz);if(!L)return;
- const end=[b[0]-dx/L*19,b[1]-dy/L*19,b[2]-dz/L*19];for(const sign of [-1,1])wire([[end[0]+sign*10,end[1],end[2]],b],col,2.1,'AIRFLOW',[],.9);}
-function coolingKit(width){
- if(!state.cooling)return;
- for(let i=0;i<FAN_LAYOUT.length;i++){const f=FAN_LAYOUT[i];fanHousing(f.x,f.z,'F'+(i+1));
-  if(state.wiring){wire([[f.x+62,46,f.z-61],[f.x+62,46,46],[f.x+62,35,44]],'#c8b382',1.6,'FANPOWER');}
- }
- if(state.wiring){pushBox(25,31,30,width-50,10,10,'#575c68','FANPOWER','Canalina bassa dedicata 12 V DC; controller e alimentatore commerciali esterni',1);}
- if(state.airflow){
-  const blue='#56bde8',hot='#e99b6a';
-  for(const f of FAN_LAYOUT){airArrow([[f.x,-62,f.z],[f.x,14,f.z]],blue);}
-  // Seven inter-module air routes, not six supposed isolated sealed ducts.
-  for(let j=0;j<7;j++){const x=178+(j+.5)*96+26;airArrow([[x,58,155],[x,130,155],[x,245,158]],blue);airArrow([[x,245,158],[x,345,210],[x,380,355]],hot);}
-  for(const x of [89,939]){airArrow([[x,56,132],[x,150,132],[x,267,145]],blue);airArrow([[x,267,145],[x,340,195],[x,375,310]],hot);}
-  if(state.dims&&state.scene==='thermal'){text3([514,-68,255],'6 INGRESSI · 4 COMPUTE + 2 HDD',blue,11,'DIM');text3([514,355,420],'USCITA ALTA / RETRO · SCHEMA, NON CFD',hot,11,'DIM');}
- }
-}
-function thermalCalc(){const q=state.heat*3600/(1.18*1005*state.delta);$('heat-label').textContent=state.heat+' W';$('delta-label').textContent=state.delta+' °C';$('thermal-result').textContent='Portata utile minima teorica: '+Math.ceil(q)+' m³/h. A 6 ventole: '+Math.ceil(q/6)+' m³/h medi per ventola (solo bilancio globale). Obiettivo iniziale 250–300 m³/h utili; distribuzione e ricircolo da verificare.';}
-function embedTowerAt(originX,originY,baseZ,where){
- const prev={faces,lines,labels,scene:state.scene,n:state.n,showUPS:state.showUPS};
- let donorFaces=[],donorLines=[],donorLabels=[];
- try{
-  state.scene='tower';state.n=7;state.showUPS=false;
-  make();donorFaces=faces;donorLines=lines;donorLabels=labels;
- }finally{
-  faces=prev.faces;lines=prev.lines;labels=prev.labels;
-  state.scene=prev.scene;state.n=prev.n;state.showUPS=prev.showUPS;
-  $('variant-pill').textContent=where==='floor'?'UNA TORRE H-7 · AUTONOMA':'UNA TORRE H-7 · SUL MOBILE';
-  if(where!=='floor')$('scene-subtitle').textContent=prev.scene==='cabinet'?'Spalletta a U: sei appoggi interni e piastra rimovibile 1130 mm':prev.scene==='workstation'?'Tre schermi su bracci a muro; sedia gaming e cablaggi perimetrali':'Una Torre H-7, 230V/RJ45 a destra, canalette separate e UPS al pavimento';
- }
- // Rotazione rigida +90° (nessuna specchiatura); il retro I/O è verso x minore, cioè il muro.
- const place=p=>[originX+445-p[1],originY+p[0],baseZ+p[2]];
- const normal=n=>[-n[1],n[0],n[2]];
- for(const f of donorFaces){if(f.group==='DIM'||f.group==='GRID')continue;faces.push({...f,p:f.p.map(place),normal:normal(f.normal)})}
- for(const l of donorLines){if(l.group==='DIM'||l.group==='GRID')continue;lines.push({...l,points:l.points.map(place)})}
- for(const lab of donorLabels){if(lab.group==='DIM')continue;labels.push({...lab,pos:place(lab.pos)})}
-}
-// Unica geometria condivisa per il kit H-7 (quote di studio in mm).
-function cabinetKit(bx,by,lift=0){
- const top=500, z=top+lift;
- for(const y of [259,750,1241])for(const x of [55,265]){
-  pushBox(bx+x-30,by+y-47,z,60,94,51,'#6f9197','ADAPTER','Piede interno alla U: 51 mm; carico sul piano portante',1);
-  if(lift)wire([[bx+x,by+y,top],[bx+x,by+y,z]],'#e8c17b',1.3,'ALIGN',[5,5]);
-  else pushBox(bx+x-27,by+y-43,z,54,86,3,'#273c44','ADAPTER','Inserto antiscivolo (schema)',1);
- }
- for(const y of [259,750,1241])pushBox(bx-65,by+y-12,z+40,450,24,11,'#768e96','ADAPTER','Traversa strutturale da dimensionare: luce 12 mm sopra il bordo',.98);
- pushBox(bx-65,by+185,z+51,450,1130,18,'#b99c75','ADAPTER','Piastra rigida rimovibile 1130×450×18 mm; resistenza da collaudare',lift?.38:.93);
- if(!lift)for(const y of [195,1292])for(const x of [-55,363])pushBox(bx+x,by+y,z+69,14,13,17,'#e0b885','ADAPTER','Fermo anti-scorrimento da validare',1);
-}
-function lipDetailScene(){
- // Vista esplosa dell'ADATTATORE (traslazione verticale visuale +60 mm) per mostrare la U senza nasconderla.
- // La geometria assemblata resta nella vista Torre sul mobile.
- const bx=60,by=100,top=500,liph=28,lipw=18;
- if(state.grid){for(let yy=0;yy<1700;yy+=100)wire([[0,yy,-9],[530,yy,-9]],'#285061',.6,'GRID');for(let xx=0;xx<530;xx+=100)wire([[xx,0,-9],[xx,1680,-9]],'#285061',.6,'GRID')}
- pushBox(bx,by,0,320,1500,500,'#dce2e4','WHITECAB','Mobile bianco, mostrato senza la Torre per vedere la spalletta',.91);
- pushBox(bx,by,top,lipw,1500,liph,'#8cbfda','LIP','Spalletta posteriore continua a U (28 mm ipotesi)',1);
- pushBox(bx,by,top,320,lipw,liph,'#8cbfda','LIP','Spalletta laterale sinistra',1);
- pushBox(bx,by+1482,top,320,lipw,liph,'#8cbfda','LIP','Spalletta laterale destra',1);
- const lift=110;
- // Contorno superiore della U evidenziato: il lato frontale a x=380 rimane rigorosamente aperto.
- wire([[380,100,531],[60,100,531],[60,1600,531],[380,1600,531]],'#a6ebff',3,'LIP',[],1);
- cabinetKit(bx,by,lift);
- if(state.dims){
-  dimension([60,100,500],[60,100,528],'28 mm · altezza spalletta',[-80,0,0],'#9dd8f5');
-  dimension([60,100,528],[78,100,528],'18 mm · spessore risalto',[0,-60,0],'#9dd8f5');
-  dimension([380,100,500],[380,1600,500],'1500 mm mobile',[94,0,0],'#b4d7ee');
-  dimension([60,100,500],[380,100,500],'320 mm piano', [0,-90,0],'#b4d7ee');
-  dimension([-5,285,679],[445,285,679],'450 mm piastra', [0,-65,0],'#e2bd80');
-  dimension([-5,285,679],[-5,1415,679],'1130 mm · lunghezza kit H-7',[-80,0,0],'#e2bd80');
-  text3([230,1650,740],'ESPLOSO +110 mm SOLO PER SPIEGARE LA U',C.accent,11,'DIM');
-  text3([388,840,550],'FRONTE APERTO →',C.accent,11,'DIM');
- }
- return 1650;
-}
-function standaloneScene(){
- // Il telaio e' già autoportante: su piano rigido poggia sui propri piedi.
- // Solo quattro pattini esterni (optional, identici stampabili) ampliano l'impronta senza trasformare il mobile in componente strutturale.
- if(state.grid){for(let x=0;x<760;x+=100)wire([[x,0,-7],[x,1620,-7]],'#254856',.8,'GRID');for(let y=0;y<1650;y+=100)wire([[0,y,-7],[760,y,-7]],'#254856',.8,'GRID')}
- pushBox(0,0,-10,720,1630,8,'#456675','FLOOR','Piano rigido per Torre autonoma (illustrativo)',.22);
- embedTowerAt(130,300,0,'floor');
- // Pattini a quattro estremita': opzionali, non sostituiscono i dieci piedi presenti nel telaio.
- for(const yy of [323,1305])for(const xx of [171,550]){
-  pushBox(xx-70,yy-36,0,140,72,13,'#567984','STANDPAD','Pattino antiribaltamento clip-on opzionale; collegamento al piede da validare',.9);
-  pushBox(xx-14,yy-11,9,28,22,11,'#93b7b4','STANDPAD','Incastro pattino-piede della Torre (ipotesi)',.94);
- }
- // Doppio raccordo di servizio passivo, con rete e dati separati.
- if(state.wiring){pushBox(85,323,52,18,982,15,'#a96861','ACDUCT','Canaletta esterna per alimentazione certificata e uscita di servizio',.95);
- pushBox(55,323,88,18,982,12,'#5199a8','NETDUCT','Canaletta rete separata sul lato I/O',.95)}
- if(state.dims){dimension([130,185,0],[575,185,0],'445 mm · profondità max telaio',[0,-70,0],'#81d6d8');
- dimension([120,300,0],[120,1328,0],'1028 mm · lunghezza H-7',[-98,0,0],'#eac582');
- dimension([130,1328,0],[130,1328,334],'334 mm · altezza',[-86,0,0],'#9bbef4');
- text3([350,1600,370],'STESSA TORRE, SENZA MOBILE · 4 PATTINI OPZIONALI',C.accent,10,'DIM')}
- return 1630;
 }
 
-function roomScene(){
- const roomW=4300,roomD=4300,wallH=1750,cut=350;
- if(state.grid){for(let x=0;x<=roomW;x+=100)wire([[x,0,-10],[x,roomD,-10]],'#234451',.55,'GRID',[],.50);
- for(let y=0;y<=roomD;y+=100)wire([[0,y,-10],[roomW,y,-10]],'#234451',.55,'GRID',[],.50)}
- pushBox(cut,0,0,roomW-2*cut,24,wallH,'#7ca4b5','WALL','Parete posteriore ottagonale',.15);
- pushBox(0,cut,0,24,roomD-2*cut,wallH,'#7ca4b5','WALL','Parete sinistra',.15);
- pushBox(roomW-24,cut,0,24,roomD-2*cut,wallH,'#7ca4b5','WALL','Parete destra',.15);
- pushBox(cut,roomD-24,0,roomW-2*cut,24,wallH,'#7ca4b5','WALL','Parete frontale',.15);
- rotBox(cut/2,cut/2,0,Math.SQRT2*cut,24,wallH,-Math.PI/4,'#7ca4b5','WALL','Smusso posteriore sinistro',.15);
- rotBox(roomW-cut/2,cut/2,0,Math.SQRT2*cut,24,wallH,Math.PI/4,'#7ca4b5','WALL','Smusso posteriore destro',.15);
- rotBox(cut/2,roomD-cut/2,0,Math.SQRT2*cut,24,wallH,Math.PI/4,'#7ca4b5','WALL','Smusso anteriore sinistro',.15);
- rotBox(roomW-cut/2,roomD-cut/2,0,Math.SQRT2*cut,24,wallH,-Math.PI/4,'#7ca4b5','WALL','Smusso anteriore destro',.15);
- const floorOutline=[[cut,0],[roomW-cut,0],[roomW,cut],[roomW,roomD-cut],[roomW-cut,roomD],[cut,roomD],[0,roomD-cut],[0,cut]];
- faces.push({p:floorOutline.map(([x,y])=>[x,y,-5]),color:'#73573f',group:'FLOOR',name:'Pavimento reale schematico · otto lati con smussi piccoli',opa:.22,emphasis:false,normal:[0,0,1]});
- // Mobile bianco: 1500×320×500 stimati, arretrato di 201 mm dal muro interno per accesso I/O.
- const cabX=225,cabY=1720;
- pushBox(cabX,cabY,0,320,1500,500,'#d8ddd8','WHITECAB','Mobile bianco a terra · L1500 P320 H500 mm stimati; portata ignota',.94);
- pushBox(cabX+5,cabY+10,62,310,480,320,'#dfe4de','WHITECAB','Vano aperto sinistro',.50);
- pushBox(cabX+5,cabY+1010,62,310,390,320,'#dfe4de','WHITECAB','Vano aperto destro',.50);
- for(const y of [2220,2540,2860])pushBox(cabX+13,y,18,292,180,148,'#f1f3ef','WHITECAB','Cassetto mobile bianco',.91);
- const lipH=28,lipW=18;
- pushBox(cabX,cabY,500,lipW,1500,lipH,'#a7c4d5','LIP','Spalletta continua posteriore: 28 mm stimati',1);
- pushBox(cabX,cabY,500,320,lipW,lipH,'#a7c4d5','LIP','Spalletta laterale sinistra',1);
- pushBox(cabX,cabY+1482,500,320,lipW,lipH,'#a7c4d5','LIP','Spalletta laterale destra',1);
- if(state.dims)text3([550,2490,533],'FRONTE APERTO',C.accent,10,'DIM');
- cabinetKit(cabX,cabY);
- // Centrata sulla piastra: 185 mm residui per testata del mobile; 51 mm piastra oltre ciascuna estremità torre.
- embedTowerAt(162,1956,569,'cabinet');
- // Fascia dietro I/O: fino a 138 mm liberi tra piastra e muro interno; accesso da testate.
- if(state.clearance)wire([[24,1905,569],[160,1905,569],[160,3035,569],[24,3035,569],[24,1905,569]],'#80d4e8',1.4,'CLEAR',[6,4]);
- // UPS commerciale fuori dal mobile: posto sul pavimento vicino alle prese LAN/230V della parete destra.
- // Ruotato di 90° in pianta: 410 mm lungo il muro, 99 mm verso la stanza, sempre verticale.
- if(state.showUPS){pushBox(1240,140,0,410,99,280,C.ups,'UPS','UPS PowerWalker VI 1500 CSW IEC · 410 lungo parete × 99 P × 280 H',1);
- pushBox(1237,154,190,3,71,55,C.upsFace,'UPS','Pannello LCD anteriore UPS accessibile',1);
- for(let j=0;j<4;j++)pushBox(1651,154,26+j*48,4,25,24,'#66acaf','UPSPORT','Uscita IEC con batteria (schema)',1);}
- // A destra della scrivania: TUTTI e tre con lato lungo parallelo al muro y=0.
- // Scaffale aperto: veri montanti e ripiani, non un volume pieno che nasconde le apparecchiature.
- for(const x of [1970,2472])for(const y of [94,416])pushBox(x,y,0,18,18,980,'#7f553a','RACK','Montante del mobile multilivello, L 520 × P 340 × H 980 mm stimati',1);
- for(const z of [20,220,490,770])pushBox(1970,94,z,520,340,23,'#6c4832','RACK','Ripiano aperto del mobile multilivello',.98);
- pushBox(2035,157,243,340,238,189,'#dde3e6','PRINTER','Brother HL-1110 nel mobile multilivello · 340 × 238 × 189 mm',1);
- pushBox(2000,137,513,220,160,58,'#1f2f38','RACKMODEM','Modem / router nel mobile multilivello · 220 × 160 × 58 mm ipotetici',1);
- // Tutti i quattro satelliti già presenti nel modello, ciascuno su un ripiano e rivolto verso la stanza.
- for(const [x,y,z,h,id,n] of [[2290,158,513,210,'AUDIOLEFT',1],[2390,158,513,210,'AUDIORIGHT',2],[2070,190,793,175,'DESKSATLEFT',3],[2320,190,793,175,'DESKSATRIGHT',4]]){
-  pushBox(x,y,z,70,90,h,'#1f2326',id,`Satellite audio ${n} nel multilivello`,1);
-  pushBox(x+6,y+90,z+10,58,3,h-20,'#46525a',id,`Griglia frontale satellite ${n}`,1);
+function buildAirflow(){
+ for(const [fx,fz] of FANS){
+  const y0=6,z0=BODY.Z0+fz;
+  wire([fx,y0,z0],[fx,y0+120,z0+70],C.air,'AIR',1.6,[6,4],.85);
+  wire([fx,y0+120,z0+70],[fx,y0+235,z0+120],C.air,'AIR',1.6,[6,4],.7);
  }
- pushBox(2600,95,0,400,260,540,'#6e452f','DARKDRAWER','Cassettiera autonoma a terra · lato lungo 400 mm addossato alla parete',.98);
- for(const z of [90,180,270,360,450])pushBox(2604,349,z,392,5,55,'#81563b','DARKDRAWER','Frontale cassetto indipendente',1);
- pushBox(2670,135,540,260,180,360,'#24272b','SUBWOOFER','Subwoofer sopra la cassettiera · ingombro 260 × 180 × 360 mm',1);
- // PRESE REALI sulla parete a DESTRA della postazione.
- // Distanza: ~1000 mm dal termine dello smusso (inizio della parete diritta x=350); quota dal pavimento solo illustrativa.
- const socketX=1350;
- pushBox(socketX-87,23,260,78,18,100,'#e6e1d3','OUTLETAC','Presa elettrica 230 V sulla parete destra · posizione ~1 m dopo lo smusso',1);
- pushBox(socketX+8,23,260,78,18,100,'#dbe7ea','OUTLETLAN','Presa dati Ethernet RJ45 sulla parete destra · accanto alla presa AC',1);
- pushBox(socketX-60,41,298,28,3,32,'#45505a','OUTLETAC','Frutto 230 V (nessun cablaggio fai-da-te)',1);
- pushBox(socketX+32,41,300,30,3,26,'#3d879b','OUTLETLAN','Frutto RJ45',1);
- if(state.wiring){
-  // Canaline a parete distinte: due linee con percorso aderente alla parete, non attraverso la zona sedia.
-  // Rosso = alimentazione AC, blu = rete LAN. Quote delle sezioni illustrative.
-  pushBox(351,27,108,1590,23,17,'#af7569','ACDUCT','Canaletta AC chiusa · ~23×17 mm (ipotesi), parete destra',1);
-  pushBox(351,27,154,1875,20,14,'#478ba1','NETDUCT','Canaletta RJ45 separata · ~20×14 mm, parete destra',1);
-  rotBox(190,190,108,Math.SQRT2*440,23,17,-Math.PI/4,'#af7569','ACDUCT','Curve e giunti lungo la smussatura, no cavi liberi sul pavimento',1);
-  rotBox(195,195,154,Math.SQRT2*435,20,14,-Math.PI/4,'#478ba1','NETDUCT','Canaletta dati lungo il raccordo parete',1);
-  pushBox(27,350,108,23,2850,17,'#af7569','ACDUCT','Canaletta AC dietro il mobile bianco, lontano dalla sedia',1);
-  pushBox(60,350,154,20,2850,14,'#478ba1','NETDUCT','Canaletta LAN dietro il mobile bianco, separata dalla rete elettrica',1);
-  // Risalite dietro il mobile: restano nel corridoio posteriore, separate e senza passare davanti ai cassetti.
-  pushBox(39,2460,108,23,24,455,'#af7569','ACDUCT','Risalita AC nel corridoio dietro la Torre',1);
-  pushBox(79,2500,154,20,20,440,'#478ba1','NETDUCT','Risalita LAN separata dietro la Torre',1);
-  wire([[socketX-50,45,280],[socketX-50,62,185],[1280,125,190],[1245,170,180]],'#d99b82',2.4,'ACFLEX',[5,4],.95);
-  wire([[1400,45,285],[1400,67,174],[2120,67,174],[2120,160,530]],'#69b5ca',2.1,'NETPATCH',[4,5],.96);
-  wire([[2150,63,164],[1350,63,164],[350,63,164],[55,350,164],[55,2500,164],[89,2510,594],[178,2500,748]],'#64c8dc',2.0,'NETPATCH',[4,5],.95);
-  wire([[1650,185,155],[1650,65,118],[350,65,118],[38,352,118],[50,2472,118],[50,2472,563],[178,2470,635]],'#d3a28f',2.2,'ACFLEX',[5,4],.92);
- }
- if(state.dims)dimension([350,95,0],[1350,95,0],'~1000 mm · presa dal fine smusso',[0,0,75],'#89c9de');
- // Scrivania orientata a 45° verso l'angolo smussato.
- const ang=-Math.PI/4, dcx=1180,dcy=1120;
- rotBox(dcx,dcy,770,1200,650,32,ang,'#8a6247','DESK','Piano scrivania ruotato verso l’angolo smussato',.98,true);
- const pt=(lx,ly)=>[dcx+lx*Math.cos(ang)-ly*Math.sin(ang),dcy+lx*Math.sin(ang)+ly*Math.cos(ang)];
- for(const lx of [-530,530])for(const ly of [-260,260]){const [px,py]=pt(lx,ly);rotBox(px,py,0,60,60,770,ang,'#65432d','DESK','Gamba della scrivania',.98)}
- for(const ly of [-268,268]){const [px,py]=pt(0,ly);rotBox(px,py,660,1090,22,108,ang,'#775039','DESK','Fascia strutturale sottopiano',.96)}
- // Bracci VESA a muro: tre monitor dispiegati ad arco, quasi bordo-bordo, senza sovrapporsi.
- function wallArm(ax,ay,bx,by,cx,cy,id,label){
-  const z=1130,col='#94b5bf';
-  rotBox(ax,ay,z-38,83,28,96,Math.atan2(by-ay,bx-ax)+Math.PI/2,col,id,'Piastra a parete · '+label,1);
-  const p1=[bx,by], p0=[ax,ay], p2=[cx,cy];
-  for(const [a,b] of [[p0,p1],[p1,p2]]){const dx=b[0]-a[0],dy=b[1]-a[1],len=Math.hypot(dx,dy),angle=Math.atan2(dy,dx);rotBox((a[0]+b[0])/2,(a[1]+b[1])/2,z,len,24,27,angle,col,id,'Braccio snodato a parete · '+label,.99)}
-  pushBox(bx-19,by-19,z-15,38,38,44,'#ced9db',id,'Snodo centrale · '+label,1);
-  rotBox(cx,cy,z-47,105,36,90,ang,col,id,'Piastra VESA posteriore · '+label,1);
-  if(state.wiring)wire([[ax,ay,z-40],[bx,by,z-40],[cx,cy,z-40]],'#75abb9',1.7,id,[3,5],.85);
- }
- // Monitor: in pianta due distanze minime misurate nel modello = circa 18 e 15 mm.
- // Un bordo tocca quasi l'altro, senza alcuna intersezione fra i volumi delle scocche.
- wallArm(35,1260,170,1190,301,1070,'ARMLEFT','sinistro VGA');
- wallArm(175,175,355,355,690,600,'ARMCENTER','centrale HDMI');
- wallArm(1370,35,1325,138,1234,195,'ARMRIGHT','destro intermedio');
- const vgaAngle=-1.05,midAngle=-.46;
- rotBox(301,1070,970,442,42,325,vgaAngle,'#141c21','MONVGA','Acer V193W · scocca a muro, distacco ~19 mm dal centrale',.98);
- rotBox(301+23*(-Math.sin(vgaAngle)),1070+23*Math.cos(vgaAngle),985,405,5,295,vgaAngle,'#456383','MONVGA','Schermo Acer VGA sospeso',.99);
- rotBox(690,600,955,740,42,430,ang,'#11181e','MONHDMI','Monitor principale HDMI · supportato dalla parete smussata',.98);
- rotBox(690+23/Math.sqrt(2),600+23/Math.sqrt(2),972,700,5,397,ang,'#357a94','MONHDMI','Schermo HDMI centrale sospeso',.99);
- rotBox(1234,195,963,590,44,360,midAngle,'#141c21','MONMID','Monitor intermedio · ~15 mm dal centrale',.98);
- rotBox(1234+24*(-Math.sin(midAngle)),195+24*Math.cos(midAngle),978,550,5,331,midAngle,'#345f83','MONMID','Schermo intermedio sospeso',.99);
- const [px,py]=pt(365,70);
- rotBox(px,py,808,360,250,22,ang-.08,'#2d3136','LAPTOP','Laptop chiuso / dock sulla scrivania',.97);
- // SEDIA GAMING: rappresentazione geometrica articolata (non un blocco pieno).
- // La scheda del prodotto Amazon non e' stata associata in modo verificato a questo modello:
- // ingombri prudenziali, sedia reale da identificare con precisione.
- // Il fronte locale della seduta è -Y; orientarlo verso il centro del monitor HDMI (690,600).
- const ccx=1730,ccy=1700,chairAngle=Math.atan2(690-ccx,ccy-600);
- const cpt=(lx,ly)=>[ccx+lx*Math.cos(chairAngle)-ly*Math.sin(chairAngle),ccy+lx*Math.sin(chairAngle)+ly*Math.cos(chairAngle)];
- // Base stellare con CINQUE razze e cinque ruote; piantone centrale.
- pushBox(ccx-49,ccy-49,64,98,98,60,'#56606b','CHAIR','Mozzo a cinque razze della sedia',1);
- for(let k=0;k<5;k++){
-  const a=k*2*Math.PI/5+0.35;
-  const ox=ccx+155*Math.cos(a),oy=ccy+155*Math.sin(a);
-  rotBox(ox,oy,88,330,52,36,a,'#343e49','CHAIR','Razza '+(k+1)+' della base a cinque stelle',.98);
-  const wx=ccx+322*Math.cos(a),wy=ccy+322*Math.sin(a);
-  rotBox(wx,wy,12,73,56,60,a,'#1b252d','CHAIR','Ruota piroettante '+(k+1),.97);
- }
- pushBox(ccx-37,ccy-37,120,74,74,350,'#82909a','CHAIR','Colonna a gas regolabile della sedia',.98);
- pushBox(ccx-132,ccy-107,440,264,214,40,'#212932','CHAIR','Meccanismo seduta e piastra inclinazione',.99);
- rotBox(ccx,ccy,478,540,515,87,chairAngle,'#2e3744','CHAIR','Seduta imbottita, sagomata con guance laterali',1);
- const [seatX,seatY]=cpt(0,-10);
- rotBox(seatX,seatY,559,466,445,21,chairAngle,'#42606c','CHAIR','Cuscino seduta e rivestimento',.99);
- // Schienale dietro al bacino e due fianchetti laterali con cuscino lombare.
- const [bx,by]=cpt(0,235);
- rotBox(bx,by,558,525,118,673,chairAngle,'#2d3946','CHAIR','Schienale alto da sedia gaming',.99);
- const [backX,backY]=cpt(0,205);
- rotBox(backX,backY,650,436,105,463,chairAngle,'#43515b','CHAIR','Schiena interna imbottita',.99);
- const [lumX,lumY]=cpt(0,160);
- rotBox(lumX,lumY,758,335,112,92,chairAngle,'#7a8e94','CHAIR','Cuscino lombare',.99);
- for(const u of [-1,1]){
-  const [ax,ay]=cpt(u*270,-3);
-  pushBox(ax-23,ay-23,535,46,46,178,'#687782','CHAIR','Colonnina bracciolo regolabile',.98);
-  rotBox(ax,ay,714,80,325,42,chairAngle,'#242e36','CHAIR','Bracciolo imbottito',.99);
-  const [sx,sy]=cpt(u*246,260);
-  rotBox(sx,sy,632,67,135,505,chairAngle,'#293948','CHAIR','Aletta laterale schienale',.98);
- }
- const [hx,hy]=cpt(0,278);
- rotBox(hx,hy,1178,355,125,94,chairAngle,'#243543','CHAIR','Poggiatesta integrato imbottito',.99);
- // NESSUN secondo PC tower a pavimento: e' tutta nella H-7 sul mobile bianco.
- if(state.dims){
-  dimension([225,1720,0],[545,1720,0],'320 mm · profondità mobile',[0,-84,0],'#81d6d8');
-  dimension([225,1720,0],[225,3220,0],'1500 mm · lunghezza mobile',[-100,0,0],'#81d6d8');
-  dimension([160,1905,569],[610,1905,569],'450 mm · piastra',[0,-85,0],'#e7c38a');
-  dimension([160,1905,569],[160,3035,569],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
-  dimension([160,1905,569],[160,1905,903],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
-  if(state.scene!=='cabinet'){
-   dimension([0,0,0],[4300,0,0],'4300 mm · stanza stimata',[0,-118,0],'#a8d6ee');
-   dimension([0,0,0],[0,4300,0],'4300 mm · stanza stimata',[-118,0,0],'#a8d6ee');
-  }
-  dimension([24,1905,569],[160,1905,569],'136 mm · retro libero nominale',[0,-145,0],'#80d4e8');
-  text3([390,2470,944],'UNA TORRE H-7 · L 1028 × P 429 × H 334 mm · RETRO VERSO PARETE',C.accent,10,'DIM');
-  text3([285,1870,1000],'spalletta H~28 mm · appoggi H51 mm · piastra H18 mm',C.accent,10,'DIM');
-  if(state.scene!=='cabinet'){
-   text3([810,640,1530],'MONITOR A MURO · luce 15–19 mm in pianta',C.accent,11,'DIM');
-   text3([2720,480,115],'MULTILIVELLO + CASSETTIERA · SUBWOOFER SOPRA',C.accent,10,'DIM');
-  }
- }
- if(state.scene==='cabinet'){
-  const hidden=new Set(['UPS','UPSPORT','OUTLETAC','OUTLETLAN','ACDUCT','NETDUCT','ACFLEX','NETPATCH','WALL','FLOOR','RACK','RACKMODEM','PRINTER','DARKDRAWER','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','DESK','CHAIR','MONVGA','MONHDMI','MONMID','ARMLEFT','ARMCENTER','ARMRIGHT','LAPTOP','DESKSATLEFT','DESKSATRIGHT']);
-  faces=faces.filter(f=>!hidden.has(f.group));
-  lines=lines.filter(l=>!hidden.has(l.group));
-  labels=labels.filter(l=>!hidden.has(l.group));
- }
- return roomW;
+ text3([BODY.L/2,BODY.D+10,BODY.Z0+250],'ingresso fronte → uscita alto/retro (non CFD)',C.air,11,'AIR');
 }
 
-function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;
- $('variant-pill').textContent='7 PC · NESSUN VANO EXTRA';
- if(state.scene==='lipdetail'){ $('variant-pill').textContent='KIT RIMOVIBILE · VISTA ESPLOSA';return lipDetailScene();}
- if(state.scene==='standalone'){ $('variant-pill').textContent='TORRE AUTO-PORTANTE · SENZA MOBILE'; return standaloneScene(); }
- if(['room','workstation','cabinet'].includes(state.scene)){
-  $('variant-pill').textContent='UNA TORRE H-7 · mobile bianco';
-  return roomScene();
- }
- if(state.scene==='ups'){
-  // Detail focuses UPS and one neighbouring structural end-frame; no enclosure is placed on UPS.
-  pushBox(width-25,16,21,18,405,25,C.frame,'FRAME','Fianco esterno della Torre senza collegamento di carico all’UPS',.99);
-  pushBox(width-28,20,34,18,365,9,C.frame2,'FRAME','Struttura di confine PC / banco dischi',.96);
-  diskBank('right',state.n,width);
-  upsSidecar(width);
-  return width;
- }
- if(state.scene==='module'||state.scene==='joint'||state.scene==='supports'||state.scene==='guides'){
-  const i=clamp(state.focusIndex,0,6),cx=178+(i+.5)*96;
-  pushBox(cx-56,19,21,112,15,26,C.frame,'FRAME','Trave anteriore della campata isolata',1);
-  pushBox(cx-56,384,21,112,15,26,C.frame,'FRAME','Trave posteriore della campata isolata',1);
-  for(const x of [cx-54,cx+44])pushBox(x,20,24,10,379,18,C.frame2,'FRAME','Traversa strutturale trasversale',.98);
-  pushBox(cx-53,385,43,17,15,70,C.frame2,'BACKBONE','Montante posteriore basso, estraneo all’appoggio della cartuccia',1);
-  pushBox(cx+37,385,43,17,15,70,C.frame2,'BACKBONE','Montante posteriore basso, estraneo all’appoggio della cartuccia',1);
-  pushBox(cx-53,387,43,107,15,11,C.frame,'BACKBONE','Trave posteriore bassa della campata isolata',.98);
-   // Isolated front/back exterior top ties and segment end uprights.
-   for(const yy of [56,332]){
-    pushBox(cx-56,yy,251,112,11,17,C.frame2,'GUIDEFRAME','Tratto di traversa esterna superiore della campata',1);
-    for(const xx of [cx-53,cx+44])pushBox(xx,yy,39,10,11,229,C.frame2,'GUIDEFRAME','Montante perimetrale / traversa alta della campata',.98);
-   }
-  module(i,width);
-  if(state.dims){
-   dimension([cx-48,66,40],[cx+48,66,40],'96 mm · passo X',[0,-65,0]);
-   dimension([cx-4,74,60],[cx-4,323,60],'249 mm · profondità corpo',[66,0,0],'#79dbd3');
-   dimension([cx-4,74,72],[cx-4,74,311],'239 mm · altezza telaio',[-73,0,0],'#86aff0');
-   dimension([cx-11.5,225,182],[cx-1.5,225,182],'10 mm · M3 (ipotesi)',[0,0,29],'#ffcd83');
-   text3([cx,45,120],'6 supporti M3 • foratura da rilevare',C.accent,10,'DIM');
-   if(state.scene==='joint')text3([cx,71,34],'BATTUTE z=52 e z=89 mm',C.accent,10,'DIM');
-   if(state.scene==='guides'){
-    dimension([cx+20,73,89],[cx+20,73,240],'151 mm · leva laterale (studio)',[56,0,0],'#81d6d8');
-    dimension([cx-6,73,291],[cx+6,73,291],'12 mm · luce guida',[0,-37,30],'#81d6d8');
-    text3([cx,192,331],'Montante 8 mm · 2 mm gioco/lato (da provare)',C.accent,10,'DIM');
-   }
-  }
-  if(state.scene==='joint'||state.scene==='guides'){for(const yy of [71,291]){wire([[cx,yy+15,139],[cx,yy+15,91]],'#f4cb84',1.6,'ALIGN',[5,5]);wire([[cx,yy+15,91],[cx-5,yy+15,97]],'#f4cb84',1.6,'ALIGN');wire([[cx,yy+15,91],[cx+5,yy+15,97]],'#f4cb84',1.6,'ALIGN')}}
-  
-  return width;
- }
-
- // Ground grid at 100 mm, extended to sidecar if present.
- if(state.grid){for(let x=-100;x<width+(state.showUPS?280:100);x+=100)wire([[x,-80,-15],[x,state.showUPS?570:510,-15]],'#234451',.7,'GRID',[],.7);
- for(let y=-80;y<(state.showUPS?570:550);y+=100)wire([[-90,y,-15],[width+(state.showUPS?250:90),y,-15]],'#234451',.7,'GRID',[],.7)}
- // nine-cell comb frame, frontal and rear horizontal longitudinal beams; segmented joints every pitch
- pushBox(5,16,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale anteriore',.99);
- pushBox(5,411,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale posteriore',.99);
- pushBox(5,17,11,18,405,25,C.frame2,'FRAME','Trave laterale sinistra',.96);
- pushBox(width-23,17,11,18,405,25,C.frame2,'FRAME','Trave laterale destra',.96);
- for(let i=0;i<=state.n;i++){
- const x=178+i*96;
- pushBox(x-5,17,22,10,407,19,C.frame,'FRAME','Traversa di campata stampata',.88);
- pushBox(x-7,18,42,14,31,12,C.corner,'FRAME','Giunto incastro trave anteriore',.93);
- pushBox(x-7,393,42,14,31,12,C.corner,'FRAME','Giunto incastro trave posteriore',.93);
- }
- // Single paired CENTRAL FOOT, mechanically tied by a printed crossmember below the docks.
- const centerFoot=width/2;
- pushBox(centerFoot-9,23,21,18,395,17,C.frame,'FOOT','Traversa mediana strutturale tra longheroni frontale e posteriore',1);
- for(const x of [23,163,centerFoot,limit+15,width-23])for(const y of [25,404]){
-  const central=x===centerFoot;
-  pushBox(x-12,y-13,0,24,27,13,central?'#b7d7a7':'#2e5660',central?'FOOT':'FRAME',central?'Piedino centrale regolabile / antivibrante · da dimensionare':'Piede antivibrante',1);
-  pushBox(x-10,y-10,10,20,20,16,central?C.frame:C.frame2,central?'FOOT':'FRAME','Colonnina piena di trasferimento carico: piedino -> trave di base',1);
- }
- // side storage banks isolated from motherboard carriers
- diskBank('left',state.n,width);diskBank('right',state.n,width);
- rearSkeleton(width);
- guideBridge(width);
- // dual sided lateral beams
- pushBox(146,43,25,11,339,18,C.frame,'FRAME','Spina divisoria banco dischi / compute',.97);
- pushBox(limit+10,43,25,11,339,18,C.frame,'FRAME','Spina divisoria compute / banco dischi',.97);
- for(let i=0;i<7;i++)module(i,width);
- coolingKit(width);
-  // Placeholder for factory-certified cabling only; NO 230 V printed distribution boards or bare mains.
-  // UPS rear IEC outputs are a capacity CONSTRAINT (4 backed up + 4 surge-only), not 7 backed-up sockets.
- if(state.wiring){pushBox(52,429,50,width-104,11,15,C.cable,'POWER','Canalina posteriore elettrica protetta',.92);
- pushBox(width-92,415,53,53,27,31,C.psu,'POWER','Punto di raccolta cavi AC commerciali · NON è un distributore 230V autocostruito',.97);
- pushBox(width-30,434,62,18,6,10,C.orange,'POWER','Cavi AC commerciali da UPS, NON contatto scoperto',1);
- for(let j=0;j<5;j++){const x=230+j*196;if(x<width-170){pushBox(x-12,414,48,24,14,15,'#426d73','POWER','Fascetta fissacavo posteriore',1);wire([[x,423,67],[x,426,88]],C.cable,2,'POWER')}}}
- if(state.scene!=='thermal')upsSidecar(width);
- // Overall schematic dimensions (units = millimetres); only authoritative within this drawing.
- // 0..width overall including end allowance, y=16..445 overall incl AC conduit,
- // z=0..334 top of unloaded handle (raised modules intentionally excluded).
- dimension([0,16,0],[width,16,0],`${width.toLocaleString('it-IT')} mm · L`,[0,-79,0]);
- dimension([width,16,0],[width,445,0],'429 mm · P',[75,0,0],'#79dbd3');
- dimension([width,445,0],[width,445,334],'334 mm · H',[98,0,0],'#86aff0');
- dimension([178,45,40],[274,45,40],'96 mm · passo',[0,-8,0],'#f5c17b');
- text3([width*.5,465,50],'RETRO  ·  LAN / USB / AC',C.metal,10,'DIM');
- text3([width*.5,-7,52],'FRONTE  ·  ACCESSO AI MODULI',C.metal,10,'DIM');
- if(state.showUPS&&state.scene!=='thermal'){
-  dimension([0,-116,0],[width+200,-116,0],`${(width+200).toLocaleString('it-IT')} mm · INGOMBRO LATERALE CON UPS`,[0,-25,0],'#c6c9ad');
-  dimension([width+193,8,0],[width+193,535,0],'~535 mm · con corridoio cavi',[87,0,0],'#d8ad82');
- }
- $('variant-pill').textContent='7 PC · NESSUN VANO EXTRA';if(state.scene==='tower')$('scene-subtitle').textContent=state.showUPS?`${width} × 429 × 334 mm corpo; +200 mm fianco UPS; retro libero fino a ~535 mm`:`${width} × 429 × 334 mm · solo corpo`;return width;
+function buildUPS(){
+ const x=BODY.L+40,y=10,z=0;
+ box(x,y,z,99,410,280,C.ups,'UPS');
+ box(x+6,y-1,z+40,87,3,150,'#2d3b44','UPS');
+ for(let k=0;k<4;k++)box(x+8+k*21,y-2,z+196,15,4,14,C.io,'UPS');
+ for(let k=0;k<4;k++)box(x+8+k*21,y-2,z+226,15,4,14,C.frame2,'UPS');
+ text3([x+49,y-12,z+292],'UPS 99×410×280 · 13,1 kg',C.guide,10,'UPS');
 }
-function basis(){const a=state.yaw,e=state.pitch,dir=[Math.sin(a)*Math.cos(e),Math.cos(a)*Math.cos(e),Math.sin(e)];return {right:[Math.cos(a),-Math.sin(a),0],up:[-Math.sin(a)*Math.sin(e),-Math.cos(a)*Math.sin(e),Math.cos(e)],dir}}
-let cam;
+
+function buildGrid(){
+ const step=100;
+ for(let x=0;x<=BODY.L;x+=step)wire([x,-40,0],[x,BODY.D+40,0],'#27424b','GRID',.6,[],.5);
+ for(let y=0;y<=BODY.D;y+=step)wire([-40,y,0],[BODY.L+40,y,0],'#27424b','GRID',.6,[],.5);
+}
+
+function makeGeometry(){
+ faces=[];lines=[];labels=[];pick=[];
+ const s=state.scene;
+ const standalone=s==='standalone', detail=(s==='module'||s==='corrections'||s==='exploded');
+ box(-120,-160,0, BODY.L+520, BODY.D+340, 4, C.floor,'FLOOR');
+ if(state.grid)buildGrid();
+ if(!detail){
+   buildChassis(!standalone);
+   if(state.disks)buildDisks();
+   if(state.fans&&s!=='rear')buildFans();
+   if(s==='vent'||state.air)buildAirflow();
+   buildUPS();
+   if(s==='rear')buildIORear();
+ }else{
+   buildCarrier(CARRIERS.indexOf(state.carrier));
+   if(s==='corrections')buildCorrectionNotes();
+   if(s==='exploded')buildLiftPath();
+ }
+ if(s==='rear'){dim([BODY.L+35,-10,BODY.Z0-10],[BODY.L+35,BODY.D+10,BODY.Z0-10],'~136 mm corridoio retro (non verificato)',[70,0,0],C.io)}
+ if(s==='assembled'){
+   dim([0,-26,BODY.Z0-18],[BODY.L,-26,BODY.Z0-18],'1028 mm · corpo',[0,-14,0],C.guide);
+   dim([END+8,-26,BODY.Z0-18],[END+104,-26,BODY.Z0-18],'96 mm · passo',[0,-26,0],C.guide);
+   text3([BODY.L/2,BODY.D/2,BODY.Z0+BODY.H+20],'7 cartucce · nessun vano extra',C.guide,11,'FRAME');
+ }
+}
+
+function buildIORear(){
+ const y=BODY.D+4,z=BODY.Z0;
+ for(const id of CARRIERS){const x=carrierStart(CARRIERS.indexOf(id))+20;
+  box(x,y,z+120,18,3,42,C.io,'IO');
+  for(let k=0;k<3;k++)box(x+3+k*5,y-1,z+150,3,2,7,C.cable,'IO');
+ }
+ text3([BODY.L/2,y+8,z+180],'RETRO · LAN / USB / AC verso muro',C.io,11,'IO');
+ wire([BODY.L+20,y+30,z],[BODY.L+20,y+30,z+BODY.H],C.ghost,'IO',1.2,[5,5],.7);
+}
+
+function buildCorrectionNotes(){
+ const i=CARRIERS.indexOf(state.carrier),x0=carrierStart(i),y0=74,z0=BODY.Z0;
+ // swept volume of the insert top bar during lift (C-1 clearance proof)
+ box(x0+6,y0+121.5,z0+232,14,6,34,'#3a7d74','GUIDE',.22);
+ dim([x0-30,y0-14,z0+10],[x0-30,y0-14,z0+245],'235 mm · sede→guida',[-16,0,0],C.guide);
+ dim([x0-46,y0-14,z0+10],[x0-46,y0-14,z0+232],'232 mm · insert C-2a',[-30,0,0],C.green);
+ dim([x0+86,y0+121,z0+4],[x0+86,y0+121,z0+10],'C-3: top 10',[14,0,0],C.brace);
+ text3([x0+40,y0+125,z0+262],'C-1: guida solo ai montanti → corsa libera',C.guide,10,'GUIDE');
+}
+
+function buildLiftPath(){
+ const i=CARRIERS.indexOf(state.carrier),x=carrierStart(i)+40,y=74+125,z=BODY.Z0+10;
+ wire([x,y,z],[x,y,z+150],C.ghost,'DIM',1.2,[6,4],.85);
+ text3([x,y,z+160],state.lift+' mm · corsa verticale (guida splitta)',C.guide,11,'DIM');
+ text3([x,y-40,z+130],'scollegare i cavi e rimuovere 2 fermi prima del sollevamento',C.ghost,10,'DIM');
+}
+
+function basis(){const a=state.yaw,e=state.pitch;return{right:[Math.cos(a),-Math.sin(a),0],up:[-Math.sin(a)*Math.sin(e),-Math.cos(a)*Math.sin(e),Math.cos(e)],dir:[Math.sin(a)*Math.cos(e),Math.cos(a)*Math.cos(e),Math.sin(e)]}}
 function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
-function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],depth=dot(v,cam.b.dir),scale=cam.base/(1-depth/cam.distance);
- return {x:W/2+dot(v,cam.b.right)*scale,y:H/2-dot(v,cam.b.up)*scale,depth,scale};}
+let cam;
+function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],depth=dot(v,cam.b.dir),scale=cam.base/(1-depth/cam.distance);return{x:W/2+dot(v,cam.b.right)*scale,y:H/2-dot(v,cam.b.up)*scale,depth:depth,scale:scale}}
 function faceAvg(p){return p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length,a[2]+q[2]/p.length],[0,0,0])}
-function polygonPath(points){const path=new Path2D();points.forEach((p,i)=>i?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();return path}
-function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;refreshPartPicker();
- const detail=['module','supports','guides'].includes(state.scene),joint=state.scene==='joint',rear=state.scene==='rear',upsFocus=state.scene==='ups',room=['room','workstation','cabinet'].includes(state.scene),focus=state.scene==='workstation',cabinetFocus=state.scene==='cabinet',solo=state.scene==='standalone',lip=state.scene==='lipdetail';
- const frameWidth=lip?1600:solo?1950:cabinetFocus?2150:focus?2900:room?6600:(upsFocus?680:joint?560:detail?590:rear?width*1.34:(width+(state.showUPS&&state.scene!=='thermal'?225:0))*1.52);
- const frameHeight=lip?1600:solo?1550:cabinetFocus?1800:focus?2400:room?6400:(upsFocus?700:joint?700:detail?700:rear?760:780);
- const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.18,4)*state.zoom;
- cam={b,center:lip?[215,850,370]:solo?[370,860,190]:cabinetFocus?[390,2470,690]:focus?[1180,1100,740]:room?[2150,2150,460]:(upsFocus?[width+80,230,155]:joint?[cx,192,157]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:lip?2200:solo?2600:cabinetFocus?3200:focus?4900:room?10800:Math.max(850,width*1.45),base:dimScale};
+
+function cameraFor(s){
+ const detail=(s==='module'||s==='corrections'||s==='exploded');
+ const i=CARRIERS.indexOf(state.carrier),cx=carrierStart(i)+40;
+ const def={assembled:[2.42,.42],rear:[0.18,.30],vent:[2.66,.36],module:[2.25,.52],corrections:[2.25,.50],exploded:[2.32,.40],standalone:[2.42,.40]}[s]||[2.42,.42];
+ if(state.scene!=='manual'){state.yaw=def[0];state.pitch=def[1]}
+ let center,base;
+ if(detail){center=[cx,198,BODY.Z0+132];base=Math.min(W/520,H/560)*1.05}
+ else if(s==='standalone'){center=[BODY.L/2+120,BODY.D/2,BODY.Z0/2+40];base=Math.min(W/1750,H/1100)*1.05}
+ else if(s==='rear'){center=[BODY.L/2,BODY.D/2,BODY.Z0+BODY.H/2];base=Math.min(W/1500,H/900)*1.02}
+ else{center=[BODY.L/2,BODY.D/2,BODY.Z0+BODY.H/2];base=Math.min(W/1650,H/1000)*1.02}
+ return{center:center,base:base*state.zoom,distance:detail?2600:5200,b:basis()};
+}
+
+function redraw(){
+ makeGeometry();cam=cameraFor(state.scene);refreshPicker();
  ctx.clearRect(0,0,W,H);
- const grd=ctx.createRadialGradient(W*.5,H*.45,90,W*.5,H*.45,Math.max(W,H)*.75);grd.addColorStop(0,'#15303c');grd.addColorStop(1,'#0a1620');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
- // distant vignette horizon / front/back guidance
+ ctx.fillStyle='#0a1923';ctx.fillRect(0,0,W,H);
  const ordered=[];
- for(const f of faces){const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({...f,center,pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],b.dir)})}
+ for(const f of faces){const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({f:f,center:center,pp:pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],cam.b.dir)})}
  ordered.sort((a,z)=>a.depth-z.depth);
  pick=[];
  const light=[.36,-.54,.77];
- for(const f of ordered){const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.12);let opacity=f.opa;
- if(state.xray && (f.group==='FRAME' || /^P\d/.test(f.group) || ['WALL','FLOOR','WHITECAB','DARKDRAWER','PRINTER','MODEM','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','RACK','DESK','CHAIR','MONHDMI','MONVGA','MONMID','LAPTOP','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT'].includes(f.group)))opacity*=['room','workstation','cabinet','standalone'].includes(state.scene)?.75:.30;
- if(f.group==='GRID')continue;
- const chosen=f.group===state.selected;
- ctx.fillStyle=tint(f.color,chosen?Math.min(bright*1.18,1.3):bright,opacity);
- ctx.fill(path);ctx.lineWidth=chosen?1.15:.55;ctx.strokeStyle=chosen?'rgba(255,221,148,.8)':'rgba(2,16,25,.46)';ctx.stroke(path);
- if(f.group && f.group!=='DIM')pick.push({path,group:f.group,name:f.name});
+ for(const o of ordered){const f=o.f,path=new Path2D();o.pp.forEach((p,k)=>k?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();
+  const chosen=f.group&&f.group===state.selected;
+  const bright=clamp(.67+.33*dot(f.normal,light),.35,1.14);
+  ctx.fillStyle=tint(f.color,chosen?Math.min(bright*1.2,1.3):bright,f.opacity);
+  ctx.fill(path);ctx.lineWidth=chosen?1.3:.5;ctx.strokeStyle=chosen?'rgba(255,221,148,.85)':'rgba(2,16,25,.45)';ctx.stroke(path);
+  if(f.group&&f.group!=='FLOOR'&&f.group!=='GRID')pick.push({path:path,group:f.group,name:f.group});
  }
- const orderedLines=lines.map(l=>({...l,pp:l.points.map(projection),depth:l.points.reduce((acc,p)=>acc+dot([p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],b.dir)/l.points.length,0)})).sort((a,b)=>a.depth-b.depth);
- for(const l of orderedLines){if(l.group==='GRID'&&!state.grid||l.group==='DIM'&&!state.dims||l.group==='CLEAR'&&!state.clearance)continue;
- ctx.beginPath();l.pp.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.lineWidth=l.width*(state.selected===l.group?1.6:1)*Math.min(1.65,Math.max(.7,state.zoom));ctx.strokeStyle=tint(l.color,1,l.opa*(state.xray&&l.group==='FRAME'?.38:1));ctx.setLineDash(l.dash);ctx.stroke();ctx.setLineDash([])}
- if((state.labels && state.selected)||state.dims){for(const l of labels){if(!((l.group==='DIM'&&state.dims)||(l.group!=='DIM'&&state.labels&&l.group===state.selected)))continue;const p=projection(l.pos);ctx.save();ctx.font=`${l.size<12?'600':'800'} ${l.size}px system-ui, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';const m=ctx.measureText(l.value).width;if(l.group==='DIM'){ctx.fillStyle='#0e2630da';ctx.fillRect(p.x-m/2-6,p.y-9,m+12,18)}else{ctx.fillStyle='#0c222dc5';ctx.fillRect(p.x-m/2-5,p.y-9,m+10,18)}ctx.fillStyle=l.color;ctx.fillText(l.value,p.x,p.y);ctx.restore()}}
- // XYZ mini axes, screen-space, from world basis
- const orig={x:W-69,y:76},axis=[[80,0,0,'X','#f5aa62'],[0,80,0,'Y','#6dd9d0'],[0,0,80,'Z','#93b3ef']];
- for(const ax of axis){let p=projection([cam.center[0]+ax[0],cam.center[1]+ax[1],cam.center[2]+ax[2]]),c=projection(cam.center);let dx=(p.x-c.x)*.45,dy=(p.y-c.y)*.45;let k=25/Math.max(5,Math.hypot(dx,dy));dx*=k;dy*=k;ctx.strokeStyle=ax[4];ctx.fillStyle=ax[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(orig.x,orig.y);ctx.lineTo(orig.x+dx,orig.y+dy);ctx.stroke();ctx.font='700 11px system-ui';ctx.fillText(ax[3],orig.x+dx*1.29,orig.y+dy*1.29)}
+ const ol=lines.map(l=>({l:l,pp:l.p.map(projection),depth:l.p.reduce((a,p)=>a+dot([p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],cam.b.dir)/l.p.length,0)})).sort((a,b)=>a.depth-b.depth);
+ for(const o of ol){const l=o.l;if(l.group==='GRID'&&!state.grid)continue;ctx.beginPath();o.pp.forEach((p,k)=>k?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.lineWidth=l.width*Math.min(1.6,Math.max(.7,state.zoom));ctx.strokeStyle=tint(l.color,1,l.opacity);ctx.setLineDash(l.dash);ctx.stroke();ctx.setLineDash([])}
+ for(const l of labels){if(l.group==='DIM'||(state.labels&&l.group!=='GRID')){const p=projection(l.pos);ctx.save();ctx.font=`700 ${l.size}px system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';const m=ctx.measureText(l.value).width;ctx.fillStyle='#0c222dcb';ctx.fillRect(p.x-m/2-5,p.y-9,m+10,18);ctx.fillStyle=l.color;ctx.fillText(l.value,p.x,p.y);ctx.restore()}}
 }
-function dimensions(){const r=vp.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
-function clearSelection(){state.selected=null;state.selectedName='';$('inspector').hidden=true;tip.style.opacity=0;redraw()}
-function select(id,name='',at=null){state.selected=id;state.selectedName=name;
- if(/^[PA]\d$/.test(id))state.focusIndex=Math.min(6,Math.max(0,+id.slice(1)-1));
- const title=$('part-title'),desc=$('part-desc'),tags=$('part-tags');let t='Elemento',d='',tt=[];
- if(/^P\d$/.test(id)){t=`Modulo PC · ${id}`;d='Telaio mobile uguale per tutte le campate (passo 96 mm); X stampata completa e dietro la PCB, collegata a quattro nodi perimetrali. Sei distanziatori M3 metallici tengono la scheda lontana dalla stampa: i fori raffigurati sono indicativi, vanno rilevati sulla scheda reale. Il peso verticale arriva alle due sedi inferiori collegate alle traverse di base, i carichi laterali alle guide alte su fronte e retro; NON alle X basse dello schienale. Prima dell’estrazione scollegare alimentazione e I/O e togliere entrambi i fermi.';tt=['6 appoggi M3 metal · schema','X stampata completa','PCB distaccata dal polimero','foratura donor-specific']}
- else if(/^A\d$/.test(id)){t=`Adattatore stampato · ${id}`;d='La motherboard non appoggia direttamente sulla stampa. Sei distanziali metallici M3 (10 mm illustrativi) attraversano l’intercapedine tra piazzole dell’adattatore e PCB. L’adattatore ha una X a due diagonali complete, nodo centrale pieno e quattro puntoni verso traverse superiore e inferiore della cartuccia. Le coordinate dei sei fori restano da confrontare con la motherboard donatrice, senza forzarne la scheda.';tt=['6 distanziali M3','diagonali continue','4 puntoni verso carrello','foratura da misurare']}
- else if(id==='DOCK'){t='Sede di appoggio reale del cassetto';d='Ogni linguetta mobile entra dall’alto nel ricevitore fisso a U: il fondo è a z=52 mm e la spalla sulle guance è a z=89 mm. La U si collega tramite traversini inferiori ai due longheroni fissi e alle traverse della campata, poi al telaio di base; NON alle X posteriori. Fermo anti-sollevamento separato e rimovibile, ancora da dimensionare.';tt=['2 sedi inferiori','costole di rinforzo','guida superiore distinta','portata da testare']}
- else if(id==='LOCK'){t='Due fermi di ritenuta indipendenti';d='Una spina anteriore e una posteriore passano 4 mm sopra le spalle delle sedi, impedendo il sollevamento oltre quel gioco. Si estraggono a mano prima di sollevare il modulo, dopo avere scollegato tutti i cavi. Staffe, fori e carichi sono da progettare e testare: la demo li tratta come entrambi sbloccati con un comando.';tt=['anteriore + posteriore','4 mm gioco ipotetico','prima scollegare i cavi','prototipo da testare']}
- else if(id==='GUIDE'){t='Guide alte anti-oscillazione';d='Due coppie di guance fisse, davanti e dietro, abbracciano con gioco il montante verticale di 8 mm. La luce illustrativa è 12 mm: 2 mm per lato, valore da verificare in prototipo secondo stampante, materiale e temperatura. Gli sforzi laterali vanno alle traverse esterne (davanti y=56 mm; dietro y=332 mm), poi ai montanti e alla base; la corsia superiore del cassetto resta aperta per l’estrazione verticale.';tt=['2 stazioni per vano','luce 12 / guida 8 mm','apertura sopra libera','rigidezza da provare']}
- else if(id==='GUIDEFRAME'){t='Traverse superiori perimetrali';d='Due binari orizzontali perimetrali paralleli al fronte e al retro, fuori dall’ingombro mobile y=74–323 mm. Segmentati al passo 96 mm, collegati a montanti ogni tre campate e rinforzati alla base. I giunti e il fissaggio finale vanno progettati per flessione e taglio: nessuna certificazione strutturale è ancora disponibile.';tt=['fuori dal percorso dei moduli','giunti ogni 96 mm','montanti ogni 3 vani','prove torsione necessarie']}
- else if(id==='FOOT'){t='Coppia di piedini centrali';d='Due piedini antivibranti sotto la mezzeria, uno davanti e uno dietro, collegati tramite rialzi verticali alle travi principali e una traversa mediana portante sotto le sedi dei cassetti. Riduce la luce libera delle travi lunghe, ma non è una prova della portata definitiva. Altezza e appoggio regolabile da validare sul piano reale.';tt=['2 piedini', 'traversa centrale', 'meno flessione globale','portata da verificare']}
- else if(id==='BACKBONE'){t='Schienale libero alle prese';d='Le grandi X alte sono state eliminate. Due triangoli bassi integrati (sotto quota z=112 mm) irrigidiscono la base; restano montanti snelli tra i vani e una traversa alta sopra le prese. Non sostengono le cartucce: il carico scende dalle linguette nelle sedi di base e poi nelle travi inferiori. La rigidezza va ancora verificata con prove e carichi reali.';tt=['X basse complete','porta I/O z=126–209 mm','NON porta le cartucce','test flessione necessario']}
- else if(id==='IO'){t='Pannello delle prese sul retro';d='Piastra posteriore con LAN RJ45, USB e fascetta di scarico della trazione dei cavi. Il pannello rappresenta un possibile riporto delle porte: ogni cavo si scollega prima di estrarre la cartuccia. Non è un backplane elettronico.';tt=['LAN / USB','scollegabile','accessibile dal retro']}
- else if(id==='STORAGE'){t='Banchi HDD laterali';d='Due cartucciere laterali indipendenti. Numero e dimensioni delle unità raffigurati a scopo illustrativo; ogni disco deve avere alimentazione e connessione dati definite.';tt=['lato destro / sinistro','dischi separati']}
- else if(id==='UPS'){t='UPS candidato · PowerWalker VI 1500 CSW IEC';d='Apparecchio commerciale intatto, collocato in verticale su pavimento o piano strutturalmente indipendente dalla Torre. Ingombro verificato 99 × 410 × 280 mm; massa 13,1 kg. Lo spazio laterale di 66 mm e la riserva posteriore di circa 110 mm sono IPOTESI di allestimento, non prescrizioni del produttore; verificare il manuale. Niente pannelli chiusi attorno, accesso anteriore alla batteria, griglie non ostruite. Erogazione massima 900 W, non autonomia promessa.';tt=['1500 VA / 900 W','99×410×280 mm','13,1 kg a terra','non manomettere il case']}
- else if(id==='UPSPORT'){t='8 IEC: solo 4 con batteria';d='Retro del PowerWalker VI 1500 CSW IEC (SKU 10121124): quattro prese IEC C13 con alimentazione da batteria e quattro prese solo filtraggio/sovratensioni. Le altre quattro NON continuano a funzionare senza rete. I sette computer non risultano tutti sotto continuità: assegnare prima le utenze realmente critiche e misurare il carico totale. Cavi e connettori commerciali certificati; USB HID per NUT e arresto ordinato.';tt=['4× backup','4× solo surge','USB HID → NUT','no multiprese fai-da-te']}
- else if(id==='UPSLOC'){t='Sede di posizionamento non portante';d='Quattro semplici riscontri stampati delimitano la posizione dell’UPS. Nessuna mensola o pavimento stampato sostiene i suoi 13,1 kg: tutto il peso resta sul piano. Prima di spostarlo si scollegano i cavi.';tt=['nessun peso sulla stampa','indipendente dal telaio','niente cassetto']}
- else if(id==='UPSCLEAR'){t='Spazi aperti per ventilazione e cavi';d='I 66 mm laterali e la zona fino a y=535 mm dietro le prese sono riserve di studio, NON clearance approvate dal manuale PowerWalker. Lasciare libero il fronte per LCD e manutenzione batteria. Nessuna copertura superiore e nessun cavo a 230 V esposto.';tt=['lati aperti','retro accessibile','verifica manuale','no enclosure']}
- else if(id==='UPSCABLE'){t='Percorsi cavi solo schematici';d='Linee tratteggiate illustrative per IEC rete e USB HID, non un cablaggio esecutivo. Niente collegamenti fissi o distribuzione rete autocostruita. Le quattro prese con backup vanno assegnate a nodi prioritari; verifica potenza e spunti necessari.';tt=['IEC originali','USB HID','no 230V stampati']}
- else if(id==='POWER'){t='Alimentazione e canalina posteriore';d='Alimentatori commerciali indipendenti, con collegamenti rimovibili e canalina elettrica protetta. La rappresentazione non è uno schema di cablaggio AC esecutivo.';tt=['protezione elettrica','nessun backplane AC fai-da-te']}
 
-  else if(id==='WALL'){t='Involucro stanza';d='Pareti semi-trasparenti, con smusso ridotto a circa 35 cm per lato come ipotesi, per capire l’angolo della stanza e l’orientamento della postazione. Servono come contesto di layout, non come rilievo architettonico definitivo.';tt=['vista stanza','trasparenza illustrativa']}
-  else if(id==='FLOOR'){t='Pavimento del locale';d='Piano di riferimento dell’angolo stanza. Le misure sono schematiche e servono a confrontare ingombri e percorsi.';tt=['base metrica','solo contesto']}
-  else if(id==='LIP'){t='Spalletta a U del mobile';d='Risalto continuo su TRE lati: dietro e sulle due testate, con fronte libero. Altezza 28 mm e spessore 18 mm sono ipotesi, non misure. Nessun carico deve attraversare la spalletta o forarla: il telaio riceve peso attraverso sei appoggi interni al perimetro.';tt=['retro + due lati','H 28 mm / spessore 18 mm (studio)','fronte aperto']}
- else if(id==='ADAPTER'){t='Kit rimovibile H-7 / mobile';d='Piastra rigida 1130×450×18 mm su sei appoggi da 51 mm e tre traverse. Luce nominale 23 mm sotto la piastra e 12 mm sotto le traverse rispetto alla U stimata di 28 mm. Sbalzo 65 mm davanti e dietro. Verificare struttura interna, distribuzione dei carichi, flessione, fissaggi e ribaltamento; nessun carico sulle spallette. Materiale resistente da dimensionare, non stampa portante non verificata.';tt=['1130×450×18 mm','6 appoggi interni','kit rimovibile','NON certificato']}
- else if(id==='STANDPAD'){t='Pattini opzionali per uso autonomo';d='Il telaio H-7 possiede già dieci piedini integrati e può poggiare su un piano rigido. Quattro pattini opzionali a incastro aumentano l’impronta e contrastano le spinte laterali, senza modificare i sette vani. Incastro e materiale da provare.';tt=['telaio autonomo','4 componenti opzionali','stabilità da provare']}
- else if(id==='OUTLETAC'){t='Presa elettrica a parete';d='Presa 230 V esistente dichiarata sulla parete a destra della postazione, approssimativamente un metro dopo lo spigolo/smusso. La quota 260–360 mm sopra pavimento è illustrativa, non rilevata. Alimentazione UPS con spina/cavo commerciale certificato; nessun 230 V stampato.';tt=['posizione circa 1 m','distanza da rilevare','solo impianto esistente']}
- else if(id==='OUTLETLAN'){t='Presa Ethernet RJ45';d='Punto LAN sulla stessa parete della presa elettrica. Si tratta di un frutto distinto; il cavo va nel proprio passacavo blu, separato dalla canaletta AC e raggiunge il modem/rack e la Torre senza attraversare il passaggio della sedia.';tt=['RJ45','canaletta dati separata']}
- else if(id==='ACDUCT'){t='Canaletta alimentazione AC';d='Percorso protetto lungo la parete destra, lo smusso e dietro il mobile, separato dalla LAN. I segmenti modellati sono sezioni indicative (23×17 mm) da dimensionare in base a numero di cavi, diametro, temperatura, raggi di curva e normative. Solo prolunghe/cavi certificati, niente connessioni domestiche improvvisate.';tt=['perimetro, non sotto la sedia','separata dai dati','sezione ipotetica']}
- else if(id==='NETDUCT'){t='Canaletta Ethernet dati';d='Canalina CAT6 lungo pareti e bordo mobile, fisicamente separata dalla rete 230 V. Il tratto finale arriva alla zona posteriore della Torre con una lunghezza di servizio rimovibile per ogni cartuccia.';tt=['rete dati','servizio sfilabile','separazione AC']}
- else if(id==='ACFLEX'){t='Bretella AC di servizio';d='Tracciato schematico della linea dal muro all’UPS e dall’UPS alle utenze selezionate. I cavi non devono passare sotto ruote o spigoli: verificare lunghezza, spine IEC e connettori prima del montaggio.';tt=['commerciale certificato','niente attraversamenti a pavimento']}
- else if(id==='NETPATCH'){t='Patch Ethernet / bretella di servizio';d='Cavo LAN separato dalla rete elettrica, con riccio di servizio e scollegamento prima di sollevare le cartucce. I percorsi nel browser rappresentano la destinazione, non una posa esecutiva.';tt=['CAT6','scollegare per estrazione']}
-  else if(id==='RACKMODEM'){t='Modem nel multilivello';d='Router appoggiato su ripiano arieggiato insieme alla stampante e a tutti i satelliti audio. Alimentazione e connessioni devono rimanere accessibili e separate dal cablaggio IEC dell’UPS.';tt=['nel mobile multilivello','accesso ai cavi']}
-  else if(id==='WHITECAB'){t='Mobile bianco · base H-7';d='1500×320×500 mm stimati; U da 28×18 mm ipotizzata. Piastra centrata lunga 1130 mm: 185 mm liberi alle testate, 65 mm di sbalzo in profondità per lato. Mobile distanziato dal muro per lasciare 136 mm nominali dietro la piastra. Portata e struttura reale non rilevate; fissaggio e prova prima di caricare.';tt=['1500×320×500 stimati','185 mm per testata','retro libero ~136 mm','portata ignota']}
-  else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
-  else if(id==='PRINTER'){t='Brother HL-1110 nel multilivello';d='Ingombro nominale 340 × 238 × 189 mm. Si trova sul ripiano inferiore del mobile multilivello, non sul mobile bianco né sulla cassettiera. Lasciare libera la corsa della carta e l’apertura delle coperture.';tt=['340 × 238 × 189 mm','nel mobile multilivello']}
-  else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
-  else if(id==='SUBWOOFER'){t='Subwoofer sulla cassettiera';d='Subwoofer stimato 260 × 180 × 360 mm, spostato sopra la cassettiera a destra della scrivania. In questo assetto libera il pavimento e resta vicino al rack audio; va comunque verificata la stabilità dinamica e l’eventuale trasmissione di vibrazioni al mobile.';tt=['sopra cassettiera','vibrazioni da verificare']}
-  else if(id==='AUDIOLEFT'){t='Satellite 1 · multilivello';d='Satellite grande stimato 70 × 90 × 210 mm sul ripiano centrale, vicino al router.';tt=['7 × 9 × 21 cm','ripiano centrale']}
-  else if(id==='AUDIORIGHT'){t='Satellite 2 · multilivello';d='Secondo satellite grande accanto al primo, sul ripiano centrale.';tt=['7 × 9 × 21 cm','ripiano centrale']}
-  else if(id==='RACK'){t='Mobile multilivello alla parete destra';d='Ripiano a più livelli orientato con lato lungo 520 mm aderente al muro, profondità 340 mm indicativa. Ospita Brother HL-1110, router e tutti e quattro i satelliti audio; il VGA resta fissato al muro, non sul mobile.';tt=['520×340 mm stimati','stampante / router / audio','VGA sul muro']}
-  else if(id==='DESK'){t='Scrivania diagonale';d='Disposizione proposta più efficiente: scrivania ruotata di circa 45° verso l’angolo della stanza. Questo migliora il campo visivo dei tre monitor e libera entrambi i fianchi per stampante e cablaggi.';tt=['orientamento 45°','setup principale']}
-  else if(id==='CHAIR'){t='Sedia gaming a 5 razze';d='Modello 3D dettagliato con cinque ruote, piantone a gas, seduta, schienale alto, cuscino lombare, poggiatesta e due braccioli. Ingombro prudenziale circa 70 cm alla base e 120–135 cm di altezza. La corrispondenza con il tuo ASIN Amazon B07TYJDM5M non è verificata: non attribuire al prodotto queste quote.';tt=['orientata al monitor centrale','braccioli, lombare, poggiatesta','misure da confermare']}
-  else if(id==='ARMCENTER'){t='Braccio VESA · monitor centrale';d='Ancora alla breve parete diagonale, con snodo e piastra VESA. Sbraccio di studio ~45 cm. Verificare materiale, portata della parete (lo smusso potrebbe non essere strutturale), staffa e peso reale dello schermo prima di forare.';tt=['ancoraggio sullo smusso','portata da verificare','nessun piedistallo']}
-  else if(id==='ARMLEFT'){t='Braccio VESA · monitor VGA';d='Piastra sulla parete sinistra, con due sezioni snodate e attacco VESA. Posizione e sbraccio di studio; non appoggia sul tavolo.';tt=['parete sinistra','VESA da controllare','nessun piedistallo']}
-  else if(id==='ARMRIGHT'){t='Braccio VESA · terzo monitor';d='Piastra sulla parete posteriore, braccio articolato e attacco VESA. Il monitor di dimensione intermedia non pesa sulla scrivania.';tt=['parete posteriore','sbraccio da verificare','nessun piedistallo']}
-  else if(id==='MONHDMI'){t='Monitor centrale HDMI';d='Schermo principale fissato a parete con braccio articolato, più grande degli altri due, centrato davanti alla posizione di lavoro. Larghezza illustrativa circa 740 mm, compatibile con un TV/monitor intorno ai 32 pollici.';tt=['monitor principale','~32”']}
-  else if(id==='MONVGA'){t='Monitor sinistro VGA';d='Monitor Acer V193W identificato dai dati EDID del nodo n1. Larghezza esterna verificata circa 442 mm. Nella proposta è il pannello secondario sinistro, sospeso con braccio a muro.';tt=['Acer V193W','~442 mm']}
-  else if(id==='MONMID'){t='Terzo monitor intermedio';d='Schermo di dimensioni intermedie tra il VGA Acer e il monitor/TV HDMI: stima progettuale circa 590 mm di larghezza, equivalente grossomodo a un 24–25 pollici; è fissato a parete tramite braccio.';tt=['~24–25”','dimensione intermedia']}
-  else if(id==='LAPTOP'){t='Laptop in appoggio';d='Portatile aperto sul lato destro, in funzione di quarto schermo occasionale, test o controllo nodi. In un uso quotidiano può restare chiuso su supporto verticale.';tt=['supporto lavoro','lato destro']}
-  else if(id==='AUDIOCENTER'){t='Speaker centrale da scrivania';d='Piccolo speaker orizzontale sotto il monitor principale, stimato circa 240 × 80 × 75 mm. Aiuta a concentrare l’audio vicino all’utente senza rubare troppo spazio.';tt=['24 × 8 × 7,5 cm','stima']}
-  else if(id==='DESKSATLEFT'){t='Satellite 3 · multilivello';d='Satellite piccolo precedentemente sulla scrivania, ora sul ripiano superiore.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
-  else if(id==='DESKSATRIGHT'){t='Satellite 4 · multilivello';d='Altro satellite piccolo, ora sul ripiano superiore; il piano della scrivania resta libero.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
- else if(/^F[1-6]$/.test(id)){t=partDescriptions[id];d='Ventola commerciale candidata Arctic P14 PWM PST da 140 × 140 × 27 mm. 123,76 m³/h a bocca libera, 200–1700 rpm, 0,12 A a 12 V, temperatura ambiente operativa 0–40 °C. Griglie su entrambe le facce; ingresso dal fronte. Nessuna portata utile garantita: misurare con hardware e cablaggi reali.';tt=['140 mm','PWM 12 V','aspirazione frontale','non acquistata']}
- else if(id==='FANMOUNT'){t='Supporti ventole fissi e rimovibili';d='Due staffe per ventola sulla trave anteriore. Le ventole sono davanti al volume estraibile, non sopra le maniglie; rimozione frontale per servizio dei fermi o degli HDD. Attacchi, viti, materiale e ritenuta da collaudare.';tt=['y=16–49 mm','12 staffe','nessun vano aggiunto']}
- else if(id==='FANPOWER'){t='Alimentazione e controllo indipendenti';d='Sei ventole da 0,12 A nominali ciascuna: 0,72 A e 8,64 W nominali totali a 12 V. Alimentatore commerciale 12 V e controller PWM multi-canale compatibili, margine di avvio e protezione da verificare. Monitoraggio tachimetrico per ventola e profilo fail-safe; niente collegamenti improvvisati a più PC.';tt=['12 V DC','0,72 A nominali','6 tachimetri']}
- else if(id==='FRAME'){t='Telaio portante stampabile';d='Travi longitudinali, traverse segmentate, giunti, supporti intermedi e piedini antivibranti. L’incastro geometrico deve essere accompagnato da adeguata ritenuta meccanica e verifica della deformazione.';tt=['segmentato','stampabile','resistenza da testare']}
- else {t='Torre H-7';d='Elemento del modello orientativo.';tt=[]}
- title.textContent=t;desc.textContent=d;$('part-specific').textContent=name ? 'Elemento preciso: '+name : 'Selezione del sottosistema';
- tags.replaceChildren(...tt.map(x=>{const b=document.createElement('span');b.className='tiny';b.textContent=x;return b}));
- $('inspector').hidden=false;
- if(at){tip.textContent=name||t;tip.style.left=clamp(at.x+14,8,Math.max(8,W-270))+'px';tip.style.top=clamp(at.y-13,55,Math.max(55,H-100))+'px';tip.style.opacity=1}else{tip.style.opacity=0}
+function resize(){const r=vp.getBoundingClientRect();DPR=Math.min(window.devicePixelRatio||1,2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);ctx.setTransform(DPR,0,0,DPR,0,0);redraw()}
+
+function groupBase(g){return g.startsWith('CAR_')?'INSERT':g.startsWith('F')?'FANMOUNT':g}
+function describe(g){
+ if(g.startsWith('CAR_')){const id=g.slice(4);const p=PARTS.INSERT;return{t:'Cartuccia '+id+' · insert',b:p.b,d:'Cartuccia '+id+' — '+p.d}}
+ const key=groupBase(g);const p=PARTS[key]||{t:g,b:'design',d:'Elemento del modello, valore di studio.'};return{t:p.t,b:p.b,d:p.d}
+}
+function badgeHtml(b){const map={official:['b-official','ufficiale · README v2.1'],design:['b-design','studio / candidato'],photo:['b-photo','foto NON inclusa'],unmeasured:['b-unmeasured','da misurare · G0']};const m=map[b]||map.design;return'<span class="badge '+m[0]+'">'+m[1]+'</span>'}
+function selectGroup(g){
+ if(!g)return;const d=describe(g);state.selected=g;state.selectedName=d.t;
+ $('part-title').textContent=d.t;$('part-desc').textContent=d.d;$('part-badge').innerHTML=badgeHtml(d.b);$('inspector').hidden=false;
+ $('part-pick').value=PARTS[groupBase(g)]?groupBase(g):'';
  redraw();
 }
-function buttonGroup(sel,active){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('active',b===active))}
-function view(v){if(v==='iso'){state.yaw=2.36;state.pitch=.52}else if(v==='top'){state.yaw=3.14;state.pitch=1.53}else if(v==='front'){state.yaw=3.14;state.pitch=.10}else if(v==='rear'){state.yaw=0;state.pitch=.25}else if(v==='side'){state.yaw=1.57;state.pitch=.23}state.zoom=1;buttonGroup('[data-view]',document.querySelector(`[data-view="${v}"]`));tip.style.opacity=0;redraw()}
-function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow=false;$('airflow').classList.remove('on')}state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
- if(mode==='thermal'){state.yaw=2.85;state.pitch=.63;state.cooling=true;$('cooling').classList.add('on');state.airflow=true;$('airflow').classList.add('on');state.dims=true;$('dims').classList.add('on')}else if(mode==='room'){state.yaw=.82;state.pitch=.57;state.xray=true;$('xray').classList.add('on')}else if(mode==='cabinet'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}else if(mode==='standalone'){state.yaw=1.44;state.pitch=.48;state.xray=false;$('xray').classList.remove('on')}else if(mode==='lipdetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.36;state.pitch=.52}
- if(mode==='room'||mode==='workstation'){state.dims=false;$('dims').classList.remove('on')}else if(['cabinet','standalone','lipdetail'].includes(mode)){state.dims=true;$('dims').classList.add('on')}
- const names={thermal:['VENTILAZIONE · 6 VENTOLE FRONTALI','Blu = ingresso · arancio = uscita ipotizzata · non CFD'],tower:['TORRE H-7 · quote e appoggi','1028 × 429 × 334 mm · ingombro nominale H-7'],rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti solo nelle sedi inferiori'],module:['CARTUCCIA · 6 distanziali e X completa','Scheda su M3 metallici, adapter stampato dietro'],supports:['FISSAGGIO PCB · vista dal retro','X stampata continua + 6 distanziali metallici + 4 puntoni al telaio'],joint:['INCASTRO · contatti reali','Fondo su z=52, spalle su z=89 mm; estrazione illustrata, fermi nascosti'],guides:['GUIDE ALTE · vincolo anti-oscillazione','Doppia guida fissa frontale/posteriore; binari fuori dal passaggio verticale'],ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],room:['ANGOLO STANZA · UNA TORRE H-7','Torre sul mobile bianco, quattro satelliti nel multilivello, sedia orientata ai monitor'],cabinet:['TORRE H-7 · ADATTATORE E SPALLETTA U','Rialzo rimovibile sopra 3 bordini, carico solo sul piano interno del mobile'],standalone:['TORRE H-7 · AUTO-PORTANTE','Medesima Torre senza mobile, con pattini laterali opzionali'],lipdetail:['SPALLETTA U · 3 LATI, FRONTE LIBERO','Vista esplosa +110 mm: sei appoggi sul piano interno e piastra rimovibile'],workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']};
- $('scene-caption').textContent=names[mode][0];$('scene-subtitle').textContent=names[mode][1];
- buttonGroup('[data-scene]',document.querySelector(`[data-scene="${mode}"]`));clearSelection();
+function clearSelection(){state.selected='';$('inspector').hidden=true;redraw()}
+
+function refreshPicker(){
+ const ids=[...new Set(faces.map(f=>f.group).filter(g=>g&&g!=='FLOOR'&&g!=='GRID'))];
+ ids.sort((a,b)=>((describe(a).t)||a).localeCompare((describe(b).t)||b,'it'));
+ const el=$('part-pick');const keep=el.value;el.replaceChildren();
+ const o0=document.createElement('option');o0.value='';o0.textContent='Seleziona un componente…';el.appendChild(o0);
+ for(const g of ids){const o=document.createElement('option');o.value=g;o.textContent=describe(g).t;el.appendChild(o)}
+ el.value=keep;
 }
-document.querySelectorAll('[data-view]').forEach(el=>el.onclick=()=>view(el.dataset.view));
-document.querySelectorAll('[data-scene]').forEach(el=>el.onclick=()=>scene(el.dataset.scene));
-$('close-inspector').onclick=clearSelection;
-$('part-picker').onchange=e=>{if(e.target.value)select(e.target.value);else clearSelection()};
-$('showUPS').onclick=()=>{state.showUPS=!state.showUPS;$('showUPS').classList.toggle('on',state.showUPS);if(state.scene==='ups'&&!state.showUPS)scene('tower');else redraw();};
-$('load').oninput=e=>{state.loadEstimate=Number(e.target.value);const v=state.loadEstimate;$('load-label').textContent=`${v} / 900 W`;$('load-bar').style.width=(v/9)+'%';$('load-bar').classList.toggle('over',v>650);$('load-warning').textContent=v>900?'Supera la potenza massima nominale.':v>650?'Zona da verificare: minore riserva per picchi/autonomia; non è una misura reale.':'Valore di prova: serve misurare a muro il carico reale e gli spunti prima della scelta definitiva.';};
-$('fit').onclick=()=>{state.zoom=1;redraw()};
-function updateLocks(){
- $('extract').disabled=state.locked;
- $('explode').disabled=state.locked;
- $('unlock').textContent=state.locked?'🔓 Sblocca due fermi / vano':'🔒 Reinserisci i fermi';
- $('lock-status').textContent=state.locked?'Fermi davanti e dietro INSERITI: estrazione bloccata. Prima di estrarre nella realtà scollegare ogni cavo.':'Fermi SBLOCCATI (demo): puoi sollevare la cartuccia. Nella realtà stacca tutti i cavi prima.';
+
+function setScene(s){
+ state.scene=s;state.air=(s==='vent');state.selected='';$('inspector').hidden=true;
+ document.querySelectorAll('.scene-btn').forEach(b=>b.classList.toggle('active',b.dataset.scene===s));
+ const meta=SCENES.find(x=>x[0]===s);$('scene-title').textContent=meta[2];$('scene-sub').textContent=meta[3];
+ state.lift=0;$('lift').value=0;$('lift-label').textContent='0 mm';
+ refreshPicker();redraw();
 }
-$('unlock').onclick=()=>{state.locked=!state.locked;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';updateLocks();redraw()};
-$('explode').oninput=e=>{if(state.locked){e.target.value=0;return;}state.explode=+e.target.value*1.1;$('explabel').textContent=e.target.value+'%';redraw()};
-$('extract').onclick=()=>{if(state.locked)return;const id=/^P\d$/.test(state.selected||'')?state.selected:'P'+(state.focusIndex+1);state.lifted=state.lifted===id?null:id;redraw()};
-$('reset').onclick=()=>{state.explode=0;state.lifted=null;$('explode').value=0;$('explabel').textContent='0%';redraw()};
-updateLocks();
-$('heat').oninput=e=>{state.heat=+e.target.value;thermalCalc()};$('delta').oninput=e=>{state.delta=+e.target.value;thermalCalc()};thermalCalc();
-for(const id of ['labels','xray','disks','wiring','grid','dims','clearance','cooling','airflow'])$(id).onclick=e=>{state[id]=!state[id];e.currentTarget.classList.toggle('on',state[id]);redraw()};
-vp.addEventListener('pointerdown',e=>{if(e.button!==0)return;vp.setPointerCapture(e.pointerId);drag={sx:e.clientX,sy:e.clientY,yaw:state.yaw,pitch:state.pitch,moved:false};vp.classList.add('dragging')});
-vp.addEventListener('pointermove',e=>{
- if(drag){const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;state.yaw=drag.yaw-dx*.007;state.pitch=clamp(drag.pitch+dy*.006,-.22,1.54);redraw();tip.style.opacity=0}
-});
-vp.addEventListener('pointerup',e=>{if(!drag)return;let clicked=!drag.moved;drag=null;vp.classList.remove('dragging');if(clicked){const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;let backdrop=null;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x,y)){const h=pick[i];if(h.group==='WALL'||h.group==='FLOOR'){backdrop=backdrop||h;continue;}select(h.group,h.name,{x,y});return}}if(backdrop){select(backdrop.group,backdrop.name,{x,y});return}clearSelection()}});
-vp.addEventListener('pointercancel',()=>{drag=null;vp.classList.remove('dragging')});vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});
-vp.addEventListener('wheel',e=>{e.preventDefault();state.zoom=clamp(state.zoom*Math.exp(-e.deltaY*.0012),.45,3.3);redraw()},{passive:false});
-window.addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();if(k==='escape'){clearSelection();return}if(k==='r'){scene('tower');view('iso')}if(k==='1')view('iso');if(k==='2')view('top');if(k==='+')state.zoom=clamp(state.zoom*1.15,.45,3.3);if(k==='-')state.zoom=clamp(state.zoom/1.15,.45,3.3);redraw()});
-new ResizeObserver(dimensions).observe(vp);dimensions();clearSelection();
+
+// ---- build UI ----
+const grid=$('scene-grid');
+for(const [id,label] of SCENES){const b=document.createElement('button');b.className='button scene-btn';b.dataset.scene=id;b.textContent=label;b.addEventListener('click',()=>setScene(id));grid.appendChild(b)}
+const cp=$('carrier-pick');for(const id of CARRIERS){const o=document.createElement('option');o.value=id;o.textContent='Cartuccia '+id;cp.appendChild(o)}cp.value=state.carrier;
+cp.addEventListener('change',()=>{state.carrier=cp.value;refreshPicker();redraw()});
+
+$('lift').addEventListener('input',e=>{state.lift=+e.target.value;$('lift-label').textContent=state.lift/100*140+' mm';redraw()});
+function toggle(id,key){const el=$(id);el.classList.toggle('on',state[key]);el.setAttribute('aria-pressed',state[key]);el.addEventListener('click',()=>{state[key]=!state[key];el.classList.toggle('on',state[key]);redraw()})}
+toggle('sw-fans','fans');toggle('sw-disks','disks');toggle('sw-labels','labels');toggle('sw-air','air');toggle('sw-grid','grid');
+$('close-insp').addEventListener('click',clearSelection);
+$('part-pick').addEventListener('change',e=>selectGroup(e.target.value));
+document.querySelectorAll('[data-gate]').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('active')}));
+
+// interaction
+let drag=null;
+vp.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,moved:false};vp.classList.add('dragging');vp.setPointerCapture(e.pointerId)});
+vp.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>3)drag.moved=true;state.yaw+=dx*.008;state.pitch=clamp(state.pitch-dy*.006,-1.2,1.25);state.scene='manual';drag.x=e.clientX;drag.y=e.clientY;cam=cameraFor('manual');redraw()});
+vp.addEventListener('pointerup',e=>{if(drag&&!drag.moved){const r=canvas.getBoundingClientRect(),mx=e.clientX-r.left,my=e.clientY-r.top;let hit=null;for(let k=pick.length-1;k>=0;k--){if(ctx.isPointInPath(pick[k].path,mx,my)){hit=pick[k].group;break}}if(hit)selectGroup(hit);else clearSelection()}drag=null;vp.classList.remove('dragging')});
+vp.addEventListener('wheel',e=>{e.preventDefault();state.zoom=clamp(state.zoom*(e.deltaY<0?1.08:.92),.45,3);redraw()},{passive:false});
+window.addEventListener('keydown',e=>{if(e.key==='r'||e.key==='R'){state.yaw=2.42;state.pitch=.42;state.zoom=1;state.scene='assembled';setScene('assembled')}if(e.key==='Escape')clearSelection()});
+window.addEventListener('resize',resize);
+
+setScene('assembled');resize();
 })();
 </script>
 </body>

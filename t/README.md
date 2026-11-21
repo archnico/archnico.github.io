@@ -1,3 +1,18 @@
+# Torre H-7 R-1 — candidato consolidato
+
+21 novembre 2026 · **Candidato ingegneristico, non esecutivo: non stampare o installare prima delle verifiche pertinenti.**
+
+- [Anteprima corrente](index.html) · [Scheda tecnica](r1.html) · [Anteprima storica v2.1](v2.1.html).
+- Sette cartucce identiche estraibili dall'alto, passo nominale 96 mm; I/O verso il retro; eventuale GPU futura esterna, nessun vano telefoni.
+- Corpo nominale 1028×429×334 mm; pannello candidato 1130×450×18 mm. Quote da congelare dopo rilievo. La cornice CAD di studio 80×249×251 mm deve essere riconciliata con la precedente altezza illustrativa di 239 mm.
+- Scelta preliminare: profilati 2020 in alluminio pretagliati, base in multistrato di betulla, PETG solo per interfacce e campioni; nessun percorso di carico strutturale stampato non verificato.
+- CAD candidato con 16 geometrie esportate in STL, STEP facettato e 3MF. 137/137 controlli digitali del modello registrati; non costituiscono prove di resistenza, compatibilità hardware o certificazione. Anteprima illustrativa, non copia esatta del CAD. File di fabbricazione non pubblicati.
+- Prima fase: misurare chassis e scheda madre, porte, dissipatore e cavi; validare la geometria dei campioni; preventivo e piccolo lotto di prova; prototipo vuoto con prove di carico; collaudo elettrico e termico prima dell'installazione.
+- Sei ventole sono un'ipotesi da verificare; analisi termica e strutturale preliminari, non CFD/FEA. Nessuna misura di portata o carico reale. UPS da dimensionare dopo rilevazione degli assorbimenti.
+- Campioni PETG: ordine aggregato, stima indicativa 16–23 EUR al netto di IVA, spedizione ed extra; non un preventivo.
+
+## Archivio delle specifiche v2.1 (storico, non prevale sulla R-1)
+
 # Torre H-7 — Specifiche di progetto v2.1
 
 21 novembre 2026 · configurazione scelta: sette PC, nessun vano di riserva. Modello concettuale, non CAD esecutivo.
