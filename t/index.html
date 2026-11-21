@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-9 • V1.0 · UPS laterale e corridoio di servizio</title>
+<title>TORRE H-9 • V1.1.1 · Angolo stanza riparato</title>
 <style>
 :root{color-scheme:dark;--bg:#0a121b;--panel:#0d1c27;--panel2:#132733;--line:#2c4451;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--blue:#56a4e5;--orange:#f5aa62;--red:#e78b86}
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
@@ -32,11 +32,11 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
 </head>
 <body>
 <div class="shell">
-<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.0 · 21 NOV 2026</span></div></header>
+<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V1.1.1 · 21 NOV 2026</span></div></header>
 <div class="layout">
 <aside class="left">
   <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per ingrandire · clicca un componente per ispezionarlo.</p></div>
-  <div class="section"><div class="label">02 / Dettagli meccanici</div><div class="scene-grid"><button class="button scene-btn active" data-scene="tower">◈ Torre intera</button><button class="button scene-btn" data-scene="rear">▤ Retro tecnico</button><button class="button scene-btn" data-scene="module">▥ Modulo isolato</button><button class="button scene-btn" data-scene="supports">⚙ Fissaggio scheda</button><button class="button scene-btn" data-scene="joint">⌑ Incastro</button><button class="button scene-btn" data-scene="guides">⊞ Guide alte</button><button class="button scene-btn" data-scene="ups">▣ UPS laterale</button></div><p class="help">ARANCIO: cartuccia e adattatore. TURCHESE: guide alte fisse, collegate a traverse perimetrali. VERDE: controventi bassi posteriori. Prese posteriori accessibili; quote di studio in mm.</p></div>
+  <div class="section"><div class="label">02 / Dettagli meccanici</div><div class="scene-grid"><button class="button scene-btn active" data-scene="tower">◈ Torre intera</button><button class="button scene-btn" data-scene="rear">▤ Retro tecnico</button><button class="button scene-btn" data-scene="module">▥ Modulo isolato</button><button class="button scene-btn" data-scene="supports">⚙ Fissaggio scheda</button><button class="button scene-btn" data-scene="joint">⌑ Incastro</button><button class="button scene-btn" data-scene="guides">⊞ Guide alte</button><button class="button scene-btn" data-scene="ups">▣ UPS laterale</button><button class="button scene-btn" data-scene="room">⌂ Angolo stanza</button></div><p class="help">ARANCIO: cartuccia e adattatore. TURCHESE: guide alte fisse, collegate a traverse perimetrali. VERDE: controventi bassi posteriori. Prese posteriori accessibili; quote di studio in mm.</p></div>
   <div class="section"><div class="label">03 / Configurazione</div><h3 class="section-title">Posizioni modulari</h3><div class="btn-grid"><button class="button active" data-count="9">H-9 · 9</button><button class="button" data-count="7">H-7 · 7</button></div><p class="help">7 moduli PC + S8/S9 universali GPU o dock telefoni con inserti intercambiabili. Tutti i vani hanno passo identico di 96 mm (ipotesi da validare).</p><div class="row-control"><span>UPS laterale autonomo</span><button class="switch on" id="showUPS" aria-label="Mostra UPS laterale"></button></div><p class="help">L’UPS non occupa un vano PC e <b>non grava sulla stampa</b>: 13,1 kg sul piano di appoggio, aperto davanti e ai lati.</p></div>
   <div class="section"><div class="label">04 / Smontaggio</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide accent" id="unlock">🔓 Sblocca due fermi / vano</button><button class="button wide" id="extract" disabled>↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div><p class="help" id="lock-status" aria-live="polite">Fermi anteriori e posteriori inseriti; estrazione bloccata (simulazione). Prima dell’estrazione reale scollegare tutti i cavi.</p></div>
   <div class="section"><div class="label">05 / Dimensionamento elettrico</div><h3 class="section-title">UPS candidato · PowerWalker VI 1500 CSW IEC</h3><p class="help">1.500 VA · 900 W · 99 × 410 × 280 mm · 13,1 kg. 4 prese IEC con batteria + 4 solo sovratensioni. <a href="https://powerwalker.com/product/10121124/" target="_blank" rel="noopener noreferrer" style="color:#90d9ca">Scheda produttore</a>.</p><div class="input-row"><span>Carico ipotetico (non misurato)</span><b id="load-label">450 / 900 W</b></div><input id="load" type="range" min="100" max="900" step="50" value="450" aria-label="Simula carico elettrico UPS"><div class="power-meter"><div class="power-meter-fill" id="load-bar" style="width:50%"></div></div><p class="help" id="load-warning">Da verificare con wattmetro, inclusi spunti all’avvio. Protezione selettiva, non tutti i sette PC.</p></div>
@@ -48,7 +48,7 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
   <div class="legend-mini"><span style="color:#73cdb6">■</span> telaio & sede fissa &nbsp; <span style="color:#e2ab65">■</span> cartuccia estraibile &nbsp; <span style="color:#6aa9ca">■</span> I/O &nbsp; <span style="color:#d48580">■</span> elettrico</div>
 </aside>
 </div>
-<footer><div class="footer-left"><span class="dot"></span><span>Anteprima GitHub Pages · clic per le schede dei componenti</span></div><span class="warning">v1.0 · UPS candidato, nessun acquisto effettuato · carichi e ingombri dei cavi da verificare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
+<footer><div class="footer-left"><span class="dot"></span><span>Anteprima GitHub Pages · clic per le schede dei componenti</span></div><span class="warning">v1.1.1 · Vista ambiente / quote indicative · UPS candidato, nessun acquisto effettuato · carichi e ingombri dei cavi da verificare</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
 </div>
 <script>
 (()=>{'use strict';
@@ -85,6 +85,19 @@ function beamXZ(y,x1,z1,x2,z2,web=8,thick=10,color=C.frame2,group='BACKBONE',nam
 function prism(p,color,group,name){
  const f=[[0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]];
  for(const a of f){faces.push({p:a.map(i=>p[i]),color,group,name,opa:1,emphasis:false,normal:[.22,-.35,.92]})}
+}
+// Solid rectangular objects with the same rendering/picking model as the Torre.
+// Used by the room layout to rotate desk, monitors and chair in the horizontal plane.
+function polyPrism(p,color,group,name,opa=1,emphasis=false){
+ const f=[[0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]];
+ const normals=[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]];
+ for(let i=0;i<f.length;i++) faces.push({p:f[i].map(j=>p[j]),color,group,name,opa,emphasis,normal:normals[i]});
+}
+function rotBox(cx,cy,z,w,d,h,angle,color,group='',name='',opa=1,emphasis=false){
+ const hw=w/2,hd=d/2,cs=Math.cos(angle),sn=Math.sin(angle);
+ const bottom=[[-hw,-hd],[hw,-hd],[hw,hd],[-hw,hd]].map(([x,y])=>[cx+x*cs-y*sn,cy+x*sn+y*cs,z]);
+ const top=bottom.map(([x,y])=>[x,y,z+h]);
+ polyPrism([...bottom,...top],color,group,name,opa,emphasis);
 }
 // Dimension geometry and extension lines are fixed in world millimetres; no fake measurements.
 function dimension(a,b,label,offset,color=C.accent){
@@ -381,8 +394,63 @@ function upsSidecar(width){
  }
 }
 
+function roomScene(){
+ const roomW=2200,roomD=1700,wallH=1600;
+ if(state.grid){for(let x=0;x<=roomW;x+=100)wire([[x,0,-10],[x,roomD,-10]],'#234451',.7,'GRID',[],.58);
+ for(let y=0;y<=roomD;y+=100)wire([[0,y,-10],[roomW,y,-10]],'#234451',.7,'GRID',[],.58)}
+ pushBox(0,0,0,24,roomD,wallH,'#7ca4b5','WALL','Parete sinistra / di fondo locale',.16);
+ pushBox(0,0,0,roomW,24,wallH,'#7ca4b5','WALL','Parete posteriore / angolo stanza',.16);
+ pushBox(0,0,0,roomW,roomD,10,'#73573f','FLOOR','Pavimento dell’angolo stanza',.24);
+ pushBox(28,120,0,320,1500,500,'#d8ddd8','WHITECAB','Mobiletto basso bianco stimato 1500 × 320 × 500 mm',.95);
+ pushBox(33,128,62,310,480,320,'#dfe4de','WHITECAB','Vano aperto sinistro',.52);
+ pushBox(33,1120,62,310,390,320,'#dfe4de','WHITECAB','Vano aperto destro',.52);
+ for(const y of [620,940,1260])pushBox(42,y,18,292,180,148,'#f1f3ef','WHITECAB','Cassetto mobile basso',.92);
+ pushBox(80,650,500,260,400,540,'#6e452f','DARKDRAWER','Cassettiera scura sopra il mobile basso',.96);
+ pushBox(42,1260,500,238,340,189,'#dde3e6','PRINTER','Brother HL-1110 · 340 × 238 × 189 mm',.97);
+ pushBox(130,1065,500,160,170,58,'#1f2f38','MODEM','Modem / router nero · stima 220 × 160 × 58 mm',.98);
+ pushBox(370,190,0,180,260,360,'#24272b','SUBWOOFER','Subwoofer a terra per ridurre vibrazioni dei mobili · stima 180 × 260 × 360 mm',.96);
+ pushBox(265,205,510,70,90,210,'#1f2326','AUDIOLEFT','Satellite sinistro mobile · stima 70 × 90 × 210 mm',.96);
+ pushBox(265,355,510,70,90,210,'#1f2326','AUDIORIGHT','Satellite destro mobile · stima 70 × 90 × 210 mm',.96);
+ pushBox(1680,120,0,300,450,740,'#7f553a','RACK','Ripiano / sostegno laterale in legno',.94);
+ pushBox(1690,132,250,280,430,24,'#6c4832','RACK','Ripiano superiore',.92);
+ pushBox(1690,132,490,280,430,24,'#6c4832','RACK','Ripiano alto',.92);
+ pushBox(1490,930,0,210,440,430,'#1c2227','PCFLOOR','PC tower attuale a pavimento · stima 210 × 440 × 430 mm',.98);
+ const ang=-Math.PI/4, dcx=980,dcy=900;
+ // Thin tabletop with genuine leg volume, not a solid cube filling the knee space.
+ rotBox(dcx,dcy,770,1000,500,32,ang,'#8a6247','DESK','Piano scrivania a 45°',.98,true);
+ const pt=(lx,ly)=>[dcx+lx*Math.cos(ang)-ly*Math.sin(ang),dcy+lx*Math.sin(ang)+ly*Math.cos(ang)];
+ for(const lx of [-445,445])for(const ly of [-200,200]){const [px,py]=pt(lx,ly);rotBox(px,py,0,54,54,770,ang,'#65432d','DESK','Gamba reale della scrivania',.98)}
+ for(const ly of [-204,204]){const [px,py]=pt(0,ly);rotBox(px,py,660,930,20,108,ang,'#775039','DESK','Fascia strutturale sottopiano',.96)}
+ const ccx=1160,ccy=1210;
+ rotBox(ccx,ccy,0,660,660,45,ang,'#20262c','CHAIR','Base sedia gaming / office chair · modello Amazon da confermare',.95);
+ rotBox(ccx,ccy,410,520,520,80,ang,'#2a3238','CHAIR','Seduta sedia',.97);
+ rotBox(ccx-120*Math.cos(ang),ccy-120*Math.sin(ang),490,520,110,520,ang,'#303941','CHAIR','Schienale sedia gaming',.97);
+ const [mcx,mcy]=pt(0,-255),[lx,ly]=pt(-670,-270),[rx,ry]=pt(670,-270),[px,py]=pt(320,70);
+ // Wide central monitor and two side panels on their own wall/arm supports (illustrative).
+ rotBox(mcx,mcy,925,740,45,430,ang,'#11181e','MONHDMI','Monitor principale HDMI Sony · ingombro foto da verificare',.98);
+ rotBox(lx,ly,945,442,42,325,ang+.24,'#141c21','MONVGA','Acer V193W VGA · 442 mm larghezza esterna',.98);
+ rotBox(rx,ry,930,590,44,360,ang-.24,'#141c21','MONMID','Monitor intermedio ipotizzato · 590 mm larghezza',.98);
+ rotBox(mcx,mcy+55,804,240,80,75,ang,'#202529','AUDIOCENTER','Speaker centrale sul piano dietro tastiera',.98);
+ rotBox(px,py,804,360,250,22,ang-.08,'#2d3136','LAPTOP','Laptop in appoggio o dock',.97);
+ const [spx,spy]=pt(-380,60),[sdx,sdy]=pt(385,60);
+ rotBox(spx,spy,804,70,90,175,ang+.05,'#1f2326','DESKSATLEFT','Satellite audio sinistro',.97);
+ rotBox(sdx,sdy,804,70,90,175,ang-.05,'#1f2326','DESKSATRIGHT','Satellite audio destro',.97);
+ if(state.dims){
+  dimension([28,120,0],[348,120,0],'320 mm · P mobile',[-75,0,0],'#81d6d8');
+  dimension([28,120,0],[28,1620,0],'1500 mm · L mobile',[0,-70,0],'#81d6d8');
+  dimension([1490,930,0],[1700,930,0],'210 mm · L tower attuale',[0,45,0],'#f5c17b');
+  dimension([dcx-350,dcy-350,0],[dcx+350,dcy+350,0],'postazione ruotata ~45°',[0,0,70],'#f0d089');
+  text3([mcx,610,1350],'TRIPLO MONITOR · VGA 19” + MID ~24” + HDMI ~32”',C.accent,11,'DIM');
+ }
+ return roomW;
+}
+
 function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;
  $('variant-pill').textContent=state.n===9?'7 PC + 2 VANI UNIVERSALI':'7 PC + ZERO RISERVE';
+ if(state.scene==='room'){
+  $('variant-pill').textContent='WORKSTATION · riarrangiamento di stanza';
+  return roomScene();
+ }
  if(state.scene==='ups'){
   // Detail focuses UPS and one neighbouring structural end-frame; no enclosure is placed on UPS.
   pushBox(width-25,16,21,18,405,25,C.frame,'FRAME','Fianco esterno della Torre senza collegamento di carico all’UPS',.99);
@@ -483,11 +551,11 @@ function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.c
 function faceAvg(p){return p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length,a[2]+q[2]/p.length],[0,0,0])}
 function polygonPath(points){const path=new Path2D();points.forEach((p,i)=>i?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();return path}
 function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;
- const detail=['module','supports','guides'].includes(state.scene),joint=state.scene==='joint',rear=state.scene==='rear',upsFocus=state.scene==='ups';
- const frameWidth=upsFocus?680:joint?560:detail?590:rear?width*1.34:(width+(state.showUPS?225:0))*1.52;
- const frameHeight=upsFocus?700:joint?700:detail?700:rear?760:780;
+ const detail=['module','supports','guides'].includes(state.scene),joint=state.scene==='joint',rear=state.scene==='rear',upsFocus=state.scene==='ups',room=state.scene==='room';
+ const frameWidth=room?3000:(upsFocus?680:joint?560:detail?590:rear?width*1.34:(width+(state.showUPS?225:0))*1.52);
+ const frameHeight=room?2250:(upsFocus?700:joint?700:detail?700:rear?760:780);
  const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.18,4)*state.zoom;
- cam={b,center:upsFocus?[width+80,230,155]:joint?[cx,192,157]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS?170:0))/2,210,160],distance:Math.max(850,width*1.45),base:dimScale};
+ cam={b,center:room?[1070,815,710]:(upsFocus?[width+80,230,155]:joint?[cx,192,157]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS?170:0))/2,210,160]),distance:room?4200:Math.max(850,width*1.45),base:dimScale};
  ctx.clearRect(0,0,W,H);
  const grd=ctx.createRadialGradient(W*.5,H*.45,90,W*.5,H*.45,Math.max(W,H)*.75);grd.addColorStop(0,'#15303c');grd.addColorStop(1,'#0a1620');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
  // distant vignette horizon / front/back guidance
@@ -497,7 +565,7 @@ function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;
  pick=[];
  const light=[.36,-.54,.77];
  for(const f of ordered){const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.12);let opacity=f.opa;
- if(state.xray && (f.group==='FRAME' || /^P\d/.test(f.group)))opacity*=.30;
+ if(state.xray && (f.group==='FRAME' || /^P\d/.test(f.group) || ['WALL','FLOOR','WHITECAB','DARKDRAWER','PRINTER','MODEM','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','RACK','PCFLOOR','DESK','CHAIR','MONHDMI','MONVGA','MONMID','LAPTOP','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT'].includes(f.group)))opacity*=state.scene==='room'?.73:.30;
  if(f.group==='GRID')continue;
  const chosen=f.group===state.selected;
  ctx.fillStyle=tint(f.color,chosen?Math.min(bright*1.18,1.3):bright,opacity);
@@ -534,6 +602,27 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='UPSCLEAR'){t='Spazi aperti per ventilazione e cavi';d='I 66 mm laterali e la zona fino a y=535 mm dietro le prese sono riserve di studio, NON clearance approvate dal manuale PowerWalker. Lasciare libero il fronte per LCD e manutenzione batteria. Nessuna copertura superiore e nessun cavo a 230 V esposto.';tt=['lati aperti','retro accessibile','verifica manuale','no enclosure']}
  else if(id==='UPSCABLE'){t='Percorsi cavi solo schematici';d='Linee tratteggiate illustrative per IEC rete e USB HID, non un cablaggio esecutivo. Niente collegamenti fissi o distribuzione rete autocostruita. Le quattro prese con backup vanno assegnate a nodi prioritari; verifica potenza e spunti necessari.';tt=['IEC originali','USB HID','no 230V stampati']}
  else if(id==='POWER'){t='Alimentazione e canalina posteriore';d='Alimentatori commerciali indipendenti, con collegamenti rimovibili e canalina elettrica protetta. La rappresentazione non è uno schema di cablaggio AC esecutivo.';tt=['protezione elettrica','nessun backplane AC fai-da-te']}
+
+  else if(id==='WALL'){t='Involucro stanza';d='Pareti semi-trasparenti per capire l’angolo della stanza e l’orientamento della postazione. Servono come contesto di layout, non come rilievo architettonico definitivo.';tt=['vista stanza','trasparenza illustrativa']}
+  else if(id==='FLOOR'){t='Pavimento del locale';d='Piano di riferimento dell’angolo stanza. Le misure sono schematiche e servono a confrontare ingombri e percorsi.';tt=['base metrica','solo contesto']}
+  else if(id==='WHITECAB'){t='Mobile basso bianco';d='Elemento di servizio principale lungo la parete sinistra: ospita stampante, modem, parte dell’audio e mantiene piano libero accanto alla scrivania. Stima: circa 1500 × 320 × 500 mm.';tt=['stima','servizio laterale']}
+  else if(id==='DARKDRAWER'){t='Cassettiera scura';d='Cassettiera in legno sopra il mobile basso. Conviene mantenerla addossata alla parete per non rubare spazio utile alla postazione di lavoro.';tt=['storage leggero','ingombro visibile']}
+  else if(id==='PRINTER'){t='Stampante Brother HL-1110';d='Stampante identificata con buona affidabilità: 340 × 238 × 189 mm. Viene tenuta sul mobile basso, vicino alla scrivania, per accesso comodo senza occupare il piano di lavoro principale.';tt=['34 × 23,8 × 18,9 cm','dato affidabile']}
+  else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
+  else if(id==='SUBWOOFER'){t='Subwoofer / speaker principale';d='Stima fotografica: circa 180 × 260 × 360 mm. Nel riarrangiamento sta sul pavimento rigido, separato dalla cassettiera, per ridurre vibrazioni sui mobili.';tt=['18 × 26 × 36 cm','stima']}
+  else if(id==='AUDIOLEFT'){t='Satellite audio laterale';d='Satellite del sistema audio visto sulle foto, stimato circa 70 × 90 × 210 mm. Qui resta vicino al subwoofer sul mobile basso.';tt=['7 × 9 × 21 cm','stima']}
+  else if(id==='AUDIORIGHT'){t='Satellite audio laterale';d='Secondo satellite audio sul mobile basso. La coppia grande resta laterale, mentre due satelliti piccoli aggiuntivi vanno sulla scrivania per l’ascolto ravvicinato.';tt=['7 × 9 × 21 cm','stima']}
+  else if(id==='RACK'){t='Ripiano / sostegno laterale in legno';d='Elemento a ripiani alto e stretto, riutilizzato come supporto destro per piccoli accessori, alimentazioni e base visiva della postazione, senza invadere il triangolo operativo della sedia.';tt=['riuso arredo presente','lato destro']}
+  else if(id==='PCFLOOR'){t='PC tower attuale a pavimento';d='Case desktop attuale, tenuto a destra della scrivania per non ostacolare la rotazione della sedia a 45°. Stima: circa 210 × 440 × 430 mm.';tt=['stima','a pavimento']}
+  else if(id==='DESK'){t='Scrivania diagonale';d='Disposizione proposta più efficiente: scrivania ruotata di circa 45° verso l’angolo della stanza. Questo migliora il campo visivo dei tre monitor e libera entrambi i fianchi per stampante e cablaggi.';tt=['orientamento 45°','setup principale']}
+  else if(id==='CHAIR'){t='Sedia gaming / office chair';d='Segnaposto per la sedia definitiva. Non posso leggere i tuoi vecchi ordini Amazon da qui, quindi il modello esatto è da confermare. Ho usato un ingombro prudente da sedia gaming media, circa 660 × 660 mm a terra.';tt=['Amazon non accessibile','ingombro stimato']}
+  else if(id==='MONHDMI'){t='Monitor centrale HDMI';d='Schermo principale, più grande degli altri due, centrato davanti alla posizione di lavoro. Larghezza illustrativa circa 740 mm, compatibile con un TV/monitor intorno ai 32 pollici.';tt=['monitor principale','~32”']}
+  else if(id==='MONVGA'){t='Monitor sinistro VGA';d='Monitor Acer V193W identificato dai dati EDID del nodo n1. Larghezza esterna verificata circa 442 mm. Nella proposta è il pannello secondario sinistro.';tt=['Acer V193W','~442 mm']}
+  else if(id==='MONMID'){t='Terzo monitor intermedio';d='Schermo di dimensioni intermedie tra il VGA Acer e il monitor/TV HDMI: stima progettuale circa 590 mm di larghezza, equivalente grossomodo a un 24–25 pollici.';tt=['~24–25”','dimensione intermedia']}
+  else if(id==='LAPTOP'){t='Laptop in appoggio';d='Portatile aperto sul lato destro, in funzione di quarto schermo occasionale, test o controllo nodi. In un uso quotidiano può restare chiuso su supporto verticale.';tt=['supporto lavoro','lato destro']}
+  else if(id==='AUDIOCENTER'){t='Speaker centrale da scrivania';d='Piccolo speaker orizzontale sotto il monitor principale, stimato circa 240 × 80 × 75 mm. Aiuta a concentrare l’audio vicino all’utente senza rubare troppo spazio.';tt=['24 × 8 × 7,5 cm','stima']}
+  else if(id==='DESKSATLEFT'){t='Satellite sinistro su scrivania';d='Satellite vicino all’ascolto, collocato a sinistra della tastiera per una scena sonora più coerente nella posizione di lavoro ruotata verso l’angolo.';tt=['near-field','sinistra']}
+  else if(id==='DESKSATRIGHT'){t='Satellite destro su scrivania';d='Satellite destro near-field sulla scrivania. Insieme a quello sinistro e allo speaker centrale crea un setup più leggibile durante lavoro e call.';tt=['near-field','destra']}
  else if(id==='FRAME'){t='Telaio portante stampabile';d='Travi longitudinali, traverse segmentate, giunti, supporti intermedi e piedini antivibranti. L’incastro geometrico deve essere accompagnato da adeguata ritenuta meccanica e verifica della deformazione.';tt=['segmentato','stampabile','resistenza da testare']}
  else {t='Torre H-9';d='Elemento del modello orientativo.';tt=[]}
  title.textContent=t;desc.textContent=d;$('part-specific').textContent=name ? 'Elemento preciso: '+name : 'Selezione del sottosistema';
@@ -545,8 +634,8 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
 function buttonGroup(sel,active){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('active',b===active))}
 function view(v){if(v==='iso'){state.yaw=2.36;state.pitch=.52}else if(v==='top'){state.yaw=3.14;state.pitch=1.53}else if(v==='front'){state.yaw=3.14;state.pitch=.10}else if(v==='rear'){state.yaw=0;state.pitch=.25}else if(v==='side'){state.yaw=1.57;state.pitch=.23}state.zoom=1;buttonGroup('[data-view]',document.querySelector(`[data-view="${v}"]`));tip.style.opacity=0;redraw()}
 function scene(mode){state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
- if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.36;state.pitch=.52}
- const names={tower:['TORRE H-9 · quote e appoggi','1220 × 429 × 334 mm · ingombro nominale H-9'],rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti solo nelle sedi inferiori'],module:['CARTUCCIA · 6 distanziali e X completa','Scheda su M3 metallici, adapter stampato dietro'],supports:['FISSAGGIO PCB · vista dal retro','X stampata continua + 6 distanziali metallici + 4 puntoni al telaio'],joint:['INCASTRO · contatti reali','Fondo su z=52, spalle su z=89 mm; estrazione illustrata, fermi nascosti'],guides:['GUIDE ALTE · vincolo anti-oscillazione','Doppia guida fissa frontale/posteriore; binari fuori dal passaggio verticale'],ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge']};
+ if(mode==='room'){state.yaw=.82;state.pitch=.57;state.xray=true;$('xray').classList.add('on')}else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.36;state.pitch=.52}
+ const names={tower:['TORRE H-9 · quote e appoggi','1220 × 429 × 334 mm · ingombro nominale H-9'],rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti solo nelle sedi inferiori'],module:['CARTUCCIA · 6 distanziali e X completa','Scheda su M3 metallici, adapter stampato dietro'],supports:['FISSAGGIO PCB · vista dal retro','X stampata continua + 6 distanziali metallici + 4 puntoni al telaio'],joint:['INCASTRO · contatti reali','Fondo su z=52, spalle su z=89 mm; estrazione illustrata, fermi nascosti'],guides:['GUIDE ALTE · vincolo anti-oscillazione','Doppia guida fissa frontale/posteriore; binari fuori dal passaggio verticale'],ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],room:['ANGOLO STANZA · riarrangiamento efficiente','Scrivania a 45°, triplo monitor, mobile laterale e selezione di ogni elemento']};
  $('scene-caption').textContent=names[mode][0];$('scene-subtitle').textContent=names[mode][1];
  buttonGroup('[data-scene]',document.querySelector(`[data-scene="${mode}"]`));clearSelection();
 }
