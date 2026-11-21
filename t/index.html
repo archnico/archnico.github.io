@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TORRE H-9 • V0.7 · Retro e incastri interattivi</title>
+<style>
+:root{color-scheme:dark;--bg:#0a121b;--panel:#0d1c27;--panel2:#132733;--line:#2c4451;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--blue:#56a4e5;--orange:#f5aa62;--red:#e78b86}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
+.shell{min-height:100vh;display:grid;grid-template-rows:76px minmax(580px,1fr) 56px;background:radial-gradient(ellipse at 55% 45%,#16303b 0%,#0b1520 54%,#091019 100%)}
+header{display:flex;justify-content:space-between;gap:20px;align-items:center;padding:17px 26px;border-bottom:1px solid #2d45505b;background:linear-gradient(90deg,#0e202b,#0a141e);z-index:1}
+.brand{display:flex;gap:15px;align-items:center}.logo{height:40px;width:40px;display:grid;place-items:center;background:#123b43;border:1px solid #368b87;border-radius:11px;font-size:23px;color:#9ce6d8}.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);font-weight:800}.heading{font-size:21px;line-height:1.2;font-weight:750;letter-spacing:-.04em;margin-top:2px}.heading span{color:#acc5ca;font-weight:400}.status{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.pill{border:1px solid #38535a;color:#a5bec4;background:#1b303a;padding:7px 11px;border-radius:100px;font-size:11px;white-space:nowrap}.pill.accent{border-color:#35786f;color:#98e8d5;background:#173631}
+.layout{display:grid;grid-template-columns:225px minmax(500px,1fr);min-height:0;position:relative}
+aside{z-index:2;background:#0d1b25e6;padding:22px 19px;overflow:auto;border-right:1px solid #30475366}
+.right{position:absolute;right:20px;top:20px;width:285px;max-height:calc(100% - 45px);overflow:auto;z-index:8;border:1px solid #4b7781;border-radius:14px;background:#0d202cf6;box-shadow:0 12px 42px #0008;backdrop-filter:blur(14px)}[hidden]{display:none!important}.close{float:right;border:1px solid #49626b;border-radius:7px;background:#173440;color:#e2f4f2;padding:4px 8px}.selected-note{font-size:10px;color:#80b6b5;letter-spacing:.1em;text-transform:uppercase}.scene-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.scene-btn{font-size:11px}.scene-btn.active{border-color:#e1ae69;background:#4d3d2b;color:#ffe2aa}.legend-mini{font-size:10px;color:#96abb5;line-height:1.8}
+.label{font-size:10px;color:#80abb4;letter-spacing:.17em;text-transform:uppercase;font-weight:800;margin-bottom:12px}.section{margin-bottom:25px}.section-title{font-size:13px;font-weight:750;margin:0 0 10px}.help{font-size:11px;line-height:1.65;color:var(--muted)}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.button{border:1px solid #33505a;background:#142b36;color:#bad4d8;border-radius:9px;padding:10px 7px;font-size:11px;font-weight:700;transition:.15s}.button:hover{background:#214451;color:#fff}.button.active{border-color:#5bbdaa;background:#16433f;color:#d5fff5}.button.wide{grid-column:1 / -1}.button.accent{border-color:#b7904c;background:#4e3826;color:#ffe7bc}
+.row-control{display:flex;align-items:center;justify-content:space-between;margin:0 0 10px;gap:9px;font-size:11px;color:#d4e6e8}.switch{height:21px;width:37px;border:1px solid #49626b;border-radius:100px;background:#1b333e;position:relative;flex:none;transition:.15s}.switch:before{content:"";position:absolute;top:3px;left:4px;width:13px;height:13px;border-radius:100%;background:#86a0a7;transition:.15s}.switch.on{border-color:#40b9a0;background:#1e6657}.switch.on:before{left:18px;background:#d3fff3}.input-row{display:flex;justify-content:space-between;font-size:11px;color:#c0d7db;margin:0 0 10px}input[type=range]{accent-color:#62cdbc;width:100%;height:4px;cursor:pointer}.sep{height:1px;background:#27434b;margin:18px 0}
+.viewport{position:relative;min-width:0;overflow:hidden;touch-action:none;cursor:grab}.viewport.dragging{cursor:grabbing}canvas{width:100%;height:100%;display:block;touch-action:none}.viewport:after{content:"";pointer-events:none;position:absolute;inset:24px;border:1px solid #35515a35;border-radius:14px}
+.overlay-title{position:absolute;top:25px;left:27px;pointer-events:none}.overlay-title strong{font-size:17px;display:block;letter-spacing:.015em}.overlay-title small{display:block;margin-top:5px;color:#81aab4;font-size:11px;letter-spacing:.04em}
+.hint{position:absolute;bottom:24px;left:27px;display:flex;align-items:center;gap:13px;color:#9ab5bd;font-size:11px;pointer-events:none}.hint span{background:#1c323cb2;border:1px solid #35545b;border-radius:6px;padding:6px 9px}
+.viewmark{position:absolute;bottom:25px;right:25px;color:#77969e;font-size:10px;letter-spacing:.11em;text-align:right;pointer-events:none;line-height:1.9}
+.tooltip{position:absolute;z-index:5;pointer-events:none;max-width:260px;box-shadow:0 8px 24px #0008;padding:8px 10px;background:#062329ed;color:#ddfff4;border:1px solid #4d9d92;border-radius:8px;font-size:11px;line-height:1.4;opacity:0;transition:opacity .13s}
+.num{font-variant-numeric:tabular-nums}.big{font-size:29px;font-weight:750;letter-spacing:-.05em;line-height:1.2;color:#e9f7f4}.small-note{font-size:10px;color:#7897a1;line-height:1.55;margin:8px 0 0}.stat{padding:12px 0;border-bottom:1px solid #203d45}.stat .value{font-size:15px;font-weight:750;color:#d8f3ed;margin-top:5px}.stat .name{font-size:10px;color:#82a8b0;letter-spacing:.09em;text-transform:uppercase}
+.legend{display:grid;grid-template-columns:12px 1fr;gap:10px 8px;align-items:center;font-size:11px;color:#bed2d6}.sw{height:9px;width:9px;border-radius:2px}.detail{border:1px solid #34545b;background:linear-gradient(145deg,#14313c,#10222d);border-radius:13px;padding:13px;margin:10px 0}.detail h3{font-size:13px;margin:0 0 8px}.detail p{font-size:11px;color:#9dbec4;line-height:1.6;margin:0 0 12px}.badges{display:flex;gap:5px;flex-wrap:wrap}.tiny{font-size:10px;padding:4px 7px;border-radius:6px;background:#29464d;color:#b9e7df}
+footer{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:0 26px;background:#0b1820;border-top:1px solid #2d455077;font-size:11px;color:#86a4ac}.footer-left{display:flex;align-items:center;gap:8px}.dot{width:6px;height:6px;background:#75d1b1;border-radius:50%}.warning{color:#d6b783}.kbd{border:1px solid #36515b;padding:3px 5px;border-radius:4px;color:#b0cbd0}
+@media(max-width:1150px){.layout{grid-template-columns:207px minmax(350px,1fr)aside{padding:17px 13px}.heading{font-size:18px}.pill:last-child{display:none}}
+@media(max-width:850px){.shell{grid-template-rows:auto auto auto}.layout{display:flex;flex-direction:column}.viewport{height:min(65vh,570px);min-height:420px;order:0}.left{order:1;border-right:0;border-top:1px solid #304753;display:grid;grid-template-columns:1fr 1fr;gap:20px}.right{position:absolute;right:8px;top:8px;width:min(310px,calc(100% - 18px));max-height:70%;display:block}header{padding:16px}.status{display:none}footer{padding:14px;flex-wrap:wrap}.overlay-title{top:20px;left:18px}.hint{left:16px;bottom:14px}}
+@media(max-width:540px){.left,.right{display:block}.viewport{min-height:360px;height:53vh}.heading{font-size:15px}.overlay-title strong{font-size:14px}.hint span:last-child{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header><div class="brand"><div class="logo">⌗</div><div><div class="eyebrow">Astronave / Hardware / Digital Twin</div><div class="heading">TORRE H-9 <span>— Minimal Comb Orizzontale</span></div></div></div><div class="status"><span class="pill accent">● CONCETTO INTERATTIVO</span><span class="pill" id="variant-pill">7 PC + 2 POSIZIONI RISERVA</span><span class="pill">V0.7 · 21 NOV 2026</span></div></header>
+<div class="layout">
+<aside class="left">
+  <div class="section"><div class="label">01 / Esplorazione</div><h3 class="section-title">Orientamento camera</h3><div class="btn-grid"><button class="button active" data-view="iso">◈ Prospettiva</button><button class="button" data-view="top">▤ Dall'alto</button><button class="button" data-view="front">▥ Fronte</button><button class="button" data-view="rear">▥ Retro</button><button class="button" data-view="side">▯ Fianco</button><button class="button" id="fit">⤢ Centra</button></div><p class="help">Trascina per ruotare · rotella per ingrandire · clicca un componente per ispezionarlo.</p></div>
+  <div class="section"><div class="label">02 / Dettagli meccanici</div><div class="scene-grid"><button class="button scene-btn active" data-scene="tower">◈ Torre intera</button><button class="button scene-btn" data-scene="rear">▤ Retro tecnico</button><button class="button scene-btn" data-scene="module">▥ Modulo isolato</button><button class="button scene-btn" data-scene="joint">⌑ Incastro</button></div><p class="help">Il dettaglio ravvicinato mostra separatamente la sede fissa, il maschio della cartuccia e il fermo manuale.</p></div>
+  <div class="section"><div class="label">03 / Configurazione</div><h3 class="section-title">Posizioni modulari</h3><div class="btn-grid"><button class="button active" data-count="9">H-9 · 9</button><button class="button" data-count="7">H-7 · 7</button></div><p class="help">Sette PC ipotizzati; le posizioni 8 e 9 sono vuote nella variante H-9. I telefoni sono nodi esterni.</p></div>
+  <div class="section"><div class="label">04 / Smontaggio</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide" id="extract">↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div></div>
+  <div class="section"><div class="label">05 / Strati</div><div class="row-control"><span>Etichetta del selezionato</span><button class="switch on" id="labels" aria-label="Mostra etichette"></button></div><div class="row-control"><span>Vista semitrasparente</span><button class="switch" id="xray" aria-label="Attiva trasparenza"></button></div><div class="row-control"><span>Dischi laterali</span><button class="switch on" id="disks" aria-label="Mostra dischi"></button></div><div class="row-control"><span>Alimentazione e cavi</span><button class="switch on" id="wiring" aria-label="Mostra cavi"></button></div><div class="row-control"><span>Griglia di misura</span><button class="switch on" id="grid" aria-label="Mostra griglia"></button></div></div>
+</aside>
+<section class="viewport" id="vp" aria-label="Modello tecnico interattivo della torre orizzontale"><canvas id="c"></canvas><div class="overlay-title"><strong id="scene-caption">TORRE H-9 · vista generale</strong><small id="scene-subtitle">Clicca un pezzo per leggere la scheda tecnica</small></div><div class="hint"><span>↔ Ruota</span><span>⊕ Zoom</span><span>◉ Seleziona / Esc deseleziona</span></div><div class="viewmark">SCHEMA MECCANICO CONCETTUALE<br>QUOTE E TENUTE NON VERIFICATE</div><div class="tooltip" id="tooltip"></div></section>
+<aside class="right" id="inspector" hidden aria-live="polite">
+  <div class="section" style="margin-bottom:12px"><button class="close" id="close-inspector" aria-label="Chiudi dettagli">✕</button><div class="selected-note">COMPONENTE SELEZIONATO</div><div class="detail"><h3 id="part-title"></h3><p id="part-desc"></p><div class="badges" id="part-tags"></div></div><div class="small-note" id="part-specific"></div></div>
+  <div class="legend-mini"><span style="color:#73cdb6">■</span> telaio & sede fissa &nbsp; <span style="color:#e2ab65">■</span> cartuccia estraibile &nbsp; <span style="color:#6aa9ca">■</span> I/O &nbsp; <span style="color:#d48580">■</span> elettrico</div>
+</aside>
+</div>
+<footer><div class="footer-left"><span class="dot"></span><span>Anteprima HTML offline · seleziona un componente per i dettagli</span></div><span class="warning">Dimensioni, resistenza e raffreddamento non verificati</span><span><span class="kbd">R</span> reset vista &nbsp; <span class="kbd">1</span> isometrica &nbsp; <span class="kbd">2</span> alto</span></footer>
+</div>
+<script>
+(()=>{'use strict';
+const canvas=document.getElementById('c'),vp=document.getElementById('vp'),ctx=canvas.getContext('2d'),tip=document.getElementById('tooltip');
+const $=id=>document.getElementById(id);
+const C={frame:'#5bb49e',frame2:'#447c77',corner:'#dfa962',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570'};
+const state={n:9,yaw:2.36,pitch:.52,zoom:1,explode:0,xray:false,labels:true,disks:true,wiring:true,grid:true,selected:null,selectedName:'',focusIndex:0,scene:'tower',lifted:null};
+let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function rgb(hex){const a=hex.replace('#','');return [parseInt(a.slice(0,2),16),parseInt(a.slice(2,4),16),parseInt(a.slice(4,6),16)]}
+function tint(color,k,alpha=1){const x=rgb(color).map(c=>clamp(Math.round(c*k),0,255));return `rgba(${x[0]},${x[1]},${x[2]},${alpha})`}
+function pushBox(x,y,z,sx,sy,sz,color,group='',name='',opa=1,emphasis=false){
+ const p=[[x,y,z],[x+sx,y,z],[x+sx,y+sy,z],[x,y+sy,z],[x,y,z+sz],[x+sx,y,z+sz],[x+sx,y+sy,z+sz],[x,y+sy,z+sz]];
+ const fs=[[0,3,2,1],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
+ for(let k=0;k<6;k++){faces.push({p:fs[k].map(i=>p[i]),color,group,name,opa,emphasis,normal:[[0,0,-1],[0,0,1],[0,-1,0],[1,0,0],[0,1,0],[-1,0,0]][k]})}
+}
+function wire(points,color='#7ec6bd',width=1,group='',dash=[],opa=1){lines.push({points,color,width,group,dash,opa})}
+function text3(pos,value,color='#bdd6d8',size=11,group='',code=''){labels.push({pos,value,color,size,group,code})}
+function fastener(x,y,z,group,name){
+ pushBox(x-3,y-3,z-1.5,6,6,3,'#cbd7d5',group,name,1);
+ wire([[x-2,y-2,z+2],[x+2,y+2,z+2]],'#34464e',1.15,group);
+ wire([[x-2,y+2,z+2],[x+2,y-2,z+2]],'#34464e',1.15,group);
+}
+function dockSocket(cx,y,id){
+ // A U-shaped, open-top receiver.  External cheeks stay on the frame when the cartridge lifts.
+ pushBox(cx-17,y,49,7,30,40,C.frame2,'DOCK','Sede femmina fissa: guancia sinistra',1);
+ pushBox(cx+10,y,49,7,30,40,C.frame2,'DOCK','Sede femmina fissa: guancia destra',1);
+ pushBox(cx-17,y,46,34,30,6,C.frame,'DOCK','Fondo di battuta della sede',1);
+ pushBox(cx-21,y+2,49,4,26,27,C.frame,'DOCK','Nervatura laterale fissa',1);
+ pushBox(cx+17,y+2,49,4,26,27,C.frame,'DOCK','Nervatura laterale fissa',1);
+ for(const d of [-12,12])fastener(cx+d,y+15,86,'DOCK','Fissaggio sede/traversa (schema)');
+}
+function fitTongue(cx,y,z,id){
+ pushBox(cx-8,y+4,73+z,16,22,22,C.corner,id,'Maschio verticale della cartuccia',1,true);
+ pushBox(cx-11,y+6,92+z,22,18,6,'#f6c67e',id,'Spalla di appoggio superiore',1,true);
+ pushBox(cx-8,y+7,74+z,16,16,5,'#a87345',id,'Smusso inferiore di invito',1);
+}
+function lockPin(cx,y,id){
+ pushBox(cx-22,y-6,95,45,7,6,C.metal,'LOCK','Fermo trasversale anti-sollevamento, rimozione manuale',1);
+ pushBox(cx+21,y-9,92,7,13,12,C.orange,'LOCK','Testa del fermo estraibile',1);
+ fastener(cx+24,y-2,104,'LOCK','Manopola fermo manuale (concettuale)');
+}
+function rearSkeleton(width){
+ // Rear service spine: tall printed uprights, bolted/reinforced joints and an open horizontal tie.
+ const xs=[178];for(let i=3;i<state.n;i+=3)xs.push(178+i*96);xs.push(178+state.n*96);
+ for(const x of xs){
+  pushBox(x-10,385,28,20,17,284,C.frame2,'BACKBONE','Montante verticale posteriore modulare',1);
+  pushBox(x-19,383,31,38,23,28,C.frame,'BACKBONE','Piede del montante sul longherone',1);
+  pushBox(x-16,383,288,32,23,30,C.frame,'BACKBONE','Nodo di testa del montante',1);
+  wire([[x,386,111],[x-35,349,43]],'#86c4ad',3.8,'BACKBONE');
+  wire([[x,392,280],[x+24,401,245]],'#86c4ad',2.6,'BACKBONE');
+  for(const z of [49,300])fastener(x,402,z,'BACKBONE','Viti di ritenuta del giunto (da dimensionare)');
+ }
+ pushBox(166,383,308,width-332,15,13,C.frame,'BACKBONE','Traversa alta posteriore anti-svergolamento',.98);
+ pushBox(168,390,238,width-336,10,10,'#4f9690','BACKBONE','Longherone di irrigidimento inferiore',1);
+}
+function rearPanel(cx,id){
+ // I/O service patch faces the back; no exposed backplane/mains shown.
+ pushBox(cx-36,416,155,72,7,54,C.metal,'IO','Piastra I/O posteriore rimovibile · '+id,.97);
+ pushBox(cx-31,423,179,22,4,16,'#193f4b','IO','RJ45 / LAN · '+id,1);
+ pushBox(cx-28,427,184,16,2,6,'#88d39f','IO','Contatti LAN · '+id,1);
+ for(let j=0;j<2;j++){
+  pushBox(cx-3+j*18,423,180,14,4,9,'#145a7a','IO','Porta USB · '+id,1);
+  pushBox(cx-1+j*18,428,182,10,1.5,4,'#99cfe9','IO','Linguetta USB · '+id,1);
+ }
+ pushBox(cx-31,423,162,60,3,7,'#334f5d','IO','Scarico trazione cablaggi · '+id,1);
+ for(let j=0;j<3;j++)wire([[cx-26+j*22,416,170],[cx-26+j*22,382,154],[cx-9+j*11,328,183]],C.plug,1.5,'IO');
+}
+function handle(x,y,z,id){
+ // Large inverted-U handle, rigid carrier: no sliding mechanical guides
+ wire([[x-2,y-27,z-4],[x-2,y-27,z+20],[x-2,y+27,z+20],[x-2,y+27,z-4]],C.corner,4,id);
+ pushBox(x-5,y-29,z+17,10,58,7,C.corner,id,'Maniglia · '+id,.95,true);
+}
+function fan(x,y,z,r,id){
+ const pts=[];for(let a=0;a<=24;a++){let t=2*Math.PI*a/24;pts.push([x,y+Math.cos(t)*r,z+Math.sin(t)*r])}
+ wire(pts,C.fan,1.65,id);for(let j=0;j<6;j++){const t=j*Math.PI/3;wire([[x,y+4*Math.cos(t),z+4*Math.sin(t)],[x,y+(r-4)*Math.cos(t+.33),z+(r-4)*Math.sin(t+.33)]],C.fan,1,id)}
+}
+function diskBank(side,n,width){if(!state.disks)return;const x0=side==='left'?24:width-145;
+ pushBox(x0-11,48,42,140,300,7,C.frame2,'STORAGE',`Banco HDD ${side}`,1);
+ for(let i=0;i<4;i++){const x=x0+i*30;
+  pushBox(x,82,63,24,190,100,C.disk,'STORAGE','HDD 3,5″ · alloggiamento '+(side==='left'?i+1:i+5),.98);
+  pushBox(x-1,75,61,26,13,105,C.diskEdge,'STORAGE','Cartuccia HDD estraibile',.95);
+  pushBox(x+3,103,165,18,146,3,C.metal,'STORAGE','Copertura disco',.95);
+  pushBox(x+3,115,171,18,36,2,'#8cb9bd','STORAGE','Indicazione HDD',.9);
+  wire([[x+12,74,168],[x+12,74,183],[x+12,92,183]],C.corner,2.5,'STORAGE');
+ }
+ text3([x0+55,160,210],side==='left'?'HDD • A':'HDD • B',C.metal,11,'STORAGE');
+}
+function module(i,wx){const id='P'+(i+1),cx=178+(i+.5)*96,zlift=state.explode*(i%2?1.3:1.65)+(state.lifted===id?155:0)+(state.scene==='joint'?44:0);const z=zlift;const s=i%3;
+ // fixed receiving cradles and vertical anti-shear slots
+ pushBox(cx-40,52,43,8,270,9,C.frame,'DOCK','Longherone fisso sinistro · '+id,1);
+ pushBox(cx+32,52,43,8,270,9,C.frame,'DOCK','Longherone fisso destro · '+id,1);
+ pushBox(cx-41,65,50,12,31,13,C.frame2,'DOCK','Battuta anteriore fissa',1);
+ pushBox(cx+29,296,50,12,31,13,C.frame2,'DOCK','Battuta posteriore fissa',1);
+ for(const socketY of [71,291]){dockSocket(cx,socketY,id);fitTongue(cx,socketY,z,id)}
+ if(state.scene!=='joint')lockPin(cx,61,id);
+ // carrier perimeter, partly rail-like, with board held on standoffs
+ pushBox(cx-4,74,72+z,8,249,9,C.corner,id,'Traversa inferiore portante · '+id,.98,true);
+ pushBox(cx-4,74,81+z,8,8,231,C.corner,id,'Montante cartuccia · '+id,.98,true);
+ pushBox(cx-4,315,81+z,8,8,231,C.corner,id,'Montante cartuccia · '+id,.98,true);
+ pushBox(cx-4,74,304+z,8,249,7,C.corner,id,'Traversa superiore · '+id,.98,true);
+ for(const y of [84,313]){for(const h of [86,290]){pushBox(cx-12,y-3,h+z,12,6,6,C.metal,id,'Distanziatore filettato motherboard',1);fastener(cx+3,y,h+z,id,'Vite motherboard e rondella')}}
+ handle(cx,192,310+z,id);
+ // board adapt to donor specific height sizes while retaining identical carrier outer envelope
+ const bpY=88+(s===1?10:0),bpZ=94+(s===2?25:0),bph=(s===2?179:204),bpD=(s===1?208:224);
+ pushBox(cx-1.5,bpY,bpZ+z,3,bpD,bph,C.pcb,id,'Scheda madre · '+id,.94);
+ // silkscreen copper traces, cpu and socket
+ for(let j=0;j<7;j++){const yy=bpY+16+j*27;wire([[cx+2,yy,bpZ+14+z],[cx+2,yy+16,bpZ+14+z],[cx+2,yy+16,bpZ+22+j%4*10+z]],'#3d8790',.85,id)}
+ pushBox(cx+2,bpY+93,bpZ+70+z,8,60,56,C.chip,id,'CPU / socket · '+id,.95);
+ pushBox(cx+10,bpY+100,bpZ+77+z,22,46,44,C.metal,id,'Dissipatore CPU · '+id,.95);
+ for(let f=0;f<7;f++)pushBox(cx+12+f*2.5,bpY+103,bpZ+80+z,1.2,40,38,'#abc3c1',id,'Lamelle dissipatore',.93);
+ fan(cx+36,bpY+122,bpZ+97+z,19,id);
+ // RAM banks
+ for(let j=0;j<2;j++){
+  pushBox(cx+3,bpY+42+j*16,bpZ+66+z,7,7,98,C.pcb2,id,'Modulo RAM',.96);
+  for(let k=0;k<6;k++)pushBox(cx+10,bpY+42+j*16,bpZ+73+k*14+z,1,7,8,C.chip,id,'Chip RAM',.95)
+ }
+ // peripheral chips / sockets / front IO
+ pushBox(cx+3,bpY+156,bpZ+25+z,7,40,29,'#172d36',id,'Chipset',.95);
+ pushBox(cx+3,bpY+24,bpZ+15+z,7,54,10,C.metal,id,'Slot PCIe',.94);
+ pushBox(cx+3,bpY+24,bpZ+29+z,7,54,10,C.metal,id,'Connettore espansione',.94);
+ pushBox(cx-6,bpY+bpD-18,bpZ+30+z,5,14,90,C.metal,id,'Piastra porte motherboard',.94);
+ for(let k=0;k<5;k++)pushBox(cx+2,bpY+115+k*12,bpZ+28+z,3,8,6,'#487c89',id,'Chip di servizio della scheda',.98);
+ pushBox(cx+2,bpY+65,bpZ+158+z,4,58,9,'#d6d2a6',id,'Connettore ATX / alimentazione',.95);
+ // rear cable down to PSU individual: simple, deliberately not a proprietary backplane
+ if(state.wiring && zlift<5){wire([[cx+1,315,163+z],[cx+1,332,163+z],[cx+1,347,118],[cx+1,404,118]],C.cable,2.5,'POWER');
+ wire([[cx-10,318,197+z],[cx-10,338,197+z],[cx-10,401,141]],C.plug,1.7,'POWER');}
+ // PSU commercial individual, along rear bench, serviced independently
+ if(state.wiring){pushBox(cx-32,345,57,64,55,50,C.psu,'POWER','Alimentatore commerciale individuale · '+id,.99);
+  pushBox(cx-27,344,63,19,2,35,C.metal,'POWER','Griglia PSU',.93);
+  for(let j=0;j<4;j++)wire([[cx-25+j*4,343,64],[cx-25+j*4,343,93]],'#284755',.8,'POWER');
+  pushBox(cx-31,403,126,64,6,13,C.plug,'POWER','Porte posteriori LAN / USB · '+id,.96);
+  pushBox(cx-24,409,129,12,4,6,'#9cd6a9','POWER','LAN',1);
+  pushBox(cx+4,409,129,14,4,6,'#8bc5e8','POWER','USB',1);
+ rearPanel(cx,id);
+ }
+ text3([cx,191,343+z],id,C.accent,12,id,id);
+ return cx;
+}
+function emptyModule(i){const id='S'+(i+1),cx=178+(i+.5)*96;pushBox(cx-40,52,43,8,270,9,C.frame,id,'Guida vuota',1);pushBox(cx+32,52,43,8,270,9,C.frame,id,'Guida vuota',1);
+ pushBox(cx-3,78,50,6,241,5,C.empty,id,'Predisposizione per futura cartuccia',.65);
+ for(let j=0;j<4;j++)wire([[cx-35,90+j*52,52],[cx+35,90+j*52,52]],'#416878',1,id,[3,6]);
+ text3([cx,191,65],id,C.metal,11,id,id);
+}
+function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;
+ if(state.scene==='module'||state.scene==='joint'){
+  const i=clamp(state.focusIndex,0,6),cx=178+(i+.5)*96;
+  pushBox(cx-56,19,21,112,15,26,C.frame,'FRAME','Trave anteriore della campata isolata',1);
+  pushBox(cx-56,384,21,112,15,26,C.frame,'FRAME','Trave posteriore della campata isolata',1);
+  for(const x of [cx-54,cx+44])pushBox(x,20,24,10,379,18,C.frame2,'FRAME','Traversa strutturale trasversale',.98);
+  pushBox(cx-53,385,43,17,15,260,C.frame2,'BACKBONE','Montante posteriore della campata',1);
+  pushBox(cx+37,385,43,17,15,260,C.frame2,'BACKBONE','Montante posteriore della campata',1);
+  pushBox(cx-53,387,291,107,15,11,C.frame,'BACKBONE','Traversa di testa del retro',.98);
+  module(i,width);
+  if(state.scene==='joint'){for(const yy of [71,291]){wire([[cx,yy+15,139],[cx,yy+15,91]],'#f4cb84',1.6,'ALIGN',[5,5]);wire([[cx,yy+15,91],[cx-5,yy+15,97]],'#f4cb84',1.6,'ALIGN');wire([[cx,yy+15,91],[cx+5,yy+15,97]],'#f4cb84',1.6,'ALIGN')}}
+  
+  return width;
+ }
+
+ // ground grid z=-10, every 100 mm, floor dotted rulers
+ if(state.grid){for(let x=-100;x<width+200;x+=100)wire([[x,-80,-15],[x,510,-15]],'#234451',.7,'GRID',[],.7);
+ for(let y=-80;y<550;y+=100)wire([[-90,y,-15],[width+90,y,-15]],'#234451',.7,'GRID',[],.7)}
+ // nine-cell comb frame, frontal and rear horizontal longitudinal beams; segmented joints every pitch
+ pushBox(5,16,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale anteriore',.99);
+ pushBox(5,411,21,width-10,14,22,C.frame,'FRAME','Trave longitudinale posteriore',.99);
+ pushBox(5,17,11,18,405,25,C.frame2,'FRAME','Trave laterale sinistra',.96);
+ pushBox(width-23,17,11,18,405,25,C.frame2,'FRAME','Trave laterale destra',.96);
+ for(let i=0;i<=state.n;i++){
+ const x=178+i*96;
+ pushBox(x-5,17,22,10,407,19,C.frame,'FRAME','Traversa di campata stampata',.88);
+ pushBox(x-7,18,42,14,31,12,C.corner,'FRAME','Giunto incastro trave anteriore',.93);
+ pushBox(x-7,393,42,14,31,12,C.corner,'FRAME','Giunto incastro trave posteriore',.93);
+ }
+ for(let x of [23,163,limit+15,width-23])for(let y of [25,404]){pushBox(x-12,y-13,0,24,27,13,'#2e5660','FRAME','Piede antivibrante',1)}
+ // side storage banks isolated from motherboard carriers
+ diskBank('left',state.n,width);diskBank('right',state.n,width);
+ rearSkeleton(width);
+ // dual sided lateral beams
+ pushBox(146,43,25,11,339,18,C.frame,'FRAME','Spina divisoria banco dischi / compute',.97);
+ pushBox(limit+10,43,25,11,339,18,C.frame,'FRAME','Spina divisoria compute / banco dischi',.97);
+ for(let i=0;i<state.n;i++)i<7?module(i,width):emptyModule(i);
+ // protected mains distribution represented as service element, NOT an exposed wire point
+ if(state.wiring){pushBox(52,429,50,width-104,11,15,C.cable,'POWER','Canalina posteriore elettrica protetta',.92);
+ pushBox(width-92,415,53,53,27,31,C.psu,'POWER','Modulo distribuzione AC protetto (da certificare)',.97);
+ pushBox(width-30,434,62,18,6,10,C.orange,'POWER','Ingresso rete AC',1);
+ for(let j=0;j<5;j++){const x=230+j*196;if(x<width-170){pushBox(x-12,414,48,24,14,15,'#426d73','POWER','Fascetta fissacavo posteriore',1);wire([[x,423,67],[x,426,88]],C.cable,2,'POWER')}}}
+ // horizontal dimension arrows outside model (screen-space labels on wire anchors)
+ wire([[0,-46,0],[width,-46,0]],C.orange,1,'DIM', [5,4]);
+ wire([[0,-58,-8],[0,-34,8]],C.orange,1,'DIM');wire([[width,-58,-8],[width,-34,8]],C.orange,1,'DIM');
+ text3([width/2,-47,5],`${width.toLocaleString('it-IT')} mm`,C.accent,11,'DIM');
+ text3([width*.5,465,50],'RETRO  ·  LAN / USB / AC',C.metal,10,'DIM');
+ text3([width*.5,-7,52],'FRONTE  ·  ACCESSO AI MODULI',C.metal,10,'DIM');
+ $('variant-pill').textContent=state.n===9?'7 PC + 2 POSIZIONI RISERVA':'7 PC + ZERO RISERVE';return width;
+}
+function basis(){const a=state.yaw,e=state.pitch,dir=[Math.sin(a)*Math.cos(e),Math.cos(a)*Math.cos(e),Math.sin(e)];return {right:[Math.cos(a),-Math.sin(a),0],up:[-Math.sin(a)*Math.sin(e),-Math.cos(a)*Math.sin(e),Math.cos(e)],dir}}
+let cam;
+function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2]}
+function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],depth=dot(v,cam.b.dir),scale=cam.base/(1-depth/cam.distance);
+ return {x:W/2+dot(v,cam.b.right)*scale,y:H/2-dot(v,cam.b.up)*scale,depth,scale};}
+function faceAvg(p){return p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length,a[2]+q[2]/p.length],[0,0,0])}
+function polygonPath(points){const path=new Path2D();points.forEach((p,i)=>i?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();return path}
+function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;
+ const detail=state.scene==='module',joint=state.scene==='joint',rear=state.scene==='rear';
+ const frameWidth=joint?250:detail?390:rear?700:width*1.26;
+ const frameHeight=joint?320:detail?435:rear?500:620;
+ const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.18,4)*state.zoom;
+ cam={b,center:joint?[cx,95,109]:detail?[cx,214,177]:rear?[width/2,393,165]:[width/2,210,160],distance:Math.max(850,width*1.45),base:dimScale};
+ ctx.clearRect(0,0,W,H);
+ const grd=ctx.createRadialGradient(W*.5,H*.45,90,W*.5,H*.45,Math.max(W,H)*.75);grd.addColorStop(0,'#15303c');grd.addColorStop(1,'#0a1620');ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+ // distant vignette horizon / front/back guidance
+ const ordered=[];
+ for(const f of faces){const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({...f,center,pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],b.dir)})}
+ ordered.sort((a,z)=>a.depth-z.depth);
+ pick=[];
+ const light=[.36,-.54,.77];
+ for(const f of ordered){const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.12);let opacity=f.opa;
+ if(state.xray && (f.group==='FRAME' || /^P\d/.test(f.group)))opacity*=.30;
+ if(f.group==='GRID')continue;
+ const chosen=f.group===state.selected;
+ ctx.fillStyle=tint(f.color,chosen?Math.min(bright*1.18,1.3):bright,opacity);
+ ctx.fill(path);ctx.lineWidth=chosen?1.15:.55;ctx.strokeStyle=chosen?'rgba(255,221,148,.8)':'rgba(2,16,25,.46)';ctx.stroke(path);
+ if(f.group && f.group!=='DIM')pick.push({path,group:f.group,name:f.name});
+ }
+ const orderedLines=lines.map(l=>({...l,pp:l.points.map(projection),depth:l.points.reduce((acc,p)=>acc+dot([p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.center[2]],b.dir)/l.points.length,0)})).sort((a,b)=>a.depth-b.depth);
+ for(const l of orderedLines){if(l.group==='GRID'&&!state.grid)continue;
+ ctx.beginPath();l.pp.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.lineWidth=l.width*(state.selected===l.group?1.6:1)*Math.min(1.65,Math.max(.7,state.zoom));ctx.strokeStyle=tint(l.color,1,l.opa*(state.xray&&l.group==='FRAME'?.38:1));ctx.setLineDash(l.dash);ctx.stroke();ctx.setLineDash([])}
+ if(state.labels && state.selected){for(const l of labels){if(l.group!==state.selected)continue;const p=projection(l.pos);ctx.save();ctx.font=`${l.size<12?'600':'800'} ${l.size}px system-ui, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';const m=ctx.measureText(l.value).width;if(l.group==='DIM'){ctx.fillStyle='#0e2630cf';ctx.fillRect(p.x-m/2-6,p.y-9,m+12,18)}else{ctx.fillStyle='#0c222dc5';ctx.fillRect(p.x-m/2-5,p.y-9,m+10,18)}ctx.fillStyle=l.color;ctx.fillText(l.value,p.x,p.y);ctx.restore()}}
+ // XYZ mini axes, screen-space, from world basis
+ const orig={x:W-69,y:76},axis=[[80,0,0,'X','#f5aa62'],[0,80,0,'Y','#6dd9d0'],[0,0,80,'Z','#93b3ef']];
+ for(const ax of axis){let p=projection([cam.center[0]+ax[0],cam.center[1]+ax[1],cam.center[2]+ax[2]]),c=projection(cam.center);let dx=(p.x-c.x)*.45,dy=(p.y-c.y)*.45;let k=25/Math.max(5,Math.hypot(dx,dy));dx*=k;dy*=k;ctx.strokeStyle=ax[4];ctx.fillStyle=ax[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(orig.x,orig.y);ctx.lineTo(orig.x+dx,orig.y+dy);ctx.stroke();ctx.font='700 11px system-ui';ctx.fillText(ax[3],orig.x+dx*1.29,orig.y+dy*1.29)}
+}
+function dimensions(){const r=vp.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
+function clearSelection(){state.selected=null;state.selectedName='';$('inspector').hidden=true;tip.style.opacity=0;redraw()}
+function select(id,name='',at=null){state.selected=id;state.selectedName=name;
+ if(/^P\d$/.test(id))state.focusIndex=Math.min(6,Math.max(0,+id.slice(1)-1));
+ const title=$('part-title'),desc=$('part-desc'),tags=$('part-tags');let t='Elemento',d='',tt=[];
+ if(/^P\d$/.test(id)){t=`Modulo PC · ${id}`;d='Portascheda estraibile verso l’alto, con telaio uguale per tutte le campate; adattatori e distanziatori della motherboard specifici per il donatore. Le linguette inferiori scendono nelle due sedi aperte, poi si innesta il fermo anti-sollevamento.';tt=['parte mobile','staffe stampabili','distanziali metallici','stacca i cavi prima di sollevare']}
+ else if(id==='DOCK'){t='Incastro fisso a gravità';d='Due ricevitori a U, aperti verso l’alto, sono solidali al telaio. Le linguette della cartuccia entrano dall’alto, appoggiano sulla battuta e vengono bloccate da un fermo manuale. Non sono guide di scorrimento orizzontale né una giunzione senza ritenuta.';tt=['femmina fissa','linguetta mobile','battuta','anti-taglio']}
+ else if(id==='LOCK'){t='Fermo manuale di ritenuta';d='Spina/piastrina rimovibile che impedisce il sollevamento involontario. Il dettaglio è illustrativo: dimensioni e numero delle viti restano da calcolare sui carichi reali.';tt=['anti-lift','accesso frontale','da dimensionare']}
+ else if(id==='BACKBONE'){t='Spina strutturale posteriore';d='Montanti verticali scanditi ogni tre campate, traversa alta di collegamento e controventi. Il retro rimane aperto per l’accesso alle porte, ai cablaggi e agli alimentatori individuali.';tt=['montanti verticali','traversa alta','nodi rinforzati','retro aperto']}
+ else if(id==='IO'){t='Pannello delle prese sul retro';d='Piastra posteriore con LAN RJ45, USB e fascetta di scarico della trazione dei cavi. Il pannello rappresenta un possibile riporto delle porte: ogni cavo si scollega prima di estrarre la cartuccia. Non è un backplane elettronico.';tt=['LAN / USB','scollegabile','accessibile dal retro']}
+ else if(/^S\d$/.test(id)){t=`Slot libero · ${id}`;d='Una delle due posizioni di riserva H-9. Stesso passo strutturale dei portaschede, ma non è assegnata ora a una GPU: una GPU futura richiederà verifica di ingombri, dissipazione e alimentazione.';tt=['slot vuoto','nessuna GPU installata']}
+ else if(id==='STORAGE'){t='Banchi HDD laterali';d='Due cartucciere laterali indipendenti. Numero e dimensioni delle unità raffigurati a scopo illustrativo; ogni disco deve avere alimentazione e connessione dati definite.';tt=['lato destro / sinistro','dischi separati']}
+ else if(id==='POWER'){t='Alimentazione e canalina posteriore';d='Alimentatori commerciali indipendenti, con collegamenti rimovibili e canalina elettrica protetta. La rappresentazione non è uno schema di cablaggio AC esecutivo.';tt=['protezione elettrica','nessun backplane AC fai-da-te']}
+ else if(id==='FRAME'){t='Telaio portante stampabile';d='Travi longitudinali, traverse segmentate, giunti e piedi antivibranti. L’incastro geometrico deve essere accompagnato da adeguata ritenuta meccanica e verifica della deformazione.';tt=['segmentato','stampabile','resistenza da testare']}
+ else {t='Torre H-9';d='Elemento del modello orientativo.';tt=[]}
+ title.textContent=t;desc.textContent=d;$('part-specific').textContent=name ? 'Elemento preciso: '+name : 'Selezione del sottosistema';
+ tags.replaceChildren(...tt.map(x=>{const b=document.createElement('span');b.className='tiny';b.textContent=x;return b}));
+ $('inspector').hidden=false;
+ if(at){tip.textContent=name||t;tip.style.left=clamp(at.x+14,8,Math.max(8,W-270))+'px';tip.style.top=clamp(at.y-13,55,Math.max(55,H-100))+'px';tip.style.opacity=1}else{tip.style.opacity=0}
+ redraw();
+}
+function buttonGroup(sel,active){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('active',b===active))}
+function view(v){if(v==='iso'){state.yaw=2.36;state.pitch=.52}else if(v==='top'){state.yaw=3.14;state.pitch=1.53}else if(v==='front'){state.yaw=3.14;state.pitch=.10}else if(v==='rear'){state.yaw=0;state.pitch=.25}else if(v==='side'){state.yaw=1.57;state.pitch=.23}state.zoom=1;buttonGroup('[data-view]',document.querySelector(`[data-view="${v}"]`));tip.style.opacity=0;redraw()}
+function scene(mode){state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
+ if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.36;state.pitch=.52}
+ const names={tower:['TORRE H-9 · vista generale','7 moduli e 2 posizioni libere'],rear:['RETRO · sezione centrale','Montanti, connessioni LAN / USB e alimentatori'],module:['CARTUCCIA · vista isolata','Ruota e seleziona maniglia, motherboard e incastri'],joint:['INCASTRO · sede fissa + linguetta','Distacco di 44 mm per mostrare i pezzi accoppiati']};
+ $('scene-caption').textContent=names[mode][0];$('scene-subtitle').textContent=names[mode][1];
+ buttonGroup('[data-scene]',document.querySelector(`[data-scene="${mode}"]`));clearSelection();
+}
+document.querySelectorAll('[data-view]').forEach(el=>el.onclick=()=>view(el.dataset.view));
+document.querySelectorAll('[data-scene]').forEach(el=>el.onclick=()=>scene(el.dataset.scene));
+$('close-inspector').onclick=clearSelection;
+$('fit').onclick=()=>{state.zoom=1;redraw()};
+document.querySelectorAll('[data-count]').forEach(el=>el.onclick=()=>{state.n=+el.dataset.count;state.lifted=null;buttonGroup('[data-count]',el);redraw()});
+$('explode').oninput=e=>{state.explode=+e.target.value*1.1;$('explabel').textContent=e.target.value+'%';redraw()};
+$('extract').onclick=()=>{const id=/^P\d$/.test(state.selected||'')?state.selected:'P'+(state.focusIndex+1);state.lifted=state.lifted===id?null:id;redraw()};
+$('reset').onclick=()=>{state.explode=0;state.lifted=null;$('explode').value=0;$('explabel').textContent='0%';redraw()};
+for(const id of ['labels','xray','disks','wiring','grid'])$(id).onclick=e=>{state[id]=!state[id];e.currentTarget.classList.toggle('on',state[id]);redraw()};
+vp.addEventListener('pointerdown',e=>{if(e.button!==0)return;vp.setPointerCapture(e.pointerId);drag={sx:e.clientX,sy:e.clientY,yaw:state.yaw,pitch:state.pitch,moved:false};vp.classList.add('dragging')});
+vp.addEventListener('pointermove',e=>{
+ if(drag){const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;state.yaw=drag.yaw-dx*.007;state.pitch=clamp(drag.pitch+dy*.006,-.22,1.54);redraw();tip.style.opacity=0}
+});
+vp.addEventListener('pointerup',e=>{if(!drag)return;let clicked=!drag.moved;drag=null;vp.classList.remove('dragging');if(clicked){const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x,y)){select(pick[i].group,pick[i].name,{x,y});return}}clearSelection()}});
+vp.addEventListener('pointercancel',()=>{drag=null;vp.classList.remove('dragging')});vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});
+vp.addEventListener('wheel',e=>{e.preventDefault();state.zoom=clamp(state.zoom*Math.exp(-e.deltaY*.0012),.45,3.3);redraw()},{passive:false});
+window.addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();if(k==='escape'){clearSelection();return}if(k==='r'){scene('tower');view('iso')}if(k==='1')view('iso');if(k==='2')view('top');if(k==='+')state.zoom=clamp(state.zoom*1.15,.45,3.3);if(k==='-')state.zoom=clamp(state.zoom/1.15,.45,3.3);redraw()});
+new ResizeObserver(dimensions).observe(vp);dimensions();clearSelection();
+})();
+</script>
+</body>
+</html>
