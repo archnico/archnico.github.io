@@ -53,3 +53,12 @@ La **v1.1** aggiunge appoggi distribuiti (luce massima nominale 192 mm), controv
 **Test eseguiti in sviluppo**: sintassi JS con node, browser Chromium/Playwright desktop 1600×1000, tablet 880×720, mobile 390×780; scena UPS, vista torre, nascondi/mostra UPS, carico simulato, H7/H9 e inspector al clic senza errori JS. **Non eseguiti:** carichi veri, termografia, runtime reale, dimensionamento giunti e alimentazione degli altri nodi.
 
 Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.it/it/home/interactive/gruppo-di-continuita-line-interactive-powerwalker-vi-1500-csw-con-8-prese-iec.1.35.163.gp.4448.uw .
+
+## v1.1.1 — Fix vista Angolo stanza (21 novembre 2026)
+- Riparato crash JavaScript `ReferenceError: rotBox is not defined`: implementati `rotBox` e `polyPrism` per gli oggetti ruotati a 45 gradi.
+- Scrivania modellata con piano sottile, quattro gambe e fasce portanti, non più parallelepipedo pieno.
+- Tre monitor distribuiti lungo l'arco della postazione (Acer VGA 442 mm; terzo monitor intermedio **stimato** 590 mm; HDMI ~740 mm **ipotizzato**, non verificato su fotografia).
+- Subwoofer stimato spostato a pavimento; cassettiera, stampante Brother HL-1110, router e ripiano rappresentati con dimensioni indicative. Misure stanza NON rilevate in loco.
+- Vista semitrasparente selezionabile, pannello di dettaglio al clic per ogni elemento modellato. Non pubblicate le foto originali private della stanza.
+- Test locale Chromium/Playwright eseguito su desktop 1550×900, tablet 850×720 e mobile 390×780: tutte le 8 scene caricate, console senza errori; selezione monitor centrale, rotazione e zoom verificati.
+- Modello della sedia gaming da ordini Amazon non disponibile: segnaposto dimensionale, NON attribuito a un ordine identificato.
