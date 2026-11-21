@@ -109,3 +109,8 @@ Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.i
 - **Vista ambientale e Torre sul mobile:** identica Torre H-9, ruotata affinché la faccia posteriore I/O sia rivolta verso la parete, non verso il centro della stanza; rimane il fronte accessibile dalla stanza. Trasformazione della mesh usata solo nel posizionamento ambientale; nessuna modifica alla carpenteria autonoma.
 - **Subwoofer** stimato 260×180×360 mm collocato **sopra** la cassettiera autonoma (top z=540 mm). Verificare appoggio, stabilità, eventuali vibrazioni, portata e cablaggi prima di eseguire la disposizione.
 - Nessuna modifica a UPS, modularità H-9, piastre adattatrici, spalletta a U o canalette.
+
+## v1.7.2 — Audio e orientamento sedia
+- Tutti e quattro i satelliti del modello sul mobile multilivello: due sul ripiano del modem e due sul ripiano superiore. Scaffale aperto con montanti, nessun satellite sulla scrivania. Subwoofer sulla cassettiera invariato.
+- Asse della seduta orientato al centro del monitor HDMI; schienale e cuscini ruotati coerentemente.
+- Test Chromium desktop: 12 scene, nessun errore JavaScript, quattro satelliti selezionabili.
