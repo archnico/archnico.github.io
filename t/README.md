@@ -86,3 +86,21 @@ Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.i
 **Monitor** tre schermi esclusivamente su bracci a muro. In pianta, le sagome esterne 2D hanno distanza minima simulata circa 19 mm (VGA↔HDMI) e 15 mm (HDMI↔intermedio), senza intersezioni; da verificare in 3D per sbracci, peso, attacco VESA, vibrazioni e capacità portante della parete diagonale. La piccola parete smussata resta una ipotesi materiale: non autorizza perforazioni.
 
 **UI/test**: nuova vista `Torre sul mobile` separata da `Angolo stanza` e `Bracci a muro`; i componenti individuali della Torre restano cliccabili, così come mobile, bordini, piastra e UPS. Verificati parser JS, Chromium/Playwright con 10 scene su desktop 1550×950 e mobile 390×800, zero errori runtime; clic testati su mobile, UPS e modulo adattatore A5. Foto della casa private, mai committate nel repository pubblico.
+
+## v1.7 — spalletta a U / autonomia / canalette (21 novembre 2026)
+
+**Nuove osservazioni utente (da validare metricamente):** mobile bianco con spalletta rialzata su tre lati (retro + due testate; fronte aperto), vano postazione con presa 230 V ed Ethernet RJ45 sulla parete alla destra dell'operatore a circa 1 m dallo spigolo.
+
+**Geometria illustrata mobile**: piano 1500×320×500 mm da foto (non misurato). Spalletta U: H **28 mm**, spessore **18 mm**, entrambi *assunti*, non fatti. Kit adattatore **RIMOVIBILE**: 6 piedi disposti sul piano interno (H 41 mm, inclusa superficie antiscivolo illustrativa), 3 traverse e piastra 1320×450×18 mm che supera il risalto con luce nominale ~13 mm. Sporgenza piattaforma 65 mm su ciascun lato della profondità del mobile. Nessuna forza di progetto deve scaricarsi sulle spallette, sulle loro viti o sui loro incollaggi. Queste quote non sono istruzioni di montaggio sicuro; serve rilievo della spalletta vera, della struttura interna e della portata del mobile, nonché verifica di appoggio, sbalzo, deformazione e ribaltamento prima di collocare hardware reale.
+
+**Torre autonoma**: il telaio H-9 resta in scala invariata e con i propri 10 punti d'appoggio. Nessuna dipendenza meccanica dalla spalletta o dal mobile. Vista `Torre autonoma` con quattro pattini esterni anti-ribaltamento opzionali, di geometria da provare; vista `Spalletta a U` mostra un esploso puramente visivo di 110 mm, non un'elevazione di montaggio. **Una sola Torre** nella vista ambientale.
+
+**Sedia**: geometria illustrativa a 5 razze e ruote, seduta con struttura, due braccioli, schienale alto, cuscino lombare e poggiatesta; impronta ~700 mm e h ~1200–1300 mm *di studio*. **NON** identificata definitivamente la sedia Amazon ASIN B07TYJDM5M: non attribuire al prodotto misure non verificate.
+
+**Parete destra**: due placche separate 230V e RJ45. Posizione posta nominalmente a x=1350 mm, cioè 1000 mm **dopo** l'inizio del tratto rettilineo successivo allo smusso da 350 mm; questa interpretazione del riferimento «spigolo» va confermata sul posto. Altezza delle prese e ingombri scatole sono illustrativi. UPS commerciale con massa 13,1 kg a pavimento, vicino alle prese e al rack; NON sul mobile.
+
+**Canalette**: percorsi separati e selezionabili AC (rossiccio, sezione ipotetica 23×17 mm) e dati (azzurro, 20×14 mm), lungo pareti e attorno al mobile, non sopra la zona di passaggio della sedia. Percorsi finali e bretelle di servizio su I/O Torre e router sono schematici, da verificare contro ostacoli, curve, distanze, normativa, diametro e numero reale di cavi. Nessun backplane di rete a 230 V costruito/stampato; usare componenti di rete certificati.
+
+**UI**: 12 scene (inclusa spalletta esplosa e Torre autonoma), nuove schede tecniche cliccabili per ADAPTER, STANDPAD, LIP, OUTLETAC, OUTLETLAN, ACDUCT, NETDUCT, ACFLEX, NETPATCH. Aggiunto selettore alfabetico nella barra laterale per accedere anche ai componenti nascosti. Test Chromium/Playwright desktop e mobile: zero errori JS in 12 scene; test selezione automatizzato su gruppi di mobili, moduli, adattatore, prese e canalette. Quote in vista stanza spente per default per ridurre affollamento, riattivabili dal menu.
+
+**Nessuna prova fisica** di carico, rigidità, torsione, ribaltamento o isolamento elettrico è stata eseguita; il modello resta concettuale e NON è un CAD pronto per fabbricazione. Nessuna fotografia della casa caricata su GitHub.
