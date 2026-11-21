@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TORRE H-9 • V1.7 · Spalletta U, autonomia e canalette</title>
+<title>TORRE H-9 • V1.7.1 · Orientamento Torre e subwoofer</title>
 <style>
 :root{color-scheme:dark;--bg:#0a121b;--panel:#0d1c27;--panel2:#132733;--line:#2c4451;--text:#e3f1f1;--muted:#8ca9b2;--aqua:#64d6c4;--yellow:#ffc969;--blue:#56a4e5;--orange:#f5aa62;--red:#e78b86}
 *{box-sizing:border-box}html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}button,input{font:inherit}button{cursor:pointer}
@@ -423,8 +423,9 @@ function embedTowerAt(originX,originY,baseZ,where){
   $('variant-pill').textContent=where==='floor'?'UNA TORRE H-9 · AUTONOMA':'UNA TORRE H-9 · SUL MOBILE';
   if(where!=='floor')$('scene-subtitle').textContent=prev.scene==='cabinet'?'Spalletta a U: sei appoggi interni e piastra rimovibile':prev.scene==='workstation'?'Tre schermi su bracci a muro; sedia gaming e cablaggi perimetrali':'Una Torre H-9, 230V/RJ45 a destra, canalette separate e UPS al pavimento';
  }
- // Ruotata di -90°: 1220 mm lungo asse y; stessa mesh e stessi 10 piedini strutturali.
- const place=p=>[originX+p[1],originY-p[0],baseZ+p[2]];
+ // Ruotata di +90° e specchiata sulla profondità: 1220 mm lungo asse y; il retro I/O guarda verso la parete e non verso il centro stanza.
+ // Profondità nominale H-9 = 429 mm; la specchiatura porta il corridoio prese sul lato vicino al muro.
+ const place=p=>[originX+(429-p[1]),originY-p[0],baseZ+p[2]];
  for(const f of donorFaces){if(f.group==='DIM'||f.group==='GRID')continue;faces.push({...f,p:f.p.map(place)})}
  for(const l of donorLines){if(l.group==='DIM'||l.group==='GRID')continue;lines.push({...l,points:l.points.map(place)})}
  for(const lab of donorLabels){if(lab.group==='DIM')continue;labels.push({...lab,pos:place(lab.pos)})}
@@ -535,7 +536,7 @@ function roomScene(){
  pushBox(2390,158,512,70,90,210,'#1f2326','AUDIORIGHT','Altro satellite audio nel mobile multilivello',1);
  pushBox(2600,95,0,400,260,540,'#6e452f','DARKDRAWER','Cassettiera autonoma a terra · lato lungo 400 mm addossato alla parete',.98);
  for(const z of [90,180,270,360,450])pushBox(2604,349,z,392,5,55,'#81563b','DARKDRAWER','Frontale cassetto indipendente',1);
- pushBox(3130,96,0,260,180,360,'#24272b','SUBWOOFER','Subwoofer a terra · lato lungo 260 mm addossato alla parete',1);
+ pushBox(2670,135,540,260,180,360,'#24272b','SUBWOOFER','Subwoofer sopra la cassettiera · ingombro 260 × 180 × 360 mm',1);
  // PRESE REALI sulla parete a DESTRA della postazione.
  // Distanza: ~1000 mm dal termine dello smusso (inizio della parete diritta x=350); quota dal pavimento solo illustrativa.
  const socketX=1350;
@@ -640,11 +641,11 @@ function roomScene(){
    dimension([0,0,0],[4300,0,0],'4300 mm · stanza stimata',[0,-118,0],'#a8d6ee');
    dimension([0,0,0],[0,4300,0],'4300 mm · stanza stimata',[-118,0,0],'#a8d6ee');
   }
-  text3([390,2550,934],'UNA TORRE H-9 · L 1220 × P 429 × H 334 mm',C.accent,10,'DIM');
+  text3([390,2550,934],'UNA TORRE H-9 · L 1220 × P 429 × H 334 mm · RETRO VERSO PARETE',C.accent,10,'DIM');
   text3([285,1870,1000],'spalletta H~28 mm · appoggi H41 mm · piastra H18 mm',C.accent,10,'DIM');
   if(state.scene!=='cabinet'){
    text3([810,640,1530],'MONITOR A MURO · luce 15–19 mm in pianta',C.accent,11,'DIM');
-   text3([2720,480,115],'MULTILIVELLO + CASSETTIERA + SUBWOOFER · LATO LUNGO AL MURO',C.accent,10,'DIM');
+   text3([2720,480,115],'MULTILIVELLO + CASSETTIERA · SUBWOOFER SOPRA',C.accent,10,'DIM');
   }
  }
  if(state.scene==='cabinet'){
@@ -833,7 +834,7 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
   else if(id==='PRINTER'){t='Brother HL-1110 nel multilivello';d='Ingombro nominale 340 × 238 × 189 mm. Si trova sul ripiano inferiore del mobile multilivello, non sul mobile bianco né sulla cassettiera. Lasciare libera la corsa della carta e l’apertura delle coperture.';tt=['340 × 238 × 189 mm','nel mobile multilivello']}
   else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
-  else if(id==='SUBWOOFER'){t='Subwoofer a destra';d='Ingombro indicativo 260 × 180 × 360 mm, posto con il lato lungo a muro sul pavimento alla destra della scrivania, separato dalla stampante per evitare vibrazioni. Occorre controllare l’orientamento della porta reflex e le distanze minime dal muro.';tt=['lato lungo al muro','a terra','stima']}
+  else if(id==='SUBWOOFER'){t='Subwoofer sulla cassettiera';d='Subwoofer stimato 260 × 180 × 360 mm, spostato sopra la cassettiera a destra della scrivania. In questo assetto libera il pavimento e resta vicino al rack audio; va comunque verificata la stabilità dinamica e l’eventuale trasmissione di vibrazioni al mobile.';tt=['sopra cassettiera','vibrazioni da verificare']}
   else if(id==='AUDIOLEFT'){t='Satellite audio laterale';d='Satellite del sistema audio visto sulle foto, stimato circa 70 × 90 × 210 mm. Qui resta vicino al subwoofer sul mobile basso.';tt=['7 × 9 × 21 cm','stima']}
   else if(id==='AUDIORIGHT'){t='Satellite audio laterale';d='Secondo satellite audio sul mobile basso. La coppia grande resta laterale, mentre due satelliti piccoli aggiuntivi vanno sulla scrivania per l’ascolto ravvicinato.';tt=['7 × 9 × 21 cm','stima']}
   else if(id==='RACK'){t='Mobile multilivello alla parete destra';d='Ripiano a più livelli orientato con lato lungo 520 mm aderente al muro, profondità 340 mm indicativa. Ospita Brother HL-1110, router e parte dell’audio; il VGA resta fissato al muro, non sul mobile.';tt=['520×340 mm stimati','stampante / router / audio','VGA sul muro']}
