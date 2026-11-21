@@ -39,3 +39,17 @@ La **v1.1** aggiunge appoggi distribuiti (luce massima nominale 192 mm), controv
 - In S8/S9 le guide e le sedi FISSE restano identiche agli altri vani: sono variabili soltanto gli inserti mobili GPU/telefoni.
 - Verificati: parser JavaScript, test Playwright per vista torre, retro, guide, estrazione bloccata/sbloccata, configurazioni H7/H9, layout desktop/tablet/mobile; niente errori JS.
 - **Non verificati:** portata, fatica, svergolamento reale, vibrazioni, stabilità con cablaggi reali, temperatura, tolleranze, giunti, dimensioni e ingombri dei donor reali. Il 3D NON costituisce certificazione né file pronto per stampa.
+
+## v1.0 — UPS laterale indipendente (21 novembre 2026)
+
+**Candidato, NON acquistato:** PowerWalker VI 1500 CSW IEC, produttore SKU **10121124**. Line-interactive AVR, sinusoidale pura in batteria, **1500 VA / 900 W**, USB HID, **8 IEC C13 = 4 battery-backed + 4 surge-only**. Dati fisici **99 mm larghezza × 410 mm profondità × 280 mm altezza; 13,1 kg** (fonti: PowerWalker e rivenditori). Prezzi indicativi sotto €300, disponibilità commerciale da ricontrollare al momento dell'ordine.
+
+**Policy meccanica**: UPS commerciale integro, verticale, indipendente dalla struttura stampata. Non sfrutta S8/S9 (sempre universali GPU/telefoni). Posizionato **accanto al lato destro** oltre i due banchi dischi, appoggiato direttamente su pavimento/piano portante. Nessuna mensola in plastica che regga 13,1 kg; i riscontri stampati ai quattro spigoli sono solo guide di posizionamento. Niente cabinet, pannelli, ventilazione coperta o manomissione del 230 V.
+
+**Quote di studio in mm H-9**: corpo preesistente **1220 × 429 × 334**. UPS con lato vicino a x=1286 rispetto a fine struttura x=1220 (**66 mm** nominali di intercapedine libera), y=8..418, z=3..283. Riserva di 200 mm in più di lunghezza per la postazione UPS (ingombro convenzionale **1420 mm**). Corridoio posteriore di cablaggio libero fino a y≈535 (profondità del piazzamento comprensiva della riserva **circa 535 mm**, da verificare fisicamente). Zona frontale libera per sportello batteria e LCD. **I 66 e ~117 mm non sono distanze prescritte dal costruttore**, ma scelte preliminari da controllare sul manuale del modello acquistato.
+
+**Policy elettrica**: 4 uscite in continuità per host/router/switch prioritari da definire con misuratore di consumo, non tutti i 7 PC; altre 4 contro sole sovratensioni. Non promettere 900 W continui in sicurezza pratica: serve margine di autonomia e gestione degli spunti. La barra nel browser è soltanto simulazione (valore iniziale 450 W); NON è telemetria. USB HID via NUT per spegnimento ordinato quando realmente installato. I cavi AC vanno acquistati certificati, senza collegamenti 230 V DIY o "bus" stampato; separare cavi di segnale e rete, usare scarico trazione.
+
+**Test eseguiti in sviluppo**: sintassi JS con node, browser Chromium/Playwright desktop 1600×1000, tablet 880×720, mobile 390×780; scena UPS, vista torre, nascondi/mostra UPS, carico simulato, H7/H9 e inspector al clic senza errori JS. **Non eseguiti:** carichi veri, termografia, runtime reale, dimensionamento giunti e alimentazione degli altri nodi.
+
+Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.it/it/home/interactive/gruppo-di-continuita-line-interactive-powerwalker-vi-1500-csw-con-8-prese-iec.1.35.163.gp.4448.uw .
