@@ -20,3 +20,10 @@ La **v1.1** aggiunge appoggi distribuiti (luce massima nominale 192 mm), controv
 - **Calcoli riproducibili:** [rigidita_test.py](rigidita_test.py).
 
 **Cosa manca prima della stampa definitiva:** prove sui giunti stampati, torsione, creep e calore, dimensioni e fori dei donor, flussi d'aria, baricentro, montaggi GPU, compatibilità PSU e protezione elettrica.
+
+## v0.8 — note meccaniche ancora da validare
+- Ingombro nominale nel modello H-9: 1220 × 429 × 334 mm; passo identico di 96 mm per sette moduli PC e due vani universali S8/S9. Sono quote concettuali, non CAD dimensionato per la produzione.
+- La motherboard ha una sottostruttura stampata con due diagonali continue, quattro puntoni di trasferimento verso la cartuccia e sei distanziatori metallici M3 10 mm esemplificativi. I fori vanno rilevati sui donor reali.
+- Il carico della cartuccia si scarica nelle due sedi inferiori a U e nei longheroni di base; NON sullo schienale.
+- Il retro elimina i controventi alti davanti ai connettori: triangolazione bassa a z inferiore a 112 mm, fascia I/O indicativa z 118–238 mm, montanti sui confini delle campate e collegamento superiore a z~309 mm.
+- Nessuna prova a carico, interferenza cavi o verifica termo-meccanica/rigidezza è ancora attestata; il rendering non va trattato come STL esecutivo.
