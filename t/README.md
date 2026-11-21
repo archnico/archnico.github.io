@@ -62,3 +62,13 @@ Fonti: https://powerwalker.com/product/10121124/ ; https://www.powerwalker-ups.i
 - Vista semitrasparente selezionabile, pannello di dettaglio al clic per ogni elemento modellato. Non pubblicate le foto originali private della stanza.
 - Test locale Chromium/Playwright eseguito su desktop 1550×900, tablet 850×720 e mobile 390×780: tutte le 8 scene caricate, console senza errori; selezione monitor centrale, rotazione e zoom verificati.
 - Modello della sedia gaming da ordini Amazon non disponibile: segnaposto dimensionale, NON attribuito a un ordine identificato.
+
+## v1.3 — stanza ottagonale: smusso ridotto, tre schermi su muro (21 novembre 2026)
+- L'angolo pieno era sovradimensionato nella v1.2: **ridotto da 860 mm a 350 mm per ciascun lato** come *ipotesi provvisoria*, con parete diagonale risultante di circa 495 mm. Stanza esterna stimata 4300×4300 mm, perimetro ottagonale schematizzato, non rilievo reale.
+- Schermi **tutti montati a parete** e **nessuno sulla scrivania**: VGA Acer V193W (~442 mm), principale HDMI (~740 mm ipotetici) e intermedio (~590 mm ipotetici). Angolo di visione a tre monitor attorno all'operatore con tavolo diagonale a circa 45 gradi.
+- Tre staffe/bracci VESA articolati, selezionabili al clic per singolo ancoraggio: sinistro sulla parete laterale, destro sulla parete posteriore, centrale sul breve tratto diagonale. Geometrie dei bracci indicative; occorre verificare VESA, sbraccio, pesi degli schermi, materiale e capacità portante delle pareti. **Non perforare né usare il tratto diagonale come portante senza verifica**, perché potrebbe essere tamponamento leggero.
+- Mobile bianco e dispositivi spostati lungo parete sinistra, zona sedia libera; spazio di progetto riservato (1590×630 mm) per futura Torre+UPS a pavimento, non ancora verificato con ingombri reali di passaggio.
+- Aggiunte due viste complementari: **Angolo stanza** (perimetro ottagonale) e **Bracci a muro** (dettaglio). Pavimento realmente sagomato nel digital twin, no falso quadrato sotto gli angoli tagliati.
+- Corretto hit-test: in vista semitrasparente le pareti non devono coprire la selezione dei mobili e dei bracci visibili; pareti/pavimento selezionabili soltanto se nessun altro oggetto è in primo piano.
+- Test Chromium/Playwright con sintassi JS e 9 scene su desktop 1500×950 e mobile 390×780, 0 errori; selezione del terzo monitor e del braccio centrale verificata.
+- Il modello è **concept non certificato**, nessun nuovo componente è stato acquistato, nessuna fotografia privata dell'angolo PC è stata caricata nel repo pubblico.
