@@ -83,9 +83,9 @@
     "manufacturer_max_top_load_kg": 20,
     "estimated_components_kg": {
       "schede_cpu_ram_dissipatori_7": 6.2,
-      "profilati_2020": 3.0,
+      "profilati_2020": 3,
       "base_reticolare_alleggerita": 1.8,
-      "7_cartucce_petg_e_guide": 1.0,
+      "7_cartucce_petg_e_guide": 1,
       "6_ventole": 1.38,
       "hdd_1x35_2x25": 0.6,
       "ssd": 0.12,
@@ -98,6 +98,19 @@
     "support_count": 6,
     "support_height_mm": 105,
     "ups_on_hauga": false,
-    "structurally_validated": false
+    "structurally_validated": false,
+    "mass_estimate_is_historical_with_3_internal_hdd": true,
+    "new_h7_no_hdd_mass_estimate_kg": null
+  },
+  "storage_architecture_2026_11_23": {
+    "status": "canonical_direction_selected_not_purchased",
+    "compute": "H-7: seven PC nodes with local boot SSD, no internal HDD banks",
+    "das": "H-4: commercial USB multi-bay, 4 independent SATA disk bays, separate powered USB 3.x hub for existing external USB disks",
+    "initial_host": "n2",
+    "shared_to_other_nodes": "NFS/Samba over LAN",
+    "placement": "other furniture",
+    "current_8tb_disk_host": "n3",
+    "source": "docs/TORRINO_DAS_H4_2026-11-23.md",
+    "render_status": "HDD banks shown are legacy, not current design"
   }
 }
