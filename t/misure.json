@@ -1,7 +1,7 @@
 {
   "updated": "2026-11-23",
   "units": "mm",
-  "model": "H-7 FB-1 fishbone in plan + H-8 separate 8-bay DAS (concept not executable)",
+  "model": "H-7 FB-1 fishbone in plan + H-4 separate 4-bay DAS (concept not executable)",
   "furniture": {
     "measured": {
       "width": 1370,
@@ -132,21 +132,12 @@
     "status": "historical, contains HDD and birch elements, not canonical FB-1 mass"
   },
   "storage_architecture_2026_11_23": {
-    "status": "canonical FB-1 H-8 direction; devices not purchased and disks not migrated",
+    "status": "canonical four-bay SATA DAS, powered four-port USB 3.x hub; purchase of DAS can wait until SATA disks are needed",
     "compute": "H-7: 7 independent nodes, one local SSD each, no mechanical HDD banks or birch plywood plate",
-    "das": "H-8: commercial powered and cooled 8 independent SATA bay USB DAS; verify JBOD/SMART by chosen model",
-    "bay_count": 8,
-    "initial_installed_drive_plan": [
-      {
-        "size_tb": 8,
-        "status": "existing, currently on n3; migration pending"
-      },
-      {
-        "size_tb": 4,
-        "status": "existing, installation pending"
-      }
-    ],
-    "free_bays_initial_plan": 6,
+    "das": "H-4: commercial four-SATA-bay independent SINGLE/JBOD, ventilated externally powered, USB 5Gbps sufficient for n2",
+    "bay_count": 4,
+    "initial_installed_drive_plan": [],
+    "free_bays_initial_plan": 4,
     "hub": "First phase: 4-port USB 3.x hub with independent power supply; upstream to n2 via separate USB link; no 8-port hub initial purchase",
     "host": "n2 inside H-7",
     "connections": [
@@ -154,11 +145,32 @@
       "separate 4-port USB hub-to-n2 USB data cable"
     ],
     "shared_to_other_nodes": "NFS/Samba on LAN; never simultaneous USB connection to two hosts",
-    "placement": "on separate drawer cabinet, not HAUGA",
-    "source": "docs/H7_FB1_H8_CANONE_2026-11-23.md",
-    "render_status": "H-8 DAS and 4-port hub shown separately on drawer, two drive slots occupied in target configuration",
+    "placement": "DAS 4-bay future and USB hub 4-port on separate drawer cabinet, no weight on IKEA HAUGA",
+    "source": "docs/H7_FB1_DAS_H4_CANONE_2026-11-23.md",
+    "render_status": "DAS 4 empty SATA bays + separately illustrated two external USB drives 8TB and 4TB; no migration performed",
     "hub_initial_ports": 4,
-    "hub_second_unit": "Optional second independently powered 4-port USB 3.x hub, deferred until four ports no longer suffice; preferably separate host connection"
+    "hub_second_unit": "Optional second independently powered 4-port USB 3.x hub, deferred until four ports no longer suffice; preferably separate host connection",
+    "initial_SATA_populated": 0,
+    "usb_disks_existing": [
+      {
+        "size_tb": 8,
+        "interface": "external USB Seagate Expansion",
+        "current_host": "n3",
+        "migration_status": "not started",
+        "initial_location": "original USB enclosure, can join powered hub after planned transfer and backup"
+      },
+      {
+        "size_tb": 4,
+        "interface": "external native USB WD40NDZW",
+        "current_host": "n2",
+        "migration_status": "not started",
+        "initial_location": "original USB enclosure, not SATA compatible"
+      }
+    ],
+    "candidate_models": [
+      "ICY BOX IB-3640SU3: 4 x 3.5-inch SATA, 5Gbps USB SINGLE",
+      "TerraMaster D4-320: 4 x 2.5/3.5 SATA, 10Gbps USB SINGLE (limited by n2)"
+    ]
   },
   "audio_router_placement": {
     "all_speakers_and_subwoofer": "multi_level_cabinet",

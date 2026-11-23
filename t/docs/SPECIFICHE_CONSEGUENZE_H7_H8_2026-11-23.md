@@ -1,3 +1,5 @@
+> **ARCHIVIO: configurazione 8 bay superata.** Documento aggiornato: [specifiche H-7 + DAS H-4](SPECIFICHE_CONSEGUENZE_H7_DAS_H4_2026-11-23.md).
+
 # Torre H-7 + storage H-8 — specifiche e conseguenze, revisione S-1
 
 **23 novembre 2026 · decisione architetturale con verifiche hardware reali.**

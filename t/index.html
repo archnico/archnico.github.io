@@ -8,7 +8,7 @@
 <body>
 <div class="shell">
 <header><div class="brand"><div class="logo">◈</div><div class="heading">TORRE H-7 <span>· anteprima interattiva</span></div></div>
- <nav class="toplinks"><a href="README.md">Il progetto</a><a href="r3.html">R-3 storico</a><a href="r2.html">R-2 storico</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">H-7 FB-1 · DAS H-8</span></nav>
+ <nav class="toplinks"><a href="README.md">Il progetto</a><a href="r3.html">R-3 storico</a><a href="r2.html">R-2 storico</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">H-7 FB-1 · DAS H-4</span></nav>
 </header><main class="layout">
 <aside class="left" aria-label="Controlli dell'anteprima">
   <div class="side-head"><span class="stack-symbol">◇</span><div><strong>Strati</strong><small>Nascondi dall'esterno verso l'interno</small></div><button type="button" class="text-action" id="layers-reset" title="Ripristina gli strati">↺</button></div>
@@ -40,9 +40,10 @@
 <div class="layer-row"><span>Cavi</span><button type="button" class="switch on" data-layer="cavi" role="switch" aria-label="Cavi" aria-checked="true" title="Mostra o nascondi: Cavi"></button></div>
 <div class="layer-row"><span>UPS</span><button type="button" class="switch" data-layer="ups" role="switch" aria-label="UPS" aria-checked="false" title="Mostra o nascondi: UPS"></button></div>
 </div></details>
-<details class="layer-group" data-layer-group="torrino" open><summary><span class="stack-symbol">▤</span>Torrino H-8<span class="caret">⌄</span><button type="button" class="group-master on" data-group-toggle="torrino" role="checkbox" aria-label="Torrino: seleziona o deseleziona tutti gli strati" aria-checked="true" title="Mostra o nascondi tutti gli strati del torrino"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
-<div class="layer-row"><span>DAS · 8 bay</span><button type="button" class="switch on" data-layer="das" role="switch" aria-label="DAS otto vani" aria-checked="true"></button></div>
+<details class="layer-group" data-layer-group="torrino" open><summary><span class="stack-symbol">▤</span>Torrino H-4<span class="caret">⌄</span><button type="button" class="group-master on" data-group-toggle="torrino" role="checkbox" aria-label="Torrino: seleziona o deseleziona tutti gli strati" aria-checked="true" title="Mostra o nascondi tutti gli strati del torrino"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
+<div class="layer-row"><span>DAS · 4 bay</span><button type="button" class="switch on" data-layer="das" role="switch" aria-label="DAS quattro vani" aria-checked="true"></button></div>
 <div class="layer-row"><span>Hub · 4 porte</span><button type="button" class="switch on" data-layer="hub" role="switch" aria-label="Hub USB quattro porte" aria-checked="true"></button></div>
+<div class="layer-row"><span>Dischi USB esterni</span><button type="button" class="switch on" data-layer="usbDrives" role="switch" aria-label="HDD esterni USB 8 TB e 4 TB" aria-checked="true"></button></div>
 <div class="layer-row"><span>Collegamenti</span><button type="button" class="switch on" data-layer="connessioneDas" role="switch" aria-label="Cavi torrino" aria-checked="true"></button></div>
 </div></details>
 <details class="layer-group" data-layer-group="overlay" open><summary><span class="stack-symbol">◈</span>Overlay<span class="caret">⌄</span><button type="button" class="group-master mixed" data-group-toggle="overlay" role="checkbox" aria-label="Overlay: seleziona o deseleziona tutti gli strati" aria-checked="mixed" title="Mostra o nascondi tutti gli strati del capitolo Overlay"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
@@ -61,7 +62,7 @@
       <button class="button scene-btn" data-scene="tower">Torre</button>
       <button class="button scene-btn" data-scene="module">Modulo</button>
       <button class="button scene-btn" data-scene="rear">Retro</button>
-      <button class="button scene-btn" data-scene="light">Spina di pesce</button><button class="button scene-btn" data-scene="cabinet">Torre su HAUGA</button><button class="button scene-btn" data-scene="storage">Torrino H-8</button><button class="button scene-btn" data-scene="desk">Scrivania</button><button class="button scene-btn" data-scene="haugadetail">Mobile HAUGA</button>
+      <button class="button scene-btn" data-scene="light">Spina di pesce</button><button class="button scene-btn" data-scene="cabinet">Torre su HAUGA</button><button class="button scene-btn" data-scene="storage">Torrino H-4</button><button class="button scene-btn" data-scene="desk">Scrivania</button><button class="button scene-btn" data-scene="haugadetail">Mobile HAUGA</button>
       <button class="button scene-btn" data-scene="thermal">Ventilazione</button>
       <button class="button scene-btn" data-scene="ups">UPS</button>
     </div>
@@ -115,7 +116,7 @@
   <button class="quick" id="qfit">◎ Centra</button>
   <button class="quick" data-preset="iso">◇ Isometrica</button>
   <button class="quick" data-preset="workstation">⌁ Bracci muro</button>
-  <button class="quick" data-preset="light">▣ Spina di pesce</button><button class="quick" data-preset="cabinet">HAUGA + H-7</button><button class="quick" data-preset="storage">DAS H-8</button><button class="quick" data-preset="desk">Scrivania</button><button class="quick" data-preset="haugadetail">▤ HAUGA</button>
+  <button class="quick" data-preset="light">▣ Spina di pesce</button><button class="quick" data-preset="cabinet">HAUGA + H-7</button><button class="quick" data-preset="storage">DAS H-4</button><button class="quick" data-preset="desk">Scrivania</button><button class="quick" data-preset="haugadetail">▤ HAUGA</button>
   <button class="quick" data-preset="autonoma">▥ Autonoma</button>
   <button class="quick" data-preset="rear">↶ Retro</button>
   <button class="quick" data-preset="room">⌂ Stanza</button>
