@@ -41,30 +41,60 @@ function isVisibleGroup(group){
  const layer=layerFor(group);
  return layer===null || state.layers[layer]!==false;
 }
+// The parent reflects all / none / partial, including changes made one layer at a time.
+const CHAPTER_LAYERS={
+ contesto:['pareti','finestra','mobilio'],
+ postazione:['monitor','bracci','scrivania','sedia','audio'],
+ torre:['telaio','moduli','schede','dischi','ventole','cavi','ups'],
+ overlay:['semitrasparente','isola','quote','griglia','etichette','ingombri']
+};
 function syncLayerControls(){
  for(const el of document.querySelectorAll('[data-layer]')){
-  const active=!!state.layers[el.dataset.layer];el.classList.toggle('on',active);
+  const active=!!state.layers[el.dataset.layer];
+  el.classList.toggle('on',active);
   el.setAttribute('aria-checked',String(active));
  }
+ for(const button of document.querySelectorAll('[data-group-toggle]')){
+  const layers=CHAPTER_LAYERS[button.dataset.groupToggle];
+  const selected=layers.filter(layer=>state.layers[layer]).length;
+  const mode=selected===0?'false':selected===layers.length?'true':'mixed';
+  button.setAttribute('aria-checked',mode);
+  button.classList.toggle('on',mode==='true');
+  button.classList.toggle('mixed',mode==='mixed');
+  button.title=mode==='true'?'Nascondi tutti gli strati':('Mostra tutti gli strati'+(mode==='mixed'?' (selezione parziale)':''));
+ }
 }
-function toggleLayer(layer,on){
- if(!(layer in state.layers))return;
- state.layers[layer]=on;
- if(layer==='semitrasparente')state.xray=on;
- if(layer==='isola')state.isolate=on;
- if(layer==='quote')state.dims=on;
- if(layer==='griglia')state.grid=on;
- if(layer==='etichette')state.labels=on;
- if(layer==='ingombri')state.clearance=on;
- if(layer==='ups')state.showUPS=on;
- if(layer==='cavi')state.wiring=on;
- if(layer==='dischi')state.disks=on;
- if(layer==='ventole')state.cooling=on;
+// A single batch redraw keeps the 3D preview responsive when a whole chapter changes.
+function setLayers(changes){
+ for(const [layer,on] of Object.entries(changes)){
+  if(!(layer in state.layers))continue;
+  state.layers[layer]=on;
+  if(layer==='semitrasparente')state.xray=on;
+  if(layer==='isola')state.isolate=on;
+  if(layer==='quote')state.dims=on;
+  if(layer==='griglia')state.grid=on;
+  if(layer==='etichette')state.labels=on;
+  if(layer==='ingombri')state.clearance=on;
+  if(layer==='ups')state.showUPS=on;
+  if(layer==='cavi')state.wiring=on;
+  if(layer==='dischi')state.disks=on;
+  if(layer==='ventole')state.cooling=on;
+ }
  if(state.selected&&!isVisibleGroup(state.selected)){
   state.selected=null;state.selectedName='';$('inspector').hidden=true;
  }
  syncLayerControls();redraw();
 }
+function toggleLayer(layer,on){setLayers({[layer]:on})}
+document.querySelectorAll('[data-group-toggle]').forEach(el=>{
+ el.addEventListener('click',event=>{
+  event.preventDefault();event.stopPropagation(); // don't collapse the heading
+  const layers=CHAPTER_LAYERS[el.dataset.groupToggle];
+  // Partial selection counts as "not all": one click completes, next hides.
+  const enable=!layers.every(layer=>state.layers[layer]);
+  setLayers(Object.fromEntries(layers.map(layer=>[layer,enable])));
+ });
+});
 document.querySelectorAll('[data-layer]').forEach(el=>{
  el.addEventListener('click',()=>toggleLayer(el.dataset.layer,!state.layers[el.dataset.layer]));
 });

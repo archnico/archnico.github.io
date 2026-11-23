@@ -56,3 +56,24 @@ footer{padding:0 18px;font-size:10px}.switch{cursor:pointer}
 .viewport{height:62vh;min-height:355px}.overlay-title strong{font-size:12px}.overlay-title small{font-size:9px}.quicktools .quick{font-size:10px;padding:3px 6px}
 footer{font-size:9px}.viewmark{display:none}}
 
+
+/* Interruttore di capitolo. Il comando è fratello di <summary>,
+   così non apre/chiude accidentalmente il capitolo. */
+.layer-group[data-layer-group]{position:relative}
+.layer-group[data-layer-group]>summary{padding-right:108px}
+.group-master{position:absolute;right:9px;top:6px;z-index:2;min-height:25px;
+ display:flex;align-items:center;gap:6px;padding:3px 2px;border:0;border-radius:7px;
+ background:transparent;color:#c4e1dd;font-size:10px;font-weight:700;line-height:1;
+ cursor:pointer}
+.group-master:hover{background:#28505a}
+.group-master:focus-visible{outline:2px solid #f8d081;outline-offset:2px}
+.group-master-track{width:34px;height:19px;position:relative;flex:none;
+ border-radius:999px;border:1px solid #4a6871;background:#203640;transition:background .18s}
+.group-master-track::before{content:"";position:absolute;left:3px;top:3px;
+ width:11px;height:11px;background:#96aeb4;border-radius:50%;transition:left .18s,background .18s}
+.group-master.on .group-master-track{background:#216b60;border-color:#4bc6b2}
+.group-master.on .group-master-track::before{left:18px;background:#ddfff4}
+.group-master.mixed .group-master-track{background:#43513b;border-color:#d4ac6c}
+.group-master.mixed .group-master-track::before{left:11px;background:#fbd18c}
+.group-master.mixed .group-master-label{color:#ffd89a}
+@media(max-width:440px){.layer-group[data-layer-group]>summary{padding-right:104px}}
