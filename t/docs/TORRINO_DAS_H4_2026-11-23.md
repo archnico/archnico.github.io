@@ -1,3 +1,5 @@
+> **SUPERATO:** progetto storico H-4 a quattro baie. Il canone corrente è il [torrino H-8 con DAS a otto baie e hub a otto porte](H7_FB1_H8_CANONE_2026-11-23.md), sul piano della cassettiera.
+
 # Decisione canonica — Torrino DAS H-4 separato dalla Torre H-7
 
 **Data:** 23 novembre 2026  

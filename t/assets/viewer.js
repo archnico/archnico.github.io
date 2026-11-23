@@ -10,7 +10,7 @@ const state={n:7,yaw:2.77,pitch:.45,zoom:1,explode:0,xray:false,labels:true,disk
 // Layer controls are independent of scene/camera and never mutate source geometry.
 const DEFAULT_LAYERS={
  pareti:true,finestra:true,mobilio:true,haugaStruttura:true,haugaCassetti:true,haugaPomelli:true,monitor:true,bracci:true,
- scrivania:true,sedia:true,audio:true,telaio:true,moduli:true,schede:true,
+ scrivania:true,sedia:true,audio:true,periferiche:true,usbC:true,das:true,hub:true,connessioneDas:true,telaio:true,moduli:true,schede:true,
  dischi:true,ventole:true,cavi:true,ups:false,semitrasparente:false,
  isola:false,quote:false,griglia:false,etichette:true,ingombri:false
 };
@@ -23,13 +23,18 @@ function layerFor(group){
  if(['WALL','WALLCUT'].includes(group))return 'pareti';
  if(group==='WINDOW'||group==='ROOMLABEL')return 'finestra';
  if(['WHITECAB','LIP','RACK','DARKDRAWER','PRINTER','RACKMODEM','HAUGABACK','HAUGASHELF','HAUGAOPEN','HAUGAGUIDE','HAUGADRAWER','HAUGAKNOB'].includes(group))return 'mobilio';
- if(['DESK','LAPTOP'].includes(group))return 'scrivania';
+ if(['DESK','LAPTOP','LAPTOPSTAND'].includes(group))return 'scrivania';
+ if(['KEYBOARD','MOUSE','PHONE','PHONESTAND'].includes(group))return 'periferiche';
+ if(group==='USBC')return 'usbC';
+ if(group==='DAS8')return 'das';
+ if(group==='HUB8')return 'hub';
+ if(group==='DASCABLE')return 'connessioneDas';
  if(group==='CHAIR')return 'sedia';
  if(['MONVGA','MONHDMI','MONMID'].includes(group))return 'monitor';
  if(['ARMLEFT','ARMCENTER','ARMRIGHT'].includes(group))return 'bracci';
  if(['AUDIOLEFT','AUDIORIGHT','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT','SUBWOOFER'].includes(group))return 'audio';
  if(['FRAME','GUIDE','GUIDEFRAME','BACKBONE','DOCK','LOCK','FOOT','STANDPAD','ADAPTER','ALIGN','PORTAL','PORTALBRACE','PORTALFOOT','PORTALLOCK','LIGHTSUPPORT','LIGHTBASE','LIGHTPAD'].includes(group))return 'telaio';
- if(group==='STORAGE')return 'dischi';
+ if(group==='STORAGE'||group==='SSD')return 'dischi';
  if(['POWER','IO','NETDUCT','ACDUCT','ACFLEX','NETPATCH','OUTLETAC','OUTLETLAN','FANPOWER','UPSCABLE'].includes(group))return 'cavi';
  if(['UPS','UPSPORT','UPSLOC','UPSCLEAR'].includes(group))return 'ups';
  return null;
@@ -47,7 +52,8 @@ function isVisibleGroup(group){
 // The parent reflects all / none / partial, including changes made one layer at a time.
 const CHAPTER_LAYERS={
  contesto:['pareti','finestra','mobilio'],
- postazione:['monitor','bracci','scrivania','sedia','audio'],
+ postazione:['monitor','bracci','scrivania','sedia','audio','periferiche','usbC'],
+ torrino:['das','hub','connessioneDas'],
  torre:['telaio','moduli','schede','dischi','ventole','cavi','ups'],
  overlay:['semitrasparente','isola','quote','griglia','etichette','ingombri']
 };
@@ -115,7 +121,7 @@ function openPreset(preset){
 document.querySelectorAll('[data-preset]').forEach(el=>el.onclick=()=>openPreset(el.dataset.preset));
 
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={WINDOW:'Finestra 210 × 160 cm',F1:"Ventola HDD sinistra",F2:"Ventola compute 1",F3:"Ventola compute 2",F4:"Ventola compute 3",F5:"Ventola compute 4",F6:"Ventola HDD destra",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={DAS8:'Torrino DAS 8 bay · 2 dischi in progetto',HUB8:'Hub alimentato 8 porte USB',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:"Ventola candidata 1",F2:"Ventola candidata 2",F3:"Ventola candidata 3",F4:"Ventola candidata 4",F5:"Ventola legacy 5",F6:"Ventola legacy 6",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 function refreshPartPicker(){
  const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)&&isVisibleGroup(id)))];
  ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
@@ -171,6 +177,71 @@ function rotBox(cx,cy,z,w,d,h,angle,color,group='',name='',opa=1,emphasis=false)
  const top=bottom.map(([x,y])=>[x,y,z+h]);
  polyPrism([...bottom,...top],color,group,name,opa,emphasis);
 }
+
+// FB-1 canonical tower: herringbone is an IN-PLAN rotation, like angled parking bays.
+// 7 identical cartridges, 42 degrees. Envelope study 1310 x 318 mm vs 1345 x 330 mm HAUGA inner top.
+// No load on lip; no birch plywood, no HDD inside compute H-7.
+const FB={length:1310,depth:318,angle:Math.PI*42/180,pitch:164,first:162,cy:159};
+function fbPoint(i,u,v,z){const a=FB.angle,c=Math.cos(a),sn=Math.sin(a);return [FB.first+i*FB.pitch+u*c-v*sn,FB.cy+u*sn+v*c,z];}
+function fbBox(i,u,v,z,w,d,h,color,group,name,opa=1){
+ const p=fbPoint(i,u,v,z);
+ const lifted=state.lifted==='P'+(i+1)?155:0;
+ const exploded=state.explode*(i%2?1.3:1.65);
+ const adapterLift=state.scene==='module'&&state.moduleExploded&&(group==='PCB'+(i+1)||group==='A'+(i+1))?65:0;
+ rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);
+}
+function fbWire(i,pts,color,group,width=2){wire(pts.map(([u,v,z])=>fbPoint(i,u,v,z)),color,width,group);}
+function fishboneTower(onlyIndex=null){
+ const L=FB.length,D=FB.depth;
+ if(onlyIndex===null){
+ // Six removable steel/aluminium supports rest on the inner top, clearing the 90 mm U-shaped lip.
+ for(const xx of [100,655,1210])for(const yy of [68,248]){
+  pushBox(xx-36,yy-27,0,72,54,5,'#4d6f78','LIGHTPAD','Pattino sul top interno HAUGA: nessuna vite nel mobile',1);
+  pushBox(xx-12,yy-12,5,24,24,104,'#739aa1','LIGHTSUPPORT','Rialzo metallico rimovibile di 109 mm totali',1);
+  pushBox(xx-25,yy-23,103,50,46,9,C.frame,'FRAME','Nodo portante del telaio aperto',1);
+ }
+ for(const yy of [14,D-32])pushBox(10,yy,109,L-20,18,18,C.frame,'FRAME','Longherone 2020 candidate, nessuna betulla',1);
+ for(const xx of [10,L-28])pushBox(xx,14,109,18,D-28,18,C.frame2,'FRAME','Testata della base metallica aperta',1);
+ for(const xx of [190,655,1120])pushBox(xx,30,109,14,D-60,16,C.frame2,'FRAME','Traversa di ripartizione da dimensionare',1);
+ }
+ const nodeColors=['#db9b66','#72bcc2','#b3c89e','#e4bf6a','#a9a2c9','#70a8dc','#cf817a'];
+ for(let i=0;i<7;i++){
+  if(onlyIndex!==null&&i!==onlyIndex)continue;
+  const id='P'+(i+1),pcb='PCB'+(i+1),ad='A'+(i+1);
+  fbBox(i,0,0,127,92,284,10,C.frame2,id,'Cartuccia uniforme 92 × 284 mm ruotata 42° in pianta',1);
+  for(const u of [-42,42])fbBox(i,u,0,137,8,282,33,nodeColors[i],id,'Fianco e guida rimovibile della cartuccia',1);
+  for(const v of [-137,137])fbBox(i,0,v,137,92,8,16,nodeColors[i],id,'Traversa e fermo cartuccia',1);
+  fbBox(i,-14,0,161,5,208,180,C.pcb,pcb,'Scheda madre illustrativa: ingombri e fori da verificare',.98);
+  for(const v of [-91,91])fbBox(i,-23,v,162,9,10,176,C.corner,ad,'Adattatore dedicato scheda madre PETG: geometria da rilevare',1);
+  fbBox(i,4,-17,236,20,59,55,C.metal,pcb,'CPU e dissipatore rappresentativi',1);
+  for(const v of [-75,-58])fbBox(i,-6,v,242,9,8,80,C.pcb2,pcb,'RAM illustrativa',1);
+  fbBox(i,19,-105,150,48,67,9,C.disk,'SSD','SSD locale di sistema del nodo',1);
+  fbBox(i,12,105,151,62,55,47,C.psu,'POWER','Alimentatore singolo: ingombro e tipo da verificare',1);
+  fbBox(i,0,142,171,68,8,17,C.plug,'IO','Porte rete, USB e alimentazione lato posteriore',1);
+  fbBox(i,0,-145,163,56,8,16,nodeColors[i],id,'Maniglia frontale accessibile in diagonale',1);
+  if(state.wiring)fbWire(i,[[0,134,188],[0,155,188],[0,158,131]],C.plug,'POWER',1.6);
+  text3(fbPoint(i,0,-122,355),id,C.accent,11,id,id);
+  if([0,2,4,6].includes(i)){
+   const f='F'+([0,2,4,6].indexOf(i)+1);
+   fbBox(i,0,-142,209,67,12,67,C.fan,f,'Ventola candidata: numero, flusso e sicurezza da validare',.88);
+   fbBox(i,0,-150,223,52,3,39,'#163b45',f,'Griglia frontale',.91);
+  }
+ }
+ if(state.wiring&&onlyIndex===null)pushBox(36,D-24,115,L-72,8,10,C.cable,'POWER','Canalina dati ed elettricità dei singoli nodi da separare e dimensionare',.90);
+ if(state.dims&&onlyIndex===null){
+  dimension([0,0,109],[L,0,109],'1310 mm · LUNGHEZZA STUDIO',[0,-76,0]);
+  dimension([L,0,109],[L,D,109],'318 mm · PROFONDITÀ',[70,0,0]);
+  text3([655,160,380],'7 PC · SPINA DI PESCE 42° · NO BETULLA / NO HDD',C.accent,11,'DIM');
+  text3([655,40,20],'MASSA NON COLLAUDATA · HAUGA MAX 20 KG',C.accent,10,'DIM');
+ }
+ if(state.dims&&onlyIndex!==null){
+  const x=FB.first+onlyIndex*FB.pitch;
+  text3([x,FB.cy,376],'CARTUCCIA P'+(onlyIndex+1)+' · 42° IN PIANTA · 92 × 284 mm',C.accent,10,'DIM');
+ }
+ $('variant-pill').textContent=onlyIndex===null?'H-7 · FB-1 · SETTE PC':'MODULO · P'+(onlyIndex+1);
+ return L;
+}
+
 // Dimension geometry and extension lines are fixed in world millimetres; no fake measurements.
 function dimension(a,b,label,offset,color=C.accent){
  if(!state.dims)return;
@@ -504,7 +575,7 @@ function coolingKit(width){
   if(state.dims&&state.scene==='thermal'){text3([514,-68,255],'6 INGRESSI · 4 COMPUTE + 2 HDD',blue,11,'DIM');text3([514,355,420],'USCITA ALTA / RETRO · SCHEMA, NON CFD',hot,11,'DIM');}
  }
 }
-function thermalCalc(){const q=state.heat*3600/(1.18*1005*state.delta);$('heat-label').textContent=state.heat+' W';$('delta-label').textContent=state.delta+' °C';$('thermal-result').textContent='Portata utile minima teorica: '+Math.ceil(q)+' m³/h. A 6 ventole: '+Math.ceil(q/6)+' m³/h medi per ventola (solo bilancio globale). Obiettivo iniziale 250–300 m³/h utili; distribuzione e ricircolo da verificare.';}
+function thermalCalc(){const q=state.heat*3600/(1.18*1005*state.delta);$('heat-label').textContent=state.heat+' W';$('delta-label').textContent=state.delta+' °C';$('thermal-result').textContent='Portata minima teorica '+Math.ceil(q)+' m³/h. Quattro ventole sono segnaposto: portata reale e orientamento delle cartucce da verificare, nessuna simulazione CFD.';}
 function embedTowerAt(originX,originY,baseZ,where){
  const prev={faces,lines,labels,scene:state.scene,n:state.n,showUPS:state.showUPS,standpads:state.standpads};
  let donorFaces=[],donorLines=[],donorLabels=[];
@@ -515,10 +586,10 @@ function embedTowerAt(originX,originY,baseZ,where){
   faces=prev.faces;lines=prev.lines;labels=prev.labels;
   state.scene=prev.scene;state.n=prev.n;state.showUPS=prev.showUPS;state.standpads=prev.standpads;
   $('variant-pill').textContent=where==='floor'?'UNA TORRE H-7 · AUTONOMA':'UNA TORRE H-7 · SUL MOBILE';
-  if(where!=='floor')$('scene-subtitle').textContent=prev.scene==='cabinet'?'R-2: portale metallico scarica tutto il peso al pavimento':prev.scene==='light'?'R-3: ~17,8 kg ipotetici sul piano IKEA · non collaudato':prev.scene==='workstation'?'R-3 leggero e tre schermi su bracci a muro':'Torre R-3 sul mobile, UPS fuori, portata da verificare';
+  if(where!=='floor')$('scene-subtitle').textContent='H-7 FB-1 in pianta · 7 PC · 6 appoggi smontabili · massa e struttura da verificare';
  }
  // Rotazione rigida +90° (nessuna specchiatura); il retro I/O è verso x minore, cioè il muro.
- const place=p=>[originX+445-p[1],originY+p[0],baseZ+p[2]];
+ const place=p=>[originX+FB.depth-p[1],originY+p[0],baseZ+p[2]];
  const normal=n=>[-n[1],n[0],n[2]];
  for(const f of donorFaces){if(f.group==='DIM'||f.group==='GRID')continue;faces.push({...f,p:f.p.map(place),normal:normal(f.normal)})}
  for(const l of donorLines){if(l.group==='DIM'||l.group==='GRID')continue;lines.push({...l,points:l.points.map(place)})}
@@ -746,12 +817,12 @@ function roomScene(){
  // IKEA HAUGA: geometria 2 vani, 2 cassetti, 4 pomelli e spalletta U smussata.
  const cabX=225,cabY=1720;
  drawHaugaReal(cabX,cabY,state.scene==='cabinet'||state.scene==='light');
- const useR2=state.scene==='cabinet';
- const mount=useR2?portalFrame(cabX,cabY):lightKit(cabX,cabY);
+  const useR2=false; // Historical alternatives remain on separate HTML pages.
+  const mount={plateX:cabX+10,plateY:cabY+30,baseZ:M.cab.height};
  // Una sola H-7 indipendente, due supporti alternativi R-2/R-3. R-3 carica il mobile
  // solo SE peso effettivo e stabilità saranno certificati; UPS escluso in entrambi.
  const plateStartX=mount.plateX;
- embedTowerAt(mount.plateX+2,mount.plateY+51,mount.baseZ,'cabinet');
+ embedTowerAt(mount.plateX,mount.plateY,mount.baseZ,'cabinet');
  // Fascia dietro I/O: fino a 138 mm liberi tra piastra e muro interno; accesso da testate.
  if(state.clearance){const p0=mount.plateY,z0=mount.baseZ;wire([[24,p0,z0],[plateStartX,p0,z0],[plateStartX,p0+1130,z0],[24,p0+1130,z0],[24,p0,z0]],'#80d4e8',1.4,'CLEAR',[6,4]);}
  // UPS commerciale fuori dal mobile: posto sul pavimento vicino alle prese LAN/230V della parete destra.
@@ -761,18 +832,35 @@ function roomScene(){
  for(let j=0;j<4;j++)pushBox(1651,154,26+j*48,4,25,24,'#66acaf','UPSPORT','Uscita IEC con batteria (schema)',1);}
  // A destra della scrivania: TUTTI e tre con lato lungo parallelo al muro y=0.
  // Scaffale aperto: veri montanti e ripiani, non un volume pieno che nasconde le apparecchiature.
- for(const x of [1970,2472])for(const y of [94,416])pushBox(x,y,0,18,18,980,'#7f553a','RACK','Montante del mobile multilivello, L 520 × P 340 × H 980 mm stimati',1);
- for(const z of [20,220,490,770])pushBox(1970,94,z,520,340,23,'#6c4832','RACK','Ripiano aperto del mobile multilivello',.98);
- pushBox(2035,157,243,340,238,189,'#dde3e6','PRINTER','Brother HL-1110 nel mobile multilivello · 340 × 238 × 189 mm',1);
- pushBox(2000,137,513,220,160,58,'#1f2f38','RACKMODEM','Modem / router nel mobile multilivello · 220 × 160 × 58 mm ipotetici',1);
+ for(const x of [1970,2472])for(const y of [94,416])pushBox(x,y,0,18,18,1100,'#7f553a','RACK','Montante del mobile multilivello, L 520 × P 340 × H 980 mm stimati',1);
+  for(const z of [20,420,695,950])pushBox(1970,94,z,520,340,23,'#6c4832','RACK','Ripiano audio e router',.98);
+  pushBox(2040,165,43,265,225,356,'#24272b','SUBWOOFER','Subwoofer sul ripiano basso del mobile multilivello',1);
+  pushBox(2040,392,102,265,4,250,'#515e68','SUBWOOFER','Frontale subwoofer rivolto verso la stanza',1);
+  pushBox(2045,140,973,220,160,58,'#1f2f38','RACKMODEM','Router sul mobile multilivello',1);
  // Tutti i quattro satelliti già presenti nel modello, ciascuno su un ripiano e rivolto verso la stanza.
- for(const [x,y,z,h,id,n] of [[2290,158,513,210,'AUDIOLEFT',1],[2390,158,513,210,'AUDIORIGHT',2],[2070,190,793,175,'DESKSATLEFT',3],[2320,190,793,175,'DESKSATRIGHT',4]]){
+  for(const [x,y,z,h,id,n] of [[2240,158,443,210,'AUDIOLEFT',1],[2385,158,443,210,'AUDIORIGHT',2],[2045,190,718,175,'DESKSATLEFT',3],[2340,190,718,175,'DESKSATRIGHT',4]]){
   pushBox(x,y,z,70,90,h,'#1f2326',id,`Satellite audio ${n} nel multilivello`,1);
   pushBox(x+6,y+90,z+10,58,3,h-20,'#46525a',id,`Griglia frontale satellite ${n}`,1);
  }
  pushBox(2600,95,0,400,260,540,'#6e452f','DARKDRAWER','Cassettiera autonoma a terra · lato lungo 400 mm addossato alla parete',.98);
  for(const z of [90,180,270,360,450])pushBox(2604,349,z,392,5,55,'#81563b','DARKDRAWER','Frontale cassetto indipendente',1);
- pushBox(2670,135,540,260,180,360,'#24272b','SUBWOOFER','Subwoofer sopra la cassettiera · ingombro 260 × 180 × 360 mm',1);
+  // Torrino H-8: DAS commerciale a 8 bay e hub alimentato a 8 porte sul mobile CASSETTIERA.
+  // Due HDD sono mostrati nello scenario; l'8 TB oggi su n3 attende migrazione.
+  pushBox(2665,124,540,185,218,316,'#293944','DAS8','DAS USB 8 bay con alimentazione e raffreddamento propri',1);
+  pushBox(2672,340,552,171,6,296,'#638595','DAS8','Frontale vano dischi',1);
+  for(let k=0;k<8;k++){
+   const z=567+k*34;
+   pushBox(2680,346,z,155,4,26,k<2?'#668f94':'#344650','DAS8',k===0?'Bay 1 · HDD 8 TB da migrare':k===1?'Bay 2 · HDD 4 TB da montare':'Bay '+(k+1)+' libera',1);
+   if(k<2)pushBox(2690,351,z+11,12,3,7,'#8be2ac','DAS8','Disco '+(k===0?'8 TB':'4 TB')+' nello scenario',1);
+  }
+  pushBox(2659,130,860,192,82,56,'#365663','HUB8','Hub USB a 8 porte alimentato, separato dal DAS',1);
+  for(let k=0;k<8;k++)pushBox(2672+k*22,213,876,13,3,12,'#81b8cc','HUB8','Porta USB '+(k+1),1);
+  text3([2760,217,934],'DAS 8 BAY + HUB 8 PORTE',C.accent,11,'HUB8');
+  text3([2760,217,857],'8 TB + 4 TB · 6 SLOT LIBERI',C.accent,10,'DAS8');
+  if(state.wiring){
+   wire([[2664,238,807],[2590,238,780],[2590,65,780],[350,65,780],[52,355,780],[52,3000,780],[235,3000,770]],C.plug,3,'DASCABLE',[3,3],.98);
+   wire([[2664,244,884],[2540,244,830],[2540,75,830],[360,75,830],[65,365,830],[65,3020,830],[235,3020,780]],C.guide2,2.4,'DASCABLE',[4,4],.95);
+  }
  // PRESE REALI sulla parete a DESTRA della postazione.
  // Distanza: ~1000 mm dal termine dello smusso (inizio della parete diritta x=350); quota dal pavimento solo illustrativa.
  const socketX=1350;
@@ -827,7 +915,45 @@ function roomScene(){
  rotBox(1234,195,963,590,44,360,midAngle,'#141c21','MONMID','Monitor intermedio · ~15 mm dal centrale',.98);
  rotBox(1234+24*(-Math.sin(midAngle)),195+24*Math.cos(midAngle),978,550,5,331,midAngle,'#345f83','MONMID','Schermo intermedio sospeso',.99);
  const [px,py]=pt(280,70);
- rotBox(px,py,800,360,250,22,ang-.08,'#2d3136','LAPTOP','Laptop chiuso / dock sulla scrivania',.97);
+  // Laptop aperto sul leggio, telefono su leggio, tastiera, mouse e sei prese USB-C.
+  const [lx,ly]=pt(225,85);
+  rotBox(lx,ly,800,320,215,14,ang,'#99a7a8','LAPTOPSTAND','Leggio per laptop aperto',.99);
+  rotBox(lx,ly,840,302,188,12,ang,'#637681','LAPTOPSTAND','Piano inclinato del leggio',1);
+  rotBox(lx,ly,853,340,225,13,ang,'#303840','LAPTOP','Base del laptop aperto',1);
+  const screenBase=pt(225,192),u=[Math.cos(ang),Math.sin(ang)];
+  polyPrism([
+    [screenBase[0]-u[0]*170,screenBase[1]-u[1]*170,866],
+    [screenBase[0]+u[0]*170,screenBase[1]+u[1]*170,866],
+    [screenBase[0]+u[0]*170,screenBase[1]+u[1]*170,1087],
+    [screenBase[0]-u[0]*170,screenBase[1]-u[1]*170,1087],
+    [screenBase[0]-u[0]*170-4,screenBase[1]-u[1]*170+4,866],
+    [screenBase[0]+u[0]*170-4,screenBase[1]+u[1]*170+4,866],
+    [screenBase[0]+u[0]*170-4,screenBase[1]+u[1]*170+4,1087],
+    [screenBase[0]-u[0]*170-4,screenBase[1]-u[1]*170+4,1087]
+  ],'#345a70','LAPTOP','Schermo aperto sul leggio',1);
+  const [phx,phy]=pt(-205,73);
+  rotBox(phx,phy,800,93,122,13,ang,'#aab6b6','PHONESTAND','Leggio telefono',1);
+  rotBox(phx,phy,850,76,28,20,ang,'#6b828a','PHONESTAND','Sostegno smartphone',1);
+  rotBox(phx,phy,869,73,30,159,ang,'#273543','PHONE','Telefono in verticale',1);
+  const [kx,ky]=pt(0,-151);
+  rotBox(kx,ky,800,350,123,24,ang,'#222f36','KEYBOARD','Tastiera davanti ai monitor',1);
+  for(let j=0;j<5;j++)for(let k=0;k<14;k++){
+   const q=pt(-157+k*23,-196+j*22);
+   rotBox(q[0],q[1],826,18,16,3,ang,'#789099','KEYBOARD','Tasto',.97);
+  }
+  const [mx,my]=pt(355,-150);
+  rotBox(mx,my,801,67,106,34,ang,'#263843','MOUSE','Mouse',.99);
+  const [ux,uy]=pt(-350,-212);
+  rotBox(ux,uy,800,208,40,24,ang,'#344650','USBC','Pannello con sei porte USB-C sul lato sinistro',1);
+  for(let k=0;k<6;k++){
+   const p=pt(-430+k*32,-235);
+   rotBox(p[0],p[1],811,15,5,7,ang,'#7cd0e3','USBC','Porta USB-C '+(k+1),1);
+  }
+  if(state.wiring){
+   const cable0=pt(-430,-235),cable1=pt(-398,-235);
+   wire([[cable0[0],cable0[1],816],[cable0[0],cable0[1]-100,822],[phx,phy-30,866]],C.plug,2.5,'USBC');
+   wire([[cable1[0],cable1[1],816],[cable1[0]-115,cable1[1]-80,790],[545,1390,780],[540,2930,722]],C.plug,2.5,'USBC');
+  }
  // SEDIA GAMING: rappresentazione geometrica articolata (non un blocco pieno).
  // La scheda del prodotto Amazon non e' stata associata in modo verificato a questo modello:
  // ingombri prudenziali, sedia reale da identificare con precisione.
@@ -868,23 +994,23 @@ function roomScene(){
  if(state.dims){
   dimension([cabX,cabY,0],[cabX+M.cab.depth,cabY,0],'355 mm · profondità MISURATA',[0,-84,0],'#81d6d8');
   dimension([cabX,cabY,0],[cabX,cabY+M.cab.width,0],'1370 mm · mobile MISURATO',[-100,0,0],'#81d6d8');
-  dimension([plateStartX,1840,mount.baseZ],[plateStartX+450,1840,mount.baseZ],'450 mm · piastra',[0,-85,0],'#e7c38a');
-  dimension([plateStartX,1840,mount.baseZ],[plateStartX,2970,mount.baseZ],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
-  dimension([plateStartX,1840,mount.baseZ],[plateStartX,1840,mount.baseZ+334],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
+   dimension([plateStartX,1840,mount.baseZ],[plateStartX+FB.depth,1840,mount.baseZ],'318 mm · profondità FB-1',[0,-85,0],'#e7c38a');
+   dimension([plateStartX,1840,mount.baseZ],[plateStartX,1840,mount.baseZ+FB.length],'1310 mm · lunghezza in pianta',[-95,0,0],'#e7c38a');
+   dimension([plateStartX,1840,mount.baseZ],[plateStartX,1840,mount.baseZ+360],'360 mm · H studio',[0,-92,0],'#8ac4f1');
   if(state.scene!=='cabinet'){
    dimension([0,0,0],[roomW,0,0],'5000 mm · stanza circa',[0,-118,0],'#a8d6ee');
    dimension([0,0,0],[0,roomD,0],'5000 mm · stanza circa',[-118,0,0],'#a8d6ee');
   }
   dimension([24,1840,573],[160,1840,573],'136 mm · retro libero nominale',[0,-145,0],'#80d4e8');
-  text3([390,2405,mount.baseZ+374],'UNA TORRE H-7 · L 1028 × P 429 × H 334 mm · RETRO VERSO PARETE',C.accent,10,'DIM');
-  text3([285,1805,mount.baseZ+430],useR2?'R-2: PORTALE PORTA TUTTO A TERRA':'R-3: 17,8 KG STIMATI · TOP IKEA MAX 20 KG · NON COLLAUDATA',C.accent,10,'DIM');
+   text3([390,2405,mount.baseZ+374],'H-7 FB-1 · 7 CARTUCCE INCLINATE · 1310 × 318 mm',C.accent,10,'DIM');
+   text3([285,1805,mount.baseZ+430],'FB-1 · NO BETULLA · TOP IKEA MAX 20 KG · PESO DA VERIFICARE',C.accent,10,'DIM');
   if(state.scene!=='cabinet'){
    text3([810,640,1530],'MONITOR A MURO · luce 15–19 mm in pianta',C.accent,11,'DIM');
-   text3([2720,480,115],'MULTILIVELLO + CASSETTIERA · SUBWOOFER SOPRA',C.accent,10,'DIM');
+    text3([2720,480,115],'AUDIO + ROUTER NEL MULTILIVELLO · DAS H-8 SU CASSETTIERA',C.accent,10,'DIM');
   }
  }
  if(['cabinet','light'].includes(state.scene)){
-  const hidden=new Set(['UPS','UPSPORT','OUTLETAC','OUTLETLAN','ACDUCT','NETDUCT','ACFLEX','NETPATCH','WALL','WALLCUT','WINDOW','ROOMLABEL','FLOOR','RACK','RACKMODEM','PRINTER','DARKDRAWER','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','DESK','CHAIR','MONVGA','MONHDMI','MONMID','ARMLEFT','ARMCENTER','ARMRIGHT','LAPTOP','DESKSATLEFT','DESKSATRIGHT']);
+  const hidden=new Set(['UPS','UPSPORT','OUTLETAC','OUTLETLAN','ACDUCT','NETDUCT','ACFLEX','NETPATCH','WALL','WALLCUT','WINDOW','ROOMLABEL','FLOOR','RACK','RACKMODEM','PRINTER','DARKDRAWER','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','DESK','CHAIR','MONVGA','MONHDMI','MONMID','ARMLEFT','ARMCENTER','ARMRIGHT','LAPTOP','LAPTOPSTAND','KEYBOARD','MOUSE','PHONE','PHONESTAND','USBC','DAS8','HUB8','DASCABLE','DESKSATLEFT','DESKSATRIGHT']);
   faces=faces.filter(f=>!hidden.has(f.group));
   lines=lines.filter(l=>!hidden.has(l.group));
   labels=labels.filter(l=>!hidden.has(l.group));
@@ -893,13 +1019,15 @@ function roomScene(){
 }
 
 function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;
- $('variant-pill').textContent='7 PC · NESSUN VANO EXTRA';
+ $('variant-pill').textContent='H-7 FB-1 · SPINA DI PESCE';
  if(state.scene==='haugadetail'){ $('variant-pill').textContent='IKEA HAUGA · 004.150.47';return haugaDetailScene();}
  if(state.scene==='lipdetail'){ $('variant-pill').textContent='R-2 · PORTALE INDIPENDENTE';return lipDetailScene();}
- if(['room','workstation','cabinet','light'].includes(state.scene)){
-  $('variant-pill').textContent=state.scene==='cabinet'?'R-2 · TORRE SU PORTALE A TERRA':'R-3 · TORRE LEGGERA SUL MOBILE';
+ if(['room','workstation','cabinet','light','storage','desk'].includes(state.scene)){
+   $('variant-pill').textContent='FB-1 · 7 PC + DAS H-8 SEPARATO';
   return roomScene();
  }
+ if(['tower','rear','thermal'].includes(state.scene))return fishboneTower();
+ if(state.scene==='module')return fishboneTower(state.focusIndex);
  if(state.scene==='ups'){
   // Detail focuses UPS and one neighbouring structural end-frame; no enclosure is placed on UPS.
   pushBox(width-25,16,21,18,405,25,C.frame,'FRAME','Fianco esterno della Torre senza collegamento di carico all’UPS',.99);
@@ -992,7 +1120,7 @@ function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+s
   dimension([0,-116,0],[width+200,-116,0],`${(width+200).toLocaleString('it-IT')} mm · INGOMBRO LATERALE CON UPS`,[0,-25,0],'#c6c9ad');
   dimension([width+193,8,0],[width+193,535,0],'~535 mm · con corridoio cavi',[87,0,0],'#d8ad82');
  }
- $('variant-pill').textContent='7 PC · NESSUN VANO EXTRA';if(state.scene==='tower')$('scene-subtitle').textContent=state.showUPS?`${width} × 429 × 334 mm corpo; +200 mm fianco UPS; retro libero fino a ~535 mm`:`${width} × 429 × 334 mm · solo corpo`;return width;
+ $('variant-pill').textContent='H-7 FB-1 · SPINA DI PESCE';if(state.scene==='tower')$('scene-subtitle').textContent=state.showUPS?`${width} × 429 × 334 mm corpo; +200 mm fianco UPS; retro libero fino a ~535 mm`:`${width} × 429 × 334 mm · solo corpo`;return width;
 }
 function basis(){const a=state.yaw,e=state.pitch,dir=[Math.sin(a)*Math.cos(e),Math.cos(a)*Math.cos(e),Math.sin(e)];return {right:[Math.cos(a),-Math.sin(a),0],up:[-Math.sin(a)*Math.sin(e),-Math.cos(a)*Math.sin(e),Math.cos(e)],dir}}
 let cam;
@@ -1001,12 +1129,12 @@ function projection(p){const v=[p[0]-cam.center[0],p[1]-cam.center[1],p[2]-cam.c
  return {x:W/2+(cam.ox||0)+dot(v,cam.b.right)*scale,y:H/2+(cam.oy||0)-dot(v,cam.b.up)*scale,depth,scale};}
 function faceAvg(p){return p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.length,a[2]+q[2]/p.length],[0,0,0])}
 function polygonPath(points){const path=new Path2D();points.forEach((p,i)=>i?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();return path}
-function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;refreshPartPicker();
- const detail=state.scene==='module',rear=state.scene==='rear',upsFocus=state.scene==='ups',room=['room','workstation','cabinet','light'].includes(state.scene),focus=state.scene==='workstation',cabinetFocus=['cabinet','light'].includes(state.scene),lip=state.scene==='lipdetail';
+function redraw(){const width=make(),b=basis(),cx=FB.first+state.focusIndex*FB.pitch;refreshPartPicker();
+ const detail=state.scene==='module',rear=state.scene==='rear',upsFocus=state.scene==='ups',room=['room','workstation','cabinet','light','storage','desk'].includes(state.scene),focus=['workstation','desk'].includes(state.scene),cabinetFocus=['cabinet','light','storage'].includes(state.scene),lip=state.scene==='lipdetail';
  const frameWidth=state.scene==='haugadetail'?1950:lip?1950:cabinetFocus?2150:focus?2900:room?6600:(upsFocus?680:detail?590:rear?width*1.34:(width+(state.showUPS&&state.scene!=='thermal'?225:0))*1.52);
  const frameHeight=state.scene==='haugadetail'?1850:lip?1900:cabinetFocus?1900:focus?2400:room?6400:(upsFocus?700:detail?700:rear?760:780);
  const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.035,4)*state.zoom;
- cam={b,center:state.scene==='haugadetail'?[300,820,380]:lip?[270,850,500]:cabinetFocus?[440,2405,650]:focus?[1180,1100,740]:room?[1530,1770,1090]:(upsFocus?[width+80,230,155]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:state.scene==='haugadetail'?2300:lip?2200:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
+ cam={b,center:state.scene==='haugadetail'?[300,820,380]:lip?[270,850,500]:state.scene==='storage'?[2760,205,750]:cabinetFocus?[440,2405,650]:focus?[1180,1100,880]:room?[1530,1770,1090]:(upsFocus?[width+80,230,155]:detail?[cx,FB.cy,244]:rear?[width/2,FB.depth/2,190]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:state.scene==='haugadetail'?2300:lip?2200:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
  // Fit the physical tower geometry rather than its nominal bounding envelope.
  if((state.scene==='tower'||state.scene==='room')&&!state.dims&&!state.clearance){
   cam.base=1;cam.ox=0;cam.oy=0;
@@ -1085,7 +1213,7 @@ function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;r
 function dimensions(){const r=vp.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
 function clearSelection(){state.selected=null;state.selectedName='';$('inspector').hidden=true;tip.style.opacity=0;redraw()}
 function select(id,name='',at=null){state.selected=id;state.selectedName=name;
- if(/^(?:P|A|PCB)\d$/.test(id))state.focusIndex=Math.min(6,Math.max(0,+id.slice(1)-1));
+ const chosenModule=/^(?:P|A|PCB)([1-7])$/.exec(id);if(chosenModule)state.focusIndex=Number(chosenModule[1])-1;
  const title=$('part-title'),desc=$('part-desc'),tags=$('part-tags');let t='Elemento',d='',tt=[];
  if(/^P\d$/.test(id)){t=`Modulo PC · ${id}`;d='Telaio mobile uguale per tutte le campate (passo 96 mm); X stampata completa e dietro la PCB, collegata a quattro nodi perimetrali. Sei distanziatori M3 metallici tengono la scheda lontana dalla stampa: i fori raffigurati sono indicativi, vanno rilevati sulla scheda reale. Il peso verticale arriva alle due sedi inferiori collegate alle traverse di base, i carichi laterali alle guide alte su fronte e retro; NON alle X basse dello schienale. Prima dell’estrazione scollegare alimentazione e I/O e togliere entrambi i fermi.';tt=['6 appoggi M3 metal · schema','X stampata completa','PCB distaccata dal polimero','foratura donor-specific']}
  else if(/^A\d$/.test(id)){t=`Adattatore stampato · ${id}`;d='La motherboard non appoggia direttamente sulla stampa. Sei distanziali metallici M3 (10 mm illustrativi) attraversano l’intercapedine tra piazzole dell’adattatore e PCB. L’adattatore ha una X a due diagonali complete, nodo centrale pieno e quattro puntoni verso traverse superiore e inferiore della cartuccia. Le coordinate dei sei fori restano da confrontare con la motherboard donatrice, senza forzarne la scheda.';tt=['6 distanziali M3','diagonali continue','4 puntoni verso carrello','foratura da misurare']}
@@ -1109,8 +1237,8 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='FLOOR'){t='Pavimento del locale';d='Piano di riferimento dell’angolo stanza. Le misure sono schematiche e servono a confrontare ingombri e percorsi.';tt=['base metrica','solo contesto']}
   else if(id==='LIP'){t='Spalletta a U del mobile';d='Risalto su tre lati, alto 90 mm e spesso 10 mm misurati. Progetto R-2: nessun carico o fissaggio della Torre su HAUGA. Il telaio portante è esterno e arriva a pavimento.';tt=['H90 e spessore 10 mm misurati','non portante per Torre','nessuna vite aggiuntiva']}
  else if(id==='LIGHTBASE'){t='Base reticolare alleggerita R-3';d='Travi reticolari sottili e correnti sul perimetro al posto della pesante piastra piena da 18 mm. La geometria è un concept: non provata a flessione, giunti, vibrazione e resistenza a estrazione dei moduli. Richiesto CAD e collaudo con carico inerte.';tt=['mass budget ~1,8 kg','base autoportante a pavimento','non stampare senza verifica'];}
- else if(id==='LIGHTSUPPORT'){t='Sei rialzi R-3 su piano interno HAUGA';d='Rialzi metallici nominali 105 mm: superano di 15 mm la spalletta da 90 mm, senza appoggiarvi. Appoggio sul piano superiore del mobile; non è prova di portata né autorizzazione a caricare 20 kg. Rimuovibili per posizionare la H-7 a terra.';tt=['6 supporti H105','nessuna vite nel mobile','peso reale da pesare'];}
- else if(id==='LIGHTPAD'){t='Piastre ripartizione R-3';d='Piattelli illustrativi 90×80 mm sul top interno, con antiscivolo da definire. Occorre verificare le posizioni sopra gli elementi del mobile e la risposta del piano, evitando carichi puntuali e spinte sugli spigoli.';tt=['top max 20 kg','test a carico inerte','non sulla spalletta'];}
+ else if(id==='LIGHTSUPPORT'){t='Sei rialzi metallici smontabili FB-1';d='Supporti di studio H109 mm, posati sul piano interno HAUGA, senza caricare la spalletta da 90 mm. Da verificare antiscivolo, fissaggi al telaio, reazioni e massa totale entro 20 kg.';tt=['6 appoggi','nessuna vite nel mobile','collaudo necessario'];}
+ else if(id==='LIGHTPAD'){t='Piattelli di ripartizione FB-1';d='Sei basi indicative 72 × 54 mm su HAUGA; verificare materiale, posizione rispetto ai pannelli portanti, deformazione, attrito e carico concentrato.';tt=['top max 20 kg','test a carico inerte','non sulla spalletta'];}
  else if(id==='PORTAL'){t='Portale R-2 con quattro montanti a terra';d='Supporto indipendente studiato attorno al mobile: quattro montanti 40×40, due traversi superiori a campata intera, piastra 1130×450 e bracci laterali. Bordo basso dei traversi a 560 mm: 20 mm teorici liberi sopra HAUGA. Larghezza telaio 1470 mm richiede 50 mm per lato, ma le scarpe richiedono 55 mm + tolleranze: riservare almeno 60 mm per lato. Nessuna vite nel mobile né carico sul piano IKEA. Necessari verifiche di spazio, vibrazione, flessione, ribaltamento e controventi; possibili vincoli al muro indipendenti.';tt=['portata HAUGA: 20 kg, non impiegata','R-2 senza viti nel mobile','portale 1470 mm','solo studio']}
  else if(id==='PORTALBRACE'){t='Controventi laterali';d='Ogni fianco fuori sagoma del mobile ha traversa bassa, alta e diagonale; nessun traverso davanti ai cassetti. Il controvento in direzione trasversale e gli eventuali vincoli al muro sono ancora da definire.';tt=['solo sui fianchi','accesso cassetti libero','verifica torsione']}
  else if(id==='PORTALFOOT'){t='Piedi indipendenti a pavimento';d='Quattro piastre orientative per sostenere il portale senza utilizzare il mobile. Verificare livellamento, materiale del pavimento, appoggio e anti-scorrimento; non sostituiscono verifica antiribaltamento.';tt=['quattro contatti pavimento','nessuna vite su HAUGA','non certificato']}
@@ -1145,7 +1273,7 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='MONHDMI'){t='Monitor centrale HDMI';d='Schermo principale fissato a parete con braccio articolato, più grande degli altri due, centrato davanti alla posizione di lavoro. Larghezza illustrativa circa 740 mm, compatibile con un TV/monitor intorno ai 32 pollici.';tt=['monitor principale','~32”']}
   else if(id==='MONVGA'){t='Monitor sinistro VGA';d='Monitor Acer V193W identificato dai dati EDID del nodo n1. Larghezza esterna verificata circa 442 mm. Nella proposta è il pannello secondario sinistro, sospeso con braccio a muro.';tt=['Acer V193W','~442 mm']}
   else if(id==='MONMID'){t='Terzo monitor intermedio';d='Schermo di dimensioni intermedie tra il VGA Acer e il monitor/TV HDMI: stima progettuale circa 590 mm di larghezza, equivalente grossomodo a un 24–25 pollici; è fissato a parete tramite braccio.';tt=['~24–25”','dimensione intermedia']}
-  else if(id==='LAPTOP'){t='Laptop in appoggio';d='Portatile aperto sul lato destro, in funzione di quarto schermo occasionale, test o controllo nodi. In un uso quotidiano può restare chiuso su supporto verticale.';tt=['supporto lavoro','lato destro']}
+  else if(id==='LAPTOP'){t='Laptop aperto sul leggio';d='Laptop su supporto inclinato da scrivania; posizione schematica, cablaggio verso il pannello USB-C da verificare.';tt=['leggio','scrivania']}
   else if(id==='AUDIOCENTER'){t='Speaker centrale da scrivania';d='Piccolo speaker orizzontale sotto il monitor principale, stimato circa 240 × 80 × 75 mm. Aiuta a concentrare l’audio vicino all’utente senza rubare troppo spazio.';tt=['24 × 8 × 7,5 cm','stima']}
   else if(id==='DESKSATLEFT'){t='Satellite 3 · multilivello';d='Satellite piccolo precedentemente sulla scrivania, ora sul ripiano superiore.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
   else if(id==='DESKSATRIGHT'){t='Satellite 4 · multilivello';d='Altro satellite piccolo, ora sul ripiano superiore; il piano della scrivania resta libero.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
@@ -1166,11 +1294,12 @@ function view(v){if(v==='iso'){state.yaw=state.scene==='room'?.82:2.77;state.pit
 function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow=false;$('airflow').classList.remove('on')}state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
  if(mode==='thermal'){state.yaw=2.85;state.pitch=.63;state.cooling=true;$('cooling').classList.add('on');state.airflow=true;$('airflow').classList.add('on');/* no forced dimensions */}
  else if(mode==='room'){state.yaw=.82;state.pitch=.53;state.xray=false;$('xray').classList.remove('on')}
- else if(mode==='cabinet'||mode==='light'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}
+ else if(mode==='cabinet'||mode==='light'||mode==='storage'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='lipdetail'||mode==='haugadetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}
  else if(mode==='rear'){state.yaw=0;state.pitch=.28}
  else if(mode==='module'){state.yaw=2.3;state.pitch=.36;}
+ else if(mode==='desk'){state.yaw=.82;state.pitch=.57;}
  else {state.yaw=2.77;state.pitch=.45}
  $('module-options').hidden=mode!=='module';$('tower-options').hidden=mode!=='tower';
  if(mode==='module'){buttonGroup('#module-front,#module-back',$('module-front'));}
@@ -1179,14 +1308,16 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
  if(mode==='tower'){state.clearance=false;$('clearance').classList.remove('on')}
  /* Scene changes do not overwrite visibility or overlay preferences. */
  const names={
-  thermal:['VENTILAZIONE · 6 VENTOLE FRONTALI','Blu = ingresso · arancio = uscita ipotizzata · non CFD'],
-  tower:['TORRE H-7 R-2 · completa e autonoma','1028 × 429 × 334 mm · struttura indipendente · pattini aggiuntivi opzionali'],
+  storage:['TORRINO H-8 · 8 BAY + HUB 8 PORTE','8 TB + 4 TB nello scenario · sei baie libere · USB verso la Torre'],
+  desk:['POSTAZIONE · LAPTOP E TELEFONO SU LEGGIO','Tastiera, mouse e sei USB-C a sinistra · due cavi collegati'],
+  thermal:['VENTILAZIONE · 4 VENTOLE CANDIDATE','Schema da verificare sul prototipo · nessuna simulazione CFD'],
+  tower:['TORRE H-7 · FB-1 A SPINA DI PESCE','Sette moduli inclinati di 42° in pianta · 1310 × 318 mm · no betulla e HDD'],
   rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti sulle sedi inferiori'],
-  module:['MODULO TECNICO · PCB, M3, INCASTRI E GUIDE','Una sola scena: lato scheda / retro X, incastro esploso e quote'],
+  module:['CARTUCCIA FB-1 · DETTAGLIO MODULARE','Un modulo a 42° in pianta; adattatore e scheda da verificare'],
   ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],
-  room:['STANZA 5 × 5 × 3 m · UNA TORRE H-7','Unico smusso lato PC · finestra 210 × 160 cm · vista architettonica aperta'],
-  cabinet:['H-7 R-2 · PORTALE ESTERNO AL MOBILE','Alternativa strutturale pesante, se R-3 non raggiunge i limiti'],
-  light:['H-7 R-3 · ULTRALEGGERA SU HAUGA','17,8 kg PREVISTI (NON MISURATI) · sei rialzi sul piano interno · UPS fuori'],
+  room:['STANZA 5 × 5 × 3 m · H-7 E DAS SEPARATI','Torre sul mobile bianco · DAS sulla cassettiera · audio e router nel multilivello'],
+  cabinet:['H-7 FB-1 · DETTAGLIO SUL MOBILE HAUGA','Sei appoggi metallici, senza viti nel mobile · massa e carico da verificare'],
+  light:['H-7 FB-1 · SENZA PIASTRA DI BETULLA','Base a profilati metallici aperta · niente HDD dentro · progetto da validare'],
   haugadetail:['IKEA HAUGA · MOBILE REALE','2 vani / 2 cassetti / 4 pomelli · top max 20 kg · catalogo e rilievo'],
   lipdetail:['H-7 R-2 · CONTATTO ZERO COL MOBILE','Sezione: portale portante, U libera, quattro piedi a terra, Torre removibile'],
   workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']

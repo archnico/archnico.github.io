@@ -1,7 +1,7 @@
 {
   "updated": "2026-11-23",
   "units": "mm",
-  "model": "H-7 R-3 lightweight concept; R-2 alternative; non-executive",
+  "model": "H-7 FB-1 fishbone in plan + H-8 separate 8-bay DAS (concept not executable)",
   "furniture": {
     "measured": {
       "width": 1370,
@@ -39,7 +39,17 @@
   "desk": {
     "width": 1000,
     "depth": 550,
-    "height": 800
+    "height": 800,
+    "keyboard": true,
+    "mouse": true,
+    "open_laptop_on_stand": true,
+    "phone_on_stand": true,
+    "left_usb_c_ports_study": 6,
+    "connected_ports_study": [
+      "phone",
+      "workstation_pc"
+    ],
+    "usb_c_functions_unverified": true
   },
   "room": {
     "approx_width": 5000,
@@ -49,15 +59,32 @@
   "tower": {
     "module_count": 7,
     "chassis_dimensions_mm": [
-      1028,
-      429,
-      334
+      1310,
+      318,
+      360
     ],
     "use_modes": [
-      "lightweight_on_hauga_subject_to_weight_test",
-      "chassis_alone_on_floor",
-      "r2_portal_as_backup"
-    ]
+      "six_removable_supports_on_hauga_within_20kg_total",
+      "same_chassis_floor_standalone",
+      "historical_R2_R3_archived"
+    ],
+    "configuration": "FB-1: seven matching PC cartridges, 42 degrees in horizontal plan like angled parking",
+    "module_envelope_study_mm": [
+      92,
+      284,
+      214
+    ],
+    "angle_degrees_study": 42,
+    "module_pitch_mm": 164,
+    "module_local_ssd_count_study": 7,
+    "internal_hdd_count": 0,
+    "birch_plywood_base": false,
+    "support_height_study_mm": 109,
+    "support_count_study": 6,
+    "supports_attach_to_hauga": false,
+    "loaded_mass_kg": null,
+    "mechanically_validated": false,
+    "render_status": "canonical H-7 FB-1 render; dimensions subject to survey and testing"
   },
   "r2": {
     "portal_external_width": 1470,
@@ -74,7 +101,8 @@
     "portal_clearance_above_lip_mm": 20,
     "total_on_furniture_kg_design": 0,
     "actual_loaded_mass_kg": null,
-    "structurally_validated": false
+    "structurally_validated": false,
+    "status": "historical alternative, not canonical render"
   },
   "r3": {
     "mass_estimate_kg": 17.8,
@@ -100,17 +128,39 @@
     "ups_on_hauga": false,
     "structurally_validated": false,
     "mass_estimate_is_historical_with_3_internal_hdd": true,
-    "new_h7_no_hdd_mass_estimate_kg": null
+    "new_h7_no_hdd_mass_estimate_kg": null,
+    "status": "historical, contains HDD and birch elements, not canonical FB-1 mass"
   },
   "storage_architecture_2026_11_23": {
-    "status": "canonical_direction_selected_not_purchased",
-    "compute": "H-7: seven PC nodes with local boot SSD, no internal HDD banks",
-    "das": "H-4: commercial USB multi-bay, 4 independent SATA disk bays, separate powered USB 3.x hub for existing external USB disks",
-    "initial_host": "n2",
-    "shared_to_other_nodes": "NFS/Samba over LAN",
-    "placement": "other furniture",
-    "current_8tb_disk_host": "n3",
-    "source": "docs/TORRINO_DAS_H4_2026-11-23.md",
-    "render_status": "HDD banks shown are legacy, not current design"
+    "status": "canonical FB-1 H-8 direction; devices not purchased and disks not migrated",
+    "compute": "H-7: 7 independent nodes, one local SSD each, no mechanical HDD banks or birch plywood plate",
+    "das": "H-8: commercial powered and cooled 8 independent SATA bay USB DAS; verify JBOD/SMART by chosen model",
+    "bay_count": 8,
+    "initial_installed_drive_plan": [
+      {
+        "size_tb": 8,
+        "status": "existing, currently on n3; migration pending"
+      },
+      {
+        "size_tb": 4,
+        "status": "existing, installation pending"
+      }
+    ],
+    "free_bays_initial_plan": 6,
+    "hub": "8 USB ports, powered independently; other USB devices; no assumption USB-C",
+    "host": "n2 inside H-7",
+    "connections": [
+      "separate DAS-to-n2 USB data cable",
+      "separate 8-port USB hub-to-n2 USB data cable"
+    ],
+    "shared_to_other_nodes": "NFS/Samba on LAN; never simultaneous USB connection to two hosts",
+    "placement": "on separate drawer cabinet, not HAUGA",
+    "source": "docs/H7_FB1_H8_CANONE_2026-11-23.md",
+    "render_status": "H-8 DAS and hub shown separately on drawer, two drive slots occupied in target configuration"
+  },
+  "audio_router_placement": {
+    "all_speakers_and_subwoofer": "multi_level_cabinet",
+    "router": "multi_level_cabinet",
+    "storage_das": "separate_drawer_cabinet"
   }
 }

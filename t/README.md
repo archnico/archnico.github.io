@@ -1,60 +1,33 @@
-# Torre H-7 — un cluster domestico costruito con PC recuperati
+# La Torre — sette PC recuperati, una struttura a spina di pesce
 
-Abbiamo una piccola scorta di **computer usati**: alcuni li conosciamo già abbastanza bene, di altri dobbiamo ancora verificare schede madri, ingombri, alimentazione e collegamenti. L'idea è dare loro una seconda vita come **cluster casalingo a basso costo**, anziché comprare sette computer nuovi o impilare sette vecchi case.
+Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora da misurare. Il progetto prova a riutilizzarli come piccolo cluster domestico, senza comprare sette computer nuovi e senza tenere sette vecchi case ingombranti. I PC restano **indipendenti**, collegati tra loro tramite rete: non stiamo costruendo un unico supercomputer.
 
-La **Torre H-7** è il contenitore orizzontale che stiamo progettando per ospitarli in modo compatto, ispezionabile e modulare. Dal **23 novembre 2026** la direzione canonica distingue **H-7 per il calcolo** e **DAS H-4 per i dischi**, acquistato come unità USB multibay commerciale con un hub USB alimentato separato per altri dischi esterni. Non è un supercomputer unico: ogni PC resta un nodo indipendente, collegato agli altri tramite rete locale. Il software dell'Astronave potrà assegnare i lavori alle macchine disponibili. Il risultato desiderato è più capacità utile con poca spesa e minore spreco di hardware.
+**Direzione canonica del 23 novembre 2026: H-7 FB-1 + torrino storage H-8.** La struttura principale a sette moduli è disposta **a spina di pesce in pianta, come parcheggi obliqui**, non come due file a V impilate. Abbiamo eliminato la piastra di betulla: telaio aperto in metallo, adattatori specifici stampati in PETG tramite servizio esterno, zero HDD meccanici nei PC. Le vecchie geometrie R-2, R-3 e R-4 sono conservate per confronto, non descrivono più la soluzione scelta.
 
-## Come funziona
+## Come si presenta
 
-- **Sette vani PC uguali**, affiancati; all'interno ogni scheda madre ha un adattatore specifico. Ogni modulo è verticale e si **solleva dall'alto**, senza guide a cassetto. Prima si spengono i nodi, si scollegano alimentazione e cavi, e si sbloccano i fermi.
-- **Nessun banco HDD dentro la Torre.** Ogni nodo tiene il proprio SSD di sistema; gli HDD vengono trasferiti concettualmente in un **torrino DAS H-4 separato**, su un altro mobile. Alimentatori adeguati ai singoli PC, niente distribuzione elettrica artigianale.
-- **Telaio aperto e robusto**, con retro accessibile per porte USB, rete e alimentazione. Raffreddamento tramite dissipatori CPU originali e **sei ventole frontali candidate**, da verificare con misure reali prima di stabilire quante ne servono.
-- **Semplicità prima di tutto**: moduli identici, poche parti speciali, niente baie per telefoni o GPU interne. Una GPU futura, se utile, potrà avere un supporto esterno indipendente.
+La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
 
-## Dove starebbe
+Il **torrino dei dischi** è **separato**, sul piano della cassettiera vicino al mobile audio: un **DAS commerciale a 8 bay SATA** con alimentazione e ventilazione proprie, e un **hub USB alimentato a 8 porte** per altre periferiche. Lo scenario iniziale prevede soltanto **due HDD, 8 TB e 4 TB**, con sei bay ancora liberi. L'8 TB oggi si trova su n3: **nessun disco è stato migrato**. Due collegamenti USB ordinati raggiungono **n2 ospitato nella Torre**, che poi può condividere i volumi sulla LAN via NFS/Samba; non si collega lo stesso disco a due host USB.
 
-Il corpo della Torre misura **circa 102,8 × 42,9 × 33,4 cm** nel modello di studio. Può stare su un supporto proprio; quattro pattini opzionali possono allargare la base.
+Il **mobile multilivello** raccoglie i quattro satelliti audio, il subwoofer e il router. La **scrivania** ospita tastiera, mouse, laptop aperto su leggio e smartphone sul proprio leggio. Sul bordo sinistro sono progettate **sei prese USB-C**, due rappresentate collegate (telefono e postazione PC). Porte dati, alimentazione e potenze di ricarica sono da specificare prima dell'acquisto.
 
-Nella stanza attuale il mobile è **IKEA HAUGA 004.150.47**, catalogo 138 × 36 × 54 cm; misurato **137 × 35,5 × 54 cm**, con spalletta a U alta **9 cm** e spessa **1 cm**. IKEA limita il carico sul piano superiore a **20 kg** e richiede il fissaggio del mobile alla parete.
+## Vincoli reali, prima dell'estetica
 
-L'ultima proposta è la **R-3 ultraleggera**: riportiamo l'intera Torre sul piano interno del mobile, **senza nuove viti nel mobile** e senza affidare peso alla spalletta. Rinunciamo alla lastra piena da 18 mm, mantenendo una struttura reticolare irrigidita con traversi metallici. La simulazione **storica** R-3 stimava **17,8 kg** con 7 schede, 6 ventole, **3 HDD**, 1 PSU interno e adattatori: non è una pesata, e non vale più come budget per la nuova H-7 senza HDD. **Ricalcoleremo massa, sostegni e ventilazione** dopo la separazione; obiettivo prudenziale **16–17 kg effettivi o meno**, con margine rispetto ai 20 kg. L'**UPS resta altrove**; i dischi USB già presenti rimangono nelle sedi attuali fino a migrazione pianificata (8 TB attualmente su n3).
+Il mobile è un **IKEA HAUGA 004.150.47**: circa 137 × 35,5 × 54 cm misurati, **spalletta a U alta 9 cm e spessa 1 cm**. Il produttore dichiara **20 kg massimo sul piano** e richiede l'ancoraggio del mobile a parete. Vogliamo **nessuna vite aggiuntiva nel mobile**: la Torre usa appoggi metallici smontabili sul piano interno, senza scaricare sulla spalletta, e deve poter poggiare anche a terra.
 
-Per superare la U, proponiamo **sei rialzi smontabili, alti 105 mm, con piastre di ripartizione sul piano interno** e niente fissaggi alla spalletta. La stessa H-7, tolti i rialzi, può poggiare direttamente sul pavimento: **il portale R-2 a quattro gambe resta solo un'alternativa archiviata**, non la scelta corrente. Ogni sostegno, la portata e il baricentro devono essere collaudati prima di caricare il mobile.
+L'ingombro **FB-1 è preliminarmente 1310 × 318 mm** e l'angolo proposto **42°**, con sette cartucce da **92 × 284 mm** di impronta esterna illustrativa. Il confronto è con la luce nominale catalogo **1345 × 330 mm**, **non con una misura interna certificata dell'esemplare**. Il nuovo budget di massa **non è ancora verificato**; i 17,8 kg R-3 con HDD erano soltanto uno studio storico. Il DAS, sul mobile separato, **non entra** nel carico HAUGA. Verificare baricentro, distribuzione carichi, oscillazioni, accesso ai cavi e raffreddamento prima di costruire.
 
-La stanza è circa 5 × 5 m, tre monitor su bracci a muro e finestra 210 × 160 cm. Il render separa i componenti per esplorarli a strati e confrontare R-3 con R-2 storica.
+La stanza è circa **5 × 5 × 3 m**, con un solo angolo smussato, finestra 210 × 160 cm, tre monitor su bracci a muro e scrivania misurata 100 × 55 × 80 cm. Il modello cerca di rappresentare questa stanza, non uno showroom inventato.
 
-## R-4 · studio di massa senza betulla né HDD
+## Esplorare l'anteprima
 
-Dopo la separazione del DAS, abbiamo stimato una **nuova H-7 interamente su profilati metallici, senza alcuna base in betulla e senza dischi meccanici**. Il primo bilancio R-4, corretto per il peso reale delle ventole senza imballaggio, è **15,05 kg nominali** con 7 schede complete ipotetiche, 7 SSD, 1 alimentatore ATX sulla Torre, 9,5 metri di profilato 2020 leggero e 4 ventole candidate. È **solo uno studio**: quattro schede donatrici, numero finale di PSU, struttura realmente necessaria e raffreddamento non sono ancora verificati. Obiettivo progettuale 14–16 kg, **limite HAUGA inderogabile 20 kg**. La disposizione a pettine obliquo è ora calcolata come **R-5 sperimentale** (25° e passo preliminare 108 mm), ma non approvata costruttivamente.
+**[Apri il render 3D interattivo](index.html)**. A sinistra trovi capitoli a strati, ciascuno con **Tutti** per mostrare o nascondere il gruppo. Puoi selezionare un pezzo, attivare la semitrasparenza, usare i comandi di smontaggio e scegliere prospettive dedicate per stanza, Torre, HAUGA, DAS H-8, scrivania e bracci dei monitor.
 
-[**Leggi il bilancio completo R-4 e gli scenari di rischio**](docs/H7_R4_BUDGET_MASSA_2026-11-23.md).
+**Nota geometrica:** la vista attuale **FB-1 a 42°**, con ingombri illustrativi 1310 × 318 mm, è un'ipotesi grafica funzionale ai confronti e **non una quota canonizzata per costruire**. In parallelo l'**[approfondimento ingegneristico R-5](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md)** indica **25° / passo 108 mm** come candidato geometrico alternativo su cartucce ipotetiche 80 × 251 mm. Le due versioni non vanno confuse: il primo dato guida il render, il secondo una simulazione comparativa da falsificare con l'hardware reale. Nessuna configurazione è approvata per la costruzione. La R-4 resta confronto storico per la massa (15,046 kg teorici, in uno scenario non rappresentativo della massa finale).
 
-## R-5 · La nuova ipotesi principale: pettine obliquo
 
-La variante **R-5** ordina le sette cartucce verticali tutte inclinate nello stesso verso, come parcheggi a pettine. Primo candidato **25° con passo 108 mm**; con un involucro nominale delle cartucce da 80×251 mm il modello suggerisce **130 cm circa di larghezza**, ma il vecchio spazio laterale comprende ancora banchi HDD rimossi e deve essere ridisegnato. Se la cartuccia n1 richiederà 90–100 mm, cambieranno passo, larghezza e posizione dei servizi. Anche la profondità finale, l'accesso ai connettori, il cablaggio e il raffreddamento sono ancora da verificare.
+Per i dettagli: **[Canone FB-1 + H-8 e verifiche](docs/H7_FB1_H8_CANONE_2026-11-23.md)** · [Registro misure](registro.html) · [Dati JSON](misure.json) · [Studio R-5, 25°](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md) · [Bilancio storico R-4](docs/H7_R4_BUDGET_MASSA_2026-11-23.md) · [DAS H-4 precedente](docs/TORRINO_DAS_H4_2026-11-23.md) · [R-3 storico](r3.html) · [Portale R-2 storico](r2.html) · [Archivio tecnico](docs/README-tecnico-storico.md).
 
-Il budget teorico **R-5** è **15,52 kg** con quattro ventole, un PSU ATX, sette SSD, 10,3 m di profilati leggeri e masse dei sette donatori ancora ipotetiche. Con sei ventole e due PSU arriverebbe a circa **17,21 kg**; le masse reali potrebbero essere più alte. L'estensione laterale può ridurre la flessione dei longheroni se ci sono **tre stazioni di appoggio per lato**, ma **non cambia la portata HAUGA di 20 kg**. Il controllo preliminare del ribaltamento frontale evidenzia un rischio concreto: saranno necessarie ritenute indipendenti dal mobile o un supporto a pavimento, dimensionati e verificati. Non si procede al montaggio senza questi controlli.
+**Stato:** progetto di fattibilità, non acquisti effettuati né installazione collaudata. Nel calcolo R-5 la massa ipotetica è 15,52 kg con un PSU e quattro ventole, ma più alimentatori possono portarla vicino ai 20 kg. L'analisi avverte soprattutto del **rischio di ribaltamento**: servono ritenute esterne al mobile o supporto autonomo a terra prima di montare. Prima proveremo e peseremo **un modulo**, poi valuteremo l'estensione a sette.
 
-[**R-5: studio ingegneristico, formule, massa e punti di arresto**](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md). **Il render resta storico**, in attesa di una geometria CAD validata.
-
-## Il torrino dei dischi
-
-L'archivio sarà un **DAS commerciale USB a quattro vani SATA indipendenti**, con alimentazione e raffreddamento propri, installato su **altro mobile**. Un **hub USB 3.x alimentato** separato permetterà di collegare i dischi esterni già inscatolati. **n2** sarà il nodo host iniziale: i dati diventeranno accessibili dagli altri PC tramite NFS/Samba, **non** con due collegamenti USB simultanei allo stesso disco. Il nuovo assetto libera spazio, peso, vibrazioni e calore nella H-7. Non abbiamo ancora acquistato DAS o hub; prestazioni, porte USB reali di n2, dischi e costi sono da verificare.
-
-La geometria dei banchi HDD mostrata nell'anteprima deriva dalle **revisioni storiche**: non è più la configurazione scelta. Il render verrà adeguato dopo le verifiche progettuali. [**Scheda canonica del DAS H-4**](docs/TORRINO_DAS_H4_2026-11-23.md).
-
-## Come vogliamo costruirla
-
-**Poca spesa, facilità di montaggio e manutenzione.** L'ipotesi R-5 combina profilati di alluminio pretagliati in un reticolo senza betulla e pezzi **stampati in PETG da un servizio esterno** per gli adattatori e i particolari non strutturali. Non abbiamo una stampante 3D. Le parti portanti devono essere dimensionate e testate: **non basta che il render sembri solido**.
-
-Un eventuale UPS commerciale rimane **separato**, mai sul mobile HAUGA: non contribuisce ai 17,8 kg della stima. Non è una promessa di alimentare sette PC a batteria.
-
-## A che punto siamo
-
-**Stiamo progettando, non montando l'installazione definitiva.** Esistono un modello esplorabile R-3 (con R-2 conservata per confronto), geometrie illustrative e verifiche digitali preliminari. Mancano ancora le misure complete delle schede donatrici, la distinta definitiva senza HDD, le prove di rigidità e stabilità del supporto, la verifica del raffreddamento e il collaudo elettrico. Prima costruiremo e proveremo **un modulo**, poi estenderemo il sistema.
-
-Il render permette di spegnere o mostrare **pareti, mobilio, monitor, bracci, telaio, moduli, schede, dischi, ventole e cavi**: una specie di matrioska digitale per capire il progetto dall'esterno all'interno. **Semitrasparenza e isolamento del pezzo selezionato sono opzioni**, non aspetti obbligatori della vista.
-
-**[Apri l'anteprima interattiva (geometria storage storica)](index.html)** · **[R-5: pettine obliquo calcolato](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md)** · **[Nuova architettura DAS H-4](docs/TORRINO_DAS_H4_2026-11-23.md)** · **[R-4: bilancio massa senza betulla](docs/H7_R4_BUDGET_MASSA_2026-11-23.md)** · **[R-3 storico](r3.html)** · [Portale R-2 alternativo](r2.html) · [Misure aggiornate](registro.html) · [Archivio storico R-1](schema-r1.html) · [Dettagli tecnici e storico](docs/README-tecnico-storico.md)
-
-*Nota: le quote della Torre e della piastra sono di studio, non file esecutivi per stampa o installazione. L'inventario hardware è progressivo: non tutti i sette PC sono già definiti.*
