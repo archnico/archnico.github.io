@@ -25,7 +25,9 @@
     "altezza_spalletta_misurata": 90,
     "altezza_massima_derivata": 540,
     "profondita_misurata": 355,
-    "spessore_risalto_stimato": 18
+    "spessore_risalto_misurato": 10,
+    "larghezza_interna_nominale": 1350,
+    "profondita_interna_nominale": 345
   },
   "torre_studio": {
     "corpo_mm": [
