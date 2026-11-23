@@ -605,15 +605,17 @@ function drawHaugaReal(bx,by,showDimensions=false){
  pushBox(bx+13,by+side,shelfZ,d-15,w-2*side,board,white,'HAUGASHELF','Mensola superiore ai cassetti · portata 12–13 kg/vano',1);
  // Schienale in fibra: il passaggio cavi non è stato misurato; finestrella in render esplicativa.
  pushBox(bx+10,by+side,40,11,w-2*side,shelfZ-40,shadow,'HAUGABACK','Schienale inferiore in fibra',1);
- pushBox(bx+10,by+side,shelfZ+board,11,w-2*side,83,shadow,'HAUGABACK','Schienale vano aperto',1);
- pushBox(bx+10,by+side,h-54,11,w-2*side,54-board,shadow,'HAUGABACK','Schienale superiore in fibra',1);
+ // Finestrine di servizio PICCOLE: ubicazione reale non rilevata.
+ pushBox(bx+10,by+side,shelfZ+board,11,w-2*side,102,shadow,'HAUGABACK','Schienale vano aperto',1);
+ pushBox(bx+10,by+side,370,11,w-2*side,h-board-370,shadow,'HAUGABACK','Schienale superiore in fibra',1);
  for(let i=0;i<2;i++){
   const by0=by+side+i*(bayW+mid),end=by0+bayW;
-  // Uscita cavi posteriore schematicamente aperta nei vani (nessuna quota inventata).
-  pushBox(bx+10,by0,shelfZ+board+83,11,90,h-54-(shelfZ+board+83),shadow,
-    'HAUGABACK','Rinforzo posteriore zona passacavo',1);
-  pushBox(bx+10,end-90,shelfZ+board+83,11,90,h-54-(shelfZ+board+83),shadow,
-    'HAUGABACK','Rinforzo posteriore zona passacavo',1);
+  // Una piccola feritoia grafica per vano, NON una misura o prescrizione di modifica.
+  const slotHalf=45,slotY=by0+bayW/2;
+  pushBox(bx+10,by0,330,11,slotY-slotHalf-by0,40,shadow,'HAUGABACK',
+    'Schienale · zona passacavo illustrativa',1);
+  pushBox(bx+10,slotY+slotHalf,330,11,end-(slotY+slotHalf),40,shadow,'HAUGABACK',
+    'Schienale · zona passacavo illustrativa',1);
   pushBox(bx+28,by0+3,shelfZ+board,d-34,bayW-6,3,'#f3f4ee','HAUGAOPEN',
     'Vano superiore '+(i+1)+' · IKEA larghezza 660 mm, altezza 175 mm',1);
   // Frontali pieni, solo nella metà bassa, lasciando veri vani aperti sopra.
@@ -1220,5 +1222,5 @@ function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.c
  $('qfan').onclick=()=>{$('cooling').click();syncQuick()};
  $('qups').onclick=()=>{$('showUPS').click();syncQuick()};
  document.addEventListener('click',syncQuick);syncLayerControls();
- new ResizeObserver(dimensions).observe(vp);dimensions();scene(location.hash==='#tower'?'tower':'room');syncQuick();
+ new ResizeObserver(dimensions).observe(vp);dimensions();scene(({'#tower':'tower','#room':'room','#haugadetail':'haugadetail','#hauga':'haugadetail','#cabinet':'cabinet'})[location.hash]||'room');syncQuick();
 })();
