@@ -4,6 +4,8 @@ Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora
 
 **Direzione canonica del 23 novembre 2026: H-7 FB-1 + torrino storage H-4.** La struttura principale a sette moduli è disposta **a spina di pesce in pianta, come parcheggi obliqui**, non come due file a V impilate. Abbiamo eliminato la piastra di betulla: telaio aperto in metallo, adattatori specifici stampati in PETG tramite servizio esterno, zero HDD meccanici nei PC. Le vecchie geometrie R-2, R-3 e R-4 sono conservate per confronto, non descrivono più la soluzione scelta.
 
+> **Novità R-6 Metal-Lite (23/11, studio successivo alla FB-1).** La [nuova pianta parametrica](r6.html) e il [dossier R-6](docs/H7_R6_METAL_LITE_2026-11-23.md) riprogettano le sette cartucce come telai aperti in alluminio, sostituendo i lunghi sostegni stampati con guide metalliche leggere e componenti PETG piccoli. **Obiettivo 0,7–1,2 kg PETG**; sagoma di studio 1310×305 mm. La FB-1 illustrata più sotto resta il **render 3D storico**, non un disegno da fabbricare. Nessun acquisto o stampa autorizzati prima dei rilievi e collaudi.
+
 ## Come si presenta
 
 La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.

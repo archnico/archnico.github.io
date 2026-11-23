@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Torre H-7 R-6 · Metal-Lite</title>
+<style>
+:root{color-scheme:dark;--navy:#102a38;--ink:#e9f4f2;--muted:#9db9b9;--cyan:#5dd0c7;--gold:#f0cc74;--red:#ea8d85}
+*{box-sizing:border-box}body{margin:0;background:#0b202e;color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:14px 24px;background:#143449;border-bottom:1px solid #2d5764;display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+header strong{font-size:18px;letter-spacing:.035em}a{color:#9ee9dc}small,.sub{color:var(--muted)}.status{color:#f2cf8b;border:1px solid #907b56;border-radius:14px;padding:3px 10px;font-size:12px}
+.wrap{display:grid;grid-template-columns:minmax(260px,315px) minmax(0,1fr);max-width:1900px;margin:auto}.panel{padding:18px 18px 30px;background:#102c3b;border-right:1px solid #315263}
+main{min-width:0;padding:18px 20px}.panel h2{margin:0 0 10px;font-size:17px}.panel h3{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:22px 0 9px}
+.toggles{display:grid;grid-template-columns:1fr 1fr;gap:6px}.toggle{display:flex;align-items:center;gap:7px;font-size:13px;padding:5px;border:1px solid #355765;border-radius:6px;cursor:pointer}
+.toggle input{accent-color:#73d6bc}button{background:#244858;border:1px solid #527b81;color:var(--ink);padding:6px 10px;border-radius:6px;cursor:pointer}
+button:hover{background:#376475}.twobtn{display:flex;gap:7px}.ctrl{padding:9px 0;border-bottom:1px solid #284c58}.ctrl label{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.ctrl input{width:100%;accent-color:#54ccb9}.card{background:#123646;border:1px solid #31566a;border-radius:9px;padding:12px;margin-bottom:13px}
+.statrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.stat{text-align:center;background:#123646;border:1px solid #345463;border-radius:9px;padding:8px 4px}
+.stat b{display:block;font-size:21px;color:#f4d486}.stat span{font-size:11px;color:var(--muted)}
+svg{width:100%;height:auto;display:block;background:#0a2534;border-radius:9px;max-height:740px}
+.caption{margin:8px 3px 0;color:#a2c4c7;font-size:13px}.warn{color:#f1bd95}.ok{color:#7cdbc8}
+.flag{border-left:3px solid #c99763;padding:10px;background:#2e3437;margin-top:10px;font-size:13px}
+@media(max-width:870px){.wrap{grid-template-columns:1fr}.panel{border-right:0;border-bottom:1px solid #315263}.statrow{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header><div><strong>TORRE H-7 · R-6 METAL-LITE</strong><div class="sub">7 PC a spina di pesce · modello metrico esplorativo · 23/11/2026</div></div><div><span class="status">NON PRONTO ALLA STAMPA</span> &nbsp; <a href="docs/H7_R6_METAL_LITE_2026-11-23.md">Scheda tecnica R-6</a> · <a href="index.html">Render FB-1 storico</a></div></header>
+<div class="wrap">
+<aside class="panel">
+<h2>Strati</h2>
+<div class="twobtn"><button id="all">Mostra tutto</button><button id="none">Nascondi tutto</button><button id="ghost">Semitrasparenza</button></div>
+<h3>Contesto e struttura</h3>
+<div class="toggles" id="layers"></div>
+<h3>Prova le tolleranze</h3>
+<div class="ctrl"><label for="ang">Angolo <b id="angVal">42°</b></label><input id="ang" type="range" min="32" max="47" value="42" step=".5"></div>
+<div class="ctrl"><label for="pitch">Passo <b id="pitchVal">164 mm</b></label><input id="pitch" type="range" min="146" max="178" value="164"></div>
+<div class="ctrl"><label for="w">Larghezza cartuccia <b id="wVal">92 mm</b></label><input id="w" type="range" min="80" max="110" value="92"></div>
+<div class="ctrl"><label for="d">Profondità cartuccia <b id="dVal">284 mm</b></label><input id="d" type="range" min="265" max="302" value="284"></div>
+<p class="sub">Questi cursori modificano soltanto le sagome del modello. Non autorizzano componenti, fori né tagli.</p>
+<button id="reset">Ripristina R-6 (42° / 164 / 92 × 284)</button>
+<div class="flag">Prima della prima stampa: misurare davvero n1 (PCB 226 × 175 mm, dissipatore, ATX24, PSU), il piano HAUGA e il percorso di estrazione. Il limite 20 kg e l'ancoraggio del mobile restano obbligatori.</div>
+</aside>
+<main>
+<div class="statrow">
+<div class="stat"><b id="petg">0,7–1,2</b><span>kg PETG obiettivo</span></div>
+<div class="stat"><b id="free">—</b><span>mm luce tra cartucce</span></div>
+<div class="stat"><b id="metal">4,57 + 11,79</b><span>m 2020 + angolari</span></div>
+<div class="stat"><b id="fit">—</b><span>ingombro nominale</span></div>
+</div>
+<div class="card" style="margin-top:13px">
+<svg id="plan" viewBox="0 0 1490 875" aria-label="Pianta parametrica della Torre R-6 e sezione sul mobile HAUGA"></svg>
+<p class="caption">Pianta in scala logica (sopra) e sezione sul mobile (sotto). La PCB è un riferimento di posizione, non un rilievo dei sette donatori. Le guide metalliche sottili e i pattini PETG sono concettuali.</p>
+</div>
+<p id="warnings" class="card warn" aria-live="polite">Verifica geometria in corso...</p>
+<p class="caption">Struttura progettata su 2 correnti 2020, 5 traverse di base, 6 montanti rialzati, angolari metallici per carrier e guide; PETG soltanto nei punti d'interfaccia. L'assenza di collisioni in 2D non prova rigidezza, comportamento in urto, sicurezza elettrica o estrazione con cavi.</p>
+</main>
+</div>
+<script>
+(function(){
+"use strict";
+var N=7, FRAME_L=1310,FRAME_D=305,CAB_L=1345,CAB_D=330;
+var state={ghost:false,layers:{cab:true,frame:true,feet:true,moving:true,rails:true,pcb:true,petg:true,labels:true}};
+var opts=[["cab","HAUGA"],["frame","Telaio"],["feet","Piedi"],["moving","Cartucce"],["rails","Guide"],["pcb","Schede"],["petg","PETG"],["labels","Quote"]];
+var ns="http://www.w3.org/2000/svg",root=document.getElementById("plan");
+function el(t,a,parent){var x=document.createElementNS(ns,t);Object.keys(a||{}).forEach(function(k){x.setAttribute(k,a[k]);});(parent||root).appendChild(x);return x}
+function group(name){return el("g",{"data-layer":name})}
+function rect(g,x,y,w,h,fill,stroke,sw,rx){return el("rect",{x:x,y:y,width:w,height:h,fill:fill||"none",stroke:stroke||"none","stroke-width":sw||0,rx:rx||0},g)}
+function line(g,x1,y1,x2,y2,color,sw,dash){return el("line",{x1:x1,y1:y1,x2:x2,y2:y2,stroke:color,"stroke-width":sw||1,"stroke-dasharray":dash||""},g)}
+function text(g,x,y,value,color,size,weight){var n=el("text",{x:x,y:y,fill:color||"#b6d6d8","font-size":size||14,"font-family":"system-ui, sans-serif","font-weight":weight||400},g);n.textContent=value;return n}
+function circle(g,x,y,r,fill,stroke){return el("circle",{cx:x,cy:y,r:r,fill:fill||"none",stroke:stroke||"none","stroke-width":1.5},g)}
+function value(id){return +document.getElementById(id).value}
+function update(){
+var a=value("ang"),pitch=value("pitch"),w=value("w"),d=value("d"),rad=a*Math.PI/180,c=Math.cos(rad),s=Math.sin(rad);
+["ang","pitch","w","d"].forEach(function(k){document.getElementById(k+"Val").textContent=value(k)+(k==="ang"?"°":" mm")});
+var footprintX=w*c+d*s,footprintY=w*s+d*c;
+var span=6*pitch+footprintX,gap=pitch*c-w,guideGap=gap-18;
+var x0=(FRAME_L-span)/2+footprintX/2,y0=FRAME_D/2;
+var fit=(span<=FRAME_L-2*12&&footprintY<=FRAME_D-2*12&&guideGap>=11);
+document.getElementById("free").textContent=gap.toFixed(1);
+document.getElementById("fit").textContent=fit?"ENTRA*":"NON ENTRA";
+document.getElementById("fit").style.color=fit?"#8ddac8":"#f1a998";
+root.replaceChildren();
+el("rect",{width:1490,height:875,fill:"#0b2738"});
+var cab=group("cab"),frame=group("frame"),feet=group("feet"),moving=group("moving"),rails=group("rails"),pcb=group("pcb"),petg=group("petg"),labels=group("labels");
+var ox=71,oy=40,bx=ox+(CAB_L-FRAME_L)/2,by=oy+(CAB_D-FRAME_D)/2;
+rect(cab,ox,oy,CAB_L,CAB_D,"#e0e8e5","#f8faf7",2,6).setAttribute("opacity",".20");
+rect(cab,ox,oy,CAB_L,CAB_D,"none","#9da9a7",2,6);
+rect(frame,bx,by,FRAME_L,FRAME_D,"none","#77d8c6",3);
+for(var j=0;j<2;j++)rect(frame,bx,by+(j?FRAME_D-20:0),FRAME_L,20,"#2c978d","#96dbd2",1);
+[40,355,655,955,1270].forEach(function(x){rect(frame,bx+x-10,by+20,20,FRAME_D-40,"#2b7b7b","#81c5bf",1)});
+[[100,45],[655,45],[1210,45],[100,260],[655,260],[1210,260]].forEach(function(p){rect(feet,bx+p[0]-36,by+p[1]-27,72,54,"#997c58","#f5d087",2,5);circle(feet,bx+p[0],by+p[1],8,"#f1d086")});
+for(var i=0;i<N;i++){
+ var cx=bx+x0+i*pitch,cy=by+y0;
+ var g=el("g",{transform:"rotate("+a+" "+cx+" "+cy+")"},moving);
+ rect(g,cx-w/2,cy-d/2,w,d,"#bd9b5c","#f5d78b",1.8,2).setAttribute("fill-opacity",".085");
+ for(var side of [-1,1])rect(g,cx+side*(w/2-5)-2,cy-d/2+4,4,d-8,"#d8ae68","#f7cd79",.7);
+ for(var v of [-1,1])rect(g,cx-w/2+4,cy+v*(d/2-5)-2,w-8,4,"#d8ae68");
+ var rg=el("g",{transform:"rotate("+a+" "+cx+" "+cy+")"},rails);
+ for(var u of [-1,1]){var guideX=cx+u*(w/2+6)-3;rect(rg,guideX,cy-120,6,240,"#67d4c6","#d5fff5",.7);
+  for(var vv of [-85,85]){circle(petg,cx+Math.cos(rad)*(u*(w/2+2.5))-Math.sin(rad)*vv,cy+Math.sin(rad)*(u*(w/2+2.5))+Math.cos(rad)*vv,4,"#f1a871")}}
+ var board=el("g",{transform:"rotate("+a+" "+cx+" "+cy+")"},pcb);
+ rect(board,cx-17,cy-88,6,176,"#b7cf8f","#e6e9c4",1);
+ rect(board,cx-17,cy-88,6,176,"none","#bad989",1);
+ if(state.layers.labels){text(labels,cx-15,cy+5,"P"+(i+1),"#ffdf92",12,700)}
+}
+if(state.layers.labels){
+text(labels,ox,28,"PIANTA · TOP HAUGA 1345 × 330 mm · R-6 1310 × 305 mm","#b9e7e0",18,700);
+text(labels,ox+4,407,"MARGINI teorici: 17,5 mm ai lati · 12,5 mm fronte/retro; NON misurati sul mobile","#a9c8ca",13);
+}
+// Side/elevation schematic, dimensioned only in Z.
+var top=781,scale=.75,sx=260,depthScale=2.0;
+var sxmax=sx+330*depthScale;
+rect(cab,sx-20,top,700,9,"#e4e5df","#e4e5df",1,3);
+rect(cab,sx-20,top-90*scale,15,90*scale,"#dce3da","#e3e8e3",1);
+rect(cab,sxmax+5,top-90*scale,15,90*scale,"#dce3da","#e3e8e3",1);
+line(cab,sx-50,top,sxmax+52,top,"#9eabb0",3);
+for(var fy of [45,260]){
+ var px=sx+fy*depthScale;
+ rect(feet,px-27,top-5,54,5,"#dcb77a");
+ rect(feet,px-12,top-109*scale,24,104*scale,"#73a6a4","#d3ece4",1);
+ rect(feet,px-25,top-116*scale,50,7,"#5daea5");
+}
+rect(frame,sx,top-129*scale,FRAME_D*depthScale,20*scale,"#27978c","#a3e9d6",1);
+rect(moving,sx+16*depthScale,top-155*scale,(FRAME_D-32)*depthScale,10*scale,"#d4ae75","#e1c483",1);
+rect(pcb,sx+120*depthScale,top-403*scale,5,226*scale,"#b9d88b","#dcebbd",2);
+rect(pcb,sx+125*depthScale,top-333*scale,38,42,"#7a94a4","#d2e5e0",1);
+rect(rails,sx+105*depthScale,top-187*scale,10,55*scale,"#55c8be");
+circle(petg,sx+110*depthScale,top-145*scale,6,"#edaf6e");
+if(state.layers.labels){text(labels,74,478,"SEZIONE SCHEMATICA · quota dal piano HAUGA","#b9e7e0",18,700);
+text(labels,970,570,"PCB n1: 226 mm (orientazione da rilevare)","#b4cfd0",17);
+text(labels,970,596,"Supporti sollevati ≥109 mm, lip ~90 mm","#b4cfd0",16);
+text(labels,970,624,"Ritenuta Torre → muro: progettare e collaudare","#e0b48e",16);
+text(labels,970,652,"Pesi, PSU e ventole: non dimensionati","#e0b48e",16);
+text(labels,970,680,"Nessuna vite nel mobile; ancoraggio IKEA obbligatorio","#b4cfd0",16);
+text(labels,74,838,"METALLO = CARICO   /   PETG = INTERFACCIA   /   NO FONDI PIENI","#f2cf87",18,700)}
+Object.keys(state.layers).forEach(function(layer){var selector='[data-layer="'+layer+'"]';var g=root.querySelector(selector);if(g){g.style.display=state.layers[layer]?"":"none";g.style.opacity=state.ghost&&layer!=="petg"&&layer!=="labels"?"0.32":"1"}});
+var problems=[];if(span>FRAME_L-24)problems.push("Sette cartucce troppo lunghe rispetto al margine di studio.");
+if(footprintY>FRAME_D-24)problems.push("Cartuccia troppo profonda: interferisce con correnti e zona U.");
+if(guideGap<11)problems.push("Guide troppo vicine ("+guideGap.toFixed(1)+" mm nominali) per una ferramenta non ancora progettata.");
+if(gap<0)problems.push("Le cartucce mobili si compenetrano.");
+if(!problems.length)problems.push("Ingombri planimetrici plausibili: margini e meccanismo non sono ancora verificati dal vero.");
+problems.push("Mancano: PSU reali, dissipatori e ATX24, viti, ritenuta antiribaltamento, prova su HAUGA.");
+document.getElementById("warnings").innerHTML=(fit?"<span class='ok'>CHECK PLANIMETRICO PRELIMINARE</span>":"<span class='warn'>NO-GO ANCHE NELLA PIANTA</span>")+" · "+problems.join(" · ");
+}
+opts.forEach(function(o){var lab=document.createElement("label");lab.className="toggle";var check=document.createElement("input");check.type="checkbox";check.checked=true;check.addEventListener("change",function(){state.layers[o[0]]=check.checked;update()});lab.append(check,document.createTextNode(o[1]));document.getElementById("layers").appendChild(lab)});
+function syncchecks(){document.querySelectorAll(".toggle input").forEach(function(c,i){c.checked=state.layers[opts[i][0]]})}
+document.getElementById("all").onclick=function(){Object.keys(state.layers).forEach(function(k){state.layers[k]=true});syncchecks();update()};
+document.getElementById("none").onclick=function(){Object.keys(state.layers).forEach(function(k){state.layers[k]=false});syncchecks();update()};
+document.getElementById("ghost").onclick=function(){state.ghost=!state.ghost;this.textContent=state.ghost?"Vista opaca":"Semitrasparenza";update()};
+document.getElementById("reset").onclick=function(){[["ang",42],["pitch",164],["w",92],["d",284]].forEach(function(x){document.getElementById(x[0]).value=x[1]});update()};
+["ang","pitch","w","d"].forEach(function(id){document.getElementById(id).addEventListener("input",update)});
+update();
+})();
+</script>
+</body></html>
