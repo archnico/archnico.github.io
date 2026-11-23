@@ -39,3 +39,7 @@ Per i dettagli: **[Canone FB-1 + DAS H-4 e verifiche](docs/H7_FB1_DAS_H4_CANONE_
 
 **Stato:** progetto di fattibilità, non acquisti effettuati né installazione collaudata. Nel calcolo R-5 la massa ipotetica è 15,52 kg con un PSU e quattro ventole, ma più alimentatori possono portarla vicino ai 20 kg. L'analisi avverte soprattutto del **rischio di ribaltamento**: servono ritenute esterne al mobile o supporto autonomo a terra prima di montare. Prima proveremo e peseremo **un modulo**, poi valuteremo l'estensione a sette.
 
+
+### Guide laterali dei cassetti FB-1 (correzione 23/11)
+
+Il render FB-1 comprende ora **sette telai di sostegno laterale fissi**, distinti dalle guance colorate dei cassetti estraibili: due guide laterali longitudinali doppie per vano, quattro montanti di estremità, due pattini inferiori e traverse di scarico sul telaio aperto. Sono selezionabili tramite lo strato «Sostegni cassetti». Con 42° e passo 164 mm, il distacco perpendicolare tra assi è circa 121,9 mm; cartuccia larga 92 mm, guide fisse con luce nominale 4 mm per lato e almeno 5,9 mm tra guide contigue. **Le quote sono di studio**: restano da provare deformazioni, tenuta delle connessioni, estrazione e carico sulla HAUGA (max 20 kg), senza considerare il 3D una verifica strutturale.

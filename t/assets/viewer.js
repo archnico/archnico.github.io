@@ -10,7 +10,7 @@ const state={n:7,yaw:2.77,pitch:.45,zoom:1,explode:0,xray:false,labels:true,disk
 // Layer controls are independent of scene/camera and never mutate source geometry.
 const DEFAULT_LAYERS={
  pareti:true,finestra:true,mobilio:true,haugaStruttura:true,haugaCassetti:true,haugaPomelli:true,monitor:true,bracci:true,
- scrivania:true,sedia:true,audio:true,periferiche:true,usbC:true,das:true,hub:true,connessioneDas:true,usbDrives:true,telaio:true,baseTerra:true,moduli:true,schede:true,
+ scrivania:true,sedia:true,audio:true,periferiche:true,usbC:true,das:true,hub:true,connessioneDas:true,usbDrives:true,telaio:true,guideLaterali:true,baseTerra:true,moduli:true,schede:true,
  dischi:true,ventole:true,cavi:true,ups:false,semitrasparente:false,
  isola:false,quote:false,griglia:false,etichette:true,ingombri:false
 };
@@ -35,6 +35,7 @@ function layerFor(group){
  if(['MONVGA','MONHDMI','MONMID'].includes(group))return 'monitor';
  if(['ARMLEFT','ARMCENTER','ARMRIGHT'].includes(group))return 'bracci';
  if(['AUDIOLEFT','AUDIORIGHT','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT','SUBWOOFER'].includes(group))return 'audio';
+ if(['FBGUIDE','FBCRADLE'].includes(group))return 'guideLaterali';
  if(['FRAME','GUIDE','GUIDEFRAME','BACKBONE','DOCK','LOCK','FOOT','ADAPTER','ALIGN','PORTAL','PORTALBRACE','PORTALFOOT','PORTALLOCK','LIGHTSUPPORT','LIGHTBASE','LIGHTPAD'].includes(group))return 'telaio';
  if(group==='STORAGE'||group==='SSD')return 'dischi';
  if(['POWER','IO','NETDUCT','ACDUCT','ACFLEX','NETPATCH','OUTLETAC','OUTLETLAN','FANPOWER','UPSCABLE'].includes(group))return 'cavi';
@@ -56,7 +57,7 @@ const CHAPTER_LAYERS={
  contesto:['pareti','finestra','mobilio'],
  postazione:['monitor','bracci','scrivania','sedia','audio','periferiche','usbC'],
  torrino:['das','hub','usbDrives','connessioneDas'],
- torre:['telaio','baseTerra','moduli','schede','dischi','ventole','cavi','ups'],
+ torre:['telaio','guideLaterali','baseTerra','moduli','schede','dischi','ventole','cavi','ups'],
  overlay:['semitrasparente','isola','quote','griglia','etichette','ingombri']
 };
 function syncLayerControls(){
@@ -123,7 +124,7 @@ function openPreset(preset){
 document.querySelectorAll('[data-preset]').forEach(el=>el.onclick=()=>openPreset(el.dataset.preset));
 
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={STANDRAIL:'Due longheroni metallici a terra (studio)',STANDCROSS:'Tre traverse basse per ripartire il carico (studio)',STANDPAD:'Pattini stabilizzatori aggiuntivi, opzionali (studio)',STANDRUBBER:'Appoggi antiscivolo sul pavimento (studio)',STANDJOINT:'Piastre di collegamento rimovibili (studio)',FLOORREF:'Suolo di riferimento, NON una piastra in legno',USBDRIVE:'HDD USB esterni: 8 TB su n3 / 4 TB su n2, migrazione non eseguita',DAS4:'DAS a 4 bay SATA indipendenti · inizialmente vuoto',HUB4:'Hub alimentato 4 porte USB · espandibile',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:"Ventola candidata 1",F2:"Ventola candidata 2",F3:"Ventola candidata 3",F4:"Ventola candidata 4",F5:"Ventola legacy 5",F6:"Ventola legacy 6",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={FBGUIDE:'Guide laterali FISSE dei sette cassetti, non parte dei moduli',FBCRADLE:'Sedi inferiori e traverse di carico FISSE, schema da collaudare',STANDRAIL:'Due longheroni metallici a terra (studio)',STANDCROSS:'Tre traverse basse per ripartire il carico (studio)',STANDPAD:'Pattini stabilizzatori aggiuntivi, opzionali (studio)',STANDRUBBER:'Appoggi antiscivolo sul pavimento (studio)',STANDJOINT:'Piastre di collegamento rimovibili (studio)',FLOORREF:'Suolo di riferimento, NON una piastra in legno',USBDRIVE:'HDD USB esterni: 8 TB su n3 / 4 TB su n2, migrazione non eseguita',DAS4:'DAS a 4 bay SATA indipendenti · inizialmente vuoto',HUB4:'Hub alimentato 4 porte USB · espandibile',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:"Ventola candidata 1",F2:"Ventola candidata 2",F3:"Ventola candidata 3",F4:"Ventola candidata 4",F5:"Ventola legacy 5",F6:"Ventola legacy 6",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 function refreshPartPicker(){
  const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)&&isVisibleGroup(id)))];
  ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
@@ -187,12 +188,38 @@ const FB={length:1310,depth:318,angle:Math.PI*42/180,pitch:164,first:162,cy:159}
 function fbPoint(i,u,v,z){const a=FB.angle,c=Math.cos(a),sn=Math.sin(a);return [FB.first+i*FB.pitch+u*c-v*sn,FB.cy+u*sn+v*c,z];}
 function fbBox(i,u,v,z,w,d,h,color,group,name,opa=1){
  const p=fbPoint(i,u,v,z);
- const lifted=state.lifted==='P'+(i+1)?155:0;
- const exploded=state.explode*(i%2?1.3:1.65);
+ // Guides and cradles are fixed to the chassis: they must NOT lift when a drawer is extracted.
+ const fixed=group==='FBGUIDE'||group==='FBCRADLE';
+ const lifted=!fixed&&state.lifted==='P'+(i+1)?155:0;
+ const exploded=fixed?0:state.explode*(i%2?1.3:1.65);
  const adapterLift=state.scene==='module'&&state.moduleExploded&&(group==='PCB'+(i+1)||group==='A'+(i+1))?65:0;
  rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);
 }
 function fbWire(i,pts,color,group,width=2){wire(pts.map(([u,v,z])=>fbPoint(i,u,v,z)),color,width,group);}
+// FB-1: one fixed side-support frame per bay, distinct from the coloured moving
+// cartridge cheeks. In local (u,v), adjacent bay axes are pitch*cos(42°)=121.87 mm
+// apart; 92 mm moving width gives 29.87 mm available for guides and clearance.
+// Fixed guide centres at ±54, thickness 8: moving cheek outer u=±46 -> 4 mm
+// nominal clearance; fixed-to-fixed between bays: ~5.87 mm. STUDY ONLY.
+function fishboneGuides(i){
+ const g='FBGUIDE',b='FBCRADLE';
+ // Two low-bearing runners, top at z=127, support the cartridge bottom.
+ for(const u of [-36,36])
+  fbBox(i,u,0,122,12,232,5,C.frame,b,'Longherone inferiore fisso: appoggio del cassetto; piano superiore z=127',1);
+ // End ties touch the front/rear perimeter beams near opposite corners.
+ for(const v of [-122,122])
+  fbBox(i,0,v,110,126,28,17,C.frame2,b,'Traversino terminale fisso: carico verso i longheroni perimetrali, connessione da verificare',1);
+ for(const u of [-54,54]){
+  // Two visible longitudinal guide bars rather than an opaque side panel:
+  // keeps airflow and the motherboard service envelope open.
+  fbBox(i,u,0,143,8,252,13,C.guide,g,'Guida laterale fissa bassa: 4 mm di gioco nominale dalla guancia mobile',1);
+  fbBox(i,u,0,160,8,252,10,C.guide2,g,'Secondo profilo laterale fisso: antioscillazione e irrigidimento',1);
+  for(const v of [-121,121]){
+   fbBox(i,u,v,114,10,15,59,C.frame2,g,'Montante laterale fisso collegato alla traversa inferiore',1);
+   fbBox(i,u,v,110,18,25,9,C.frame,b,'Piede di trasferimento montante -> traversino terminale',1);
+  }
+ }
+}
 function fishboneTower(onlyIndex=null){
  const L=FB.length,D=FB.depth;
  if(onlyIndex===null){
@@ -210,6 +237,7 @@ function fishboneTower(onlyIndex=null){
  for(let i=0;i<7;i++){
   if(onlyIndex!==null&&i!==onlyIndex)continue;
   const id='P'+(i+1),pcb='PCB'+(i+1),ad='A'+(i+1);
+  fishboneGuides(i);
   fbBox(i,0,0,127,92,284,10,C.frame2,id,'Cartuccia uniforme 92 × 284 mm ruotata 42° in pianta',1);
   for(const u of [-42,42])fbBox(i,u,0,137,8,282,33,nodeColors[i],id,'Fianco e guida rimovibile della cartuccia',1);
   for(const v of [-137,137])fbBox(i,0,v,137,92,8,16,nodeColors[i],id,'Traversa e fermo cartuccia',1);
@@ -1312,6 +1340,8 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='HAUGASHELF'||id==='HAUGAOPEN'){t='HAUGA · due vani aperti';d='Due vani superiori separati dal divisorio centrale e da un ripiano sopra i cassetti. Misure IKEA nominali 660 mm larghezza, 175 mm altezza, superficie interna superiore profonda 330 mm; portata ripiano 12-13 kg secondo mercati.';tt=['2 vani','660×175 mm nominali','12-13kg/vano'];}
  else if(id==='HAUGADRAWER'){t='HAUGA · due cassetti';d='Un cassetto inferiore per metà, frontale bianco con due pomelli scuri, totale quattro. Portata massima IKEA 9 kg per cassetto; guide e dimensioni di sezione schematizzate.';tt=['2 cassetti','4 pomelli','9kg/cassetto'];}
  else if(id==='HAUGAKNOB'){t='HAUGA · quattro pomelli';d='Quattro maniglie metalliche scure tonde, due per cassetto. Forma rappresentata, diametro illustrativo da verificare.';tt=['4 pomelli','diametro indicativo'];}
+ else if(id==='FBGUIDE'){t='Sette coppie di guide laterali fisse';d='Ogni cartuccia a 42° è affiancata da guide fisse a u=±54 mm, spessore 8 mm, con gioco laterale nominale di 4 mm rispetto alle guance mobili (larghezza 92 mm). Due montanti per lato si uniscono alle traverse terminali. Le guide rimangono in sede quando si estrae il cassetto. Quote e rigidezza da verificare in prototipo; non è un disegno esecutivo.';tt=['14 corsie laterali','gioco nominale 4 mm/lato','7 telai indipendenti','prototipo da collaudare'];}
+ else if(id==='FBCRADLE'){t='Appoggi inferiori strutturali dei cassetti';d='Due pattini longitudinali fissi per vano hanno quota superiore z=127 mm, coincidente con la quota inferiore della cartuccia. Traverse terminali collegano gli appoggi alle longherine esterne frontali e posteriori. Connessioni, sollecitazioni e tolleranze non sono ancora validate.';tt=['2 pattini per cartuccia','14 pattini totali','traverse terminali','portata da misurare'];}
  else if(id==='HAUGAGUIDE'){t='HAUGA · guide cassetti';d='Guide metalliche presenti secondo manuale; posizione e dimensioni del 3D sono indicative, non quote utilizzabili in officina.';tt=['schematiche','non esecutive'];}
  else if(id==='LIP'){t='HAUGA · bordi a U';d='Il fianco rialzato è smussato anteriormente. Altezza spalletta riferita +90mm; bordo posteriore dichiarato spesso 10mm, fianchi circa 17,5mm dedotti dal disegno IKEA, non misurati. Nessuna portata certificata del solo bordo.';tt=['U su 3 lati','smusso frontale','non portante per Torre'];}
  else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
