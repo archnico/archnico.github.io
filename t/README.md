@@ -23,6 +23,12 @@ Per superare la U, proponiamo **sei rialzi smontabili, alti 105 mm, con piastre 
 
 La stanza è circa 5 × 5 m, tre monitor su bracci a muro e finestra 210 × 160 cm. Il render separa i componenti per esplorarli a strati e confrontare R-3 con R-2 storica.
 
+## R-4 · studio di massa senza betulla né HDD
+
+Dopo la separazione del DAS, abbiamo stimato una **nuova H-7 interamente su profilati metallici, senza alcuna base in betulla e senza dischi meccanici**. Il primo bilancio R-4 è **15,19 kg nominali** con 7 schede complete ipotetiche, 7 SSD, 1 alimentatore ATX sulla Torre, 9,5 metri di profilato 2020 leggero e 4 ventole candidate. È **solo uno studio**: quattro schede donatrici, numero finale di PSU, struttura realmente necessaria e raffreddamento non sono ancora verificati. Obiettivo progettuale 14–16 kg, **limite HAUGA inderogabile 20 kg**. La configurazione alternativa a spina di pesce non è ancora dimensionata.
+
+[**Leggi il bilancio completo R-4 e gli scenari di rischio**](docs/H7_R4_BUDGET_MASSA_2026-11-23.md).
+
 ## Il torrino dei dischi
 
 L'archivio sarà un **DAS commerciale USB a quattro vani SATA indipendenti**, con alimentazione e raffreddamento propri, installato su **altro mobile**. Un **hub USB 3.x alimentato** separato permetterà di collegare i dischi esterni già inscatolati. **n2** sarà il nodo host iniziale: i dati diventeranno accessibili dagli altri PC tramite NFS/Samba, **non** con due collegamenti USB simultanei allo stesso disco. Il nuovo assetto libera spazio, peso, vibrazioni e calore nella H-7. Non abbiamo ancora acquistato DAS o hub; prestazioni, porte USB reali di n2, dischi e costi sono da verificare.
@@ -41,6 +47,6 @@ Un eventuale UPS commerciale rimane **separato**, mai sul mobile HAUGA: non cont
 
 Il render permette di spegnere o mostrare **pareti, mobilio, monitor, bracci, telaio, moduli, schede, dischi, ventole e cavi**: una specie di matrioska digitale per capire il progetto dall'esterno all'interno. **Semitrasparenza e isolamento del pezzo selezionato sono opzioni**, non aspetti obbligatori della vista.
 
-**[Apri l'anteprima interattiva (geometria storage storica)](index.html)** · **[Nuova architettura DAS H-4](docs/TORRINO_DAS_H4_2026-11-23.md)** · **[R-3: budget di peso storico](r3.html)** · [Portale R-2 alternativo](r2.html) · [Misure aggiornate](registro.html) · [Archivio storico R-1](schema-r1.html) · [Dettagli tecnici e storico](docs/README-tecnico-storico.md)
+**[Apri l'anteprima interattiva (geometria storage storica)](index.html)** · **[Nuova architettura DAS H-4](docs/TORRINO_DAS_H4_2026-11-23.md)** · **[R-4: bilancio massa senza betulla](docs/H7_R4_BUDGET_MASSA_2026-11-23.md)** · **[R-3 storico](r3.html)** · [Portale R-2 alternativo](r2.html) · [Misure aggiornate](registro.html) · [Archivio storico R-1](schema-r1.html) · [Dettagli tecnici e storico](docs/README-tecnico-storico.md)
 
 *Nota: le quote della Torre e della piastra sono di studio, non file esecutivi per stampa o installazione. L'inventario hardware è progressivo: non tutti i sette PC sono già definiti.*
