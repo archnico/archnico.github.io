@@ -1302,5 +1302,41 @@ function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.c
  document.head.appendChild(s);
  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)document.body.classList.add("reduce-motion");
 }
+// Round 7: prominent engineering blocker panel (second-order review aid).
+{
+ const blockerItems=[
+  'NO-GO alla stampa: nessun PSU collocato; alimentazione da rilevare su ogni donatore.',
+  'n1 reale ASUS H81M-E ~226x175 mm vs segnaposto 208x180 mm; fori, dissipatore, RAM, connettori da rilevare.',
+  'HAUGA max 20 kg e ancoraggio a parete obbligatorio; massa FB-1 non misurata.',
+  'Guide: gioco nominale 4 mm/lato, ~7.9 mm tra guide fisse contigue; stretto per viti e utensili.',
+  'Ventole: icone 67 mm sono segnaposti; P14 140 mm non entra in cartuccia 92 mm.',
+  'Cavi: linea tratteggiata NON solida; posa, diametri, curve, separazione AC/DC da progettare.',
+  'Estrazione: sweep verticale 0-155 mm senza urti tra box; esclusi cavi, mani, inclinazioni, deformazioni.',
+  'HAUGA luce nominale 1345x330 mm vs sagoma 1310x318 mm: margine 17.5 mm testate, 6 mm fronte/retro.',
+  'Variante a pavimento: solo concept grafico, non base portante validata.',
+  'Supporto laterale apparente: nessuna intersezione geometrica con la PCB illustrata; la prospettiva puo ingannare.'
+ ];
+ const aside=document.querySelector('aside.left');
+ if(aside && !document.getElementById('blocker-panel')){
+  const details=document.createElement('details');
+  details.id='blocker-panel';
+  details.open=true;
+  details.style.cssText='margin:0 0 10px;padding:10px 12px;border:1px solid #b78a5c;background:#2a2116;border-radius:10px;';
+  const summary=document.createElement('summary');
+  summary.textContent='BLOCCHI INGEGNERISTICI (NO-GO)';
+  summary.style.cssText='cursor:pointer;font-weight:750;color:#ffd89a;';
+  details.appendChild(summary);
+  const badge=document.createElement('div');
+  badge.textContent='SAT box-level: PASS · concept non esecutivo';
+  badge.style.cssText='display:inline-block;margin:6px 0;padding:3px 7px;border-radius:6px;background:#4a3320;color:#ffd89a;font-size:10px;font-weight:700;';
+  details.appendChild(badge);
+  const ul=document.createElement('ul');
+  ul.style.cssText='margin:8px 0 0;padding-left:18px;font-size:11px;line-height:1.5;color:#f0d9b5;';
+  blockerItems.forEach(function(item){const li=document.createElement('li');li.textContent=item;ul.appendChild(li);});
+  details.appendChild(ul);
+  aside.insertBefore(details,aside.firstChild);
+ }
+ window.addEventListener('keydown',function(e){if(e.target&&e.target.tagName==='INPUT')return;if(e.key.toLowerCase()==='b'){const d=document.getElementById('blocker-panel');if(d)d.open=!d.open;}});
+}
 new ResizeObserver(dimensions).observe(vp);dimensions();scene(({'#tower':'tower','#autonoma':'standalone','#standalone':'standalone','#room':'room','#haugadetail':'haugadetail','#hauga':'haugadetail','#cabinet':'cabinet'})[location.hash]||'room');syncQuick();
 })();
