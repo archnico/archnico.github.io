@@ -1,0 +1,45 @@
+{
+  "updated": "2026-11-23",
+  "units": "mm",
+  "stanza": {
+    "larghezza_approssimativa": 5000,
+    "profondita_approssimativa": 5000,
+    "altezza_soffitto": 3000,
+    "unico_angolo_smussato": true,
+    "estensione_smusso_stimata": 350
+  },
+  "finestra": {
+    "larghezza": 2100,
+    "altezza": 1600,
+    "distanza_approssimativa_angolo_opposto": 500,
+    "altezza_davanzale_solo_render": 1000
+  },
+  "scrivania": {
+    "larghezza_misurata": 1000,
+    "profondita_misurata": 550,
+    "altezza_misurata": 800
+  },
+  "mobile_bianco": {
+    "larghezza_misurata": 1370,
+    "altezza_corpo_misurata": 450,
+    "altezza_spalletta_misurata": 90,
+    "altezza_massima_derivata": 540,
+    "profondita_stimata": 320,
+    "spessore_risalto_stimato": 18
+  },
+  "torre_studio": {
+    "corpo_mm": [
+      1028,
+      429,
+      334
+    ],
+    "piastra_mm": [
+      1130,
+      450,
+      18
+    ],
+    "supporti_per_spalletta_non_validati_mm": 105,
+    "testate_libere_teoriche_mm": 120
+  },
+  "avviso": "Supporti alti e piastra sono concetti non collaudati; nessuna autorizzazione alla fabbricazione."
+}
