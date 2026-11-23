@@ -67,7 +67,7 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:15px;pa
    </div>
    <p class="help">STANZA: una Torre sul mobile bianco, tre monitor e finestra. MODULO: fissaggio scheda, incastro e guide in un'unica scena. TORRE COMPLETA: stessa struttura autonoma, pattini opzionali attivabili. Le scene tecniche restano illustrative, non esecutive.</p>
   </div>
-  <div class="section"><div class="label">R-1 / Materiali</div><p class="help"><b>Alluminio 2020 pretagliato</b> per il percorso portante, base in multistrato di betulla, PETG per sole interfacce e campioni. La vista dettagliata mantiene la geometria illustrativa precedente; le quote definitive, i fissaggi e la nuova cornice restano da verificare. <a href="schema-r1.html" style="color:#90d9ca">Apri lo schema R-1</a>.</p></div><div class="section"><div class="label">03 / Configurazione</div><h3 class="section-title">Posizioni modulari</h3><p class="help"><b>7 vani PC fissi · passo 96 mm.</b> Due banchi dischi laterali conservati. Nessun vano GPU o telefoni. GPU futura su supporto indipendente esterno, collegamento PCIe specifico del nodo da verificare. Nessuna GPU o dock installati.</p><p class="help">Telaio 1028 × 429 × 334 mm; piastra rimovibile 1130 × 450 × 18 mm (studio). Mobile misurato L1370 H450 + spalletta H90 mm; P320 stimata. Spazio posteriore nominale ~136 mm tra muro e piastra; nessun carico sulle spallette.</p><div class="row-control"><span>UPS laterale autonomo</span><button class="switch" id="showUPS" aria-label="Mostra UPS laterale"></button></div><p class="help">L’UPS non occupa un vano PC e <b>non grava sulla stampa</b>: 13,1 kg sul piano di appoggio, aperto davanti e ai lati.</p></div>
+  <div class="section"><div class="label">R-1 / Materiali</div><p class="help"><b>Alluminio 2020 pretagliato</b> per il percorso portante, base in multistrato di betulla, PETG per sole interfacce e campioni. La vista dettagliata mantiene la geometria illustrativa precedente; le quote definitive, i fissaggi e la nuova cornice restano da verificare. <a href="schema-r1.html" style="color:#90d9ca">Apri lo schema R-1</a>.</p></div><div class="section"><div class="label">03 / Configurazione</div><h3 class="section-title">Posizioni modulari</h3><p class="help"><b>7 vani PC fissi · passo 96 mm.</b> Due banchi dischi laterali conservati. Nessun vano GPU o telefoni. GPU futura su supporto indipendente esterno, collegamento PCIe specifico del nodo da verificare. Nessuna GPU o dock installati.</p><p class="help">Telaio 1028 × 429 × 334 mm; piastra rimovibile 1130 × 450 × 18 mm (studio). Mobile misurato L1370 H450 + spalletta H90 mm; P355 misurata. Spazio posteriore nominale ~136 mm tra muro e piastra; nessun carico sulle spallette.</p><div class="row-control"><span>UPS laterale autonomo</span><button class="switch" id="showUPS" aria-label="Mostra UPS laterale"></button></div><p class="help">L’UPS non occupa un vano PC e <b>non grava sulla stampa</b>: 13,1 kg sul piano di appoggio, aperto davanti e ai lati.</p></div>
   <div class="section"><div class="label">03B / Termica</div><h3 class="section-title">6 ventole frontali · PWM 140 mm</h3><p class="help">4 compute + 2 HDD, ingresso dal fronte, uscita libera in alto e dietro. P14 PWM PST candidato (140×140×27 mm, 123,76 m³/h nominali, 0,12 A a 12 V). <a href="https://www.arctic.de/en/P14-PWM-PST/ACFAN00125A/" style="color:#90d9ca" target="_blank" rel="noopener noreferrer">Scheda tecnica</a>. Portata reale da misurare.</p><div class="row-control"><span>Ventole installate (concept)</span><button class="switch on" id="cooling" aria-label="Mostra ventole"></button></div><div class="row-control"><span>Percorsi d’aria indicativi</span><button class="switch" id="airflow" aria-label="Mostra flussi aria"></button></div><div class="input-row"><span>Calore ipotetico</span><b id="heat-label">450 W</b></div><input id="heat" type="range" min="100" max="800" step="25" value="450" aria-label="Carico termico ipotetico"><div class="input-row"><span>ΔT aria obiettivo</span><b id="delta-label">8 °C</b></div><input id="delta" type="range" min="4" max="15" step="1" value="8" aria-label="Aumento temperatura aria"><p class="help" id="thermal-result" aria-live="polite"></p><p class="help">Non CFD. La portata nominale in aria libera non certifica il raffreddamento. Alimentazione 12 V separata, griglie su entrambi i lati, cavi bassi e tachimetri indipendenti; dissipatori CPU originali da mantenere.</p></div><div class="section"><div class="label">04 / Smontaggio</div><h3 class="section-title">Estrazione verticale</h3><div class="input-row"><span>Sollevamento moduli</span><b id="explabel" class="num">0%</b></div><input id="explode" type="range" min="0" max="100" value="0"><div class="btn-grid" style="margin-top:12px"><button class="button wide accent" id="unlock">🔓 Sblocca due fermi / vano</button><button class="button wide" id="extract" disabled>↑ Estrai modulo selezionato</button><button class="button wide" id="reset">↺ Rimonta tutto</button></div><p class="help" id="lock-status" aria-live="polite">Fermi anteriori e posteriori inseriti; estrazione bloccata (simulazione). Prima dell’estrazione reale scollegare tutti i cavi.</p></div>
   <div class="section"><div class="label">05 / Dimensionamento elettrico</div><h3 class="section-title">UPS candidato · PowerWalker VI 1500 CSW IEC</h3><p class="help">1.500 VA · 900 W · 99 × 410 × 280 mm · 13,1 kg. 4 prese IEC con batteria + 4 solo sovratensioni. <a href="https://powerwalker.com/product/10121124/" target="_blank" rel="noopener noreferrer" style="color:#90d9ca">Scheda produttore</a>.</p><div class="input-row"><span>Carico ipotetico (non misurato)</span><b id="load-label">450 / 900 W</b></div><input id="load" type="range" min="100" max="900" step="50" value="450" aria-label="Simula carico elettrico UPS"><div class="power-meter"><div class="power-meter-fill" id="load-bar" style="width:50%"></div></div><p class="help" id="load-warning">Da verificare con wattmetro, inclusi spunti all’avvio. Protezione selettiva, non tutti i sette PC.</p></div>
   <div class="section"><div class="label">06 / Ispezione componenti</div><h3 class="section-title">Seleziona qualsiasi elemento</h3><select id="part-picker" aria-label="Scegli componente del modello" style="width:100%;background:#142b36;color:#e3f1f1;border:1px solid #35545b;border-radius:8px;padding:10px;margin-bottom:6px;font-size:12px"><option value="">Seleziona un componente…</option></select><p class="help">Utile per selezionare anche gli elementi nascosti dietro il telaio o le pareti semitrasparenti. Le descrizioni appaiono soltanto dopo la selezione.</p></div>
@@ -87,7 +87,7 @@ const canvas=document.getElementById('c'),vp=document.getElementById('vp'),ctx=c
 const $=id=>document.getElementById(id);
 const C={guide:'#81d6d8',guide2:'#2e858f',frame:'#5bb49e',frame2:'#447c77',corner:'#dfa962',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570',ups:'#465665',upsFace:'#627888',upsBackup:'#63c7bb',upsSurge:'#d7a65f'};
 // BEGIN REGISTRO MISURE (generato da Registro/registro_torre_v1.json)
-const M={"cab":{"width":1370,"depth":320,"height":450,"lipHeight":90,"lipThickness":18},"desk":{"width":1000,"depth":550,"height":800}};
+const M={"cab":{"width":1370,"depth":355,"height":450,"lipHeight":90,"lipThickness":18},"desk":{"width":1000,"depth":550,"height":800}};
 // END REGISTRO MISURE
 const state={n:7,yaw:2.77,pitch:.45,zoom:1,explode:0,xray:false,labels:true,disks:true,wiring:true,grid:false,dims:false,clearance:false,selected:null,selectedName:'',focusIndex:0,scene:'tower',standpads:false,moduleExploded:false,lifted:null,locked:true,showUPS:false,loadEstimate:450,cooling:true,airflow:false,heat:450,delta:8};
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
@@ -502,25 +502,25 @@ function embedTowerAt(originX,originY,baseZ,where){
 // Unica geometria condivisa per il kit H-7 (quote di studio in mm).
 function cabinetKit(bx,by,lift=0){
  // Appoggio sopra la U alta 90 mm: piedini di studio da 105 mm, mai verificati strutturalmente.
- const top=M.cab.height, support=105,z=top+lift,padY=(M.cab.width-1130)/2;
+ const top=M.cab.height, support=105,z=top+lift,padY=(M.cab.width-1130)/2,plateX=bx+(M.cab.depth-450)/2;
  const ys=[190,M.cab.width/2,M.cab.width-190];
- for(const y of ys)for(const x of [55,265]){
+ for(const y of ys)for(const x of [55,M.cab.depth-55]){
   pushBox(bx+x-30,by+y-47,z,60,94,support,'#6f9197','ADAPTER','Piede prototipale da 105 mm: portata/instabilità NON verificate',1);
   if(lift)wire([[bx+x,by+y,top],[bx+x,by+y,z]],'#e8c17b',1.3,'ALIGN',[5,5]);
   else pushBox(bx+x-27,by+y-43,z+support-3,54,86,3,'#273c44','ADAPTER','Inserto antiscivolo di studio',1);
  }
- for(const y of ys)pushBox(bx-65,by+y-12,z+support-11,450,24,11,'#768e96','ADAPTER','Traversa: luce minima di studio sopra U 4 mm; dettaglio da riprogettare',.98);
- pushBox(bx-65,by+padY,z+support,450,1130,18,'#b99c75','ADAPTER','Piastra 1130×450×18 mm; 120 mm liberi alle testate se mobile L1370; portata non certificata',lift?.38:.93);
- if(!lift)for(const y of [padY+10,padY+1120])for(const x of [-55,363])
-  pushBox(bx+x,by+y,z+support+18,14,13,17,'#e0b885','ADAPTER','Fermo anti-scorrimento da verificare',1);
+ for(const y of ys)pushBox(plateX,by+y-12,z+support-11,450,24,11,'#768e96','ADAPTER','Traversa: luce minima di studio sopra U 4 mm; dettaglio da riprogettare',.98);
+ pushBox(plateX,by+padY,z+support,450,1130,18,'#b99c75','ADAPTER','Piastra 1130×450×18 mm; 120 mm liberi alle testate se mobile L1370; portata non certificata',lift?.38:.93);
+ if(!lift)for(const y of [padY+10,padY+1120])for(const x of [10,428])
+  pushBox(plateX+x,by+y,z+support+18,14,13,17,'#e0b885','ADAPTER','Fermo anti-scorrimento da verificare',1);
 }
 
 function lipDetailScene(){
- // Kit esploso, misure del mobile miste: L/H/spalletta dichiarate, P/spessore U ipotesi.
+ // Kit esploso: L/H/P e altezza spalletta dichiarate; spessore della U ipotizzato.
  const bx=60,by=100,top=M.cab.height,liph=M.cab.lipHeight,lipw=M.cab.lipThickness;
  const cabEnd=by+M.cab.width;
  if(state.grid){for(let yy=0;yy<M.cab.width+200;yy+=100)wire([[0,yy,-9],[530,yy,-9]],'#285061',.6,'GRID');for(let xx=0;xx<530;xx+=100)wire([[xx,0,-9],[xx,M.cab.width+180,-9]],'#285061',.6,'GRID')}
- pushBox(bx,by,0,M.cab.depth,M.cab.width,top,'#dce2e4','WHITECAB','Mobile bianco L1370, corpo H450 mm misurati; profondità stimata 320 mm',.91);
+ pushBox(bx,by,0,M.cab.depth,M.cab.width,top,'#dce2e4','WHITECAB','Mobile bianco L1370 × P355 mm, corpo H450 mm: misure utente',.91);
  pushBox(bx,by,top,lipw,M.cab.width,liph,'#8cbfda','LIP','Spalletta posteriore alta 90 mm (spessore da verificare)',1);
  pushBox(bx,by,top,M.cab.depth,lipw,liph,'#8cbfda','LIP','Spalletta testata A',1);
  pushBox(bx,cabEnd-lipw,top,M.cab.depth,lipw,liph,'#8cbfda','LIP','Spalletta testata B',1);
@@ -531,9 +531,9 @@ function lipDetailScene(){
   dimension([bx,by,top],[bx,by,top+liph],'90 mm · altezza spalletta',[-80,0,0],'#9dd8f5');
   dimension([bx,by,top+liph],[bx+lipw,by,top+liph],'18 mm · spessore IPOTETICO',[0,-60,0],'#9dd8f5');
   dimension([bx+M.cab.depth,by,top],[bx+M.cab.depth,cabEnd,top],'1370 mm · larghezza mobile',[94,0,0],'#b4d7ee');
-  dimension([bx,by,top],[bx+M.cab.depth,by,top],'320 mm · profondità STIMATA', [0,-90,0],'#b4d7ee');
-  dimension([-5,by+120,top+lift+123], [445,by+120,top+lift+123],'450 mm piastra', [0,-65,0],'#e2bd80');
-  dimension([-5,by+120,top+lift+123], [-5,by+1250,top+lift+123],'1130 mm · lunghezza kit H-7',[-80,0,0],'#e2bd80');
+  dimension([bx,by,top],[bx+M.cab.depth,by,top],'355 mm · profondità MISURATA', [0,-90,0],'#b4d7ee');
+  dimension([bx+(M.cab.depth-450)/2,by+120,top+lift+123], [bx+(M.cab.depth-450)/2+450,by+120,top+lift+123],'450 mm piastra', [0,-65,0],'#e2bd80');
+  dimension([bx+(M.cab.depth-450)/2,by+120,top+lift+123], [bx+(M.cab.depth-450)/2,by+1250,top+lift+123],'1130 mm · lunghezza kit H-7',[-80,0,0],'#e2bd80');
   text3([230,cabEnd+35,top+lift+180],'ESPLOSO +110 mm SOLO GRAFICO',C.accent,11,'DIM');
   text3([388,by+M.cab.width/2,top+liph+15],'FRONTE APERTO →',C.accent,11,'DIM');
  }
@@ -596,9 +596,9 @@ function roomScene(){
   dimension([45,winEnd,winSill],[45,winEnd,winTop],'1600 mm',[0,115,0],'#8ed6ef');
   dimension([0,winEnd,0],[0,roomD,0],'500 mm · angolo opposto',[-120,0,0],'#8ed6ef');
  }
- // Mobile bianco: L1370, H450 + U90 dichiarati; profondità 320 mm stimata.
+ // Mobile bianco: L1370 × P355, H450 + U90 mm misurati; U spessore da rilevare.
  const cabX=225,cabY=1720;
- pushBox(cabX,cabY,0,M.cab.depth,M.cab.width,M.cab.height,'#d8ddd8','WHITECAB','Mobile bianco L1370 H450 + spalletta H90 mm misurati · P320 mm ipotizzata',.94);
+ pushBox(cabX,cabY,0,M.cab.depth,M.cab.width,M.cab.height,'#d8ddd8','WHITECAB','Mobile bianco L1370 P355 H450 + spalletta H90 mm misurati',.94);
  pushBox(cabX+5,cabY+10,62,310,480,320,'#dfe4de','WHITECAB','Vano aperto sinistro',.50);
  pushBox(cabX+5,cabY+1010,62,310,350,320,'#dfe4de','WHITECAB','Vano aperto destro',.50);
  for(const y of [2220,2540,2860])pushBox(cabX+13,y,18,292,180,148,'#f1f3ef','WHITECAB','Cassetto mobile bianco',.91);
@@ -608,10 +608,11 @@ function roomScene(){
  pushBox(cabX,cabY+M.cab.width-lipW,M.cab.height,M.cab.depth,lipW,lipH,'#a7c4d5','LIP','Spalletta laterale destra',1);
  if(state.dims)text3([550,2405,550],'FRONTE APERTO',C.accent,10,'DIM');
  cabinetKit(cabX,cabY);
- // Centrata sulla piastra: (1370-1130)/2=120 mm per testata del mobile; 51 mm piastra oltre torre.
- embedTowerAt(162,cabY+(M.cab.width-1130)/2+51,M.cab.height+105+18,'cabinet');
+ // Piastra centrata nel mobile in profondità: (450-355)/2=47,5 mm di sbalzo per lato.
+ const plateStartX=cabX+(M.cab.depth-450)/2;
+ embedTowerAt(plateStartX+2,cabY+(M.cab.width-1130)/2+51,M.cab.height+105+18,'cabinet');
  // Fascia dietro I/O: fino a 138 mm liberi tra piastra e muro interno; accesso da testate.
- if(state.clearance){const p0=cabY+(M.cab.width-1130)/2,z0=M.cab.height+105+18;wire([[24,p0,z0],[160,p0,z0],[160,p0+1130,z0],[24,p0+1130,z0],[24,p0,z0]],'#80d4e8',1.4,'CLEAR',[6,4]);}
+ if(state.clearance){const p0=cabY+(M.cab.width-1130)/2,z0=M.cab.height+105+18;wire([[24,p0,z0],[plateStartX,p0,z0],[plateStartX,p0+1130,z0],[24,p0+1130,z0],[24,p0,z0]],'#80d4e8',1.4,'CLEAR',[6,4]);}
  // UPS commerciale fuori dal mobile: posto sul pavimento vicino alle prese LAN/230V della parete destra.
  // Ruotato di 90° in pianta: 410 mm lungo il muro, 99 mm verso la stanza, sempre verticale.
  if(state.showUPS){pushBox(1240,140,0,410,99,280,C.ups,'UPS','UPS PowerWalker VI 1500 CSW IEC · 410 lungo parete × 99 P × 280 H',1);
@@ -724,11 +725,11 @@ function roomScene(){
  rotBox(hx,hy,1178,355,125,94,chairAngle,'#243543','CHAIR','Poggiatesta integrato imbottito',.99);
  // NESSUN secondo PC tower a pavimento: e' tutta nella H-7 sul mobile bianco.
  if(state.dims){
-  dimension([cabX,cabY,0],[cabX+M.cab.depth,cabY,0],'320 mm · profondità STIMATA',[0,-84,0],'#81d6d8');
+  dimension([cabX,cabY,0],[cabX+M.cab.depth,cabY,0],'355 mm · profondità MISURATA',[0,-84,0],'#81d6d8');
   dimension([cabX,cabY,0],[cabX,cabY+M.cab.width,0],'1370 mm · mobile MISURATO',[-100,0,0],'#81d6d8');
-  dimension([160,1840,573],[610,1840,573],'450 mm · piastra',[0,-85,0],'#e7c38a');
-  dimension([160,1840,573],[160,2970,573],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
-  dimension([160,1840,573],[160,1840,907],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
+  dimension([plateStartX,1840,573],[plateStartX+450,1840,573],'450 mm · piastra',[0,-85,0],'#e7c38a');
+  dimension([plateStartX,1840,573],[plateStartX,2970,573],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
+  dimension([plateStartX,1840,573],[plateStartX,1840,907],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
   if(state.scene!=='cabinet'){
    dimension([0,0,0],[roomW,0,0],'5000 mm · stanza circa',[0,-118,0],'#a8d6ee');
    dimension([0,0,0],[0,roomD,0],'5000 mm · stanza circa',[-118,0,0],'#a8d6ee');
@@ -942,7 +943,7 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='ACFLEX'){t='Bretella AC di servizio';d='Tracciato schematico della linea dal muro all’UPS e dall’UPS alle utenze selezionate. I cavi non devono passare sotto ruote o spigoli: verificare lunghezza, spine IEC e connettori prima del montaggio.';tt=['commerciale certificato','niente attraversamenti a pavimento']}
  else if(id==='NETPATCH'){t='Patch Ethernet / bretella di servizio';d='Cavo LAN separato dalla rete elettrica, con riccio di servizio e scollegamento prima di sollevare le cartucce. I percorsi nel browser rappresentano la destinazione, non una posa esecutiva.';tt=['CAT6','scollegare per estrazione']}
   else if(id==='RACKMODEM'){t='Modem nel multilivello';d='Router appoggiato su ripiano arieggiato insieme alla stampante e a tutti i satelliti audio. Alimentazione e connessioni devono rimanere accessibili e separate dal cablaggio IEC dell’UPS.';tt=['nel mobile multilivello','accesso ai cavi']}
-  else if(id==='WHITECAB'){t='Mobile bianco · base H-7';d='Mobile L1370 H450 + spalletta alta 90 mm comunicati il 23/11/2026; profondità 320 e spessore U 18 mm non misurati. Piastra centrata lunga 1130 mm: 120 mm liberi alle testate, sbalzo teorico di 65 mm per lato su profondità ipotetica 320 mm. Mobile distanziato dal muro per lasciare 136 mm nominali dietro la piastra. Portata e struttura reale non rilevate; fissaggio e prova prima di caricare.';tt=['L1370 H450 + U90 misurati','120 mm per testata','retro libero ~136 mm','portata ignota']}
+  else if(id==='WHITECAB'){t='Mobile bianco · base H-7';d='Mobile L1370 P355 H450 + spalletta alta 90 mm comunicati il 23/11/2026; spessore U 18 mm resta ipotetico. Piastra centrata lunga 1130 mm: 120 mm liberi alle testate, sbalzo teorico di 47,5 mm per lato rispetto alla profondità misurata 355 mm. Mobile distanziato dal muro per lasciare 136 mm nominali dietro la piastra. Portata e struttura reale non rilevate; fissaggio e prova prima di caricare.';tt=['L1370 H450 + U90 misurati','120 mm per testata','retro libero ~136 mm','portata ignota']}
   else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
   else if(id==='PRINTER'){t='Brother HL-1110 nel multilivello';d='Ingombro nominale 340 × 238 × 189 mm. Si trova sul ripiano inferiore del mobile multilivello, non sul mobile bianco né sulla cassettiera. Lasciare libera la corsa della carta e l’apertura delle coperture.';tt=['340 × 238 × 189 mm','nel mobile multilivello']}
   else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
