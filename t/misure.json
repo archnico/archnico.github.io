@@ -177,6 +177,14 @@
     "router": "multi_level_cabinet",
     "storage_das": "separate_drawer_cabinet"
   },
+  "round6_2026_11_23": {
+    "focus": "refine technical details, semantic picking, xray visibility, model tests, engineering metadata",
+    "geometry_changed": false,
+    "new_solids": 0,
+    "tests_added": ["t/tests/test_round6_model.py"],
+    "ux": ["part search filter", "xray keyboard shortcut X", "engineering metadata in inspector", "reduced motion"],
+    "status": "concept, non esecutivo"
+  },
   "standalone_floor_variant_2026_11_23": {
     "status": "interactive visualization CONCEPT, not a built/tested floor support",
     "relation": "same H-7 FB-1 seven modules as cabinet, lowered in view to meet separate floor support; six HAUGA risers omitted",

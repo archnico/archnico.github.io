@@ -28,9 +28,30 @@ Il prototipo grafico della base comprende **due longheroni metallici bassi**, **
 
 **Sicurezza:** questa rappresentazione non dimostra che la Torre sia antiribaltamento né che i giunti sopportino il peso. Mancano ancora masse pesate, posizione del baricentro, attrito sul pavimento, carichi dinamici e definizione di una ritenuta indipendente dal mobile. La variante autonoma **non è ancora una soluzione costruttiva autorizzata**.
 
-## Blundercheck dei sostegni e intersezioni (23 novembre)
+## Blundercheck dei sostegni e intersezioni (23 novembre, round 1 + round 2 notturno)
 
-La [verifica ingegneristica dei volumi FB-1](docs/BLUNDERcheck_FB1_COLLISIONI_2026-11-23.md) ha trovato un **PSU fittizio che attraversava tutte e sette le schede madri**, un **SSD che intersecava un fianco**, e una **canalina che compenetrava il telaio**. Le correzioni sono applicate al modello; gli alimentatori sono ora **intenzionalmente non collocati** invece che rappresentati falsamente compatibili. Il controllo geometrico automatico dei 271 box verifica la sola estrazione verticale ideale di 155 mm, ma **non approva il CAD per stampare**. La vera n1 ASUS H81M-E ha dimensioni diverse dal PCB illustrativo; sostegni/PSU/pesi/ventole restano da dimensionare.
+La [verifica ingegneristica dei volumi FB-1](docs/BLUNDERcheck_FB1_COLLISIONI_2026-11-23.md) ha trovato un **PSU fittizio che attraversava tutte e sette le schede madri**, un **SSD che intersecava un fianco**, una **canalina che compenetrava il telaio** e, nel round 1, **intersezioni tra supporti fissi e telaio di base**. Le correzioni sono applicate al modello; gli alimentatori sono ora **intenzionalmente non collocati** invece che rappresentati falsamente compatibili.
+
+I test automatici in `t/tests/blundercheck_fb1.py` (tower, modulo per ogni vano, standalone, rear, thermal), `t/tests/test_fb1_guides.py`, `t/tests/test_geometry.py` e il nuovo `t/tests/test_loadpath.py` controllano la geometria tramite Chromium/SAT e controlli statici: nessuna intersezione rigida tra schede, SSD, supporti fissi e sweep verticale 0–155 mm nelle scene principali. Rimangono aperti PSU, cavi, ventole reali, massa e la validazione strutturale della base autonoma a terra, documentati nell'[elenco azionabile](docs/FB1_MISURE_AZIONABILI_2026-11-23.md) e nel [resoconto round 2](docs/BLUNDERcheck_FB1_ROUND2_2026-11-23.md). Il render **non approva il CAD per stampare**.
+
+### Round 2 — riconciliazione carico e geometria
+
+In questa sessione è stato eseguito un secondo passo sul ramo `night/torre-geometry-20261123`:
+
+- I montanti laterali fissi (`FBGUIDE`) ora partono dal telaio base a `z=107 mm` invece di galleggiare sopra di esso; il percorso di carico è continuo fino alla traversa sotto ogni vano.
+- Il telaio base è diventato una **scala aperta**: due longheroni longitudinali, due testate e sette traverse di ripartizione centrate su ogni vano, così pattini inferiori e montanti laterali scaricano sulla stessa struttura.
+- I sei rialzi HAUGA sono allineati ai longheroni longitudinali (yy=14 e D-32) per un trasferimento di carico diretto.
+- Le icone ventola sono state riconciliate con il vincolo **nessun HDD in H-7** (lo storage è nel DAS H-4 separato) e con l'ingombro reale: una ARCTIC P14 140 mm non entra in una cartuccia larga 92 mm.
+- La base autonoma a terra è stata abbassata per evitare intersezioni solide con il telaio abbassato; resta un **concept non validato strutturalmente**.
+- Aggiornati test (`blundercheck_fb1.py`, `test_fb1_guides.py`) e aggiunto `tests/test_loadpath.py` per i controlli statici del percorso di carico.
+
+Vedi i dettagli nei documenti linkati; lo stato rimane **NO-GO alla stampa** fino a chiusura dei gates G0–G3.
+
+### Round 3 — annotazioni percorso di carico
+In questa sessione sono state aggiunte annotazioni di percorso di carico nelle viste
+Torre e Modulo (modalità Quote), confermata l'assenza di PSU fittizi e di HDD in
+H-7, e documentati i blocchi aperti. I test SAT esistenti restano la verifica
+di riferimento.
 
 ## Esplorare l'anteprima
 
@@ -46,4 +67,4 @@ Per i dettagli: **[Canone FB-1 + DAS H-4 e verifiche](docs/H7_FB1_DAS_H4_CANONE_
 
 ### Guide laterali dei cassetti FB-1 (correzione 23/11)
 
-Il render FB-1 comprende ora **sette telai di sostegno laterale fissi**, distinti dalle guance colorate dei cassetti estraibili: due guide laterali longitudinali doppie per vano, quattro montanti di estremità, due pattini inferiori e traverse di scarico sul telaio aperto. Sono selezionabili tramite lo strato «Sostegni cassetti». Con 42° e passo 164 mm, il distacco perpendicolare tra assi è circa 121,9 mm; cartuccia larga 92 mm, guide fisse con luce nominale 4 mm per lato e almeno 5,9 mm tra guide contigue. **Le quote sono di studio**: restano da provare deformazioni, tenuta delle connessioni, estrazione e carico sulla HAUGA (max 20 kg), senza considerare il 3D una verifica strutturale.
+Il render FB-1 comprende ora **sette telai di sostegno laterale fissi**, distinti dalle guance colorate dei cassetti estraibili: quattro montanti angolari per vano collegati da binari frontali e posteriori bassi (nessuna barra continua attraversa la PCB), due longheroni inferiori con pattini anteriori/posteriori e battute terminali. Sono selezionabili tramite lo strato «Sostegni cassetti». Con 42° e passo 164 mm, il distacco perpendicolare tra assi è circa 121,9 mm; cartuccia larga 92 mm, guide fisse con luce nominale circa 5 mm per lato e circa 7,9 mm tra guide contigue. **Le quote sono di studio**: restano da provare deformazioni, tenuta delle connessioni, estrazione e carico sulla HAUGA (max 20 kg), senza considerare il 3D una verifica strutturale.
