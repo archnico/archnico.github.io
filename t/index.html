@@ -33,6 +33,7 @@
 </div></details>
 <details class="layer-group" data-layer-group="torre" open><summary><span class="stack-symbol">▥</span>Torre<span class="caret">⌄</span><button type="button" class="group-master mixed" data-group-toggle="torre" role="checkbox" aria-label="Torre: seleziona o deseleziona tutti gli strati" aria-checked="mixed" title="Mostra o nascondi tutti gli strati del capitolo Torre"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
 <div class="layer-row"><span>Telaio</span><button type="button" class="switch on" data-layer="telaio" role="switch" aria-label="Telaio" aria-checked="true" title="Mostra o nascondi: Telaio"></button></div>
+<div class="layer-row"><span>Base autonoma</span><button type="button" class="switch on" data-layer="baseTerra" role="switch" aria-label="Base metallica autonoma a terra" aria-checked="true"></button></div>
 <div class="layer-row"><span>Moduli</span><button type="button" class="switch on" data-layer="moduli" role="switch" aria-label="Moduli" aria-checked="true" title="Mostra o nascondi: Moduli"></button></div>
 <div class="layer-row"><span>Schede</span><button type="button" class="switch on" data-layer="schede" role="switch" aria-label="Schede" aria-checked="true" title="Mostra o nascondi: Schede"></button></div>
 <div class="layer-row"><span>SSD locali</span><button type="button" class="switch on" data-layer="dischi" role="switch" aria-label="SSD locali" aria-checked="true" title="Mostra o nascondi: Dischi"></button></div>
@@ -60,6 +61,7 @@
       <button class="button scene-btn" data-scene="room">Stanza</button>
       <button class="button scene-btn" data-scene="workstation">Bracci muro</button>
       <button class="button scene-btn" data-scene="tower">Torre</button>
+      <button class="button scene-btn" data-scene="standalone">Autonoma · a terra</button>
       <button class="button scene-btn" data-scene="module">Modulo</button>
       <button class="button scene-btn" data-scene="rear">Retro</button>
       <button class="button scene-btn" data-scene="light">Spina di pesce</button><button class="button scene-btn" data-scene="cabinet">Torre su HAUGA</button><button class="button scene-btn" data-scene="storage">Torrino H-4</button><button class="button scene-btn" data-scene="desk">Scrivania</button><button class="button scene-btn" data-scene="haugadetail">Mobile HAUGA</button>
@@ -83,7 +85,7 @@
       <div class="layer-row"><span>Adattatore esploso</span><button class="switch" id="module-joint" aria-label="Esplodi incastro" aria-pressed="false"></button></div>
     </div>
     <div class="scene-options" id="tower-options" hidden>
-      <div class="layer-row"><span>Pattini autonomi</span><button class="switch" id="standpads" aria-label="Quattro pattini opzionali" aria-pressed="false"></button></div>
+      <div class="layer-row"><span>Ali stabilizzatrici · studio</span><button class="switch" id="standpads" aria-label="Mostra o nascondi le quattro ali stabilizzatrici opzionali" aria-pressed="false"></button></div>
     </div>
     <details><summary>Smontaggio</summary><input id="explode" type="range" min="0" max="100" value="0"><span id="explabel">0%</span>
       <div class="btn-grid"><button class="button wide" id="unlock">Sblocca fermi</button><button class="button wide" id="extract" disabled>Estrai modulo</button><button class="button wide" id="reset">Rimonta</button></div>
@@ -117,7 +119,7 @@
   <button class="quick" data-preset="iso">◇ Isometrica</button>
   <button class="quick" data-preset="workstation">⌁ Bracci muro</button>
   <button class="quick" data-preset="light">▣ Spina di pesce</button><button class="quick" data-preset="cabinet">HAUGA + H-7</button><button class="quick" data-preset="storage">DAS H-4</button><button class="quick" data-preset="desk">Scrivania</button><button class="quick" data-preset="haugadetail">▤ HAUGA</button>
-  <button class="quick" data-preset="autonoma">▥ Autonoma</button>
+  <button class="quick" data-preset="autonoma" title="Torre senza HAUGA, con base metallica a terra">▥ Autonoma a terra</button>
   <button class="quick" data-preset="rear">↶ Retro</button>
   <button class="quick" data-preset="room">⌂ Stanza</button>
  </div>

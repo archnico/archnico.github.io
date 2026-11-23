@@ -176,5 +176,24 @@
     "all_speakers_and_subwoofer": "multi_level_cabinet",
     "router": "multi_level_cabinet",
     "storage_das": "separate_drawer_cabinet"
+  },
+  "standalone_floor_variant_2026_11_23": {
+    "status": "interactive visualization CONCEPT, not a built/tested floor support",
+    "relation": "same H-7 FB-1 seven modules as cabinet, lowered in view to meet separate floor support; six HAUGA risers omitted",
+    "frame_type": "open metal skids / crossbars, no birch or plywood plate",
+    "skids": 2,
+    "crossbars": 3,
+    "floor_contact_pads": 6,
+    "optional_stabilizing_wings": 4,
+    "approx_floor_base_depth_mm": 418,
+    "approx_floor_depth_with_wings_mm": 616,
+    "body_length_mm_study": 1310,
+    "warnings": [
+      "baricenter and floor friction not measured",
+      "anti-tip force and independent restraint unverified",
+      "joint rigidity and service access not certified",
+      "the 42 degree module size is illustrative, not manufacturing CAD"
+    ],
+    "preview_url": "https://archnico.github.io/t/#autonoma"
   }
 }

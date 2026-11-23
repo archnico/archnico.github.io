@@ -56,3 +56,9 @@ https://icybox.de/en/products/ib-3640su3
 https://www.terra-master.com/it/products/d4-320
 
 **Espansione:** prima hub a 4 porte, poi eventualmente un altro hub a 4 porte su host USB separato; se in futuro servono più di quattro HDD SATA, sarà più economico valutare un secondo DAS rispetto a pagare oggi un 8 bay inutilizzato.
+
+## Vista autonoma a terra (render del 23/11/2026)
+
+La preview distingue **Torre appoggiata su HAUGA** (sei rialzi alti circa 109 mm sul piano interno, nel rispetto del limite 20 kg e dell'ancoraggio IKEA) da **Torre autonoma** (gli stessi sette moduli FB-1 su una base autonoma metallica più bassa, che non tocca il mobile). L'autonoma NON replica i rialzi HAUGA. Disegna due correnti metallici bassi, tre traverse, sei punti di appoggio e quattro ali rimovibili per aumentare la profondità della base. Fissa l'ingombro soltanto come **studio**: supporto base circa 418 mm di profondità; con ali aperte circa 616 mm. La sagoma dei moduli di riferimento resta 1310 × 318 mm. Base a terra illustrativa non verificata, nessuna verifica di massa, ribaltamento, fissaggio o flessione. Piano semitrasparente solo come riferimento grafico: non è betulla né altra piastra portante.
+
+[Apri la scena autonoma](../index.html#autonoma).
