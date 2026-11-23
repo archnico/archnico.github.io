@@ -28,6 +28,10 @@ Il prototipo grafico della base comprende **due longheroni metallici bassi**, **
 
 **Sicurezza:** questa rappresentazione non dimostra che la Torre sia antiribaltamento né che i giunti sopportino il peso. Mancano ancora masse pesate, posizione del baricentro, attrito sul pavimento, carichi dinamici e definizione di una ritenuta indipendente dal mobile. La variante autonoma **non è ancora una soluzione costruttiva autorizzata**.
 
+## Blundercheck dei sostegni e intersezioni (23 novembre)
+
+La [verifica ingegneristica dei volumi FB-1](docs/BLUNDERcheck_FB1_COLLISIONI_2026-11-23.md) ha trovato un **PSU fittizio che attraversava tutte e sette le schede madri**, un **SSD che intersecava un fianco**, e una **canalina che compenetrava il telaio**. Le correzioni sono applicate al modello; gli alimentatori sono ora **intenzionalmente non collocati** invece che rappresentati falsamente compatibili. Il controllo geometrico automatico dei 271 box verifica la sola estrazione verticale ideale di 155 mm, ma **non approva il CAD per stampare**. La vera n1 ASUS H81M-E ha dimensioni diverse dal PCB illustrativo; sostegni/PSU/pesi/ventole restano da dimensionare.
+
 ## Esplorare l'anteprima
 
 **[Apri il render 3D interattivo](index.html)**. A sinistra trovi capitoli a strati, ciascuno con **Tutti** per mostrare o nascondere il gruppo. Puoi selezionare un pezzo, attivare la semitrasparenza, usare i comandi di smontaggio e scegliere prospettive dedicate per stanza, Torre, HAUGA, DAS H-4, scrivania e bracci dei monitor.

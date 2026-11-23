@@ -241,12 +241,18 @@ function fishboneTower(onlyIndex=null){
   fbBox(i,0,0,127,92,284,10,C.frame2,id,'Cartuccia uniforme 92 × 284 mm ruotata 42° in pianta',1);
   for(const u of [-42,42])fbBox(i,u,0,137,8,282,33,nodeColors[i],id,'Fianco e guida rimovibile della cartuccia',1);
   for(const v of [-137,137])fbBox(i,0,v,137,92,8,16,nodeColors[i],id,'Traversa e fermo cartuccia',1);
-  fbBox(i,-14,0,161,5,208,180,C.pcb,pcb,'Scheda madre illustrativa: ingombri e fori da verificare',.98);
-  for(const v of [-91,91])fbBox(i,-23,v,162,9,10,176,C.corner,ad,'Adattatore dedicato scheda madre PETG: geometria da rilevare',1);
-  fbBox(i,4,-17,236,20,59,55,C.metal,pcb,'CPU e dissipatore rappresentativi',1);
-  for(const v of [-75,-58])fbBox(i,-6,v,242,9,8,80,C.pcb2,pcb,'RAM illustrativa',1);
-  fbBox(i,19,-105,150,48,67,9,C.disk,'SSD','SSD locale di sistema del nodo',1);
-  fbBox(i,12,105,151,62,55,47,C.psu,'POWER','Alimentatore singolo: ingombro e tipo da verificare',1);
+  fbBox(i,-14,0,161,5,208,180,C.pcb,pcb,'Scheda madre illustrativa: 208×180 mm, NON le quote reali di n1',.98);
+  // PETG support bars sit behind the PCB. 10.5 mm nominal spacer gap to PCB rear face.
+  for(const v of [-91,91])fbBox(i,-31.5,v,162,9,10,176,C.corner,ad,'Barra adattatore: 10,5 mm nominali dal retro PCB; fori REALI da rilevare',1);
+  for(const v of [-91,91])for(const z of [194,279])
+   fbBox(i,-21.75,v,z,10.5,6,6,C.metal,ad,'Distanziale M3 concettuale: interasse e posizione NON verificati',1);
+  fbBox(i,-1.5,-17,236,20,59,55,C.metal,pcb,'CPU e dissipatore rappresentativi: contatto con faccia PCB, NON ingombro reale',1);
+  for(const v of [-75,-58])fbBox(i,-7,v,242,9,8,80,C.pcb2,pcb,'RAM illustrativa: contatto geometrico con la motherboard',1);
+  // SSD: separate from right sidewall and front crossbar; bracket is still undefined.
+  fbBox(i,12,-92,139,40,60,9,C.disk,'SSD','SSD locale illustrativo: senza urto con fianco/traversa, staffa da progettare',1);
+  // Previous 62×55×47 mm power box literally penetrated EVERY PCB. No fictitious PSU
+  // is shown until each donor's electrical architecture and physical supply is surveyed.
+  if(state.dims)text3(fbPoint(i,13,108,205),'ALIMENTAZIONE: NON DIMENSIONATA',C.cable,9,'DIM');
   fbBox(i,0,142,171,68,8,17,C.plug,'IO','Porte rete, USB e alimentazione lato posteriore',1);
   fbBox(i,0,-145,163,56,8,16,nodeColors[i],id,'Maniglia frontale accessibile in diagonale',1);
   if(state.wiring)fbWire(i,[[0,134,188],[0,155,188],[0,158,131]],C.plug,'POWER',1.6);
@@ -257,7 +263,9 @@ function fishboneTower(onlyIndex=null){
    fbBox(i,0,-150,223,52,3,39,'#163b45',f,'Griglia frontale',.91);
   }
  }
- if(state.wiring&&onlyIndex===null)pushBox(36,D-24,115,L-72,8,10,C.cable,'POWER','Canalina dati ed elettricità dei singoli nodi da separare e dimensionare',.90);
+ // Legacy physical cable gutter occupied the same solid volume as rear frame;
+ // until a real service corridor is proven, show only a NON-SOLID routing sketch.
+ if(state.wiring&&onlyIndex===null)wire([[36,D-6,141],[L-36,D-6,141]],C.cable,2,'POWER',[7,5],.76);
  if(state.dims&&onlyIndex===null){
   dimension([0,0,109],[L,0,109],'1310 mm · LUNGHEZZA STUDIO',[0,-76,0]);
   dimension([L,0,109],[L,D,109],'318 mm · PROFONDITÀ',[70,0,0]);
@@ -1293,8 +1301,8 @@ function clearSelection(){state.selected=null;state.selectedName='';$('inspector
 function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  const chosenModule=/^(?:P|A|PCB)([1-7])$/.exec(id);if(chosenModule)state.focusIndex=Number(chosenModule[1])-1;
  const title=$('part-title'),desc=$('part-desc'),tags=$('part-tags');let t='Elemento',d='',tt=[];
- if(/^P\d$/.test(id)){t=`Modulo PC · ${id}`;d='Telaio mobile uguale per tutte le campate (passo 96 mm); X stampata completa e dietro la PCB, collegata a quattro nodi perimetrali. Sei distanziatori M3 metallici tengono la scheda lontana dalla stampa: i fori raffigurati sono indicativi, vanno rilevati sulla scheda reale. Il peso verticale arriva alle due sedi inferiori collegate alle traverse di base, i carichi laterali alle guide alte su fronte e retro; NON alle X basse dello schienale. Prima dell’estrazione scollegare alimentazione e I/O e togliere entrambi i fermi.';tt=['6 appoggi M3 metal · schema','X stampata completa','PCB distaccata dal polimero','foratura donor-specific']}
- else if(/^A\d$/.test(id)){t=`Adattatore stampato · ${id}`;d='La motherboard non appoggia direttamente sulla stampa. Sei distanziali metallici M3 (10 mm illustrativi) attraversano l’intercapedine tra piazzole dell’adattatore e PCB. L’adattatore ha una X a due diagonali complete, nodo centrale pieno e quattro puntoni verso traverse superiore e inferiore della cartuccia. Le coordinate dei sei fori restano da confrontare con la motherboard donatrice, senza forzarne la scheda.';tt=['6 distanziali M3','diagonali continue','4 puntoni verso carrello','foratura da misurare']}
+ if(/^P\d$/.test(id)){t='Modulo PC · '+id;d='FB-1: sette moduli inclinati di 42° in pianta, passo 164 mm, cartuccia illustrativa 92 × 284 mm. Il cassetto si appoggia su due pattini inferiori fissi; due coppie di barre laterali fisse limitano l’oscillazione. Scheda illustrativa 208 × 180 mm (NON la reale n1) e PSU non collocato. Nessuna ritenuta né estrazione reale è convalidata.';tt=['passo 164 mm · studio','guide FISSE separate','PSU non dimensionato','prototipo necessario']}
+ else if(/^A\d$/.test(id)){t='Adattatore · '+id;d='FB-1: due barre posteriori e QUATTRO distanziali geometrici di prova di 10,5 mm nominali, senza foratura reale. Non è la vecchia X dello schema R-1 e non esiste ancora una staffa stampabile approvata. Occorre rilevare i fori n1, verificare la distanza sotto la PCB, il materiale isolante e tutte le connessioni strutturali.';tt=['4 distanziali visivi','10,5 mm indicativi','fori n1 da misurare','NO stampa esecutiva']}
  else if(id==='DOCK'){t='Sede di appoggio reale del cassetto';d='Ogni linguetta mobile entra dall’alto nel ricevitore fisso a U: il fondo è a z=52 mm e la spalla sulle guance è a z=89 mm. La U si collega tramite traversini inferiori ai due longheroni fissi e alle traverse della campata, poi al telaio di base; NON alle X posteriori. Fermo anti-sollevamento separato e rimovibile, ancora da dimensionare.';tt=['2 sedi inferiori','costole di rinforzo','guida superiore distinta','portata da testare']}
  else if(id==='LOCK'){t='Due fermi di ritenuta indipendenti';d='Una spina anteriore e una posteriore passano 4 mm sopra le spalle delle sedi, impedendo il sollevamento oltre quel gioco. Si estraggono a mano prima di sollevare il modulo, dopo avere scollegato tutti i cavi. Staffe, fori e carichi sono da progettare e testare: la demo li tratta come entrambi sbloccati con un comando.';tt=['anteriore + posteriore','4 mm gioco ipotetico','prima scollegare i cavi','prototipo da testare']}
  else if(id==='GUIDE'){t='Guide alte anti-oscillazione';d='Due coppie di guance fisse, davanti e dietro, abbracciano con gioco il montante verticale di 8 mm. La luce illustrativa è 12 mm: 2 mm per lato, valore da verificare in prototipo secondo stampante, materiale e temperatura. Gli sforzi laterali vanno alle traverse esterne (davanti y=56 mm; dietro y=332 mm), poi ai montanti e alla base; la corsia superiore del cassetto resta aperta per l’estrazione verticale.';tt=['2 stazioni per vano','luce 12 / guida 8 mm','apertura sopra libera','rigidezza da provare']}
@@ -1308,7 +1316,7 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='UPSLOC'){t='Sede di posizionamento non portante';d='Quattro semplici riscontri stampati delimitano la posizione dell’UPS. Nessuna mensola o pavimento stampato sostiene i suoi 13,1 kg: tutto il peso resta sul piano. Prima di spostarlo si scollegano i cavi.';tt=['nessun peso sulla stampa','indipendente dal telaio','niente cassetto']}
  else if(id==='UPSCLEAR'){t='Spazi aperti per ventilazione e cavi';d='I 66 mm laterali e la zona fino a y=535 mm dietro le prese sono riserve di studio, NON clearance approvate dal manuale PowerWalker. Lasciare libero il fronte per LCD e manutenzione batteria. Nessuna copertura superiore e nessun cavo a 230 V esposto.';tt=['lati aperti','retro accessibile','verifica manuale','no enclosure']}
  else if(id==='UPSCABLE'){t='Percorsi cavi solo schematici';d='Linee tratteggiate illustrative per IEC rete e USB HID, non un cablaggio esecutivo. Niente collegamenti fissi o distribuzione rete autocostruita. Le quattro prese con backup vanno assegnate a nodi prioritari; verifica potenza e spunti necessari.';tt=['IEC originali','USB HID','no 230V stampati']}
- else if(id==='POWER'){t='Alimentazione e canalina posteriore';d='Alimentatori commerciali indipendenti, con collegamenti rimovibili e canalina elettrica protetta. La rappresentazione non è uno schema di cablaggio AC esecutivo.';tt=['protezione elettrica','nessun backplane AC fai-da-te']}
+ else if(id==='POWER'){t='Alimentazione: BLOCCO DI PROGETTO';d='Il vecchio alimentatore segnaposto intersecava ogni motherboard ed è stato eliminato. Ora è mostrato soltanto un tracciato tratteggiato di servizio, NON una canalina fisica. Per ciascun nodo servono alimentatore e connettori reali, correnti/spunti e posizione verificata; non costruire una distribuzione 230 V artigianale.';tt=['PSU NON collocati','cavi non posati','rilievo n1 obbligatorio']}
 
   else if(id==='WALL'||id==='WALLCUT'){t='Involucro stanza';d='Pianta circa 5000 × 5000 mm; unico smusso all’angolo dei PC (350 mm ipotizzati), altri tre angoli a 90°. Altezza soffitto 3000 mm dichiarata; vista aperta per non occultare gli arredi.';tt=['5 × 5 m','unico smusso','altezza da rilevare']}
   else if(id==='WINDOW'){t='Finestra · parete mobile bianco';d='Apertura dichiarata 2100 × 1600 mm, con bordo a circa 500 mm dall’angolo opposto al PC. Soffitto a 3000 mm; davanzale a 1000 mm e divisione delle ante sono ipotesi grafiche.';tt=['210 × 160 cm','50 cm dall’angolo','davanzale da rilevare']}
@@ -1364,10 +1372,10 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='DESKSATLEFT'){t='Satellite 3 · multilivello';d='Satellite piccolo precedentemente sulla scrivania, ora sul ripiano superiore.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
   else if(id==='DESKSATRIGHT'){t='Satellite 4 · multilivello';d='Altro satellite piccolo, ora sul ripiano superiore; il piano della scrivania resta libero.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
  else if(/^PCB[1-7]$/.test(id)){t='Scheda madre '+id;d='Scheda e componenti illustrativi, separabili dal modulo con lo strato Schede. Foratura reale e dissipatori da rilevare prima di produrre adattatori.';tt=['scheda madre','dati illustrativi'];}
- else if(/^F[1-6]$/.test(id)){t=partDescriptions[id];d='Ventola commerciale candidata Arctic P14 PWM PST da 140 × 140 × 27 mm. 123,76 m³/h a bocca libera, 200–1700 rpm, 0,12 A a 12 V, temperatura ambiente operativa 0–40 °C. Griglie su entrambe le facce; ingresso dal fronte. Nessuna portata utile garantita: misurare con hardware e cablaggi reali.';tt=['140 mm','PWM 12 V','aspirazione frontale','non acquistata']}
+ else if(/^F[1-6]$/.test(id)){t=partDescriptions[id];d='Nel render FB-1 queste sono quattro icone di ventole da circa 67 × 67 mm, NON le dimensioni delle ARCTIC P14 da 140 mm valutate nello studio R-5. Posizione, ingombro, fissaggi, cablaggio e portata di ventole reali sono APERTI. Una P14 da 140 mm non entra singolarmente in una cartuccia larga 92 mm.';tt=['segnaposto 67 mm','P14 140 mm NON modellata','test termico da eseguire']}
  else if(id==='FANMOUNT'){t='Supporti ventole fissi e rimovibili';d='Due staffe per ventola sulla trave anteriore. Le ventole sono davanti al volume estraibile, non sopra le maniglie; rimozione frontale per servizio dei fermi o degli HDD. Attacchi, viti, materiale e ritenuta da collaudare.';tt=['y=16–49 mm','12 staffe','nessun vano aggiunto']}
  else if(id==='FANPOWER'){t='Alimentazione e controllo indipendenti';d='Sei ventole da 0,12 A nominali ciascuna: 0,72 A e 8,64 W nominali totali a 12 V. Alimentatore commerciale 12 V e controller PWM multi-canale compatibili, margine di avvio e protezione da verificare. Monitoraggio tachimetrico per ventola e profilo fail-safe; niente collegamenti improvvisati a più PC.';tt=['12 V DC','0,72 A nominali','6 tachimetri']}
- else if(id==='FRAME'){t='Telaio portante stampabile';d='Travi longitudinali, traverse segmentate, giunti, supporti intermedi e piedini antivibranti. L’incastro geometrico deve essere accompagnato da adeguata ritenuta meccanica e verifica della deformazione.';tt=['segmentato','stampabile','resistenza da testare']}
+ else if(id==='FRAME'){t='Telaio portante, metallo candidato';d='Schema aperto con due longheroni longitudinali, tre traversini e sei rialzi sulla HAUGA. I profili metallici 2020 sono soltanto candidati; sezioni, giunti, stabilità, carichi concentrati e massa dei nuovi sostegni sono da calcolare. Non presumere travi stampate portanti.';tt=['profilati candidati','giunti da dimensionare','nessuna verifica carichi']}
  else {t='Torre H-7';d='Elemento del modello orientativo.';tt=[]}
  title.textContent=t;desc.textContent=d;$('part-specific').textContent=name ? 'Elemento preciso: '+name : 'Selezione del sottosistema';
  tags.replaceChildren(...tt.map(x=>{const b=document.createElement('span');b.className='tiny';b.textContent=x;return b}));
@@ -1399,13 +1407,13 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
   desk:['POSTAZIONE · LAPTOP E TELEFONO SU LEGGIO','Tastiera, mouse e sei USB-C a sinistra · due cavi collegati'],
   thermal:['VENTILAZIONE · 4 VENTOLE CANDIDATE','Schema da verificare sul prototipo · nessuna simulazione CFD'],
   standalone:['TORRE H-7 · AUTONOMA A TERRA','Stessi sette moduli FB-1 · base metallica bassa + pattini aggiuntivi · stabilità da collaudare'],
-  tower:['TORRE H-7 · FB-1 A SPINA DI PESCE','Sette moduli inclinati di 42° in pianta · 1310 × 318 mm · no betulla e HDD'],
+  tower:['TORRE H-7 · FB-1 A SPINA DI PESCE','Sette cartucce · collisioni modello controllate · PSU NON dimensionati · non esecutivo'],
   rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti sulle sedi inferiori'],
-  module:['CARTUCCIA FB-1 · DETTAGLIO MODULARE','Un modulo a 42° in pianta; adattatore e scheda da verificare'],
+  module:['CARTUCCIA FB-1 · DETTAGLIO MODULARE','Distanziali schematici · motherboard e alimentatore reali da misurare'],
   ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],
   room:['STANZA 5 × 5 × 3 m · H-7 E DAS SEPARATI','Torre sul mobile bianco · DAS sulla cassettiera · audio e router nel multilivello'],
   cabinet:['H-7 FB-1 · DETTAGLIO SUL MOBILE HAUGA','Sei appoggi metallici, senza viti nel mobile · massa e carico da verificare'],
-  light:['H-7 FB-1 · SENZA PIASTRA DI BETULLA','Base a profilati metallici aperta · niente HDD dentro · progetto da validare'],
+  light:['H-7 FB-1 · SENZA PIASTRA DI BETULLA','Guide e cassetti distinti · alimentazioni non collocate · verifica fisica obbligatoria'],
   haugadetail:['IKEA HAUGA · MOBILE REALE','2 vani / 2 cassetti / 4 pomelli · top max 20 kg · catalogo e rilievo'],
   lipdetail:['H-7 R-2 · CONTATTO ZERO COL MOBILE','Sezione: portale portante, U libera, quattro piedi a terra, Torre removibile'],
   workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']
