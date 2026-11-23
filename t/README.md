@@ -25,9 +25,17 @@ La stanza è circa 5 × 5 m, tre monitor su bracci a muro e finestra 210 × 160 
 
 ## R-4 · studio di massa senza betulla né HDD
 
-Dopo la separazione del DAS, abbiamo stimato una **nuova H-7 interamente su profilati metallici, senza alcuna base in betulla e senza dischi meccanici**. Il primo bilancio R-4 è **15,19 kg nominali** con 7 schede complete ipotetiche, 7 SSD, 1 alimentatore ATX sulla Torre, 9,5 metri di profilato 2020 leggero e 4 ventole candidate. È **solo uno studio**: quattro schede donatrici, numero finale di PSU, struttura realmente necessaria e raffreddamento non sono ancora verificati. Obiettivo progettuale 14–16 kg, **limite HAUGA inderogabile 20 kg**. La configurazione alternativa a spina di pesce non è ancora dimensionata.
+Dopo la separazione del DAS, abbiamo stimato una **nuova H-7 interamente su profilati metallici, senza alcuna base in betulla e senza dischi meccanici**. Il primo bilancio R-4, corretto per il peso reale delle ventole senza imballaggio, è **15,05 kg nominali** con 7 schede complete ipotetiche, 7 SSD, 1 alimentatore ATX sulla Torre, 9,5 metri di profilato 2020 leggero e 4 ventole candidate. È **solo uno studio**: quattro schede donatrici, numero finale di PSU, struttura realmente necessaria e raffreddamento non sono ancora verificati. Obiettivo progettuale 14–16 kg, **limite HAUGA inderogabile 20 kg**. La disposizione a pettine obliquo è ora calcolata come **R-5 sperimentale** (25° e passo preliminare 108 mm), ma non approvata costruttivamente.
 
 [**Leggi il bilancio completo R-4 e gli scenari di rischio**](docs/H7_R4_BUDGET_MASSA_2026-11-23.md).
+
+## R-5 · La nuova ipotesi principale: pettine obliquo
+
+La variante **R-5** ordina le sette cartucce verticali tutte inclinate nello stesso verso, come parcheggi a pettine. Primo candidato **25° con passo 108 mm**; con un involucro nominale delle cartucce da 80×251 mm il modello suggerisce **130 cm circa di larghezza**, ma il vecchio spazio laterale comprende ancora banchi HDD rimossi e deve essere ridisegnato. Se la cartuccia n1 richiederà 90–100 mm, cambieranno passo, larghezza e posizione dei servizi. Anche la profondità finale, l'accesso ai connettori, il cablaggio e il raffreddamento sono ancora da verificare.
+
+Il budget teorico **R-5** è **15,52 kg** con quattro ventole, un PSU ATX, sette SSD, 10,3 m di profilati leggeri e masse dei sette donatori ancora ipotetiche. Con sei ventole e due PSU arriverebbe a circa **17,21 kg**; le masse reali potrebbero essere più alte. L'estensione laterale può ridurre la flessione dei longheroni se ci sono **tre stazioni di appoggio per lato**, ma **non cambia la portata HAUGA di 20 kg**. Il controllo preliminare del ribaltamento frontale evidenzia un rischio concreto: saranno necessarie ritenute indipendenti dal mobile o un supporto a pavimento, dimensionati e verificati. Non si procede al montaggio senza questi controlli.
+
+[**R-5: studio ingegneristico, formule, massa e punti di arresto**](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md). **Il render resta storico**, in attesa di una geometria CAD validata.
 
 ## Il torrino dei dischi
 
@@ -37,16 +45,16 @@ La geometria dei banchi HDD mostrata nell'anteprima deriva dalle **revisioni sto
 
 ## Come vogliamo costruirla
 
-**Poca spesa, facilità di montaggio e manutenzione.** L'ipotesi R-3 combina pochi profilati di alluminio pretagliati, una base reticolare alleggerita in multistrato e pezzi **stampati in PETG da un servizio esterno** per gli adattatori e i particolari non strutturali. Non abbiamo una stampante 3D. Le parti portanti devono essere dimensionate e testate: **non basta che il render sembri solido**.
+**Poca spesa, facilità di montaggio e manutenzione.** L'ipotesi R-5 combina profilati di alluminio pretagliati in un reticolo senza betulla e pezzi **stampati in PETG da un servizio esterno** per gli adattatori e i particolari non strutturali. Non abbiamo una stampante 3D. Le parti portanti devono essere dimensionate e testate: **non basta che il render sembri solido**.
 
 Un eventuale UPS commerciale rimane **separato**, mai sul mobile HAUGA: non contribuisce ai 17,8 kg della stima. Non è una promessa di alimentare sette PC a batteria.
 
 ## A che punto siamo
 
-**Stiamo progettando, non montando l'installazione definitiva.** Esistono un modello esplorabile R-3 (con R-2 conservata per confronto), geometrie illustrative e verifiche digitali preliminari. Mancano ancora le misure complete delle schede donatrici, la nuova distinta senza HDD, le prove di rigidità e stabilità del supporto, la verifica del raffreddamento e il collaudo elettrico. Prima costruiremo e proveremo **un modulo**, poi estenderemo il sistema.
+**Stiamo progettando, non montando l'installazione definitiva.** Esistono un modello esplorabile R-3 (con R-2 conservata per confronto), geometrie illustrative e verifiche digitali preliminari. Mancano ancora le misure complete delle schede donatrici, la distinta definitiva senza HDD, le prove di rigidità e stabilità del supporto, la verifica del raffreddamento e il collaudo elettrico. Prima costruiremo e proveremo **un modulo**, poi estenderemo il sistema.
 
 Il render permette di spegnere o mostrare **pareti, mobilio, monitor, bracci, telaio, moduli, schede, dischi, ventole e cavi**: una specie di matrioska digitale per capire il progetto dall'esterno all'interno. **Semitrasparenza e isolamento del pezzo selezionato sono opzioni**, non aspetti obbligatori della vista.
 
-**[Apri l'anteprima interattiva (geometria storage storica)](index.html)** · **[Nuova architettura DAS H-4](docs/TORRINO_DAS_H4_2026-11-23.md)** · **[R-4: bilancio massa senza betulla](docs/H7_R4_BUDGET_MASSA_2026-11-23.md)** · **[R-3 storico](r3.html)** · [Portale R-2 alternativo](r2.html) · [Misure aggiornate](registro.html) · [Archivio storico R-1](schema-r1.html) · [Dettagli tecnici e storico](docs/README-tecnico-storico.md)
+**[Apri l'anteprima interattiva (geometria storage storica)](index.html)** · **[R-5: pettine obliquo calcolato](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md)** · **[Nuova architettura DAS H-4](docs/TORRINO_DAS_H4_2026-11-23.md)** · **[R-4: bilancio massa senza betulla](docs/H7_R4_BUDGET_MASSA_2026-11-23.md)** · **[R-3 storico](r3.html)** · [Portale R-2 alternativo](r2.html) · [Misure aggiornate](registro.html) · [Archivio storico R-1](schema-r1.html) · [Dettagli tecnici e storico](docs/README-tecnico-storico.md)
 
 *Nota: le quote della Torre e della piastra sono di studio, non file esecutivi per stampa o installazione. L'inventario hardware è progressivo: non tutti i sette PC sono già definiti.*
