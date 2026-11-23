@@ -121,7 +121,7 @@ function openPreset(preset){
 document.querySelectorAll('[data-preset]').forEach(el=>el.onclick=()=>openPreset(el.dataset.preset));
 
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={DAS8:'Torrino DAS 8 bay · 2 dischi in progetto',HUB8:'Hub alimentato 8 porte USB',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:"Ventola candidata 1",F2:"Ventola candidata 2",F3:"Ventola candidata 3",F4:"Ventola candidata 4",F5:"Ventola legacy 5",F6:"Ventola legacy 6",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={DAS8:'Torrino DAS 8 bay · 2 dischi in progetto',HUB8:'Hub alimentato 4 porte USB · espandibile',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:"Ventola candidata 1",F2:"Ventola candidata 2",F3:"Ventola candidata 3",F4:"Ventola candidata 4",F5:"Ventola legacy 5",F6:"Ventola legacy 6",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 function refreshPartPicker(){
  const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)&&isVisibleGroup(id)))];
  ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
@@ -844,7 +844,7 @@ function roomScene(){
  }
  pushBox(2600,95,0,400,260,540,'#6e452f','DARKDRAWER','Cassettiera autonoma a terra · lato lungo 400 mm addossato alla parete',.98);
  for(const z of [90,180,270,360,450])pushBox(2604,349,z,392,5,55,'#81563b','DARKDRAWER','Frontale cassetto indipendente',1);
-  // Torrino H-8: DAS commerciale a 8 bay e hub alimentato a 8 porte sul mobile CASSETTIERA.
+  // Torrino H-8: DAS commerciale a 8 bay e hub alimentato a 4 porte sul mobile CASSETTIERA; secondo hub solo futuro.
   // Due HDD sono mostrati nello scenario; l'8 TB oggi su n3 attende migrazione.
   pushBox(2665,124,540,185,218,316,'#293944','DAS8','DAS USB 8 bay con alimentazione e raffreddamento propri',1);
   pushBox(2672,340,552,171,6,296,'#638595','DAS8','Frontale vano dischi',1);
@@ -853,9 +853,9 @@ function roomScene(){
    pushBox(2680,346,z,155,4,26,k<2?'#668f94':'#344650','DAS8',k===0?'Bay 1 · HDD 8 TB da migrare':k===1?'Bay 2 · HDD 4 TB da montare':'Bay '+(k+1)+' libera',1);
    if(k<2)pushBox(2690,351,z+11,12,3,7,'#8be2ac','DAS8','Disco '+(k===0?'8 TB':'4 TB')+' nello scenario',1);
   }
-  pushBox(2659,130,860,192,82,56,'#365663','HUB8','Hub USB a 8 porte alimentato, separato dal DAS',1);
-  for(let k=0;k<8;k++)pushBox(2672+k*22,213,876,13,3,12,'#81b8cc','HUB8','Porta USB '+(k+1),1);
-  text3([2760,217,934],'DAS 8 BAY + HUB 8 PORTE',C.accent,11,'HUB8');
+  pushBox(2689,130,860,132,82,56,'#365663','HUB8','Hub USB 3.x a 4 porte con alimentazione esterna, separato dal DAS',1);
+  for(let k=0;k<4;k++)pushBox(2699+k*29,213,876,16,3,12,'#81b8cc','HUB8','Porta USB '+(k+1)+' di 4',1);
+  text3([2760,217,934],'DAS 8 BAY + HUB 4 PORTE',C.accent,11,'HUB8');
   text3([2760,217,857],'8 TB + 4 TB · 6 SLOT LIBERI',C.accent,10,'DAS8');
   if(state.wiring){
    wire([[2664,238,807],[2590,238,780],[2590,65,780],[350,65,780],[52,355,780],[52,3000,780],[235,3000,770]],C.plug,3,'DASCABLE',[3,3],.98);
@@ -1308,7 +1308,7 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
  if(mode==='tower'){state.clearance=false;$('clearance').classList.remove('on')}
  /* Scene changes do not overwrite visibility or overlay preferences. */
  const names={
-  storage:['TORRINO H-8 · 8 BAY + HUB 8 PORTE','8 TB + 4 TB nello scenario · sei baie libere · USB verso la Torre'],
+  storage:['TORRINO H-8 · 8 BAY + HUB 4 PORTE','DAS USB diretto a n2, hub USB alimentato separato · espansione futura modulare'],
   desk:['POSTAZIONE · LAPTOP E TELEFONO SU LEGGIO','Tastiera, mouse e sei USB-C a sinistra · due cavi collegati'],
   thermal:['VENTILAZIONE · 4 VENTOLE CANDIDATE','Schema da verificare sul prototipo · nessuna simulazione CFD'],
   tower:['TORRE H-7 · FB-1 A SPINA DI PESCE','Sette moduli inclinati di 42° in pianta · 1310 × 318 mm · no betulla e HDD'],

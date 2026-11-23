@@ -147,16 +147,18 @@
       }
     ],
     "free_bays_initial_plan": 6,
-    "hub": "8 USB ports, powered independently; other USB devices; no assumption USB-C",
+    "hub": "First phase: 4-port USB 3.x hub with independent power supply; upstream to n2 via separate USB link; no 8-port hub initial purchase",
     "host": "n2 inside H-7",
     "connections": [
       "separate DAS-to-n2 USB data cable",
-      "separate 8-port USB hub-to-n2 USB data cable"
+      "separate 4-port USB hub-to-n2 USB data cable"
     ],
     "shared_to_other_nodes": "NFS/Samba on LAN; never simultaneous USB connection to two hosts",
     "placement": "on separate drawer cabinet, not HAUGA",
     "source": "docs/H7_FB1_H8_CANONE_2026-11-23.md",
-    "render_status": "H-8 DAS and hub shown separately on drawer, two drive slots occupied in target configuration"
+    "render_status": "H-8 DAS and 4-port hub shown separately on drawer, two drive slots occupied in target configuration",
+    "hub_initial_ports": 4,
+    "hub_second_unit": "Optional second independently powered 4-port USB 3.x hub, deferred until four ports no longer suffice; preferably separate host connection"
   },
   "audio_router_placement": {
     "all_speakers_and_subwoofer": "multi_level_cabinet",
