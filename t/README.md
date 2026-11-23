@@ -28,6 +28,17 @@ Il prototipo grafico della base comprende **due longheroni metallici bassi**, **
 
 **Sicurezza:** questa rappresentazione non dimostra che la Torre sia antiribaltamento né che i giunti sopportino il peso. Mancano ancora masse pesate, posizione del baricentro, attrito sul pavimento, carichi dinamici e definizione di una ritenuta indipendente dal mobile. La variante autonoma **non è ancora una soluzione costruttiva autorizzata**.
 
+## Interfaccia R-5 (UX)
+
+Il quinto passo UX migliora accessibilità e mobile, senza toccare il geometry worker `assets/viewer.js`:
+
+* **Touch hit targets**: pulsanti e controlli rapidi hanno altezza minima 44 px (48 px su dispositivi touch), gli interruttori hanno area tattile ampliata.
+* **ARIA e etichette**: tutti i pulsanti, le viste rapide e i cursori numerici hanno `aria-label`; la HUD di selezione ha `role="status"` e la barra rapida `role="toolbar"`.
+* **Focus**: il pannello di aiuto sposta il focus sul pulsante di chiusura all'apertura e lo ripristina al trigger alla chiusura; il focus resta intrappolato nel dialogo; la sidebar mobile sposta il focus nel pannello e lo riporta al pulsante menu alla chiusura.
+* **Nessun clipping/sovrapposizione**: la barra rapida scorre orizzontalmente invece di essere tagliata; z-index e safe-area evitano sovrapposizioni con HUD e viewmark.
+* **Prestazioni**: riduzione del blur su schermi piccoli per dispositivi low-power.
+* **Test aggiuntivi**: `tests/test_ux_r5.py` e `tests/ux_r5_dom.html`.
+
 ## Blundercheck dei sostegni e intersezioni (23 novembre)
 
 La [verifica ingegneristica dei volumi FB-1](docs/BLUNDERcheck_FB1_COLLISIONI_2026-11-23.md) ha trovato un **PSU fittizio che attraversava tutte e sette le schede madri**, un **SSD che intersecava un fianco**, e una **canalina che compenetrava il telaio**. Le correzioni sono applicate al modello; gli alimentatori sono ora **intenzionalmente non collocati** invece che rappresentati falsamente compatibili. Il controllo geometrico automatico dei 271 box verifica la sola estrazione verticale ideale di 155 mm, ma **non approva il CAD per stampare**. La vera n1 ASUS H81M-E ha dimensioni diverse dal PCB illustrativo; sostegni/PSU/pesi/ventole restano da dimensionare.
@@ -43,6 +54,78 @@ Per i dettagli: **[Canone FB-1 + DAS H-4 e verifiche](docs/H7_FB1_DAS_H4_CANONE_
 
 **Stato:** progetto di fattibilità, non acquisti effettuati né installazione collaudata. Nel calcolo R-5 la massa ipotetica è 15,52 kg con un PSU e quattro ventole, ma più alimentatori possono portarla vicino ai 20 kg. L'analisi avverte soprattutto del **rischio di ribaltamento**: servono ritenute esterne al mobile o supporto autonomo a terra prima di montare. Prima proveremo e peseremo **un modulo**, poi valuteremo l'estensione a sette.
 
+## Interfaccia R-7 (UX)
+
+Il settimo passo UX è un giro di regressione su tutte le combinazioni di scena e strati, senza toccare `assets/viewer.js`:
+
+* **Regression sweep**: `window.towerRegressionSweep()` (alias `window.towerRegression`) prova tutte le scene `[data-scene]`, i gruppi annidati e i singoli strati, poi una selezione e i tooltip, raccogliendo eventuali errori in `window.towerConsoleErrors`.
+* **Console pulita**: helper `window.towerScene`, `window.towerView`, `window.towerLayer`, `window.towerCamera` e `window.towerTooltip` con gestione degli errori; nessuna geometria nuova.
+* **Riferimenti visivi**: modalità `?reference=1`, `?scene=...`, `?view=...`, `?tooltip=...` per catturare viste riproducibili; screenshot smoke test su tutte le scene.
+* **Tooltip migliorati**: il tooltip `#tooltip` resta leggibile in screenshot/reference e su schermi stretti.
+* **Test aggiuntivi**: `tests/test_ux_r7.py` e `tests/ux_r7_dom.html`.
+
+## Interfaccia R-8 (UX)
+
+L'ottavo passo UX è l'audit visivo finale del giro notturno, senza toccare `assets/viewer.js`:
+
+* **Audit visivo finale**: `window.towerVisualAudit()` (alias `towerAudit`, `towerFinalAudit`, `towerVisualAuditRun`) restituisce una checklist su console pulita, elementi base, strati, marcatori `≈`, chip di blocco, wording non approvativo e helper esistenti. Attivabile anche con `?audit=1` (`visual-audit-mode`).
+* **Note per la prossima mattina**: `window.towerFeatureNotes()` (alias `towerMorningNotes`, `towerNextMorningNotes`) elenca le funzioni UX già presenti da riprendere il mattino dopo.
+* **Nessun testo in più**: l'audit non aggiunge pannelli permanenti né claim di fabbricazione/prezzo.
+* **Test aggiuntivi**: `tests/test_ux_r8.py` e `tests/ux_r8_dom.html`.
+
+## Interfaccia R-6 (UX)
+
+Il sesto passo UX compatta ulteriormente il menu e aggiunge densità tecnica, senza toccare `assets/viewer.js`:
+
+* **Menu compatto**: la sidebar usa la classe `compact`, righe più dense e gruppi annidati con comando «Tutti».
+* **Ispezione geometria**: pulsante e scorciatoia `G` attivano quote, griglia e ingombri; bordo ambra segnala la vista filtrata.
+* **Densità tecnica**: il blocco `#tech-details` nell'inspector riassume la selezione e ricorda che le misure marcate `≈` sono da verificare.
+* **Prestazioni mobile**: blur ridotto e target tattili adeguati su Samsung Flip/mobile.
+* **Test aggiuntivi**: `tests/test_ux_r6.py` e `tests/ux_r6_dom.html`.
+
+## Interfaccia R-1 (UX)
+
+L'anteprima in `index.html` è ora più compatta e accessibile:
+
+* **Sidebar a cassetti** con capitoli e pulsante "Tutti" per mostrare/nascondere ogni gruppo (già presente, resa più visibile).
+* **Navigazione responsive**: su schermi stretti il menu hamburger apre i controlli come pannello inferiore, i pulsanti rapidi restano a dimensione tattile e l'inspector si adatta.
+* **Selezione enfatica**: quando si sceglie un componente, il render passa automaticamente a *Isola selezione* + *Semitrasparente* così il pezzo non scompare dietro le pareti; compare un badge HUD in alto a destra e l'inspector mantiene il focus visivo.
+* **Tasti rapidi**: `?` / `H` apre la guida, `Esc` chiude la guida/deseleziona, `F` centra, `I` isola, `X` semitrasparente, `L` etichette. I comandi `1`, `2`, `+`, `-`, `R` restano gestiti dal viewer di base.
+* **Touch**: oltre al drag con un dito, il pinch con due dita zooma; il doppio tap isola e centra la selezione.
+* **Fullscreen** tramite il pulsante ⛶ nella barra rapida.
+* **Focus visivo**: contorni `:focus-visible` forti, skip-link da tastiera e rispetto di `prefers-reduced-motion`.
+
+## Interfaccia R-2 (UX)
+
+Il secondo passo UX affina la navigazione e la struttura dei controlli, sempre senza modificare il geometry worker `assets/viewer.js`:
+
+* **Sottogruppi annidati**: dentro ogni capitolo i dettagli (HAUGA, scrivania, struttura/elettronica/servizi della Torre) sono raggruppati in sotto-cassetti, ognuno con il proprio comando "Tutti". La sidebar resta compatta anche con molti strati.
+* **Preset di camera**: pulsanti dedicati per *Stanza*, *Torre*, *Mobile*, *Autonoma*, *Lato*, *Retro*, *Alto* e *Centra*. I preset sfruttano i comandi di scena/vista già presenti, quindi mantengono lo zoom e il centraggio definiti dal modello senza distorcere l'oggetto.
+* **Controlli rapidi ridisegnati**: la barra in sovrimpressione include icone per i preset principali, zoom, centra, fullscreen e aiuto; i pulsanti sono tattili e leggibili anche su schermi stretti.
+* **Selezione sempre visibile**: il piccolo testo `#focus-hint` spiega che la selezione viene isolata automaticamente; l'HUD e l'inspector mantengono il focus.
+* **Prestazioni su dispositivi low-power**: il render rimane un singolo canvas 2D con ordinamento per facce; i controlli usano solo CSS/JS leggero, nessuna animazione continua né effetti blur pesanti sul visualizzatore.
+
+I file modificati sono `index.html`, `assets/viewer.css` e `assets/viewer-enhancements.js`. I test aggiuntivi sono in `tests/test_ux_r2.py`; quelli esistenti (`tests/ux_enhancements_static.py`, `tests/ux_enhancements_dom.html`, `tests/ux_smoke_playwright.spec.js`, `tests/test_ux_r1.py`) devono continuare a passare.
+
+## Interfaccia R-3 (UX)
+
+Il terzo passo UX affina le modalità trasparente e di isolamento, senza toccare il geometry worker `assets/viewer.js`:
+
+* **Indicatori visivi di modalità**: quando «Semitrasparente» o «Isola selezione» sono attivi, il viewport riceve le classi `xray-active` / `isolate-active` e un bordo sottile ciano ricorda che si sta vedendo una vista filtrata.
+* **Selezione sempre leggibile**: l'HUD e l'inspector mantengono il focus; il pannello di aiuto spiega che la selezione attiva automaticamente isolate + semi-trasparente, così il pezzo non scompare dietro pareti o mobili.
+* **Marcatori di misure da verificare**: gli strati che contengono componenti o quote ancora da collaudare sono contrassegnati con `data-unresolved` e mostrano un piccolo `≈` nel nome; il significato è spiegato nell'aiuto, mentre i dettagli restano nel README e nei documenti di ingegneria.
+* **Test aggiuntivi**: `tests/test_ux_r3.py` verifica in Chromium headless che la selezione attivi i livelli corretti, le classi CSS e gli screenshot non vuoti; `tests/ux_r3_dom.html` è un test DOM leggero per la sincronizzazione delle classi.
+
+
+## Interfaccia R-4 (UX)
+
+Il quarto passo UX aggiunge stato ingegneristico visibile ma non invasivo e una modalità screenshot, senza toccare il geometry worker `assets/viewer.js`:
+
+* **Stato e bloccanti visibili**: il capitolo «Stato progetto» mostra chip colorati per massa non verificata, PSU non collocati, antiribaltamento, fori scheda, limiti HAUGA/DAS e vincoli NO HDD/NO UPS/NO betulla. Ogni chip ha `data-blocker` per test e documentazione.
+* **Nessuna approvazione alla costruzione**: il viewmark, il footer e un chip dedicato ripetono «STUDIO · NON ESECUTIVO · NON APPROVATO PER COSTRUZIONE». Il modello resta un'ipotesi grafica, non un CAD esecutivo.
+* **Modalità screenshot**: aggiungendo `?screenshot=1` all'URL i controlli, il menu e il footer spariscono, lasciando il canvas pulito; con `&select=P1` (o `part`/`selected`) la selezione viene attivata automaticamente, mantenendo HUD e isolamento.
+* **Selezione preservata**: anche in modalità screenshot il pezzo resta evidenziato, con isolate + semitrasparente, HUD e contorni; nessuna scomparsa dietro pareti.
+* **Test aggiuntivi**: `tests/test_ux_r4.py` verifica chip di blocco, modalità screenshot, selezione e screenshot non vuoti; `tests/ux_r4_dom.html` è il test DOM leggero associato.
 
 ### Guide laterali dei cassetti FB-1 (correzione 23/11)
 

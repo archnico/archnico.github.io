@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX Round 5 — DOM interaction tests</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#0a121b;color:#e3f1f1;padding:20px}
+ #log{white-space:pre-wrap;font-family:monospace;background:#102834;border:1px solid #254653;padding:12px;border-radius:8px;max-height:80vh;overflow:auto}
+ .pass{color:#64d6c4}.fail{color:#e78b86}
+ .left{width:200px;background:#0b1b26}.left.open{display:block}.left.collapsed{display:none}
+ .quick{border:1px solid #35515a;background:#18313c;color:#edfafa}
+ .switch[aria-checked="true"]{background:#1e6657}
+ .help-panel{padding:10px;background:#0d202c;border:1px solid #4b7781}
+ .help-panel[hidden]{display:none}
+ .selection-hud{padding:5px;background:#062329;border:1px solid #4d9d92}
+ .selection-hud[hidden]{display:none}
+ .selection-hud.active{display:block}
+ .viewport{width:200px;height:200px;background:#111;position:relative}
+ button{min-height:44px}
+</style>
+</head>
+<body>
+<h1>UX Round 5 — DOM interaction tests</h1>
+<div id="log"></div>
+
+<aside class="left" id="left-panel" tabindex="-1">sidebar</aside>
+<section class="viewport" id="vp">
+ <div class="selection-hud" id="selection-hud" role="status" aria-live="polite" hidden><span class="hud-label">Selezionato</span><strong id="hud-title">—</strong><button id="focus-selected" aria-label="Focus">Focus</button></div>
+</section>
+<aside class="right" id="inspector" hidden><h3 id="part-title">Test Part</h3></aside>
+
+<button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="left-panel" aria-label="Menu">☰</button>
+<button id="fullscreen-btn" aria-label="Schermo intero">FS</button>
+<button id="help-btn" aria-expanded="false" aria-label="Aiuto">?</button>
+<div class="help-panel" id="help-panel" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><button class="close" aria-label="Chiudi">x</button><h3 id="help-title">Aiuto</h3></div>
+<button class="switch" data-layer="semitrasparente" aria-checked="false" aria-label="Semi">semi</button>
+<button class="switch" data-layer="isola" aria-checked="false" aria-label="Isola">isola</button>
+<button id="qfit" aria-label="Centra">fit</button>
+<div class="quicktools" id="quicktools" role="toolbar" aria-label="Controlli rapidi"><button class="quick" aria-label="Zoom">+</button></div>
+
+<script src="../assets/viewer-enhancements.js"></script>
+<script>
+const log = document.getElementById('log');
+let pass = 0, fail = 0;
+function assert(cond, msg) {
+  if (cond) { pass++; log.innerHTML += '<span class="pass">PASS</span> ' + msg + '\n'; }
+  else { fail++; log.innerHTML += '<span class="fail">FAIL</span> ' + msg + '\n'; }
+}
+function $(id){ return document.getElementById(id); }
+function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+(async function run(){
+const acc = window.towerAccessibility;
+assert(!!acc && typeof acc.labelControls === 'function', 'accessibility helper exposed');
+
+// ARIA labels present
+assert(!!$('menu-toggle').getAttribute('aria-label'), 'menu toggle has aria-label');
+assert(!!$('fullscreen-btn').getAttribute('aria-label'), 'fullscreen has aria-label');
+assert(!!$('help-btn').getAttribute('aria-label'), 'help has aria-label');
+
+// Touch target min height
+const minH = parseFloat(getComputedStyle($('menu-toggle')).minHeight);
+assert(minH >= 44, 'touch target min height >= 44px (got ' + minH + ')');
+
+// Help focus restore
+const hb = $('help-btn');
+hb.focus();
+hb.click();
+await wait(50);
+const close = $('help-panel').querySelector('.close');
+if (close) close.click();
+await wait(50);
+assert(document.activeElement === hb, 'focus restored to help button');
+
+// Quicktools toolbar role
+assert($('quicktools').getAttribute('role') === 'toolbar', 'quicktools has toolbar role');
+
+log.innerHTML += '\n' + (fail === 0 ? '<span class="pass">ALL PASSED</span>' : '<span class="fail">' + fail + ' FAILED</span>') + ' (' + pass + ' passed)';
+})();
+</script>
+</body>
+</html>

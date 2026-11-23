@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX Round 8 — DOM interaction tests</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#0a121b;color:#e3f1f1;padding:20px}
+ #log{white-space:pre-wrap;font-family:monospace;background:#102834;border:1px solid #254653;padding:12px;border-radius:8px;max-height:80vh;overflow:auto}
+ .pass{color:#64d6c4}.fail{color:#e78b86}
+ .left{width:200px;background:#0b1b26}.left.open{display:block}.left.collapsed{display:none}
+ .quick{border:1px solid #35515a;background:#18313c;color:#edfafa}
+ .switch[aria-checked="true"]{background:#1e6657}
+ .help-panel{padding:10px;background:#0d202c;border:1px solid #4b7781}
+ .help-panel[hidden]{display:none}
+ .selection-hud{padding:5px;background:#062329;border:1px solid #4d9d92}
+ .selection-hud[hidden]{display:none}
+ .selection-hud.active{display:block}
+ .viewport{width:200px;height:200px;background:#111;position:relative}
+ .tooltip{position:absolute;opacity:0}
+ .tooltip.visible{opacity:1}
+ .eng-chip{font-size:9px;padding:3px 7px;border-radius:999px;border:1px solid #3a5a63;background:#132a33;color:#cfe7e3}
+ .layer-row[data-unresolved] span::after{content:"≈";margin-left:5px;color:#f5aa62}
+</style>
+</head>
+<body>
+<h1>UX Round 8 — DOM interaction tests</h1>
+<div id="log"></div>
+
+<aside class="left compact" id="left-panel">sidebar</aside>
+<section class="viewport" id="vp">
+ <div class="selection-hud" id="selection-hud" hidden><span class="hud-label">Selezionato</span><strong id="hud-title">—</strong><button id="focus-selected">Focus</button></div>
+ <div class="tooltip" id="tooltip"></div>
+</section>
+<aside class="right" id="inspector" hidden><h3 id="part-title">Test Part</h3></aside>
+
+<button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="left-panel">☰</button>
+<button id="fullscreen-btn">FS</button>
+<button id="help-btn" aria-expanded="false">?</button>
+<div class="help-panel" id="help-panel" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><button class="close">x</button><h3 id="help-title">Aiuto</h3></div>
+<button class="switch" data-layer="semitrasparente" aria-checked="false">semi</button>
+<button class="switch" data-layer="isola" aria-checked="false">isola</button>
+<button id="qfit">fit</button>
+<div class="viewmark">FB-1 · STUDIO · NON ESECUTIVO · NON APPROVATO PER COSTRUZIONE</div>
+<div class="eng-grid" id="eng-blockers">
+ <span class="eng-chip critical" data-blocker="mass">Massa non verificata</span>
+ <span class="eng-chip critical" data-blocker="psu">PSU non collocati</span>
+ <span class="eng-chip critical" data-blocker="approval">Non approvato per costruzione</span>
+ <span class="eng-chip warn" data-blocker="tip">Antiribaltamento da progettare</span>
+ <span class="eng-chip warn" data-blocker="holes">Fori scheda reale non rilevati</span>
+ <span class="eng-chip info" data-blocker="hauga">HAUGA max 20 kg · ancoraggio parete</span>
+ <span class="eng-chip info" data-blocker="das">DAS 4 bay separato · bay vuote</span>
+ <span class="eng-chip ok" data-blocker="no-hdd">NO HDD in H7</span>
+ <span class="eng-chip ok" data-blocker="no-ups">NO UPS in H7</span>
+ <span class="eng-chip ok" data-blocker="no-birch">NO betulla</span>
+</div>
+<div class="layer-rows">
+ <div class="layer-row" data-unresolved><span>Test layer</span><button class="switch" data-layer="testLayer" aria-checked="true">x</button></div>
+</div>
+
+<script src="../assets/viewer-enhancements.js"></script>
+<script>
+const log = document.getElementById('log');
+let pass = 0, fail = 0;
+function assert(cond, msg) {
+  if (cond) { pass++; log.innerHTML += '<span class="pass">PASS</span> ' + msg + '\n'; }
+  else { fail++; log.innerHTML += '<span class="fail">FAIL</span> ' + msg + '\n'; }
+}
+function $(id){ return document.getElementById(id); }
+function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+(async function run(){
+  assert(typeof window.towerVisualAudit === 'function', 'visual audit helper present');
+  assert(typeof window.towerAudit === 'function', 'audit alias present');
+  assert(typeof window.towerFinalAudit === 'function', 'final audit alias present');
+  assert(typeof window.towerVisualAuditRun === 'function', 'audit run alias present');
+  assert(typeof window.towerFeatureNotes === 'function', 'feature notes helper present');
+  assert(typeof window.towerMorningNotes === 'function', 'morning notes alias present');
+  assert(typeof window.towerNextMorningNotes === 'function', 'next morning notes alias present');
+  assert(Array.isArray(window.towerConsoleErrors), 'console error list present');
+
+  const notes = window.towerFeatureNotes();
+  assert(Array.isArray(notes) && notes.length > 0, 'feature notes non-empty');
+
+  const result = await window.towerVisualAudit();
+  assert(result && typeof result.ok === 'boolean', 'visual audit returns result');
+  assert(Array.isArray(result.checks), 'visual audit returns checks');
+  assert(result.checks.length > 0, 'visual audit has checks');
+
+  // aliases return same shape
+  const r2 = window.towerAudit();
+  assert(r2 && Array.isArray(r2.checks), 'audit alias works');
+
+  // visual audit mode via helper
+  window.towerVisualAudit({ applyMode: true });
+  assert(document.body.classList.contains('visual-audit-mode'), 'visual-audit-mode class applied');
+
+  log.innerHTML += '\n' + (fail === 0 ? '<span class="pass">ALL PASSED</span>' : '<span class="fail">' + fail + ' FAILED</span>') + ' (' + pass + ' passed)';
+})();
+</script>
+</body>
+</html>
