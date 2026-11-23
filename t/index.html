@@ -8,7 +8,7 @@
 <body>
 <div class="shell">
 <header><div class="brand"><div class="logo">◈</div><div class="heading">TORRE H-7 <span>· anteprima interattiva</span></div></div>
- <nav class="toplinks"><a href="README.md">Il progetto</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">7 PC · H-7</span></nav>
+ <nav class="toplinks"><a href="README.md">Il progetto</a><a href="r2.html">Portale R-2</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">7 PC · H-7</span></nav>
 </header><main class="layout">
 <aside class="left" aria-label="Controlli dell'anteprima">
   <div class="side-head"><span class="stack-symbol">◇</span><div><strong>Strati</strong><small>Nascondi dall'esterno verso l'interno</small></div><button type="button" class="text-action" id="layers-reset" title="Ripristina gli strati">↺</button></div>
@@ -16,6 +16,11 @@
 <div class="layer-row"><span>Pareti</span><button type="button" class="switch on" data-layer="pareti" role="switch" aria-label="Pareti" aria-checked="true" title="Mostra o nascondi: Pareti"></button></div>
 <div class="layer-row"><span>Finestra</span><button type="button" class="switch on" data-layer="finestra" role="switch" aria-label="Finestra" aria-checked="true" title="Mostra o nascondi: Finestra"></button></div>
 <div class="layer-row"><span>Mobilio</span><button type="button" class="switch on" data-layer="mobilio" role="switch" aria-label="Mobilio" aria-checked="true" title="Mostra o nascondi: Mobilio"></button></div>
+<details class="hauga-subgroup"><summary>IKEA HAUGA · dettagli</summary>
+<div class="layer-row"><span>Pannelli + spalletta</span><button type="button" class="switch on" data-layer="haugaStruttura" role="switch" aria-label="Pannelli HAUGA" aria-checked="true"></button></div>
+<div class="layer-row"><span>2 cassetti</span><button type="button" class="switch on" data-layer="haugaCassetti" role="switch" aria-label="Cassetti HAUGA" aria-checked="true"></button></div>
+<div class="layer-row"><span>4 pomelli</span><button type="button" class="switch on" data-layer="haugaPomelli" role="switch" aria-label="Pomelli HAUGA" aria-checked="true"></button></div>
+</details>
 </div></details>
 <details class="layer-group" data-layer-group="postazione" open><summary><span class="stack-symbol">▣</span>Postazione<span class="caret">⌄</span><button type="button" class="group-master on" data-group-toggle="postazione" role="checkbox" aria-label="Postazione: seleziona o deseleziona tutti gli strati" aria-checked="true" title="Mostra o nascondi tutti gli strati del capitolo Postazione"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
 <div class="layer-row"><span>Monitor</span><button type="button" class="switch on" data-layer="monitor" role="switch" aria-label="Monitor" aria-checked="true" title="Mostra o nascondi: Monitor"></button></div>
@@ -49,8 +54,8 @@
       <button class="button scene-btn" data-scene="tower">Torre</button>
       <button class="button scene-btn" data-scene="module">Modulo</button>
       <button class="button scene-btn" data-scene="rear">Retro</button>
-      <button class="button scene-btn" data-scene="cabinet">Sul mobile</button>
-      <button class="button scene-btn" data-scene="lipdetail">Spalletta</button>
+      <button class="button scene-btn" data-scene="cabinet">Portale R-2</button><button class="button scene-btn" data-scene="haugadetail">Mobile HAUGA</button>
+      <button class="button scene-btn" data-scene="lipdetail">Dettaglio portale</button>
       <button class="button scene-btn" data-scene="thermal">Ventilazione</button>
       <button class="button scene-btn" data-scene="ups">UPS</button>
     </div>
@@ -104,17 +109,17 @@
   <button class="quick" id="qfit">◎ Centra</button>
   <button class="quick" data-preset="iso">◇ Isometrica</button>
   <button class="quick" data-preset="workstation">⌁ Bracci muro</button>
-  <button class="quick" data-preset="cabinet">▣ Sul mobile</button>
+  <button class="quick" data-preset="cabinet">▣ Portale R-2</button><button class="quick" data-preset="haugadetail">▤ HAUGA</button>
   <button class="quick" data-preset="autonoma">▥ Autonoma</button>
   <button class="quick" data-preset="rear">↶ Retro</button>
   <button class="quick" data-preset="room">⌂ Stanza</button>
  </div>
- <div class="viewmark">CONCETTO · QUOTE NON ESECUTIVE</div><div class="tooltip" id="tooltip"></div>
+ <div class="viewmark">IKEA HAUGA 004.150.47 · TOP MAX 20 kg · NON ESECUTIVO</div><div class="tooltip" id="tooltip"></div>
 </section><aside class="right" id="inspector" hidden aria-live="polite">
  <button class="close" id="close-inspector" aria-label="Chiudi selezione">✕</button>
  <div class="selected-note">PEZZO SELEZIONATO</div>
  <div class="detail"><h3 id="part-title"></h3><p id="part-desc"></p><div class="badges" id="part-tags"></div></div>
  <small id="part-specific"></small>
 </aside></main>
-<footer><span>H-7 R-1 · modello illustrativo, non pronto per stampa o installazione</span><span>Trascina per ruotare · scorri per zoom · clicca per selezionare</span></footer></div></body>
+<footer><span>H-7 R-2 · portale a terra, HAUGA max 20 kg · studio NON esecutivo</span><span>Trascina per ruotare · scorri per zoom · clicca per selezionare</span></footer></div></body>
 </html>

@@ -1,47 +1,78 @@
 {
   "updated": "2026-11-23",
   "units": "mm",
-  "stanza": {
-    "larghezza_approssimativa": 5000,
-    "profondita_approssimativa": 5000,
-    "altezza_soffitto": 3000,
-    "unico_angolo_smussato": true,
-    "estensione_smusso_stimata": 350
+  "model": "H-7 R-2 conceptual non-executive",
+  "furniture": {
+    "measured": {
+      "width": 1370,
+      "depth": 355,
+      "body_height": 450,
+      "lip_height": 90,
+      "lip_thickness": 10
+    },
+    "identified": {
+      "manufacturer": "IKEA",
+      "model": "HAUGA",
+      "article": "004.150.47",
+      "confirmed": true,
+      "catalog_dimensions": {
+        "larghezza": 1380,
+        "profondita": 360,
+        "altezza": 540
+      },
+      "manufacturer_max_top_load_kg": 20,
+      "open_compartments": 2,
+      "drawers": 2,
+      "knobs": 4,
+      "nominal_inner_top_mm": [
+        1345,
+        330
+      ],
+      "nominal_open_compartment_mm": [
+        660,
+        175
+      ],
+      "wall_anchor_required": true,
+      "official_product_url": "https://www.ikea.com/ae/en/p/hauga-tv-bench-white-00415047/"
+    }
   },
-  "finestra": {
-    "larghezza": 2100,
-    "altezza": 1600,
-    "distanza_approssimativa_angolo_opposto": 500,
-    "altezza_davanzale_solo_render": 1000
+  "desk": {
+    "width": 1000,
+    "depth": 550,
+    "height": 800
   },
-  "scrivania": {
-    "larghezza_misurata": 1000,
-    "profondita_misurata": 550,
-    "altezza_misurata": 800
+  "room": {
+    "approx_width": 5000,
+    "approx_depth": 5000,
+    "ceiling_height": 3000
   },
-  "mobile_bianco": {
-    "larghezza_misurata": 1370,
-    "altezza_corpo_misurata": 450,
-    "altezza_spalletta_misurata": 90,
-    "altezza_massima_derivata": 540,
-    "profondita_misurata": 355,
-    "spessore_risalto_misurato": 10,
-    "larghezza_interna_nominale": 1350,
-    "profondita_interna_nominale": 345
-  },
-  "torre_studio": {
-    "corpo_mm": [
+  "tower": {
+    "module_count": 7,
+    "chassis_dimensions_mm": [
       1028,
       429,
       334
     ],
-    "piastra_mm": [
+    "use_modes": [
+      "portal_supports_on_floor",
+      "chassis_alone_on_floor"
+    ]
+  },
+  "r2": {
+    "portal_external_width": 1470,
+    "portal_floor_footprint_depth_study_mm": 490,
+    "portal_floor_footprint_width_study_mm": 1480,
+    "top_platform_dimensions_mm": [
       1130,
       450,
       18
     ],
-    "supporti_per_spalletta_non_validati_mm": 105,
-    "testate_libere_teoriche_mm": 120
-  },
-  "avviso": "Supporti alti e piastra sono concetti non collaudati; nessuna autorizzazione alla fabbricazione."
+    "platform_height_mm": 618,
+    "tower_top_mm": 952,
+    "overhang_only_front_mm": 95,
+    "portal_clearance_above_lip_mm": 20,
+    "total_on_furniture_kg_design": 0,
+    "actual_loaded_mass_kg": null,
+    "structurally_validated": false
+  }
 }

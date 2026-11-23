@@ -3,13 +3,13 @@ const canvas=document.getElementById('c'),vp=document.getElementById('vp'),ctx=c
 const $=id=>document.getElementById(id);
 const C={guide:'#81d6d8',guide2:'#2e858f',frame:'#5bb49e',frame2:'#447c77',corner:'#dfa962',pcb:'#214e58',pcb2:'#3a7981',chip:'#1b343c',metal:'#90adb6',disk:'#668c9a',diskEdge:'#b3c7c8',psu:'#4c6570',plug:'#65a7c2',orange:'#dfa962',cable:'#da817b',fan:'#8cb9a6',accent:'#f9d48b',empty:'#4c6570',ups:'#465665',upsFace:'#627888',upsBackup:'#63c7bb',upsSurge:'#d7a65f'};
 // BEGIN REGISTRO MISURE (generato da Registro/registro_torre_v1.json)
-const M={"cab":{"width":1370,"depth":355,"height":450,"lipHeight":90,"lipThickness":10},"desk":{"width":1000,"depth":550,"height":800}};
+const M={"cab":{"width":1370,"depth":355,"height":450,"lipHeight":90,"lipThickness":10},"desk":{"width":1000,"depth":550,"height":800},"r2":{"profile":40,"sideClearance":10,"topRailBottom":560,"topRailTop":600,"platformBottom":600,"platformThickness":18,"frontOverhang":95,"frameWidth":1470,"frameDepth":450}};
 // END REGISTRO MISURE
 const state={n:7,yaw:2.77,pitch:.45,zoom:1,explode:0,xray:false,labels:true,disks:true,wiring:true,grid:false,dims:false,clearance:false,selected:null,selectedName:'',focusIndex:0,scene:'tower',standpads:false,moduleExploded:false,lifted:null,locked:true,showUPS:false,loadEstimate:450,cooling:true,airflow:false,heat:450,delta:8};
 
 // Layer controls are independent of scene/camera and never mutate source geometry.
 const DEFAULT_LAYERS={
- pareti:true,finestra:true,mobilio:true,monitor:true,bracci:true,
+ pareti:true,finestra:true,mobilio:true,haugaStruttura:true,haugaCassetti:true,haugaPomelli:true,monitor:true,bracci:true,
  scrivania:true,sedia:true,audio:true,telaio:true,moduli:true,schede:true,
  dischi:true,ventole:true,cavi:true,ups:false,semitrasparente:false,
  isola:false,quote:false,griglia:false,etichette:true,ingombri:false
@@ -22,13 +22,13 @@ function layerFor(group){
  if(/^F[1-6]$/.test(group)||group==='FANMOUNT'||group==='AIRFLOW')return 'ventole';
  if(['WALL','WALLCUT'].includes(group))return 'pareti';
  if(group==='WINDOW'||group==='ROOMLABEL')return 'finestra';
- if(['WHITECAB','LIP','RACK','DARKDRAWER','PRINTER','RACKMODEM'].includes(group))return 'mobilio';
+ if(['WHITECAB','LIP','RACK','DARKDRAWER','PRINTER','RACKMODEM','HAUGABACK','HAUGASHELF','HAUGAOPEN','HAUGAGUIDE','HAUGADRAWER','HAUGAKNOB'].includes(group))return 'mobilio';
  if(['DESK','LAPTOP'].includes(group))return 'scrivania';
  if(group==='CHAIR')return 'sedia';
  if(['MONVGA','MONHDMI','MONMID'].includes(group))return 'monitor';
  if(['ARMLEFT','ARMCENTER','ARMRIGHT'].includes(group))return 'bracci';
  if(['AUDIOLEFT','AUDIORIGHT','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT','SUBWOOFER'].includes(group))return 'audio';
- if(['FRAME','GUIDE','GUIDEFRAME','BACKBONE','DOCK','LOCK','FOOT','STANDPAD','ADAPTER','ALIGN'].includes(group))return 'telaio';
+ if(['FRAME','GUIDE','GUIDEFRAME','BACKBONE','DOCK','LOCK','FOOT','STANDPAD','ADAPTER','ALIGN','PORTAL','PORTALBRACE','PORTALFOOT','PORTALLOCK'].includes(group))return 'telaio';
  if(group==='STORAGE')return 'dischi';
  if(['POWER','IO','NETDUCT','ACDUCT','ACFLEX','NETPATCH','OUTLETAC','OUTLETLAN','FANPOWER','UPSCABLE'].includes(group))return 'cavi';
  if(['UPS','UPSPORT','UPSLOC','UPSCLEAR'].includes(group))return 'ups';
@@ -39,7 +39,10 @@ function isVisibleGroup(group){
  if(group==='DIM')return state.dims;
  if(group==='CLEAR')return state.clearance;
  const layer=layerFor(group);
- return layer===null || state.layers[layer]!==false;
+ if(layer!==null&&state.layers[layer]===false)return false;
+ const sl=({'WHITECAB':'haugaStruttura','LIP':'haugaStruttura','HAUGABACK':'haugaStruttura','HAUGASHELF':'haugaStruttura',
+ 'HAUGAOPEN':'haugaStruttura','HAUGAGUIDE':'haugaCassetti','HAUGADRAWER':'haugaCassetti','HAUGAKNOB':'haugaPomelli'})[group];
+ return !sl||state.layers[sl]!==false;
 }
 // The parent reflects all / none / partial, including changes made one layer at a time.
 const CHAPTER_LAYERS={
@@ -112,7 +115,7 @@ function openPreset(preset){
 document.querySelectorAll('[data-preset]').forEach(el=>el.onclick=()=>openPreset(el.dataset.preset));
 
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={WINDOW:'Finestra 210 × 160 cm',F1:"Ventola HDD sinistra",F2:"Ventola compute 1",F3:"Ventola compute 2",F4:"Ventola compute 3",F5:"Ventola compute 4",F6:"Ventola HDD destra",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'Mobile bianco',LIP:'Spalletta a U',ADAPTER:'Kit adattatore rimovibile',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={WINDOW:'Finestra 210 × 160 cm',F1:"Ventola HDD sinistra",F2:"Ventola compute 1",F3:"Ventola compute 2",F4:"Ventola compute 3",F5:"Ventola compute 4",F6:"Ventola HDD destra",FANMOUNT:"Supporti ventole rimovibili",FANPOWER:"Cablaggi ventole 12 V",DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 function refreshPartPicker(){
  const ids=[...new Set(faces.map(f=>f.group).filter(id=>id&&!['DIM','GRID'].includes(id)&&isVisibleGroup(id)))];
  ids.sort((a,b)=>((partDescriptions[a]||a).localeCompare((partDescriptions[b]||b),'it')));
@@ -512,7 +515,7 @@ function embedTowerAt(originX,originY,baseZ,where){
   faces=prev.faces;lines=prev.lines;labels=prev.labels;
   state.scene=prev.scene;state.n=prev.n;state.showUPS=prev.showUPS;state.standpads=prev.standpads;
   $('variant-pill').textContent=where==='floor'?'UNA TORRE H-7 · AUTONOMA':'UNA TORRE H-7 · SUL MOBILE';
-  if(where!=='floor')$('scene-subtitle').textContent=prev.scene==='cabinet'?'Spalletta H90: adattatore da riprogettare, piastra 1130 mm':prev.scene==='workstation'?'Tre schermi su bracci a muro; sedia gaming e cablaggi perimetrali':'Una Torre H-7, 230V/RJ45 a destra, canalette separate e UPS al pavimento';
+  if(where!=='floor')$('scene-subtitle').textContent=prev.scene==='cabinet'?'R-2: portale metallico scarica il peso al pavimento, HAUGA non caricato':prev.scene==='workstation'?'Tre schermi su bracci a muro; sedia gaming e cablaggi perimetrali':'Una Torre H-7, 230V/RJ45 a destra, canalette separate e UPS al pavimento';
  }
  // Rotazione rigida +90° (nessuna specchiatura); il retro I/O è verso x minore, cioè il muro.
  const place=p=>[originX+445-p[1],originY+p[0],baseZ+p[2]];
@@ -521,45 +524,141 @@ function embedTowerAt(originX,originY,baseZ,where){
  for(const l of donorLines){if(l.group==='DIM'||l.group==='GRID')continue;lines.push({...l,points:l.points.map(place)})}
  for(const lab of donorLabels){if(lab.group==='DIM')continue;labels.push({...lab,pos:place(lab.pos)})}
 }
-// Unica geometria condivisa per il kit H-7 (quote di studio in mm).
-function cabinetKit(bx,by,lift=0){
- // Appoggio sopra la U alta 90 mm: piedini di studio da 105 mm, mai verificati strutturalmente.
- const top=M.cab.height, support=105,z=top+lift,padY=(M.cab.width-1130)/2,plateX=bx+(M.cab.depth-450)/2;
- const ys=[190,M.cab.width/2,M.cab.width-190];
- for(const y of ys)for(const x of [55,M.cab.depth-55]){
-  pushBox(bx+x-30,by+y-47,z,60,94,support,'#6f9197','ADAPTER','Piede prototipale da 105 mm: portata/instabilità NON verificate',1);
-  if(lift)wire([[bx+x,by+y,top],[bx+x,by+y,z]],'#e8c17b',1.3,'ALIGN',[5,5]);
-  else pushBox(bx+x-27,by+y-43,z+support-3,54,86,3,'#273c44','ADAPTER','Inserto antiscivolo di studio',1);
+// R-2. CARICO SOLO A TERRA: il mobile HAUGA candidato ha limite di 20 kg sul piano.
+// Le quattro colonne SONO ESTERNE al mobile e non lo toccano.
+// 1470 di larghezza esterna, piattaforma L1130 x P450, sporge 95 mm solo davanti.
+// Variante DIMENSIONALE, NON certificazione; il telaio puo richiedere tiranti a parete.
+const R2=M.r2; // portale pilotato dal registro canonico
+function portalFrame(bx,by,showDeck=true){
+ const w=M.cab.width,depth=M.cab.depth;
+ const ys=[by-R2.profile-R2.sideClearance,by+w+R2.sideClearance];
+ const xs=[bx+10,bx+410],p=R2.profile;
+ // Le quattro gambe vanno dal pavimento ai traversi, NON poggiano su HAUGA.
+ for(const y of ys)for(const x of xs){
+  pushBox(x,y,0,p,p,R2.topRailBottom,'#467e84','PORTAL','Montante portante 40×40 · carico scaricato a terra',1);
+  const shoeY=y===ys[0]?by-55:by+w+5;
+  pushBox(x-25,shoeY,0,90,50,8,'#405e6b','PORTALFOOT','Scarpa 90×50 mm fuori dal perimetro mobile · livellamento da verificare',1);
  }
- for(const y of ys)pushBox(plateX,by+y-12,z+support-11,450,24,11,'#768e96','ADAPTER','Traversa: luce minima di studio sopra U 4 mm; dettaglio da riprogettare',.98);
- pushBox(plateX,by+padY,z+support,450,1130,18,'#b99c75','ADAPTER','Piastra 1130×450×18 mm; 120 mm liberi alle testate se mobile L1370; portata non certificata',lift?.38:.93);
- if(!lift)for(const y of [padY+10,padY+1120])for(const x of [10,428])
-  pushBox(plateX+x,by+y,z+support+18,14,13,17,'#e0b885','ADAPTER','Fermo anti-scorrimento da verificare',1);
+ // Due travi a campata piena 1430 mm tra i centri, esempio 40×40 serie rigida.
+ for(const x of xs)pushBox(x,ys[0],R2.topRailBottom,p,R2.frameWidth,p,'#5f9da5','PORTAL','Trave trasversale 40×40 portante, luce 1430 mm (studio)',1);
+ // Due fianchi irrigiditi esterni al mobile: nessun traverso sul fronte dei cassetti.
+ for(const y of ys){
+  pushBox(bx+50,y+2,32,360,36,36,'#476d77','PORTALBRACE','Traversa bassa esterna al mobile',1);
+  pushBox(bx+50,y+2,R2.topRailBottom,360,36,24,'#5a9299','PORTALBRACE','Traversa alta di collegamento fianchi',1);
+  beamXZ(y+16,bx+42,120,bx+428,520,16,12,'#d7ae69','PORTALBRACE','Controvento diagonale laterale: lunghezza e giunti non validati');
+ }
+ // Blocco di testata non invasivo; la parete, non HAUGA, deve trattenere il portale dal ribaltamento.
+ // La piastra si smonta assieme alla Torre con quattro fissaggi positivi riutilizzabili.
+ const py=by+(w-1130)/2;
+ if(showDeck){
+  pushBox(bx,py,R2.platformBottom,450,1130,R2.platformThickness,'#b99c75','PORTAL','Piastra rimovibile 1130×450×18 mm: nessun contatto con mobile',.97);
+  for(const yy of [py+28,py+1102])for(const xx of [bx+25,bx+418]){
+    pushBox(xx-8,yy-8,R2.platformBottom+R2.platformThickness,16,16,15,'#f3bf72','PORTALLOCK','Fissaggio meccanico rimovibile Torre-portale; M6 solo ipotetico',1);
+  }
+ }
+ if(state.dims){
+  dimension([bx,by,R2.platformBottom],[bx+450,by,R2.platformBottom],'450 mm · PIASTRA',[0,-90,0],'#e7c38a');
+  dimension([bx+depth,by,540],[bx+450,by,540],'95 mm · SBALZO AVANTI',[0,-125,0],'#e7ad75');
+  dimension([bx,ys[0],10],[bx,ys[1]+p,10],'1470 mm · IMPRONTA ESTERNA',[-110,0,0],'#8adecf');
+  dimension([bx,ys[0],0],[bx,ys[0],R2.platformBottom+R2.platformThickness],'618 mm · PIANO TORRE',[-110,-60,0],'#8adecf');
+ }
+ return {plateX:bx,plateY:py,baseZ:R2.platformBottom+R2.platformThickness};
+}
+
+
+// IKEA HAUGA 004.150.47 — modulo 3D parametrico; non è un CAD esecutivo.
+// Valori M.cab = misurazione utente, quote catalogo 1380x360x540 esposte separatamente.
+function haugaEndCheek(x,y,z,d,th,h){
+ const q=[[x,z],[x+d,z],[x+d,z+h-38],[x+d-36,z+h],[x,z+h]],group='LIP',
+       name='Fianco alto HAUGA con smusso anteriore';
+ for(const yy of [y,y+th])faces.push({p:q.map(t=>[t[0],yy,t[1]]),color:'#e7eae6',
+   group,name,opa:1,emphasis:false,normal:[0,yy===y?-1:1,0]});
+ for(let i=0;i<q.length;i++){
+  const a=q[i],b=q[(i+1)%q.length];
+  faces.push({p:[[a[0],y,a[1]],[b[0],y,b[1]],[b[0],y+th,b[1]],[a[0],y+th,a[1]]],
+   color:'#d7dcda',group,name,opa:1,emphasis:false,normal:[1,0,0]});
+ }
+}
+function haugaKnob(x,y,z){
+ const ring=[],n=12,r=9;
+ for(let i=0;i<n;i++){const th=i*2*Math.PI/n;ring.push([y+Math.cos(th)*r,z+Math.sin(th)*r])}
+ const group='HAUGAKNOB',name='Pomello scuro originale IKEA HAUGA · dimensione indicativa';
+ faces.push({p:ring.map(p=>[x+13,p[0],p[1]]),color:'#323937',group,name,opa:1,emphasis:false,normal:[1,0,0]});
+ for(let i=0;i<n;i++){
+  const a=ring[i],b=ring[(i+1)%n];
+  faces.push({p:[[x,a[0],a[1]],[x,b[0],b[1]],[x+13,b[0],b[1]],[x+13,a[0],a[1]]],
+   color:'#555b58',group,name,opa:1,emphasis:false,normal:[1,0,0]});
+ }
+}
+function drawHaugaReal(bx,by,showDimensions=false){
+ const w=M.cab.width,d=M.cab.depth,h=M.cab.height,lipH=M.cab.lipHeight;
+ const side=17.5,mid=18,board=18,shelfZ=210,drawerZ=39,drawerH=153;
+ const bayW=(w-2*side-mid)/2,midY=by+w/2;
+ const white='#e7eae6',shadow='#d3d9d5';
+ // Carcassa cavae a pannelli, invece di un unico blocco che ostruiva i vani.
+ pushBox(bx,by,0,d,side,h,white,'WHITECAB','Fianco sinistro · truciolare rivestito',1);
+ pushBox(bx,by+w-side,0,d,side,h,white,'WHITECAB','Fianco destro · truciolare rivestito',1);
+ pushBox(bx+8,by+side,0,d-8,w-2*side,22,shadow,'WHITECAB','Base e zoccolo continuo HAUGA',1);
+ pushBox(bx+10,by+side,22,d-14,w-2*side,18,white,'WHITECAB','Piano inferiore HAUGA',1);
+ pushBox(bx+10,by+side,h-board,d-10,w-2*side,board,white,'WHITECAB','Piano superiore · portata max 20 kg',1);
+ pushBox(bx+10,midY-mid/2,24,d-13,mid,h-24,white,'HAUGASHELF','Divisorio centrale fra i 2 vani e i 2 cassetti',1);
+ pushBox(bx+13,by+side,shelfZ,d-15,w-2*side,board,white,'HAUGASHELF','Mensola superiore ai cassetti · portata 12–13 kg/vano',1);
+ // Schienale in fibra: il passaggio cavi non è stato misurato; finestrella in render esplicativa.
+ pushBox(bx+10,by+side,40,11,w-2*side,shelfZ-40,shadow,'HAUGABACK','Schienale inferiore in fibra',1);
+ pushBox(bx+10,by+side,shelfZ+board,11,w-2*side,83,shadow,'HAUGABACK','Schienale vano aperto',1);
+ pushBox(bx+10,by+side,h-54,11,w-2*side,54-board,shadow,'HAUGABACK','Schienale superiore in fibra',1);
+ for(let i=0;i<2;i++){
+  const by0=by+side+i*(bayW+mid),end=by0+bayW;
+  // Uscita cavi posteriore schematicamente aperta nei vani (nessuna quota inventata).
+  pushBox(bx+10,by0,shelfZ+board+83,11,90,h-54-(shelfZ+board+83),shadow,
+    'HAUGABACK','Rinforzo posteriore zona passacavo',1);
+  pushBox(bx+10,end-90,shelfZ+board+83,11,90,h-54-(shelfZ+board+83),shadow,
+    'HAUGABACK','Rinforzo posteriore zona passacavo',1);
+  pushBox(bx+28,by0+3,shelfZ+board,d-34,bayW-6,3,'#f3f4ee','HAUGAOPEN',
+    'Vano superiore '+(i+1)+' · IKEA larghezza 660 mm, altezza 175 mm',1);
+  // Frontali pieni, solo nella metà bassa, lasciando veri vani aperti sopra.
+  pushBox(bx+d-18,by0+3,drawerZ,18,bayW-6,drawerH,'#f0f1ed','HAUGADRAWER',
+    'Cassetto '+(i+1)+' · max 9 kg per cassetto',1);
+  for(const frac of [.22,.78])haugaKnob(bx+d+1,by0+(bayW-6)*frac+3,drawerZ+drawerH*.52);
+  pushBox(bx+40,by0+9,drawerZ+15,d-70,7,drawerH-30,'#a3b0af','HAUGAGUIDE',
+    'Guida cassetto illustrativa, da verificare sul mobile',1);
+  pushBox(bx+40,end-16,drawerZ+15,d-70,7,drawerH-30,'#a3b0af','HAUGAGUIDE',
+    'Guida cassetto illustrativa, da verificare sul mobile',1);
+ }
+ // Spalletta a U: tutti i tre bordi sono visualizzati spessi 10mm come da misura utente.
+ pushBox(bx,by,h,M.cab.lipThickness,w,lipH,'#d4dcd8','LIP',
+   'Spalletta posteriore · H90 e spessore 10mm riferiti dall utente',1);
+ haugaEndCheek(bx,by,h,d,M.cab.lipThickness,lipH);
+ haugaEndCheek(bx,by+w-M.cab.lipThickness,h,d,M.cab.lipThickness,lipH);
+ if(showDimensions&&state.dims){
+  dimension([bx+d,by,10],[bx+d,by+w,10],'1370 MISURATO · 1380 IKEA',[100,0,0],'#91d8d4');
+  dimension([bx,by,10],[bx+d,by,10],'355 MISURATO · 360 IKEA',[0,-95,0],'#91d8d4');
+  dimension([bx,by,h],[bx,by,h+lipH],'90 mm · RIALZO',[-85,0,0],'#c6e4e3');
+  text3([bx+580,by+w/2,940],'HAUGA 004.150.47 · 2 VANI · 2 CASSETTI · 4 POMELLI','#92dfd9',11,'DIM');
+  text3([bx+580,by+w/2,880],'IKEA 1345×330 mm LUCE CATALOGO DA VERIFICARE · 660×175 mm PER VANO','#b6d3d3',10,'DIM');
+  text3([bx+580,by+w/2,820],'PIANO MAX 20 kg · OBBLIGO ANCORAGGIO A PARETE','#f2be82',10,'DIM');
+  text3([bx+580,by+w/2,770],'PASSACAVO, GUIDE E SPESSORI INTERNI: SCHEMA NON QUOTATO','#acc7ce',9,'DIM');
+ }
+}
+function haugaDetailScene(){
+ const bx=90,by=120;
+ if(state.grid)for(let x=0;x<600;x+=100)wire([[x,0,-9],[x,1700,-9]],'#285061',.6,'GRID');
+ drawHaugaReal(bx,by,true);
+ return M.cab.width;
 }
 
 function lipDetailScene(){
- // Kit esploso: L/H/P, altezza e spessore della spalletta rilevati.
- const bx=60,by=100,top=M.cab.height,liph=M.cab.lipHeight,lipw=M.cab.lipThickness;
- const cabEnd=by+M.cab.width;
- if(state.grid){for(let yy=0;yy<M.cab.width+200;yy+=100)wire([[0,yy,-9],[530,yy,-9]],'#285061',.6,'GRID');for(let xx=0;xx<530;xx+=100)wire([[xx,0,-9],[xx,M.cab.width+180,-9]],'#285061',.6,'GRID')}
- pushBox(bx,by,0,M.cab.depth,M.cab.width,top,'#dce2e4','WHITECAB','Mobile bianco L1370 × P355 mm, corpo H450 mm: misure utente',.91);
- pushBox(bx,by,top,lipw,M.cab.width,liph,'#8cbfda','LIP','Spalletta posteriore alta 90 mm e spessa 10 mm',1);
- pushBox(bx,by,top,M.cab.depth,lipw,liph,'#8cbfda','LIP','Spalletta testata A',1);
- pushBox(bx,cabEnd-lipw,top,M.cab.depth,lipw,liph,'#8cbfda','LIP','Spalletta testata B',1);
- const lift=110;
- wire([[bx+M.cab.depth,by,top+liph+3],[bx,by,top+liph+3],[bx,cabEnd,top+liph+3],[bx+M.cab.depth,cabEnd,top+liph+3]],'#a6ebff',3,'LIP',[],1);
- cabinetKit(bx,by,lift);
+ const bx=90,by=120;
+ if(state.grid)for(let x=0;x<650;x+=100)wire([[x,0,-9],[x,1600,-9]],'#285061',.6,'GRID');
+ drawHaugaReal(bx,by,true);
+ const c=portalFrame(bx,by);
+ embedTowerAt(c.plateX+2,c.plateY+51,c.baseZ,'cabinet');
  if(state.dims){
-  dimension([bx,by,top],[bx,by,top+liph],'90 mm · altezza spalletta',[-80,0,0],'#9dd8f5');
-  dimension([bx,by,top+liph],[bx+lipw,by,top+liph],'10 mm · spessore MISURATO',[0,-60,0],'#9dd8f5');
-  dimension([bx+M.cab.depth,by,top],[bx+M.cab.depth,cabEnd,top],'1370 mm · larghezza mobile',[94,0,0],'#b4d7ee');
-  dimension([bx,by,top],[bx+M.cab.depth,by,top],'355 mm · profondità MISURATA', [0,-90,0],'#b4d7ee');
-  dimension([bx+(M.cab.depth-450)/2,by+120,top+lift+123], [bx+(M.cab.depth-450)/2+450,by+120,top+lift+123],'450 mm piastra', [0,-65,0],'#e2bd80');
-  dimension([bx+(M.cab.depth-450)/2,by+120,top+lift+123], [bx+(M.cab.depth-450)/2,by+1250,top+lift+123],'1130 mm · lunghezza kit H-7',[-80,0,0],'#e2bd80');
-  text3([230,cabEnd+35,top+lift+180],'ESPLOSO +110 mm SOLO GRAFICO',C.accent,11,'DIM');
-  text3([388,by+M.cab.width/2,top+liph+15],'FRONTE APERTO →',C.accent,11,'DIM');
+  dimension([bx,by,450],[bx,by,540],'90 mm · BORDINO',[-60,0,0],'#b4d7ee');
+  dimension([bx,by,540],[bx+10,by,540],'10 mm', [0,-45,0],'#b4d7ee');
+  text3([bx+520,by+M.cab.width/2,1030],'PORTALE PORTANTE SOLO A TERRA · HAUGA NON CARICATO',C.accent,10,'DIM');
  }
- return M.cab.width+250;
+ return R2.frameWidth;
 }
 
 function optionalStandalonePads(width){
@@ -618,23 +717,15 @@ function roomScene(){
   dimension([45,winEnd,winSill],[45,winEnd,winTop],'1600 mm',[0,115,0],'#8ed6ef');
   dimension([0,winEnd,0],[0,roomD,0],'500 mm · angolo opposto',[-120,0,0],'#8ed6ef');
  }
- // Mobile bianco: L1370 × P355, H450 + U90 mm; spessore U10 misurati.
+ // IKEA HAUGA: geometria 2 vani, 2 cassetti, 4 pomelli e spalletta U smussata.
  const cabX=225,cabY=1720;
- pushBox(cabX,cabY,0,M.cab.depth,M.cab.width,M.cab.height,'#d8ddd8','WHITECAB','Mobile bianco L1370 P355 H450 + spalletta H90 mm misurati',.94);
- pushBox(cabX+5,cabY+10,62,310,480,320,'#dfe4de','WHITECAB','Vano aperto sinistro',.50);
- pushBox(cabX+5,cabY+1010,62,310,350,320,'#dfe4de','WHITECAB','Vano aperto destro',.50);
- for(const y of [2220,2540,2860])pushBox(cabX+13,y,18,292,180,148,'#f1f3ef','WHITECAB','Cassetto mobile bianco',.91);
- const lipH=M.cab.lipHeight,lipW=M.cab.lipThickness;
- pushBox(cabX,cabY,M.cab.height,lipW,M.cab.width,lipH,'#a7c4d5','LIP','Spalletta posteriore alta 90 mm, spessore 10 mm dichiarato',1);
- pushBox(cabX,cabY,M.cab.height,M.cab.depth,lipW,lipH,'#a7c4d5','LIP','Spalletta laterale sinistra',1);
- pushBox(cabX,cabY+M.cab.width-lipW,M.cab.height,M.cab.depth,lipW,lipH,'#a7c4d5','LIP','Spalletta laterale destra',1);
- if(state.dims)text3([550,2405,550],'FRONTE APERTO',C.accent,10,'DIM');
- cabinetKit(cabX,cabY);
- // Piastra centrata nel mobile in profondità: (450-355)/2=47,5 mm di sbalzo per lato.
- const plateStartX=cabX+(M.cab.depth-450)/2;
- embedTowerAt(plateStartX+2,cabY+(M.cab.width-1130)/2+51,M.cab.height+105+18,'cabinet');
+ drawHaugaReal(cabX,cabY,state.scene==='cabinet');
+ const r2=portalFrame(cabX,cabY);
+ // Portale a pavimento, piastra da 450 mm allineata al retro HAUGA: solo 95 mm davanti.
+ const plateStartX=r2.plateX;
+ embedTowerAt(r2.plateX+2,r2.plateY+51,r2.baseZ,'cabinet');
  // Fascia dietro I/O: fino a 138 mm liberi tra piastra e muro interno; accesso da testate.
- if(state.clearance){const p0=cabY+(M.cab.width-1130)/2,z0=M.cab.height+105+18;wire([[24,p0,z0],[plateStartX,p0,z0],[plateStartX,p0+1130,z0],[24,p0+1130,z0],[24,p0,z0]],'#80d4e8',1.4,'CLEAR',[6,4]);}
+ if(state.clearance){const p0=r2.plateY,z0=r2.baseZ;wire([[24,p0,z0],[plateStartX,p0,z0],[plateStartX,p0+1130,z0],[24,p0+1130,z0],[24,p0,z0]],'#80d4e8',1.4,'CLEAR',[6,4]);}
  // UPS commerciale fuori dal mobile: posto sul pavimento vicino alle prese LAN/230V della parete destra.
  // Ruotato di 90° in pianta: 410 mm lungo il muro, 99 mm verso la stanza, sempre verticale.
  if(state.showUPS){pushBox(1240,140,0,410,99,280,C.ups,'UPS','UPS PowerWalker VI 1500 CSW IEC · 410 lungo parete × 99 P × 280 H',1);
@@ -749,16 +840,16 @@ function roomScene(){
  if(state.dims){
   dimension([cabX,cabY,0],[cabX+M.cab.depth,cabY,0],'355 mm · profondità MISURATA',[0,-84,0],'#81d6d8');
   dimension([cabX,cabY,0],[cabX,cabY+M.cab.width,0],'1370 mm · mobile MISURATO',[-100,0,0],'#81d6d8');
-  dimension([plateStartX,1840,573],[plateStartX+450,1840,573],'450 mm · piastra',[0,-85,0],'#e7c38a');
-  dimension([plateStartX,1840,573],[plateStartX,2970,573],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
-  dimension([plateStartX,1840,573],[plateStartX,1840,907],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
+  dimension([plateStartX,1840,618],[plateStartX+450,1840,618],'450 mm · piastra',[0,-85,0],'#e7c38a');
+  dimension([plateStartX,1840,618],[plateStartX,2970,618],'1130 mm · piattaforma',[-95,0,0],'#e7c38a');
+  dimension([plateStartX,1840,618],[plateStartX,1840,952],'334 mm · altezza Torre',[0,-92,0],'#8ac4f1');
   if(state.scene!=='cabinet'){
    dimension([0,0,0],[roomW,0,0],'5000 mm · stanza circa',[0,-118,0],'#a8d6ee');
    dimension([0,0,0],[0,roomD,0],'5000 mm · stanza circa',[-118,0,0],'#a8d6ee');
   }
   dimension([24,1840,573],[160,1840,573],'136 mm · retro libero nominale',[0,-145,0],'#80d4e8');
-  text3([390,2405,948],'UNA TORRE H-7 · L 1028 × P 429 × H 334 mm · RETRO VERSO PARETE',C.accent,10,'DIM');
-  text3([285,1805,1004],'spalletta H90 MISURATA · appoggi H105 SOLO SCHEMA · piastra H18',C.accent,10,'DIM');
+  text3([390,2405,992],'UNA TORRE H-7 · L 1028 × P 429 × H 334 mm · RETRO VERSO PARETE',C.accent,10,'DIM');
+  text3([285,1805,1048],'HAUGA MAX 20 KG · PORTALE R-2 PORTA TUTTO A TERRA',C.accent,10,'DIM');
   if(state.scene!=='cabinet'){
    text3([810,640,1530],'MONITOR A MURO · luce 15–19 mm in pianta',C.accent,11,'DIM');
    text3([2720,480,115],'MULTILIVELLO + CASSETTIERA · SUBWOOFER SOPRA',C.accent,10,'DIM');
@@ -775,9 +866,10 @@ function roomScene(){
 
 function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+state.n*96;
  $('variant-pill').textContent='7 PC · NESSUN VANO EXTRA';
- if(state.scene==='lipdetail'){ $('variant-pill').textContent='KIT RIMOVIBILE · VISTA ESPLOSA';return lipDetailScene();}
+ if(state.scene==='haugadetail'){ $('variant-pill').textContent='IKEA HAUGA · 004.150.47';return haugaDetailScene();}
+ if(state.scene==='lipdetail'){ $('variant-pill').textContent='R-2 · PORTALE INDIPENDENTE';return lipDetailScene();}
  if(['room','workstation','cabinet'].includes(state.scene)){
-  $('variant-pill').textContent='UNA TORRE H-7 · mobile bianco';
+  $('variant-pill').textContent='R-2 · TORRE SU PORTALE A TERRA';
   return roomScene();
  }
  if(state.scene==='ups'){
@@ -883,10 +975,10 @@ function faceAvg(p){return p.reduce((a,q)=>[a[0]+q[0]/p.length,a[1]+q[1]/p.lengt
 function polygonPath(points){const path=new Path2D();points.forEach((p,i)=>i?path.lineTo(p.x,p.y):path.moveTo(p.x,p.y));path.closePath();return path}
 function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;refreshPartPicker();
  const detail=state.scene==='module',rear=state.scene==='rear',upsFocus=state.scene==='ups',room=['room','workstation','cabinet'].includes(state.scene),focus=state.scene==='workstation',cabinetFocus=state.scene==='cabinet',lip=state.scene==='lipdetail';
- const frameWidth=lip?1600:cabinetFocus?2150:focus?2900:room?6600:(upsFocus?680:detail?590:rear?width*1.34:(width+(state.showUPS&&state.scene!=='thermal'?225:0))*1.52);
- const frameHeight=lip?1600:cabinetFocus?1800:focus?2400:room?6400:(upsFocus?700:detail?700:rear?760:780);
+ const frameWidth=state.scene==='haugadetail'?1950:lip?1950:cabinetFocus?2150:focus?2900:room?6600:(upsFocus?680:detail?590:rear?width*1.34:(width+(state.showUPS&&state.scene!=='thermal'?225:0))*1.52);
+ const frameHeight=state.scene==='haugadetail'?1850:lip?1900:cabinetFocus?1900:focus?2400:room?6400:(upsFocus?700:detail?700:rear?760:780);
  const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.035,4)*state.zoom;
- cam={b,center:lip?[215,850,370]:cabinetFocus?[390,2405,690]:focus?[1180,1100,740]:room?[1530,1770,1090]:(upsFocus?[width+80,230,155]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:lip?2200:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
+ cam={b,center:state.scene==='haugadetail'?[300,820,380]:lip?[270,850,500]:cabinetFocus?[440,2405,650]:focus?[1180,1100,740]:room?[1530,1770,1090]:(upsFocus?[width+80,230,155]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:state.scene==='haugadetail'?2300:lip?2200:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
  // Fit the physical tower geometry rather than its nominal bounding envelope.
  if((state.scene==='tower'||state.scene==='room')&&!state.dims&&!state.clearance){
   cam.base=1;cam.ox=0;cam.oy=0;
@@ -987,8 +1079,11 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='WALL'||id==='WALLCUT'){t='Involucro stanza';d='Pianta circa 5000 × 5000 mm; unico smusso all’angolo dei PC (350 mm ipotizzati), altri tre angoli a 90°. Altezza soffitto 3000 mm dichiarata; vista aperta per non occultare gli arredi.';tt=['5 × 5 m','unico smusso','altezza da rilevare']}
   else if(id==='WINDOW'){t='Finestra · parete mobile bianco';d='Apertura dichiarata 2100 × 1600 mm, con bordo a circa 500 mm dall’angolo opposto al PC. Soffitto a 3000 mm; davanzale a 1000 mm e divisione delle ante sono ipotesi grafiche.';tt=['210 × 160 cm','50 cm dall’angolo','davanzale da rilevare']}
   else if(id==='FLOOR'){t='Pavimento del locale';d='Piano di riferimento dell’angolo stanza. Le misure sono schematiche e servono a confrontare ingombri e percorsi.';tt=['base metrica','solo contesto']}
-  else if(id==='LIP'){t='Spalletta a U del mobile';d='Risalto continuo su TRE lati: dietro e sulle due testate, con fronte libero. Altezza 90 mm comunicata dall’utente, spessore 18 mm ancora ipotetico. Nessun carico deve attraversare la spalletta o forarla: il telaio riceve peso attraverso sei appoggi interni al perimetro.';tt=['retro + due lati','H 90 mm utente / spessore da rilevare','fronte aperto']}
- else if(id==='ADAPTER'){t='Kit rimovibile H-7 / mobile';d='Piastra 1130×450×18 mm su sei appoggi DI STUDIO da 105 mm e tre traverse, per risalto H90 mm. Luce di studio sotto piastra 15 mm e sotto traverse solo 4 mm: geometria e resistenza da riprogettare. Sbalzo 65 mm davanti e dietro. Verificare struttura interna, distribuzione dei carichi, flessione, fissaggi e ribaltamento; nessun carico sulle spallette. Materiale resistente da dimensionare, non stampa portante non verificata.';tt=['1130×450×18 mm','6 appoggi di studio H105 mm','kit rimovibile','NON certificato']}
+  else if(id==='LIP'){t='Spalletta a U del mobile';d='Risalto su tre lati, alto 90 mm e spesso 10 mm misurati. Progetto R-2: nessun carico o fissaggio della Torre su HAUGA. Il telaio portante è esterno e arriva a pavimento.';tt=['H90 e spessore 10 mm misurati','non portante per Torre','nessuna vite aggiuntiva']}
+ else if(id==='PORTAL'){t='Portale R-2 con quattro montanti a terra';d='Supporto indipendente studiato attorno al mobile: quattro montanti 40×40, due traversi superiori a campata intera, piastra 1130×450 e bracci laterali. Bordo basso dei traversi a 560 mm: 20 mm teorici liberi sopra HAUGA. Larghezza telaio 1470 mm richiede 50 mm per lato, ma le scarpe richiedono 55 mm + tolleranze: riservare almeno 60 mm per lato. Nessuna vite nel mobile né carico sul piano IKEA. Necessari verifiche di spazio, vibrazione, flessione, ribaltamento e controventi; possibili vincoli al muro indipendenti.';tt=['portata HAUGA: 20 kg, non impiegata','R-2 senza viti nel mobile','portale 1470 mm','solo studio']}
+ else if(id==='PORTALBRACE'){t='Controventi laterali';d='Ogni fianco fuori sagoma del mobile ha traversa bassa, alta e diagonale; nessun traverso davanti ai cassetti. Il controvento in direzione trasversale e gli eventuali vincoli al muro sono ancora da definire.';tt=['solo sui fianchi','accesso cassetti libero','verifica torsione']}
+ else if(id==='PORTALFOOT'){t='Piedi indipendenti a pavimento';d='Quattro piastre orientative per sostenere il portale senza utilizzare il mobile. Verificare livellamento, materiale del pavimento, appoggio e anti-scorrimento; non sostituiscono verifica antiribaltamento.';tt=['quattro contatti pavimento','nessuna vite su HAUGA','non certificato']}
+ else if(id==='PORTALLOCK'){t='Quattro agganci rimovibili Torre / portale';d='Staffette e spine metalliche riutilizzabili trattengono la Torre sul portale. Sfilando gli agganci (dopo aver tolto alimentazione e tutti i cavi), l’H-7 si può collocare sul pavimento con i suoi piedini, ed eventualmente pattini allargati. Il materiale e la resistenza degli agganci devono ancora essere verificati.';tt=['stessa Torre in 2 posizioni','nessuna vite sul mobile','fissaggi su metallo']}
  else if(id==='STANDPAD'){t='Pattini opzionali per uso autonomo';d='Il telaio H-7 possiede già dieci piedini integrati e può poggiare su un piano rigido. Quattro pattini opzionali a incastro aumentano l’impronta e contrastano le spinte laterali, senza modificare i sette vani. Incastro e materiale da provare.';tt=['telaio autonomo','4 componenti opzionali','stabilità da provare']}
  else if(id==='OUTLETAC'){t='Presa elettrica a parete';d='Presa 230 V esistente dichiarata sulla parete a destra della postazione, approssimativamente un metro dopo lo spigolo/smusso. La quota 260–360 mm sopra pavimento è illustrativa, non rilevata. Alimentazione UPS con spina/cavo commerciale certificato; nessun 230 V stampato.';tt=['posizione circa 1 m','distanza da rilevare','solo impianto esistente']}
  else if(id==='OUTLETLAN'){t='Presa Ethernet RJ45';d='Punto LAN sulla stessa parete della presa elettrica. Si tratta di un frutto distinto; il cavo va nel proprio passacavo blu, separato dalla canaletta AC e raggiunge il modem/rack e la Torre senza attraversare il passaggio della sedia.';tt=['RJ45','canaletta dati separata']}
@@ -997,8 +1092,14 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  else if(id==='ACFLEX'){t='Bretella AC di servizio';d='Tracciato schematico della linea dal muro all’UPS e dall’UPS alle utenze selezionate. I cavi non devono passare sotto ruote o spigoli: verificare lunghezza, spine IEC e connettori prima del montaggio.';tt=['commerciale certificato','niente attraversamenti a pavimento']}
  else if(id==='NETPATCH'){t='Patch Ethernet / bretella di servizio';d='Cavo LAN separato dalla rete elettrica, con riccio di servizio e scollegamento prima di sollevare le cartucce. I percorsi nel browser rappresentano la destinazione, non una posa esecutiva.';tt=['CAT6','scollegare per estrazione']}
   else if(id==='RACKMODEM'){t='Modem nel multilivello';d='Router appoggiato su ripiano arieggiato insieme alla stampante e a tutti i satelliti audio. Alimentazione e connessioni devono rimanere accessibili e separate dal cablaggio IEC dell’UPS.';tt=['nel mobile multilivello','accesso ai cavi']}
-  else if(id==='WHITECAB'){t='Mobile bianco · base H-7';d='Mobile L1370 P355 H450 + spalletta alta 90 mm comunicati il 23/11/2026; spessore U 10 mm comunicato. Piastra centrata lunga 1130 mm: 120 mm liberi alle testate, sbalzo teorico di 47,5 mm per lato rispetto alla profondità misurata 355 mm. Mobile distanziato dal muro per lasciare 136 mm nominali dietro la piastra. Portata e struttura reale non rilevate; fissaggio e prova prima di caricare.';tt=['L1370 H450 + U90 misurati','120 mm per testata','retro libero ~136 mm','portata ignota']}
-  else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
+  else if(id==='WHITECAB'){t='Mobile bianco · candidato IKEA HAUGA 004.150.47';d='Esemplare L1370×P355×H540 mm; catalogo 1380×360×540. Corpo fino a 450mm, spalletta +90mm. Due vani aperti, due cassetti, quattro pomelli; pannelli di truciolare rivestito e schienale in fibra. Ha almeno tre anni. Limite top 20kg; ancoraggio a parete obbligatorio. La Torre R-2 si sostiene su telaio indipendente a terra.';tt=['IKEA HAUGA candidato da confermare','luce nominale 1345×330','top max 20kg','fissaggio a parete obbligatorio'];}
+ else if(id==='HAUGABACK'){t='HAUGA · schienale';d='Pannello di fibra verniciata con passaggio cavi posteriore. La posizione e forma degli intagli nel render sono schematiche: non usare per tagliare o forare.';tt=['fibra verniciata','uscita cavi posteriore','posizione illustrativa'];}
+ else if(id==='HAUGASHELF'||id==='HAUGAOPEN'){t='HAUGA · due vani aperti';d='Due vani superiori separati dal divisorio centrale e da un ripiano sopra i cassetti. Misure IKEA nominali 660 mm larghezza, 175 mm altezza, superficie interna superiore profonda 330 mm; portata ripiano 12-13 kg secondo mercati.';tt=['2 vani','660×175 mm nominali','12-13kg/vano'];}
+ else if(id==='HAUGADRAWER'){t='HAUGA · due cassetti';d='Un cassetto inferiore per metà, frontale bianco con due pomelli scuri, totale quattro. Portata massima IKEA 9 kg per cassetto; guide e dimensioni di sezione schematizzate.';tt=['2 cassetti','4 pomelli','9kg/cassetto'];}
+ else if(id==='HAUGAKNOB'){t='HAUGA · quattro pomelli';d='Quattro maniglie metalliche scure tonde, due per cassetto. Forma rappresentata, diametro illustrativo da verificare.';tt=['4 pomelli','diametro indicativo'];}
+ else if(id==='HAUGAGUIDE'){t='HAUGA · guide cassetti';d='Guide metalliche presenti secondo manuale; posizione e dimensioni del 3D sono indicative, non quote utilizzabili in officina.';tt=['schematiche','non esecutive'];}
+ else if(id==='LIP'){t='HAUGA · bordi a U';d='Il fianco rialzato è smussato anteriormente. Altezza spalletta riferita +90mm; bordo posteriore dichiarato spesso 10mm, fianchi circa 17,5mm dedotti dal disegno IKEA, non misurati. Nessuna portata certificata del solo bordo.';tt=['U su 3 lati','smusso frontale','non portante per Torre'];}
+ else if(id==='DARKDRAWER'){t='Cassettiera autonoma a pavimento';d='Cassettiera scura da 400 × 260 mm ipotetici, posizionata sul pavimento con il lato lungo addossato alla parete a destra della scrivania. Non poggia sul mobile bianco e non sostiene la Torre.';tt=['lato lungo a muro','separata dal bianco']}
   else if(id==='PRINTER'){t='Brother HL-1110 nel multilivello';d='Ingombro nominale 340 × 238 × 189 mm. Si trova sul ripiano inferiore del mobile multilivello, non sul mobile bianco né sulla cassettiera. Lasciare libera la corsa della carta e l’apertura delle coperture.';tt=['340 × 238 × 189 mm','nel mobile multilivello']}
   else if(id==='MODEM'){t='Modem / router';d='Posizione proposta sul mobile basso, arretrata e vicina all’angolo, per distribuire meglio alimentazione e cavi senza passare davanti alla sedia.';tt=['stima 22 × 16 × 5,8 cm','da identificare meglio']}
   else if(id==='SUBWOOFER'){t='Subwoofer sulla cassettiera';d='Subwoofer stimato 260 × 180 × 360 mm, spostato sopra la cassettiera a destra della scrivania. In questo assetto libera il pavimento e resta vicino al rack audio; va comunque verificata la stabilità dinamica e l’eventuale trasmissione di vibrazioni al mobile.';tt=['sopra cassettiera','vibrazioni da verificare']}
@@ -1035,7 +1136,7 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
  if(mode==='thermal'){state.yaw=2.85;state.pitch=.63;state.cooling=true;$('cooling').classList.add('on');state.airflow=true;$('airflow').classList.add('on');/* no forced dimensions */}
  else if(mode==='room'){state.yaw=.82;state.pitch=.53;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='cabinet'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}
- else if(mode==='lipdetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}
+ else if(mode==='lipdetail'||mode==='haugadetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}
  else if(mode==='rear'){state.yaw=0;state.pitch=.28}
  else if(mode==='module'){state.yaw=2.3;state.pitch=.36;}
@@ -1048,13 +1149,14 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
  /* Scene changes do not overwrite visibility or overlay preferences. */
  const names={
   thermal:['VENTILAZIONE · 6 VENTOLE FRONTALI','Blu = ingresso · arancio = uscita ipotizzata · non CFD'],
-  tower:['TORRE H-7 R-1 · completa e autonoma','1028 × 429 × 334 mm · struttura indipendente · pattini aggiuntivi opzionali'],
+  tower:['TORRE H-7 R-2 · completa e autonoma','1028 × 429 × 334 mm · struttura indipendente · pattini aggiuntivi opzionali'],
   rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti sulle sedi inferiori'],
   module:['MODULO TECNICO · PCB, M3, INCASTRI E GUIDE','Una sola scena: lato scheda / retro X, incastro esploso e quote'],
   ups:['UPS LATERALE · indipendente dalla stampa','99×410×280 mm · 13,1 kg sul piano · 4 IEC backup + 4 solo surge'],
   room:['STANZA 5 × 5 × 3 m · UNA TORRE H-7','Unico smusso lato PC · finestra 210 × 160 cm · vista architettonica aperta'],
-  cabinet:['TORRE H-7 · ADATTATORE E SPALLETTA U','Rialzo rimovibile sopra 3 bordini, carico solo sul piano interno del mobile'],
-  lipdetail:['SPALLETTA U · 3 LATI, FRONTE LIBERO','Vista esplosa +110 mm: sei appoggi sul piano interno e piastra rimovibile'],
+  cabinet:['H-7 R-2 · PORTALE ESTERNO AL MOBILE','Quattro gambe a terra · HAUGA max 20 kg NON usati · nessuna vite nel mobile'],
+  haugadetail:['IKEA HAUGA · MOBILE REALE','2 vani / 2 cassetti / 4 pomelli · top max 20 kg · catalogo e rilievo'],
+  lipdetail:['H-7 R-2 · CONTATTO ZERO COL MOBILE','Sezione: portale portante, U libera, quattro piedi a terra, Torre removibile'],
   workstation:['POSTAZIONE · dettaglio dei tre supporti a muro','Piastra, doppio snodo, attacco VESA: ogni elemento si seleziona al clic']
  };
  $('scene-caption').textContent=names[mode][0];$('scene-subtitle').textContent=names[mode][1];
