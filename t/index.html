@@ -565,7 +565,7 @@ function roomScene(){
   wire([[48,winStart,winSill],[48,winEnd,winSill],[48,winEnd,winTop],[48,winStart,winTop],[48,winStart,winSill]],'#e9f8ff',2.1,'WINDOW',[],1);
   wire([[48,winStart+winWidth/2,winSill],[48,winStart+winWidth/2,winTop]],'#e9f8ff',1.6,'WINDOW',[],1);
   text3([70,(winStart+winEnd)/2,winTop+140],'FINESTRA · 210 × 160 cm','#b8efff',12,'ROOMLABEL');
-  text3([roomW-300,roomD-200,wallH],'H 3,00 m','#dbe9ed',11,'ROOMLABEL');
+  // Ceiling height remains explicit in the scene title; avoid a floating label over the chair.
  }
  if(state.dims&&state.scene!=='cabinet'){
   dimension([45,winStart,winTop],[45,winEnd,winTop],'2100 mm · finestra',[0,0,100],'#8ed6ef');
@@ -839,11 +839,11 @@ function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;r
  const frameWidth=lip?1600:solo?1950:cabinetFocus?2150:focus?2900:room?6600:(upsFocus?680:joint?560:detail?590:rear?width*1.34:(width+(state.showUPS&&state.scene!=='thermal'?225:0))*1.52);
  const frameHeight=lip?1600:solo?1550:cabinetFocus?1800:focus?2400:room?6400:(upsFocus?700:joint?700:detail?700:rear?760:780);
  const dimScale=clamp(Math.min(W/frameWidth,H/frameHeight),.035,4)*state.zoom;
- cam={b,center:lip?[215,850,370]:solo?[370,860,190]:cabinetFocus?[390,2470,690]:focus?[1180,1100,740]:room?[2500,2500,1300]:(upsFocus?[width+80,230,155]:joint?[cx,192,157]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:lip?2200:solo?2600:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
+ cam={b,center:lip?[215,850,370]:solo?[370,860,190]:cabinetFocus?[390,2470,690]:focus?[1180,1100,740]:room?[1530,1770,1090]:(upsFocus?[width+80,230,155]:joint?[cx,192,157]:detail?[cx,200,164]:rear?[width/2,393,165]:[(width+(state.showUPS&&state.scene!=='thermal'?170:0))/2,210,160]),distance:lip?2200:solo?2600:cabinetFocus?3200:focus?4900:room?16000:Math.max(850,width*1.45),base:dimScale};
  // Fit the physical tower geometry rather than its nominal bounding envelope.
  if((state.scene==='tower'||state.scene==='room')&&!state.dims&&!state.clearance){
   cam.base=1;cam.ox=0;cam.oy=0;
-  const pts=[];for(const f of faces){if(!['GRID','DIM','CLEAR'].includes(f.group))for(const p of f.p)pts.push(projection(p));}
+  const pts=[];for(const f of faces){if(!['GRID','DIM','CLEAR'].includes(f.group) && !(state.scene==='room' && ['WALL','WALLCUT','FLOOR'].includes(f.group)))for(const p of f.p)pts.push(projection(p));}
   if(pts.length){let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
    for(const p of pts){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);}
    const top=W<600?65:75,bottom=W<600?76:70,pad=W<600?16:50;
@@ -858,10 +858,16 @@ function redraw(){const width=make(),b=basis(),cx=178+(state.focusIndex+.5)*96;r
  // distant vignette horizon / front/back guidance
  const ordered=[];
  for(const f of faces){const center=faceAvg(f.p),pp=f.p.map(projection);ordered.push({...f,center,pp,depth:dot([center[0]-cam.center[0],center[1]-cam.center[1],center[2]-cam.center[2]],b.dir)})}
- ordered.sort((a,z)=>a.depth-z.depth);
+ // In the cutaway room view, architectural surfaces are a backdrop, never a
+ // foreground mask: painter-ordering by face centroid otherwise hides monitors
+ // and furniture when the high walls cross the camera's sight lines.
+ const roomBackdrop=new Set(['FLOOR','WALL','WALLCUT','WINDOW']);
+ ordered.sort((a,z)=>state.scene==='room'
+  ? (Number(!roomBackdrop.has(a.group))-Number(!roomBackdrop.has(z.group)) || a.depth-z.depth)
+  : a.depth-z.depth);
  pick=[];
  const light=[.36,-.54,.77];
- for(const f of ordered){const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.12);let opacity=f.opa;
+ for(const f of ordered){if(state.scene==='room' && f.group==='WALLCUT')continue;const path=polygonPath(f.pp),bright=clamp(.67+.33*dot(f.normal,light),.35,1.12);let opacity=f.opa;
  if(state.xray && (f.group==='FRAME' || /^P\d/.test(f.group) || ['WALL','FLOOR','WHITECAB','DARKDRAWER','PRINTER','MODEM','SUBWOOFER','AUDIOLEFT','AUDIORIGHT','RACK','DESK','CHAIR','MONHDMI','MONVGA','MONMID','LAPTOP','AUDIOCENTER','DESKSATLEFT','DESKSATRIGHT'].includes(f.group)))opacity*=['room','workstation','cabinet','standalone'].includes(state.scene)?.75:.30;
  if(f.group==='GRID')continue;
  const chosen=f.group===state.selected;
@@ -944,9 +950,9 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  redraw();
 }
 function buttonGroup(sel,active){document.querySelectorAll(sel).forEach(b=>b.classList.toggle('active',b===active))}
-function view(v){if(v==='iso'){state.yaw=state.scene==='room'?1.05:2.77;state.pitch=state.scene==='room'?.49:.45}else if(v==='top'){state.yaw=3.14;state.pitch=1.53}else if(v==='front'){state.yaw=3.14;state.pitch=.10}else if(v==='rear'){state.yaw=0;state.pitch=.25}else if(v==='side'){state.yaw=1.57;state.pitch=.23}state.zoom=1;buttonGroup('[data-view]',document.querySelector(`[data-view="${v}"]`));tip.style.opacity=0;redraw()}
+function view(v){if(v==='iso'){state.yaw=state.scene==='room'?.82:2.77;state.pitch=state.scene==='room'?.53:.45}else if(v==='top'){state.yaw=3.14;state.pitch=1.53}else if(v==='front'){state.yaw=3.14;state.pitch=.10}else if(v==='rear'){state.yaw=0;state.pitch=.25}else if(v==='side'){state.yaw=1.57;state.pitch=.23}state.zoom=1;buttonGroup('[data-view]',document.querySelector(`[data-view="${v}"]`));tip.style.opacity=0;redraw()}
 function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow=false;$('airflow').classList.remove('on')}state.scene=mode;state.zoom=1;state.lifted=null;state.explode=0;$('explode').value=0;$('explabel').textContent='0%';
- if(mode==='thermal'){state.yaw=2.85;state.pitch=.63;state.cooling=true;$('cooling').classList.add('on');state.airflow=true;$('airflow').classList.add('on');state.dims=true;$('dims').classList.add('on')}else if(mode==='room'){state.yaw=1.05;state.pitch=.49;state.xray=false;$('xray').classList.remove('on')}else if(mode==='cabinet'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}else if(mode==='standalone'){state.yaw=1.44;state.pitch=.48;state.xray=false;$('xray').classList.remove('on')}else if(mode==='lipdetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.77;state.pitch=.45}
+ if(mode==='thermal'){state.yaw=2.85;state.pitch=.63;state.cooling=true;$('cooling').classList.add('on');state.airflow=true;$('airflow').classList.add('on');state.dims=true;$('dims').classList.add('on')}else if(mode==='room'){state.yaw=.82;state.pitch=.53;state.xray=false;$('xray').classList.remove('on')}else if(mode==='cabinet'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}else if(mode==='standalone'){state.yaw=1.44;state.pitch=.48;state.xray=false;$('xray').classList.remove('on')}else if(mode==='lipdetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}else if(mode==='rear'){state.yaw=0;state.pitch=.28}else if(mode==='guides'){state.yaw=2.27;state.pitch=.25}else if(mode==='module'){state.yaw=2.3;state.pitch=.36}else if(mode==='supports'){state.yaw=-1.35;state.pitch=.26}else if(mode==='joint'){state.yaw=2.28;state.pitch=.34}else{state.yaw=2.77;state.pitch=.45}
  if(mode==='ups'){state.showUPS=true;$('showUPS').classList.add('on')}
  if(mode==='tower'){state.dims=false;state.clearance=false;state.xray=false;$('dims').classList.remove('on');$('clearance').classList.remove('on');$('xray').classList.remove('on')}
  if(mode==='room'||mode==='workstation'){state.dims=false;$('dims').classList.remove('on')}else if(['cabinet','standalone','lipdetail'].includes(mode)){state.dims=true;$('dims').classList.add('on')}
