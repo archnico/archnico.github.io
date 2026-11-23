@@ -1,7 +1,7 @@
 {
   "updated": "2026-11-23",
   "units": "mm",
-  "model": "H-7 R-2 conceptual non-executive",
+  "model": "H-7 R-3 lightweight concept; R-2 alternative; non-executive",
   "furniture": {
     "measured": {
       "width": 1370,
@@ -54,8 +54,9 @@
       334
     ],
     "use_modes": [
-      "portal_supports_on_floor",
-      "chassis_alone_on_floor"
+      "lightweight_on_hauga_subject_to_weight_test",
+      "chassis_alone_on_floor",
+      "r2_portal_as_backup"
     ]
   },
   "r2": {
@@ -73,6 +74,30 @@
     "portal_clearance_above_lip_mm": 20,
     "total_on_furniture_kg_design": 0,
     "actual_loaded_mass_kg": null,
+    "structurally_validated": false
+  },
+  "r3": {
+    "mass_estimate_kg": 17.8,
+    "mass_real_measured_kg": null,
+    "target_mass_kg": 17,
+    "manufacturer_max_top_load_kg": 20,
+    "estimated_components_kg": {
+      "schede_cpu_ram_dissipatori_7": 6.2,
+      "profilati_2020": 3.0,
+      "base_reticolare_alleggerita": 1.8,
+      "7_cartucce_petg_e_guide": 1.0,
+      "6_ventole": 1.38,
+      "hdd_1x35_2x25": 0.6,
+      "ssd": 0.12,
+      "alimentatore_atx_1": 1.3,
+      "cavi_dati_e_alimentazione": 0.8,
+      "viti_piedini_antivibrazione": 0.7,
+      "rialzi_rimovibili_hauga": 0.9
+    },
+    "front_overhang_mm": 95,
+    "support_count": 6,
+    "support_height_mm": 105,
+    "ups_on_hauga": false,
     "structurally_validated": false
   }
 }
