@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX Round 6 — DOM interaction tests</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#0a121b;color:#e3f1f1;padding:20px}
+ #log{white-space:pre-wrap;font-family:monospace;background:#102834;border:1px solid #254653;padding:12px;border-radius:8px;max-height:80vh;overflow:auto}
+ .pass{color:#64d6c4}.fail{color:#e78b86}
+ .left{width:200px;background:#0b1b26}.left.open{display:block}.left.collapsed{display:none}
+ .left.compact .layer-row{min-height:22px;font-size:11px}
+ .quick{border:1px solid #35515a;background:#18313c;color:#edfafa}
+ .switch[aria-checked="true"]{background:#1e6657}
+ .help-panel{padding:10px;background:#0d202c;border:1px solid #4b7781}
+ .help-panel[hidden]{display:none}
+ .selection-hud{padding:5px;background:#062329;border:1px solid #4d9d92}
+ .selection-hud[hidden]{display:none}
+ .selection-hud.active{display:block}
+ .viewport{width:200px;height:200px;background:#111;position:relative}
+ .tech-details{padding:6px;background:#0e242e;border:1px solid #33545b;margin:4px}
+ .tech-details[hidden]{display:none}
+ button{min-height:44px}
+</style>
+</head>
+<body>
+<h1>UX Round 6 — DOM interaction tests</h1>
+<div id="log"></div>
+
+<aside class="left compact" id="left-panel" data-compact-menu="true" tabindex="-1">sidebar</aside>
+<section class="viewport" id="vp">
+ <div class="selection-hud" id="selection-hud" role="status" aria-live="polite" hidden><span class="hud-label">Selezionato</span><strong id="hud-title">—</strong><button id="focus-selected" aria-label="Focus">Focus</button></div>
+</section>
+<aside class="right" id="inspector" hidden><h3 id="part-title">Test Part</h3><small id="part-specific"></small><div class="tech-details" id="tech-details" hidden><small id="part-tech"></small><small id="part-measurements"></small></div></aside>
+
+<button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="left-panel" aria-label="Menu">☰</button>
+<button id="fullscreen-btn" aria-label="Schermo intero">FS</button>
+<button id="help-btn" aria-expanded="false" aria-label="Aiuto">?</button>
+<div class="help-panel" id="help-panel" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><button class="close" aria-label="Chiudi">x</button><h3 id="help-title">Aiuto</h3></div>
+<button class="switch" data-layer="semitrasparente" aria-checked="false" aria-label="Semi">semi</button>
+<button class="switch" data-layer="isola" aria-checked="false" aria-label="Isola">isola</button>
+<button class="switch" data-layer="quote" aria-checked="false" aria-label="Quote">quote</button>
+<button class="switch" data-layer="griglia" aria-checked="false" aria-label="Griglia">griglia</button>
+<button class="switch" data-layer="ingombri" aria-checked="false" aria-label="Ingombri">ingombri</button>
+<button id="qfit" aria-label="Centra">fit</button>
+<button id="geometry-inspect" data-geometry-inspect aria-pressed="false" aria-label="Ispezione geometria">Ispezione</button>
+<div class="quicktools" id="quicktools" role="toolbar" aria-label="Controlli rapidi"><button class="quick" data-geometry-inspect aria-label="Ispezione">≈</button></div>
+<div class="layer-row" data-unresolved><span>Demo</span><button class="switch" data-layer="demo" aria-checked="true">demo</button></div>
+
+<script src="../assets/viewer-enhancements.js"></script>
+<script>
+const log = document.getElementById('log');
+let pass = 0, fail = 0;
+function assert(cond, msg) {
+  if (cond) { pass++; log.innerHTML += '<span class="pass">PASS</span> ' + msg + '\n'; }
+  else { fail++; log.innerHTML += '<span class="fail">FAIL</span> ' + msg + '\n'; }
+}
+function $(id){ return document.getElementById(id); }
+function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+(async function run(){
+const acc = window.towerAccessibility;
+assert(!!acc && typeof acc.labelControls === 'function', 'accessibility helper exposed');
+
+// Compact menu class present
+assert(document.querySelector('.left.compact'), 'compact sidebar class present');
+assert(document.querySelector('[data-compact-menu="true"]'), 'compact menu data attribute present');
+
+// Geometry inspection helper exposed
+assert(typeof window.towerGeometryInspection === 'function', 'geometry inspection helper exposed');
+assert(typeof window.towerInspect === 'function', 'geometry inspect alias exposed');
+
+// Tech details block present
+assert(!!$('tech-details'), 'tech details block present');
+assert(!!$('part-tech'), 'part tech element present');
+
+// Toggle geometry inspection
+const before = document.body.classList.contains('geometry-inspection');
+const res = window.towerGeometryInspection(true);
+await wait(50);
+assert(res === true && document.body.classList.contains('geometry-inspection'), 'geometry inspection activates');
+const q = document.querySelector('[data-layer="quote"]');
+assert(q && q.getAttribute('aria-checked') === 'true', 'geometry inspection enables quote layer');
+
+window.towerGeometryInspection(false);
+await wait(50);
+assert(!document.body.classList.contains('geometry-inspection'), 'geometry inspection deactivates');
+
+// Tech details react to selection
+const inspector = $('inspector');
+const hud = $('selection-hud');
+inspector.hidden = false;
+await wait(50);
+const tech = $('tech-details');
+assert(tech && !tech.hidden, 'tech details show when inspector visible');
+
+log.innerHTML += '\n' + (fail === 0 ? '<span class="pass">ALL PASSED</span>' : '<span class="fail">' + fail + ' FAILED</span>') + ' (' + pass + ' passed)';
+})();
+</script>
+</body>
+</html>

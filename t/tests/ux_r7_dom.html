@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UX Round 7 — DOM interaction tests</title>
+<style>
+ body{font-family:system-ui,sans-serif;background:#0a121b;color:#e3f1f1;padding:20px}
+ #log{white-space:pre-wrap;font-family:monospace;background:#102834;border:1px solid #254653;padding:12px;border-radius:8px;max-height:80vh;overflow:auto}
+ .pass{color:#64d6c4}.fail{color:#e78b86}
+ .left{width:200px;background:#0b1b26}.left.open{display:block}.left.collapsed{display:none}
+ .quick{border:1px solid #35515a;background:#18313c;color:#edfafa}
+ .switch[aria-checked="true"]{background:#1e6657}
+ .help-panel{padding:10px;background:#0d202c;border:1px solid #4b7781}
+ .help-panel[hidden]{display:none}
+ .selection-hud{padding:5px;background:#062329;border:1px solid #4d9d92}
+ .selection-hud[hidden]{display:none}
+ .selection-hud.active{display:block}
+ .viewport{width:200px;height:200px;background:#111;position:relative}
+ .tooltip{position:absolute;opacity:0}
+ .tooltip.visible{opacity:1}
+</style>
+</head>
+<body>
+<h1>UX Round 7 — DOM interaction tests</h1>
+<div id="log"></div>
+
+<aside class="left" id="left-panel">sidebar</aside>
+<section class="viewport" id="vp">
+ <div class="selection-hud" id="selection-hud" hidden><span class="hud-label">Selezionato</span><strong id="hud-title">—</strong><button id="focus-selected">Focus</button></div>
+ <div class="tooltip" id="tooltip"></div>
+</section>
+<aside class="right" id="inspector" hidden><h3 id="part-title">Test Part</h3></aside>
+
+<button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="left-panel">☰</button>
+<button id="fullscreen-btn">FS</button>
+<button id="help-btn" aria-expanded="false">?</button>
+<div class="help-panel" id="help-panel" hidden role="dialog" aria-modal="true" aria-labelledby="help-title"><button class="close">x</button><h3 id="help-title">Aiuto</h3></div>
+<button class="switch" data-layer="semitrasparente" aria-checked="false">semi</button>
+<button class="switch" data-layer="isola" aria-checked="false">isola</button>
+<button id="qfit">fit</button>
+
+<script src="../assets/viewer-enhancements.js"></script>
+<script>
+const log = document.getElementById('log');
+let pass = 0, fail = 0;
+function assert(cond, msg) {
+  if (cond) { pass++; log.innerHTML += '<span class="pass">PASS</span> ' + msg + '\n'; }
+  else { fail++; log.innerHTML += '<span class="fail">FAIL</span> ' + msg + '\n'; }
+}
+function $(id){ return document.getElementById(id); }
+function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+(async function run(){
+  assert(typeof window.towerRegressionSweep === 'function', 'regression sweep helper present');
+  assert(typeof window.towerScene === 'function', 'scene helper present');
+  assert(typeof window.towerLayer === 'function', 'layer helper present');
+  assert(typeof window.towerTooltip === 'object', 'tooltip helper present');
+  assert(Array.isArray(window.towerConsoleErrors), 'console error list present');
+
+  // tooltip show/hide
+  const shown = window.towerTooltip.show('test tooltip', 10, 10);
+  assert(shown === true, 'tooltip show returns true');
+  assert($('#tooltip').classList.contains('visible'), 'tooltip becomes visible');
+  window.towerTooltip.hide();
+  assert(!$('#tooltip').classList.contains('visible'), 'tooltip hides');
+
+  // layer helper does not throw on missing/valid switches
+  let err = null;
+  try { window.towerLayer('semitrasparente', true); } catch(e){ err = e; }
+  assert(!err, 'layer helper does not throw');
+
+  // scene helper does not throw even without scene buttons
+  err = null;
+  try { window.towerScene('room'); } catch(e){ err = e; }
+  assert(!err, 'scene helper does not throw');
+
+  // regression sweep runs and returns a result
+  const result = await window.towerRegressionSweep({ scenes: [], layers: ['semitrasparente','isola'] });
+  assert(result && typeof result.ok === 'boolean', 'regression sweep returns result');
+  assert(Array.isArray(result.scenes), 'regression sweep returns scenes');
+
+  log.innerHTML += '\n' + (fail === 0 ? '<span class="pass">ALL PASSED</span>' : '<span class="fail">' + fail + ' FAILED</span>') + ' (' + pass + ' passed)';
+})();
+</script>
+</body>
+</html>
