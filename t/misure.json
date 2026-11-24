@@ -306,5 +306,26 @@
     "historical_render": "fb1.html",
     "manufacturing_approved": false,
     "source": "docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md"
+  },
+  "universal_r81": {
+    "status": "candidate_not_executable",
+    "carrier_envelope_mm": [
+      120,
+      284,
+      280
+    ],
+    "pitch_mm": 190,
+    "angle_deg": 0,
+    "base_mm": [
+      1325,
+      310
+    ],
+    "guide_envelope_mm": 138,
+    "guide_gap_mm": 52,
+    "psu_preference": "independent ventilated support, location unverified",
+    "n1_cable_pocket_candidate_mm": 65,
+    "render": "R8_92_196_reference_not_R81",
+    "source": "docs/H7_R81_UNIVERSAL_2026-11-24.md",
+    "manufacturing_approved": false
   }
 }

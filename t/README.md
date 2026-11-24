@@ -24,6 +24,10 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](index.html), [FB-1 storico](fb1.html). NO-GO produzione.
 
+## R-8.1 Universal — alimentazione, cavi e carrier
+
+[Studio C120 e protocollo n1](docs/H7_R81_UNIVERSAL_2026-11-24.md): involucro candidato 120 × 284 × 280, passo 190, luce guida 52 mm, adattatori metallici per 92 mm. PSU commerciali indipendenti preferibilmente su supporto ventilato separato dal top. Per n1 studiare tasca cavi interna; il 3D R-8 92/196 resta riferimento visuale, non CAD C120. NO-GO fabbricazione.
+
 ## Come si presenta
 
 La **Torre H-7** (descrizione storica FB-1, conservata per confronto) poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
