@@ -1,0 +1,14 @@
+signal,logical_evidence,physical_connector,plug_projection_mm,straight_mm,bend_projection_mm,reserve_mm,route,measured_fit
+ATX24,manual_24pin,,,,,,,pending
+CPU,manual_4pin,,,,,,,pending
+SATA_PWR,SSD_local,,,,,,,pending
+LAN,link_1000Mbps,,,,,,,pending
+VID1,DRM_HDMI_connected_physical_path_unknown,,,,,,,pending
+VID2,DRM_VGA_connected,,,,,,,pending
+USB_KBD,USB_HID,,,,,,,pending
+USB_MOUSE,USB_HID,,,,,,,pending
+USB_CAM,USB_video_audio,,,,,,,pending
+USB_BT,USB_wireless,,,,,,,pending
+USB_HUB,USB2_hub,,,,,,,pending
+AUDIO,analog_output_active,,,,,,,pending
+F_PANEL,manual_and_OEM_survey,,,,,,,pending

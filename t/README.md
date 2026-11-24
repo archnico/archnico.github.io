@@ -28,6 +28,8 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 ## Fase 1 — prototipo n1
 
+**P0.3 ServiceDock:** [architettura e manutenzione](docs/H7_C120_N1_P03_SERVICEDOCK_2026-11-24.md) · [tavola](n1-p03.svg) · [rilievo cavi CSV](n1-p03-cables.csv). Porte originali preferite, tasca 65 lordi e possibile ostacolo a 35,5 mm; HDD n1 /srv con 268 GiB occupati, migrazione bloccata fino a backup e verifica dipendenze.
+
 **P0.2:** [Universal Mount, irrigidimento e ritenute](docs/H7_C120_N1_P02_MOUNT_2026-11-24.md) · [tavola](n1-p02.svg) · [delta CSV](n1-p02-delta.csv). Due alternative di supporto, quattro ritenute positive candidate; budget componenti A1 C120 77,9 mm lordi. NO-GO fabbricazione.
 
 **P0.1:** [distinta tagli e giunti](docs/H7_C120_N1_P01_DISTINTA_2026-11-24.md) · [tavola](n1-p01.svg) · [CSV](n1-p01-bom.csv). Banco 380 × 310, angolari inferiori 15 mm, guide a ±66; studio, non taglio autorizzato.

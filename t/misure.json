@@ -515,5 +515,38 @@
     "source": "docs/H7_C120_N1_P02_MOUNT_2026-11-24.md",
     "drawing": "n1-p02.svg",
     "delta_bom": "n1-p02-delta.csv"
+  },
+  "phase1_n1_p03": {
+    "status": "service architecture candidate; physical routing unverified",
+    "dock_preferred": "A original IO, releasable fixed cable comb",
+    "dock_alternative": "B compatible data extensions only",
+    "rear_gross_mm": 65,
+    "aligned_rear_upright_clearance_mm": 35.5,
+    "nominal_external_furniture_margin_mm": 23,
+    "rear_routes": [
+      "direct",
+      "upward",
+      "redesign IO"
+    ],
+    "live_logical_inventory": {
+      "lan_mbps": 1000,
+      "usb3_controller_mbps": 5000,
+      "display_connected": [
+        "HDMI-A-1",
+        "VGA-1"
+      ],
+      "audio": "analog active"
+    },
+    "storage_blocker": {
+      "mount": "/srv",
+      "used_gib_displayed": 268,
+      "filesystem": "ext4",
+      "migration_approved": false
+    },
+    "physical_survey_complete": false,
+    "manufacturing_approved": false,
+    "source": "docs/H7_C120_N1_P03_SERVICEDOCK_2026-11-24.md",
+    "drawing": "n1-p03.svg",
+    "cable_survey": "n1-p03-cables.csv"
   }
 }

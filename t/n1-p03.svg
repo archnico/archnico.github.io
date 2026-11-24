@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="630" viewBox="0 0 1000 630">
+<rect width="1000" height="630" fill="#f7f9fa"/>
+<g font-family="sans-serif" fill="#23343c">
+<text x="35" y="42" font-size="29">C120/n1 · P0.3 ServiceDock</text>
+<text x="35" y="68" font-size="14">Pianta nominale e schema funzionale — percorso reale da rilevare</text>
+<text x="35" y="110" font-size="19">Pianta u/v · dettaglio tasca posteriore</text>
+<rect x="35.0" y="150.0" width="468.59999999999997" height="198.0" fill="none" stroke="#526874" stroke-dasharray="5 4"/>
+<rect x="396.34999999999997" y="150.0" width="107.25" height="198.0" fill="#c7e7f5" stroke="#526874" fill-opacity=".7"/>
+<rect x="107.6" y="208.575" width="288.75" height="2.64" fill="#29836e" stroke="#526874" />
+<rect x="58.925" y="150.0" width="24.75" height="24.75" fill="#d69a42" stroke="#526874" />
+<rect x="454.92499999999995" y="150.0" width="24.75" height="24.75" fill="#d69a42" stroke="#526874" />
+<text x="70" y="140" font-size="14">Fronte</text>
+<text x="420" y="140" font-size="14">Retro</text>
+<text x="315" y="280" font-size="15">65 mm lordi</text>
+<path d="M396.34999999999997 158H454.92499999999995" stroke="#b65c4d" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="265" y="337" font-size="13">35,5 mm fino al montante se percorso allineato</text>
+<text x="35" y="365" font-size="14">PCB in verde · montanti A1 in arancio · tasca in azzurro</text>
+<text x="35" y="387" font-size="14">La proiezione non certifica il passaggio di un connettore.</text>
+<text x="550" y="110" font-size="19">Schema funzionale</text>
+<rect x="560" y="138" width="150" height="64" fill="#d5dde2" stroke="#526874" />
+<text x="585" y="166" font-size="17">PSU separato</text>
+<text x="575" y="187" font-size="14">Cavi OEM 24 + 4</text>
+<rect x="560" y="265" width="150" height="93" fill="#b6ddd2" stroke="#526874" />
+<text x="587" y="295" font-size="18">C120 / n1</text>
+<text x="576" y="318" font-size="14">SSD locale</text>
+<text x="576" y="339" font-size="14">I/O e F_PANEL</text>
+<rect x="765" y="265" width="200" height="93" fill="#c8e5f5" stroke="#526874" />
+<text x="780" y="290" font-size="15">Dock A: porte originali</text>
+<text x="780" y="311" font-size="14">Dock B: estensioni dati</text>
+<text x="780" y="334" font-size="14">Pettine fisso sganciabile</text>
+<path d="M635 202V265 M710 310H765" stroke="#64748b" stroke-width="2.5" fill="none"/>
+<text x="550" y="387" font-size="14">Nessun innesto cieco, nessun bus AC costruito in casa.</text>
+<text x="35" y="450" font-size="18">Blocco storage rilevato: HDD /srv, 268 GiB occupati</text>
+<text x="35" y="475" font-size="14">Backup verificato + verifica dipendenze + prova avvio prima di rimuovere HDD.</text>
+<text x="35" y="510" font-size="14">Percorsi candidati: R1 retro diretto, R2 risalita libera, R3 riprogettazione I/O.</text>
+<text x="35" y="548" font-size="16">NO-GO: dimensioni reali dei cavi, I/O, PSU, ritenute, accesso e termica non verificati.</text>
+</g></svg>
