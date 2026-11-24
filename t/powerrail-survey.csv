@@ -1,0 +1,11 @@
+device,role,psu_model,ac_idle_w,ac_load_w,va_load,pf_load,peak_measured_w,battery_health,ups_priority,notes
+n0,laptop,,,,,,,,pending,OEM brick survey
+n1,desktop,,,,,,,,pending,/srv dependency unresolved
+n2,storage_host,,,,,,,,candidate,ADP1 BAT0 health unknown
+n3,harbor,,,,,,,,pending,ACAD BAT1 health unknown 8TB here
+DAS_H4,storage,,,,,,,,candidate,not purchased
+HDD_8TB,storage,,,,,,,,candidate,currently n3
+HDD_4TB,storage,,,,,,,,candidate,currently n2
+HUB4,storage_usb,,,,,,,,candidate,not purchased
+router_switch,network,,,,,,,,candidate,inventory pending
+AirRail,cooling,,,,,,,,conditional,if required for protected nodes

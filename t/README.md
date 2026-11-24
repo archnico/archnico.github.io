@@ -28,6 +28,8 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 ## Fase 1 — prototipo n1
 
+**P0.5 PowerRail:** [dossier](docs/H7_C120_P05_POWERRAIL_2026-11-24.md) · [calcolatore](powerrail.html) · [rilievi CSV](powerrail-survey.csv). PSU indipendenti, UPS prioritario storage/rete, NUT candidato non installato; nessuna misura AC.
+
 **P0.4 AirRail/AirSense:** [dossier termico](docs/H7_C120_P04_AIRRAIL_AIRSENSE_2026-11-24.md) · [calcolatore interattivo](airrail.html) · [script passivo](tools/airsense.py). Raffreddamento locale sempre attivo; 0/1/4/7 ventole candidate, non approvate; nessun test sotto carico.
 
 **P0.3 ServiceDock:** [architettura e manutenzione](docs/H7_C120_N1_P03_SERVICEDOCK_2026-11-24.md) · [tavola](n1-p03.svg) · [rilievo cavi CSV](n1-p03-cables.csv). Porte originali preferite, tasca 65 lordi e possibile ostacolo a 35,5 mm; HDD n1 /srv con 268 GiB occupati, migrazione bloccata fino a backup e verifica dipendenze.

@@ -580,5 +580,28 @@
     "source": "docs/H7_C120_P04_AIRRAIL_AIRSENSE_2026-11-24.md",
     "calculator": "airrail.html",
     "passive_script": "tools/airsense.py"
+  },
+  "phase1_p05_powerrail": {
+    "status": "functional study, not installation",
+    "independent_commercial_psu": true,
+    "psu_support_preference": "independent ventilated support outside HAUGA top",
+    "ups_budget_target_eur_lt": 300,
+    "pre_migration_storage_hosts": [
+      "n2",
+      "n3",
+      "n1_srv_pending"
+    ],
+    "scenario_pf": 0.8,
+    "accessory_ac_w_scenario": 40,
+    "ups_sizing_margin_factor": 1.25,
+    "ups_runtime_goal_min": 10,
+    "shutdown_extra_margin_min": 5,
+    "nut_candidate_primary": "n2 conditional",
+    "actual_ac_w_measured": false,
+    "electrical_validated": false,
+    "manufacturing_approved": false,
+    "source": "docs/H7_C120_P05_POWERRAIL_2026-11-24.md",
+    "calculator": "powerrail.html",
+    "survey": "powerrail-survey.csv"
   }
 }
