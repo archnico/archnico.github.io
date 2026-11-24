@@ -1,0 +1,29 @@
+<!doctype html><html lang="it"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H-7 · AirRail P0.4</title><style>
+:root{color-scheme:dark;--fg:#e5edea;--muted:#a9bcb9;--bg:#102328;--line:#39565a;--teal:#73d1c3}*{box-sizing:border-box}body{background:var(--bg);color:var(--fg);font:16px/1.5 system-ui;margin:0}main{max-width:900px;margin:auto;padding:28px 20px 60px}a{color:var(--teal)}h1{font-size:clamp(27px,5vw,38px);margin-bottom:4px}h2{font-size:20px}p,small{color:var(--muted)}fieldset{border:1px solid var(--line);border-radius:12px;padding:20px;min-width:0}label{display:block;margin:12px 0}input[type=range]{display:block;width:100%;accent-color:var(--teal)}output{font-weight:700;color:var(--teal)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:16px}.metric{border:1px solid var(--line);border-radius:10px;padding:14px}.metric strong{display:block;font-size:24px;color:var(--teal)}svg{width:100%;height:auto}button,select{font:inherit;color:var(--fg);background:#203d42;border:1px solid var(--line);padding:8px;border-radius:6px} .warn{border-left:3px solid #e9b870;padding-left:12px} </style><main>
+<nav><a href="./">← Torre 3D</a> · <a href="docs/H7_C120_P04_AIRRAIL_AIRSENSE_2026-11-24.md">Dossier tecnico</a></nav><h1>AirRail · P0.4</h1><p>Dimensionamento ideale del flusso, non scelta ventole né CFD.</p>
+<fieldset><legend>Scenario</legend>
+<label>Nodi alimentati: <output id="nO"></output><input id="n" type="range" min="1" max="7" value="7"></label>
+<label>Calore interno per nodo: <output id="pO"></output><input id="p" type="range" min="15" max="180" step="5" value="60"></label>
+<label>Aumento medio dell'aria: <output id="dO"></output><input id="d" type="range" min="5" max="20" value="10"></label>
+<label>Ventole collettive attive: <select id="f"><option>0</option><option>1</option><option>2</option><option>3</option><option selected>4</option><option>7</option></select></label>
+<div class="grid" aria-live="polite"><div class="metric">Calore totale<strong id="total"></strong></div><div class="metric">Portata ideale<strong id="flow"></strong></div><div class="metric">Quota aritmetica per ventola<strong id="per"></strong></div><div class="metric">Con una indisponibile<strong id="fail"></strong></div></div>
+</fieldset>
+<h2>Predisposizione geometrica</h2><svg id="plan" viewBox="0 0 1325 330" role="img" aria-label="Sette carrier e sagome opzionali ventole"></svg>
+<p>Sagome 140 mm sopra i centri dei vani o sopra le coppie; nessun supporto o cavo modellato. La posizione reale va verificata con il ServiceDock.</p>
+<p class="warn">Le quote per ventola sono divisioni aritmetiche, non prestazioni installate né garanzia di funzionamento dopo un guasto. Con 0 ventole collettive il flusso richiesto deve comunque essere dimostrato. Raffreddamento locale sempre attivo.</p>
+<p>Formula: Q = 3600 × P / (1,20 × 1005 × ΔT), in m³/h. P è calore nella Torre; il PSU esterno è escluso. Nessun acquisto approvato.</p>
+<a href="tools/airsense.py">Script AirSense passivo (Python)</a></main>
+<script>
+const $=id=>document.getElementById(id);
+function update(){
+ const n=+$('n').value,p=+$('p').value,d=+$('d').value,f=+$('f').value,heat=n*p,q=3600*heat/(1.2*1005*d);
+ const fmt=x=>x.toLocaleString('it-IT',{maximumFractionDigits:1})+' m³/h';
+ $('nO').textContent=n;$('pO').textContent=p+' W';$('dO').textContent=d+' K';
+ $('total').textContent=heat+' W';$('flow').textContent=fmt(q);
+ $('per').textContent=f?fmt(q/f):'—';$('fail').textContent=f>1?fmt(q/(f-1)):'—';
+ const centers=Array.from({length:7},(_,i)=>92.5+i*190);
+ const fans=f===4?[187.5,567.5,947.5,1232.5]:f===7?centers:f===3?[187.5,662.5,1137.5]:f===2?[377.5,947.5]:f===1?[662.5]:[];
+ $('plan').innerHTML='<rect x="1" y="10" width="1323" height="310" fill="none" stroke="#69868a" stroke-width="2"/>'+centers.map((x,i)=>'<rect x="'+(x-60)+'" y="23" width="120" height="284" fill="'+(i<n?'#336b63':'#263b3f')+'" stroke="#73a59c" stroke-width="2"/><text x="'+x+'" y="295" text-anchor="middle" fill="#e1ece8" font-size="20">S'+(i+1)+'</text>').join('')+fans.map(x=>'<rect x="'+(x-70)+'" y="95" width="140" height="140" rx="10" fill="#d4ae66" fill-opacity=".15" stroke="#e9b870" stroke-width="4" stroke-dasharray="9 6"/><circle cx="'+x+'" cy="165" r="55" fill="none" stroke="#e9b870" stroke-width="3"/>').join('');
+}
+for(const id of ['n','p','d','f'])$(id).addEventListener('input',update);update();
+</script></html>

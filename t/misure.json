@@ -548,5 +548,37 @@
     "source": "docs/H7_C120_N1_P03_SERVICEDOCK_2026-11-24.md",
     "drawing": "n1-p03.svg",
     "cable_survey": "n1-p03-cables.csv"
+  },
+  "phase1_p04_airrail": {
+    "status": "thermal study; passive monitoring only",
+    "density_kg_m3": 1.2,
+    "cp_j_kg_k": 1005,
+    "heat_scenarios_w_per_node": [
+      30,
+      60,
+      90,
+      120,
+      150
+    ],
+    "fan_outline_mm": 140,
+    "fan_counts_candidate": [
+      0,
+      1,
+      4,
+      7
+    ],
+    "fan_center_layout_4_pair_candidate_mm": [
+      187.5,
+      567.5,
+      947.5,
+      1232.5
+    ],
+    "local_cooling_required": true,
+    "fan_selection_approved": false,
+    "thermal_validated": false,
+    "manufacturing_approved": false,
+    "source": "docs/H7_C120_P04_AIRRAIL_AIRSENSE_2026-11-24.md",
+    "calculator": "airrail.html",
+    "passive_script": "tools/airsense.py"
   }
 }
