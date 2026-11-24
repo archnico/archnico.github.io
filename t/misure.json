@@ -405,5 +405,50 @@
       "thermal": false,
       "electrical": false
     }
+  },
+  "phase1_n1_p0": {
+    "date": "2026-11-24",
+    "status": "partial survey, cold-fit study only",
+    "board_nominal_mm": [
+      175,
+      226
+    ],
+    "carrier_depth_height_mm": [
+      284,
+      280
+    ],
+    "front_gross_mm": 44,
+    "rear_gross_mm": 65,
+    "bottom_gross_mm": 34,
+    "top_gross_mm": 20,
+    "board_local_v_mm": [
+      -98,
+      77
+    ],
+    "board_local_h_mm": [
+      34,
+      260
+    ],
+    "component_height_budget_assumptions_mm": {
+      "rail": 9,
+      "standoff": 10.5,
+      "pcb": 1.6,
+      "reserve": 5
+    },
+    "budget_eur_estimate": [
+      59,
+      166
+    ],
+    "measured_hardware": {
+      "board": "ASUS H81M-E",
+      "cpu": "i3-4130",
+      "ssd": "SPCC SATA 256 GB",
+      "hdd": "ST500DM002 500 GB",
+      "gpu": "integrated"
+    },
+    "physical_survey_complete": false,
+    "source": "docs/H7_C120_N1_PROTOTIPO_2026-11-24.md",
+    "template": "n1-dima.svg",
+    "manufacturing_approved": false
   }
 }

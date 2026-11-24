@@ -26,6 +26,10 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](r8.html), [FB-1 storico](fb1.html). NO-GO produzione.
 
+## Fase 1 — prototipo n1
+
+[Distinta P0, geometria e rilievo](docs/H7_C120_N1_PROTOTIPO_2026-11-24.md) · [Dima A3 1:1 (solo a freddo)](n1-dima.svg). Inventario live verificato, fori e ingombri fisici aperti; stima P0 59–166 euro, non offerta. Nessuna fabbricazione.
+
 ## R-8.1 Universal — direzione corrente, quote candidate
 
 [Studio C120 e protocollo n1](docs/H7_R81_UNIVERSAL_2026-11-24.md): involucro candidato 120 × 284 × 280, passo 190, luce guida 52 mm, adattatori metallici per 92 mm. PSU commerciali indipendenti preferibilmente su supporto ventilato separato dal top. Per n1 studiare tasca cavi interna; [anteprima 3D C120](index.html) aggiornata; [R-8 92/196 storico](r8.html). Modello concettuale, non CAD esecutivo. NO-GO fabbricazione.
