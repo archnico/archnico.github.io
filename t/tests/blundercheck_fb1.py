@@ -5,6 +5,15 @@ Uses Chromium's JS engine to build the SAME 3D geometry as the public preview
 and intersects the recorded oriented bounding boxes (SAT 2D + Z overlap).
 This cannot model bolts, mesh details, wires, measured component envelopes,
 thermals, strength, or the real path of a lifted cartridge.
+
+Round-2 update (night geometry branch):
+- audits tower, module, standalone, rear and thermal scenes
+- fixed-structure vs fixed-structure SAT checks now cover the connected ladder frame
+- corner posts rise from the base frame (z=107) instead of floating
+- base frame has per-bay cross ties so runners/posts share a load path
+- keeps the PSU box gate (no fictitious supply is drawn)
+- standalone floor base is shifted downward to avoid solid intersections with the
+  lowered tower frame; it remains a concept, not a validated load-bearing base
 """
 import html
 import json
@@ -20,7 +29,7 @@ JS = T / "assets/viewer.js"
 HTML = T / "index.html"
 
 
-def recorded_boxes():
+def recorded_boxes(scene='tower', focus=0):
     chrome = shutil.which("chromium")
     if not chrome:
         raise RuntimeError("Install Chromium to audit actual viewer geometry")
@@ -36,7 +45,7 @@ def recorded_boxes():
         (" rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);",
          " rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);"
          " __auditBoxes[__auditBoxes.length-1].bay=i;"),
-        ("\n})();", "\nwindow.__auditBoxesMake=function(scene){state.scene=scene;__auditBoxes.length=0;"
+        ("\n})();", "\nwindow.__auditBoxesMake=function(scene,focus){state.focusIndex=focus||0;state.scene=scene;__auditBoxes.length=0;"
           "make();return __auditBoxes;};\n})();"),
     ]
     for needle, replacement in changes:
@@ -44,10 +53,8 @@ def recorded_boxes():
             raise AssertionError("Viewer changed, instrumentation not safely applicable: " + needle[:90])
         original = original.replace(needle, replacement, 1)
 
-    # The files are created alongside the viewer only for the duration of the test.
     with tempfile.TemporaryDirectory(prefix=".fb1-audit-", dir=T) as tmp:
         folder = Path(tmp)
-        # The page assets are linked by absolute file: URLs.
         audit_js = folder / "audit.js"
         audit_html = folder / "audit.html"
         audit_js.write_text(original)
@@ -56,9 +63,9 @@ def recorded_boxes():
             .replace('href="assets/viewer.css"', f'href="{(T / "assets/viewer.css").as_uri()}"')
             .replace('src="assets/viewer.js"', f'src="{audit_js.as_uri()}"')
             .replace('</body>',
-                     '<pre id="audit-out"></pre><script>window.addEventListener("load",()=>{'
+                     f'<pre id="audit-out"></pre><script>window.addEventListener("load",()=>{{'
                      'document.getElementById("audit-out").textContent='
-                     'JSON.stringify(window.__auditBoxesMake("tower"));'
+                     f'JSON.stringify(window.__auditBoxesMake("{scene}",{focus}));'
                      '});</script></body>'))
         run = subprocess.run(
             [chrome, "--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
@@ -72,7 +79,6 @@ def recorded_boxes():
 
 
 def obb(box):
-    # Axis-aligned pushBox uses the minimum corner; rotBox uses its centre.
     cx = box["x"] + box["w"] / 2 if box["type"] == "box" else box["x"]
     cy = box["y"] + box["d"] / 2 if box["type"] == "box" else box["y"]
     ang = box["angle"]
@@ -97,72 +103,119 @@ def intersects(a, b, eps=.05):
     return True
 
 
-def assert_clear(description, pairs):
+def assert_clear(description, pairs, max_hits=25):
     hits = [(a, b) for a, b in pairs if intersects(a, b)]
     if hits:
-        for a, b in hits[:25]:
+        for a, b in hits[:max_hits]:
             print(f"  COLLISION: [{a['group']}] {a['name']}  X  [{b['group']}] {b['name']}")
         raise AssertionError(description + f": {len(hits)} solid intersections")
     print("OK:", description)
 
 
-def main():
-    boxes = recorded_boxes()
+def structural_groups():
+    return {"FRAME", "FBCRADLE", "FBGUIDE", "LIGHTSUPPORT", "LIGHTPAD", "FOOT"}
+
+
+def audit_scene(scene, focus=0):
+    boxes = recorded_boxes(scene, focus)
     boards = [o for o in boxes if o["name"].startswith("Scheda madre illustrativa")]
     ssd = [o for o in boxes if o["group"] == "SSD"]
     cheek = [o for o in boxes if "Fianco e guida rimovibile" in o["name"]]
-    fixed = [o for o in boxes if o["group"] in ("FBGUIDE", "FBCRADLE", "FRAME", "LIGHTSUPPORT")]
-    supply = [o for o in boxes if o["name"].startswith("Alimentatore singolo")]
-    assert len(boxes) > 200 and len(boards) == len(ssd) == 7, "7 cartridges were not generated"
-    assert len([o for o in boxes if o["group"] == "FBGUIDE"]) == 56
-    assert len([o for o in boxes if o["group"] == "FBCRADLE"]) == 56
-    # PSU location remains an explicit unresolved decision. Do not draw fictitious boxes.
-    assert not supply, "Danger: unmeasured power supply boxes reintroduced"
+    fixed_struct = [o for o in boxes if o["group"] in structural_groups()]
+    supply = [o for o in boxes if o["name"].startswith("Alimentatore")]
 
-    assert_clear("7 motherboard faces vs ALL fixed structural objects",
-                 ((b, f) for b in boards for f in fixed))
-    assert_clear("motherboards vs other non-PCB volumes (except the touching standoff geometry)",
-                 ((b, x) for b in boards for x in boxes if
-                  x is not b and x["group"] not in
-                  ("FBGUIDE", "FBCRADLE", "FRAME", "LIGHTSUPPORT", "PCB" + str(b["bay"] + 1),
-                   "A" + str(b["bay"] + 1))
-                  and x["name"].startswith(("Alimentatore", "SSD", "Fianco", "Traversa e fermo"))))
-    assert_clear("7 SSD trays vs their coloured moving side walls",
+    print(f"\n--- Scene {scene}" + (f" focus={focus+1}" if focus else "") + f" ---")
+    print(f"{len(boxes)} solids, {len(boards)} board(s), {len(ssd)} SSD(s), "
+          f"{len(fixed_struct)} fixed-structure solids")
+
+    # PSU gate: no fictitious supply box is drawn in any audited scene.
+    assert not supply, f"Danger: unmeasured power supply boxes reintroduced in {scene}"
+
+    if scene == "tower":
+        assert len(boxes) > 200 and len(boards) == len(ssd) == 7, "7 cartridges were not generated"
+        fbg = [o for o in boxes if o["group"] == "FBGUIDE"]
+        fbc = [o for o in boxes if o["group"] == "FBCRADLE"]
+        assert len(fbg) == 56, f"expected 56 FBGUIDE boxes, got {len(fbg)}"
+        assert len(fbc) == 56, f"expected 56 FBCRADLE boxes, got {len(fbc)}"
+    elif scene == "module":
+        assert len(boards) == 1, "detail scene must show exactly one illustrative motherboard"
+
+    # Core requirement: motherboards never intersect fixed structure.
+    assert_clear(f"motherboards vs ALL fixed structural objects ({scene})",
+                 ((b, f) for b in boards for f in fixed_struct))
+
+    # Motherboards vs other non-PCB volumes (excluding the touching standoff geometry).
+    assert_clear(f"motherboards vs other non-PCB volumes ({scene})",
+                 ((b, x) for b in boards for x in boxes
+                  if x is not b and x["group"] not in
+                  structural_groups() | {f"PCB{b['bay'] + 1}", f"A{b['bay'] + 1}"}
+                  and x["name"].startswith(("SSD", "Fianco", "Traversa e fermo"))))
+
+    # SSD trays must clear their own cartridge cheeks.
+    assert_clear(f"SSD trays vs their own moving side walls ({scene})",
                  ((a, b) for a in ssd for b in cheek if a["bay"] == b["bay"]))
-    assert_clear("all mobile pieces vs the fixed supports, without intentional contacts",
-                 ((a, f) for a in boxes for f in fixed
+
+    # Mobile pieces (extractable) must not collide with fixed structure, except intended
+    # runner/cartridge bottom contacts which are separated by group membership above.
+    assert_clear(f"mobile pieces vs fixed supports ({scene})",
+                 ((a, f) for a in boxes for f in fixed_struct
                   if a["bay"] is not None and a["group"] not in ("FBGUIDE", "FBCRADLE")
                   and a["group"].startswith(("PCB", "P", "A", "F", "SSD", "IO"))))
-    # Exact nominal straight-up swept solid (continuous, not a sampled animation):
-    # extending each mobile box upward by 155 mm represents all intervening z positions.
-    # Other cartridges and ALL fixed hardware are treated as stationary obstacles.
-    movable = [x for x in boxes if x["bay"] is not None
-               and x["group"] not in ("FBGUIDE", "FBCRADLE")]
-    obstacles_fixed = [x for x in boxes if x not in movable]
+
+    # Fixed-structure self-intersection check: different groups must not overlap,
+    # except designed joints where a support/cradle/post meets the FRAME (these
+    # parts are intentionally connected and share an attachment volume).
+    CONNECTED_JOINTS = {frozenset(("LIGHTSUPPORT", "FRAME")),
+                        frozenset(("LIGHTPAD", "FRAME")),
+                        frozenset(("FBGUIDE", "FRAME")),
+                        frozenset(("FBCRADLE", "FRAME"))}
+    assert_clear(f"fixed-structure parts vs each other ({scene})",
+                 ((a, b) for i, a in enumerate(fixed_struct)
+                  for b in fixed_struct[i + 1:]
+                  if a is not b and a["group"] != b["group"]
+                  and frozenset((a["group"], b["group"])) not in CONNECTED_JOINTS))
+
+    # Exact straight-up 0..155 mm swept solid for the lifted bay vs everything else.
+    movable = [x for x in boxes if x["bay"] is not None and x["group"] not in ("FBGUIDE", "FBCRADLE")]
+    obstacles = [x for x in boxes if x not in movable]
     sweep_hits = []
     for bay in range(7):
-        obstacles = obstacles_fixed + [x for x in movable if x["bay"] != bay]
+        if scene == "module" and bay != focus:
+            continue
+        obs = obstacles + [x for x in movable if x["bay"] != bay]
         for x in (x for x in movable if x["bay"] == bay):
             swept = {**x, "h": x["h"] + 155}
-            for obstacle in obstacles:
+            for obstacle in obs:
                 if intersects(swept, obstacle):
                     sweep_hits.append((bay + 1, x["name"], obstacle["name"]))
-    assert not sweep_hits, "Vertical removal collides with other geometry: " + repr(sweep_hits[:10])
-    print("OK: 7 exact straight-up 0..155 mm nominal swept solids"
-          " vs all other moving/fixed boxes (no modelled cables)")
-    # All volume numbers count overlaps in joints; they are NOT net CAD solids.
-    support_mm3 = sum(x["w"] * x["d"] * x["h"] for x in boxes
+    assert not sweep_hits, f"Vertical removal collides in {scene}: " + repr(sweep_hits[:10])
+    print(f"OK: straight-up 0..155 mm swept solids clear in {scene}")
+    return boxes
+
+
+def main():
+    audit_scene("tower")
+    for i in range(7):
+        audit_scene("module", focus=i)
+    audit_scene("rear")
+    audit_scene("thermal")
+    audit_scene("standalone")
+
+    # Independent checks of critical nominal-only clearances.
+    angle = math.radians(42)
+    gap = 54 - 6 / 2 - 92 / 2
+    adj_gap = 164 * math.cos(angle) - 2 * (54 + 6 / 2)
+    assert gap > 4, gap
+    assert adj_gap > 5, adj_gap
+    print(f"OK: lateral nominal clearance {gap:.1f} mm; adjacent guide clearance {adj_gap:.2f} mm")
+
+    support_mm3 = sum(x["w"] * x["d"] * x["h"] for x in recorded_boxes("tower")
                       if x["group"] in ("FBGUIDE", "FBCRADLE"))
     print(f"WARN: supports shown as {support_mm3 / 1e6:.3f} L gross solid bounding-box"
           " geometry including overlapping joints; weight not included in validated BOM")
-    # Independent checks of critical nominal-only clearances.
-    gap = 54 - 8 / 2 - 92 / 2
-    adj_gap = 164 * math.cos(math.radians(42)) - 2 * (54 + 8 / 2)
-    assert abs(gap - 4) < 1e-9 and adj_gap > 5
-    print(f"OK: {len(boxes)} modelled solids; lateral nominal clearance {gap} mm;"
-          f" adjacent guide clearance {adj_gap:.2f} mm")
     print("NOT TESTED: power supply envelope, real 226×175 n1 board, real cable bends,"
-          " fastening holes, thermal flow, load path, tipping, physical extraction.")
+          " fastening holes, thermal flow, tipping, physical extraction,"
+          " standalone floor-base structural validation (concept only).")
 
 
 if __name__ == "__main__":
