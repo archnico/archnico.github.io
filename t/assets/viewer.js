@@ -1339,4 +1339,42 @@ function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.c
  window.addEventListener('keydown',function(e){if(e.target&&e.target.tagName==='INPUT')return;if(e.key.toLowerCase()==='b'){const d=document.getElementById('blocker-panel');if(d)d.open=!d.open;}});
 }
 new ResizeObserver(dimensions).observe(vp);dimensions();scene(({'#tower':'tower','#autonoma':'standalone','#standalone':'standalone','#room':'room','#haugadetail':'haugadetail','#hauga':'haugadetail','#cabinet':'cabinet'})[location.hash]||'room');syncQuick();
+// Round 8: compact handoff panel (UX, no geometry/SAT impact).
+{
+  const aside=document.querySelector('aside.left');
+  if(aside && !document.getElementById('round8-handoff')){
+    const details=document.createElement('details');
+    details.id='round8-handoff';
+    details.open=false;
+    details.style.cssText='margin:0 0 10px;padding:10px 12px;border:1px solid #7a5a3a;background:#241b12;border-radius:10px;';
+    const summary=document.createElement('summary');
+    summary.textContent='HANDOFF 06:00 · Round 8';
+    summary.style.cssText='cursor:pointer;font-weight:750;color:#ffd89a;';
+    details.appendChild(summary);
+    const badge=document.createElement('div');
+    badge.textContent='SAT box-level: PASS · NO-GO stampa';
+    badge.style.cssText='display:inline-block;margin:6px 0;padding:3px 7px;border-radius:6px;background:#4a3320;color:#ffd89a;font-size:10px;font-weight:700;';
+    details.appendChild(badge);
+    const p=document.createElement('p');
+    p.style.cssText='margin:8px 0 6px;font-size:11px;line-height:1.5;color:#f0d9b5;';
+    p.textContent='Concept non esecutivo. PSU non collocato, n1 da rilevare, massa non riconciliata, guide/cavi/termica da validare. Geometria invariata in Round 8.';
+    details.appendChild(p);
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.textContent='Copia riepilogo handoff';
+    btn.style.cssText='width:100%;padding:7px 9px;border:1px solid #5a4028;border-radius:7px;background:#3a2a18;color:#ffe7bc;font-size:11px;font-weight:700;cursor:pointer;';
+    btn.addEventListener('click',function(){
+      const text='H-7 FB-1 Round 8 handoff: SAT box-level PASS; NO-GO stampa; PSU non collocato; n1 reale ~226x175 mm da rilevare; HAUGA max 20 kg; guide/cavi/ventole/estrazione/struttura non validati; geometria invariata.';
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){btn.textContent='Copiato';setTimeout(function(){btn.textContent='Copia riepilogo handoff';},1200);}).catch(function(){});
+      }
+    });
+    details.appendChild(btn);
+    const small=document.createElement('small');
+    small.style.cssText='display:block;margin-top:8px;font-size:10px;color:#b89a7a;line-height:1.45;';
+    small.textContent='Scorciatoia B: pannello blocchi ingegneristici. Riduci dettaglio con i layer per dispositivi modesti.';
+    details.appendChild(small);
+    aside.insertBefore(details,aside.firstChild);
+  }
+}
 })();

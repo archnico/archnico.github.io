@@ -211,5 +211,13 @@
     "tests_added": ["t/tests/test_round7_review.py"],
     "ux": ["prominent NO-GO blocker panel", "B keyboard shortcut"],
     "status": "concept, non esecutivo"
+  },
+  "round8_2026_11_23": {
+    "focus": "final engineering review and compact handoff for 06:00 integrator: files changed, tests run, unresolved risks, actionable to-measure list",
+    "geometry_changed": false,
+    "new_solids": 0,
+    "tests_added": ["t/tests/test_round8_review.py"],
+    "ux": ["compact handoff panel", "clipboard summary", "no geometry change"],
+    "status": "concept, non esecutivo, NO-GO stampa"
   }
 }
