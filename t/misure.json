@@ -450,5 +450,40 @@
     "source": "docs/H7_C120_N1_PROTOTIPO_2026-11-24.md",
     "template": "n1-dima.svg",
     "manufacturing_approved": false
+  },
+  "phase1_n1_p01": {
+    "status": "candidate cut list, no manufacturing approval",
+    "date": "2026-11-24",
+    "bench_mm": [
+      380,
+      310
+    ],
+    "carrier_mm": [
+      120,
+      284,
+      280
+    ],
+    "lower_flange_mm": 15,
+    "pcb_bottom_mm": 34,
+    "nominal_vertical_clearance_mm": 19,
+    "guide_post_centers_u_mm": [
+      -66,
+      66
+    ],
+    "guide_post_centers_v_mm": [
+      -110,
+      110
+    ],
+    "guide_nominal_clearance_each_side_mm": 3,
+    "cut_segments": 16,
+    "partial_stock_lengths_mm": {
+      "2020": 2460,
+      "L15": 748,
+      "flat6x25": 400
+    },
+    "source": "docs/H7_C120_N1_P01_DISTINTA_2026-11-24.md",
+    "bom": "n1-p01-bom.csv",
+    "drawing": "n1-p01.svg",
+    "manufacturing_approved": false
   }
 }

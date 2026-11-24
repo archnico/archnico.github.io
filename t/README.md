@@ -28,6 +28,8 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 ## Fase 1 — prototipo n1
 
+**P0.1:** [distinta tagli e giunti](docs/H7_C120_N1_P01_DISTINTA_2026-11-24.md) · [tavola](n1-p01.svg) · [CSV](n1-p01-bom.csv). Banco 380 × 310, angolari inferiori 15 mm, guide a ±66; studio, non taglio autorizzato.
+
 [Distinta P0, geometria e rilievo](docs/H7_C120_N1_PROTOTIPO_2026-11-24.md) · [Dima A3 1:1 (solo a freddo)](n1-dima.svg). Inventario live verificato, fori e ingombri fisici aperti; stima P0 59–166 euro, non offerta. Nessuna fabbricazione.
 
 ## R-8.1 Universal — direzione corrente, quote candidate
