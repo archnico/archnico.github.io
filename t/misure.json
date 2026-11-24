@@ -84,7 +84,45 @@
     "supports_attach_to_hauga": false,
     "loaded_mass_kg": null,
     "mechanically_validated": false,
-    "render_status": "canonical H-7 FB-1 render; dimensions subject to survey and testing"
+    "render_status": "canonical H-7 FB-1 render; dimensions subject to survey and testing",
+    "long_life_r7": {
+      "status": "requirements_candidate_not_executable",
+      "date": "2026-11-24",
+      "carrier_envelope_candidate_mm": [
+        92,
+        284,
+        280
+      ],
+      "axis_order": [
+        "thickness",
+        "depth",
+        "height"
+      ],
+      "pcb_targets_mm": {
+        "mini_itx": [
+          170,
+          170
+        ],
+        "micro_atx_max": [
+          244,
+          244
+        ]
+      },
+      "angle_deg_study": 42,
+      "pitch_mm_study": 164,
+      "base_mm_study": [
+        1310,
+        305
+      ],
+      "psu_location_verified": false,
+      "cold_swap_only": true,
+      "phase1_inert_template_mm": [
+        244,
+        244
+      ],
+      "manufacturing_approved": false,
+      "source": "docs/H7_R7_LONG_LIFE_2026-11-24.md"
+    }
   },
   "r2": {
     "portal_external_width": 1470,

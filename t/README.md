@@ -8,6 +8,10 @@ Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora
 
 **Integrazione del 24/11:** i due rami notturni geometria e UX sono stati verificati insieme; [leggi il rapporto tecnico e i test](docs/INTEGRAZIONE_H7_FB1_2026-11-24.md). Le quote rimangono di studio e il progetto resta NO-GO alla stampa.
 
+## R-7 Long Life — progettare per il prossimo hardware
+
+La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier metallico permanente con traversine riposizionabili, adattatori minimi e target Mini-ITX / Micro-ATX 244 × 244. Candidato 92 × 284 × 280 mm: pianta R-6 invariata, altezza maggiorata da verificare. PSU indipendenti e riutilizzabili soltanto se compatibili; niente hot swap. Prima del congelamento si collaudano n1 e una dima inerte 244 × 244. **NO-GO alla serie; il render 3D non rappresenta ancora R-7.**
+
 ## Come si presenta
 
 La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
