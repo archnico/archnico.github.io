@@ -1,6 +1,8 @@
-# La Torre — sette PC recuperati, una struttura Straight Wide
+# La Torre — H-7 R-8.1 Straight Wide C120 Universal
 
 Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora da misurare. Il progetto prova a riutilizzarli come piccolo cluster domestico, senza comprare sette computer nuovi e senza tenere sette vecchi case ingombranti. I PC restano **indipendenti**, collegati tra loro tramite rete: non stiamo costruendo un unico supercomputer.
+
+**Canone del 24 novembre 2026:** [R-8.1 Straight Wide C120 Universal](docs/H7_R81_CANONE_2026-11-24.md) + DAS H-4 separato. Sette sedi a 0°, base 1325 × 310 mm, carrier candidato 120 × 284 × 280 mm, passo 190, luce fra guide 52 mm. Obiettivo ≤17 kg sul top, limite IKEA 20 kg; PSU commerciali su supporto indipendente preferito. La scelta architetturale è canonica; quote, giunti, cablaggio e termica non sono approvati per fabbricare. [Render corrente](index.html) · [Registro](registro.html).
 
 **Direzione precedente del 23 novembre 2026: H-7 FB-1 + torrino storage H-4.** La struttura principale a sette moduli è disposta **a spina di pesce in pianta, come parcheggi obliqui**, non come due file a V impilate. Abbiamo eliminato la piastra di betulla: telaio aperto in metallo, adattatori specifici stampati in PETG tramite servizio esterno, zero HDD meccanici nei PC. Le vecchie geometrie R-2, R-3 e R-4 sono conservate per confronto, non descrivono più la soluzione scelta.
 
@@ -16,21 +18,21 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Studio termogeometrico e protocollo n1](docs/H7_R7_AIRFLOW_2026-11-24.md): candidato 38°/170 mm, luce locale 23,96 mm contro 11,88 mm a 42°/164; basamento invariato, margini in profondità stretti. AirRail modulare, estrazione superiore da collaudare. Nessun cambio al render, nessuna CFD o approvazione produzione.
 
-## R-7 Airflow Wide — candidato principale
+## R-7 Airflow Wide — studio storico
 
-[Studio Wide e tolleranze](docs/H7_R7_AIRFLOW_WIDE_2026-11-24.md): basamento candidato 1325 × 310, sette carrier a 36° / passo 175 mm, luce locale nominale 31,58 mm. Alternative 35° e 37°. Sfruttamento piano quasi integrale, margini da misurare; render storico e main invariati. NO-GO alla produzione.
+[Studio Wide e tolleranze](docs/H7_R7_AIRFLOW_WIDE_2026-11-24.md): basamento candidato 1325 × 310, sette carrier a 36° / passo 175 mm, luce locale nominale 31,58 mm. Alternative 35° e 37°. Sfruttamento piano quasi integrale, margini da misurare; storico superato da R-8.1. NO-GO alla produzione.
 
-## R-8 Straight Wide — geometria di riferimento (studio)
+## R-8 Straight Wide — variante stretta storica (studio)
 
 [Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](r8.html), [FB-1 storico](fb1.html). NO-GO produzione.
 
-## R-8.1 Universal — alimentazione, cavi e carrier
+## R-8.1 Universal — direzione corrente, quote candidate
 
 [Studio C120 e protocollo n1](docs/H7_R81_UNIVERSAL_2026-11-24.md): involucro candidato 120 × 284 × 280, passo 190, luce guida 52 mm, adattatori metallici per 92 mm. PSU commerciali indipendenti preferibilmente su supporto ventilato separato dal top. Per n1 studiare tasca cavi interna; [anteprima 3D C120](index.html) aggiornata; [R-8 92/196 storico](r8.html). Modello concettuale, non CAD esecutivo. NO-GO fabbricazione.
 
 ## Come si presenta
 
-La **Torre H-7** (descrizione storica FB-1, conservata per confronto) poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
+La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce perpendicolari a 0° sfruttano la larghezza nominale del piano; la disposizione obliqua FB-1 è conservata solo in archivio. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
 
 Il **torrino dei dischi** è **separato**, sul piano della cassettiera vicino al mobile audio: un **DAS commerciale a 4 bay SATA** con alimentazione e ventilazione proprie, e un **hub USB 3.x alimentato a 4 porte** per altre periferiche (**un secondo hub solo se servirà**, su porta host separata se possibile). Lo scenario iniziale prevede soltanto **due HDD USB, 8 TB e 4 TB**, mantenuti nelle loro custodie: **quattro bay SATA liberi** in attesa di dischi compatibili. L'8 TB oggi si trova su n3: **nessun disco è stato migrato**. Due collegamenti USB separati raggiungeranno **n2 ospitato nella Torre**, che poi può condividere i volumi sulla LAN via NFS/Samba; non si collega lo stesso disco a due host USB.
 
@@ -40,15 +42,15 @@ Il **mobile multilivello** raccoglie i quattro satelliti audio, il subwoofer e i
 
 Il mobile è un **IKEA HAUGA 004.150.47**: circa 137 × 35,5 × 54 cm misurati, **spalletta a U alta 9 cm e spessa 1 cm**. Il produttore dichiara **20 kg massimo sul piano** e richiede l'ancoraggio del mobile a parete. Vogliamo **nessuna vite aggiuntiva nel mobile**: la Torre usa appoggi metallici smontabili sul piano interno, senza scaricare sulla spalletta, e deve poter poggiare anche a terra.
 
-L'ingombro **FB-1 è preliminarmente 1310 × 318 mm** e l'angolo proposto **42°**, con sette cartucce da **92 × 284 mm** di impronta esterna illustrativa. Il confronto è con la luce nominale catalogo **1345 × 330 mm**, **non con una misura interna certificata dell'esemplare**. Il nuovo budget di massa **non è ancora verificato**; i 17,8 kg R-3 con HDD erano soltanto uno studio storico. Il DAS, sul mobile separato, **non entra** nel carico HAUGA. Verificare baricentro, distribuzione carichi, oscillazioni, accesso ai cavi e raffreddamento prima di costruire.
+L'ingombro storico **FB-1 è preliminarmente 1310 × 318 mm** e l'angolo proposto **42°**, con sette cartucce da **92 × 284 mm** di impronta esterna illustrativa. Il confronto è con la luce nominale catalogo **1345 × 330 mm**, **non con una misura interna certificata dell'esemplare**. Il nuovo budget di massa **non è ancora verificato**; i 17,8 kg R-3 con HDD erano soltanto uno studio storico. Il DAS, sul mobile separato, **non entra** nel carico HAUGA. Verificare baricentro, distribuzione carichi, oscillazioni, accesso ai cavi e raffreddamento prima di costruire.
 
 La stanza è circa **5 × 5 × 3 m**, con un solo angolo smussato, finestra 210 × 160 cm, tre monitor su bracci a muro e scrivania misurata 100 × 55 × 80 cm. Il modello cerca di rappresentare questa stanza, non uno showroom inventato.
 
 ## Variante autonoma a terra
 
-La **[vista autonoma R-8](index.html#autonoma)** è una configurazione alternativa della **stessa Torre H-7**, non un secondo computer e non un basamento sul mobile: tutti e sette i moduli R-8 restano identici e il telaio metallico viene rappresentato più basso, **senza i sei rialzi da 109 mm necessari soltanto per superare la spalletta HAUGA**.
+La **[vista autonoma R-8.1](index.html#autonoma)** è una configurazione alternativa della **stessa Torre H-7**, non un secondo computer e non un basamento sul mobile: tutti e sette i moduli C120 restano identici e il telaio metallico viene rappresentato più basso, **senza i sei rialzi di studio da circa 107 mm necessari soltanto per superare la spalletta HAUGA**.
 
-Il prototipo grafico della base comprende **il medesimo telaio a scala con sette traverse sotto le cartucce**, **sei scarpe rigide basse con suola elastomerica** (nessuna seconda coppia di longheroni né traverse a pavimento che si sovrappongano alle schede nel render) e **quattro ali stabilizzatrici rimovibili** (inizialmente nascoste, attivabili nel pannello Strumenti; la loro necessità è da dimostrare con un controllo di stabilità). Gli elementi sono selezionabili e la *Base autonoma* è uno strato indipendente con comando «Tutti» nel capitolo Torre. La vista include un piano di riferimento che **non è un pannello fisico di legno**. La profondità nominale del supporto senza ali è **circa 418 mm** e con ali aperte **circa 616 mm**: non deve essere confusa con l'**impronta illustrativa 1310 × 318 mm** dei sette moduli sul mobile. Tutte le quote sono preliminari e cambieranno dopo rilievo dei cavi e delle schede.
+Il prototipo grafico della base comprende **il medesimo telaio a scala con sette traverse sotto le cartucce**, **sei scarpe rigide basse con suola elastomerica** (nessuna seconda coppia di longheroni né traverse a pavimento che si sovrappongano alle schede nel render) e **quattro ali stabilizzatrici rimovibili** (inizialmente nascoste, attivabili nel pannello Strumenti; la loro necessità è da dimostrare con un controllo di stabilità). Gli elementi sono selezionabili e la *Base autonoma* è uno strato indipendente con comando «Tutti» nel capitolo Torre. La vista include un piano di riferimento che **non è un pannello fisico di legno**. La profondità nominale del supporto senza ali è **circa 418 mm** e con ali aperte **circa 616 mm**: non deve essere confusa con l'**impronta C120 di studio 1325 × 310 mm** dei sette moduli sul mobile. Tutte le quote sono preliminari e cambieranno dopo rilievo dei cavi e delle schede.
 
 **Sicurezza:** questa rappresentazione non dimostra che la Torre sia antiribaltamento né che i giunti sopportino il peso. Mancano ancora masse pesate, posizione del baricentro, attrito sul pavimento, carichi dinamici e definizione di una ritenuta indipendente dal mobile. La variante autonoma **non è ancora una soluzione costruttiva autorizzata**.
 

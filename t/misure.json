@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-23",
+  "updated": "2026-11-24",
   "units": "mm",
-  "model": "H-7 FB-1 fishbone in plan + H-4 separate 4-bay DAS (concept not executable)",
+  "model": "H-7 R-8.1 Straight Wide C120 Universal + H-4 separate DAS (canonical direction; design study, not executable)",
   "furniture": {
     "measured": {
       "width": 1370,
@@ -59,34 +59,34 @@
   "tower": {
     "module_count": 7,
     "chassis_dimensions_mm": [
-      1310,
-      318,
-      360
+      1325,
+      310,
+      null
     ],
     "use_modes": [
       "six_removable_supports_on_hauga_within_20kg_total",
       "same_chassis_floor_standalone",
       "historical_R2_R3_archived"
     ],
-    "configuration": "FB-1: seven matching PC cartridges, 42 degrees in horizontal plan like angled parking",
+    "configuration": "R-8.1 C120: seven straight modular carriers, 0 degrees; independent PSU support preferred",
     "module_envelope_study_mm": [
-      92,
+      120,
       284,
-      214
+      280
     ],
-    "angle_degrees_study": 42,
-    "module_pitch_mm": 164,
+    "angle_degrees_study": 0,
+    "module_pitch_mm": 190,
     "module_local_ssd_count_study": 7,
     "internal_hdd_count": 0,
     "birch_plywood_base": false,
-    "support_height_study_mm": 109,
+    "support_height_study_mm": 107,
     "support_count_study": 6,
     "supports_attach_to_hauga": false,
     "loaded_mass_kg": null,
     "mechanically_validated": false,
-    "render_status": "canonical H-7 FB-1 render; dimensions subject to survey and testing",
+    "render_status": "current C120 conceptual render, not manufacturing CAD",
     "long_life_r7": {
-      "status": "requirements_candidate_not_executable",
+      "status": "historical geometric study; modularity requirements retained",
       "date": "2026-11-24",
       "carrier_envelope_candidate_mm": [
         92,
@@ -122,7 +122,17 @@
       ],
       "manufacturing_approved": false,
       "source": "docs/H7_R7_LONG_LIFE_2026-11-24.md"
-    }
+    },
+    "base_mm": [
+      1325,
+      310
+    ],
+    "guide_envelope_width_mm": 138,
+    "guide_gap_mm": 52,
+    "carrier_gap_mm": 70,
+    "target_loaded_mass_kg": 17,
+    "manufacturer_max_top_load_kg": 20,
+    "manufacturing_approved": false
   },
   "r2": {
     "portal_external_width": 1470,
@@ -231,7 +241,7 @@
     "status": "concept, non esecutivo"
   },
   "standalone_floor_variant_2026_11_23": {
-    "status": "interactive visualization CONCEPT, not a built/tested floor support",
+    "status": "historical FB-1 concept; current C120 floor variant not structurally validated",
     "relation": "same H-7 FB-1 seven modules as cabinet, lowered in view to meet separate floor support; six HAUGA risers omitted",
     "frame_type": "open metal skids / crossbars, no birch or plywood plate",
     "skids": 2,
@@ -277,7 +287,7 @@
     "status": "concept, non esecutivo, NO-GO stampa"
   },
   "straight_wide_r8": {
-    "status": "primary_design_candidate_not_executable",
+    "status": "historical narrower 92/196 alternative, not current",
     "base_mm": [
       1325,
       310
@@ -308,7 +318,7 @@
     "source": "docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md"
   },
   "universal_r81": {
-    "status": "candidate_not_executable",
+    "status": "canonical_design_direction_candidate_dimensions_not_executable",
     "carrier_envelope_mm": [
       120,
       284,
@@ -327,6 +337,73 @@
     "render": "index.html",
     "source": "docs/H7_R81_UNIVERSAL_2026-11-24.md",
     "manufacturing_approved": false,
-    "render_status": "C120 concept; PCB/PSU/cables not surveyed"
+    "render_status": "C120 concept; PCB/PSU/cables not surveyed",
+    "center_x_first_mm": 92.5,
+    "center_y_mm": 155,
+    "carrier_gap_mm": 70,
+    "guide_footprint_margin_mm": [
+      23.5,
+      13
+    ],
+    "base_to_nominal_furniture_margin_mm": [
+      10,
+      10
+    ],
+    "insertion_adapter_w92_each_side_mm": 14,
+    "phase1_nodes": [
+      "n1"
+    ]
+  },
+  "historical_fb1_tower_2026_11_23": {
+    "module_count": 7,
+    "chassis_dimensions_mm": [
+      1310,
+      318,
+      360
+    ],
+    "use_modes": [
+      "six_removable_supports_on_hauga_within_20kg_total",
+      "same_chassis_floor_standalone",
+      "historical_R2_R3_archived"
+    ],
+    "configuration": "FB-1: seven matching PC cartridges, 42 degrees in horizontal plan like angled parking",
+    "module_envelope_study_mm": [
+      92,
+      284,
+      214
+    ],
+    "angle_degrees_study": 42,
+    "module_pitch_mm": 164,
+    "module_local_ssd_count_study": 7,
+    "internal_hdd_count": 0,
+    "birch_plywood_base": false,
+    "support_height_study_mm": 109,
+    "support_count_study": 6,
+    "supports_attach_to_hauga": false,
+    "loaded_mass_kg": null,
+    "mechanically_validated": false,
+    "render_status": "historical FB-1; not current"
+  },
+  "current_decision": {
+    "date": "2026-11-24",
+    "revision": "R-8.1 C120 Universal",
+    "source": "docs/H7_R81_CANONE_2026-11-24.md",
+    "render": "index.html",
+    "geometry_frozen_for_manufacture": false,
+    "nominal_inner_top_mm": [
+      1345,
+      330
+    ],
+    "target_mass_kg": 17,
+    "hard_top_limit_kg": 20,
+    "measured_loaded_mass_kg": null,
+    "phase1": "one n1 prototype + inert mATX template; no seven-unit batch",
+    "gates": {
+      "survey": false,
+      "cold_fit": false,
+      "structure": false,
+      "thermal": false,
+      "electrical": false
+    }
   }
 }
