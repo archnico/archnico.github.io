@@ -99,21 +99,22 @@
   }
   if (menuToggle && leftPanel) {
     menuToggle.addEventListener('click', () => setSidebarOpen(!leftPanel.classList.contains('open')));
+    $('mobile-close')?.addEventListener('click', () => setSidebarOpen(false));
     // Auto-close when the user actually changes a layer or view on narrow screens.
     leftPanel.addEventListener('click', e => {
-      if (window.innerWidth > 760) return;
+      if (window.innerWidth > (document.body.classList.contains("current-viewer") ? 980 : 760)) return;
       const target = e.target.closest('button, select, [data-preset], [data-view], [data-scene], [data-cam-preset]');
-      if (target && !target.closest('#menu-toggle')) setSidebarOpen(false);
+      if (target && !target.closest('#menu-toggle') && (!document.body.classList.contains('current-viewer') || target.matches('[data-scene], [data-view], [data-cam-preset]'))) setSidebarOpen(false);
     });
     // Click/tap on the viewport closes the mobile sidebar.
     vp?.addEventListener('pointerdown', e => {
-      if (window.innerWidth <= 760 && leftPanel.classList.contains('open') && !e.target.closest('#left-panel, #quicktools')) {
+      if (window.innerWidth <= (document.body.classList.contains("current-viewer") ? 980 : 760) && leftPanel.classList.contains('open') && !e.target.closest('#left-panel, #quicktools')) {
         setSidebarOpen(false);
       }
     });
-    if (window.innerWidth <= 760) leftPanel.classList.add('collapsed');
+    if (window.innerWidth <= (document.body.classList.contains("current-viewer") ? 980 : 760)) leftPanel.classList.add('collapsed');
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 760) {
+      if (window.innerWidth > (document.body.classList.contains("current-viewer") ? 980 : 760)) {
         leftPanel.classList.remove('collapsed', 'open');
         menuToggle.setAttribute('aria-expanded', 'false');
       }
@@ -235,7 +236,7 @@
     return Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
   }
   vp?.addEventListener('pointerdown', e => {
-    if (e.target.closest('#quicktools')) return;
+    if (document.body.classList.contains('current-viewer') || e.target.closest('#quicktools')) return;
     pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointers.size === 2) lastPinchDist = pointerDistance();
   });
@@ -262,7 +263,7 @@
     if (pointers.size < 2) lastPinchDist = 0;
   }
   vp?.addEventListener('pointerup', e => {
-    if (e.target.closest('#quicktools')) { endPointer(e); return; }
+    if (document.body.classList.contains('current-viewer') || e.target.closest('#quicktools')) { endPointer(e); return; }
     const now = Date.now();
     if (now - lastTap < 350) focusSelected();
     lastTap = now;

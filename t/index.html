@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="it">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1921"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%230b1921%22/%3E%3Cpath d=%22M32 8 54 32 32 56 10 32Z%22 fill=%22none%22 stroke=%22%2364d6c4%22 stroke-width=%226%22/%3E%3C/svg%3E"><title>Torre H-7 · Esplora il progetto</title>
 <link rel="stylesheet" href="assets/viewer.css">
-<script src="assets/universal-viewer.js" defer></script>
-<script src="assets/viewer-enhancements.js" defer></script>
+<script src="assets/universal-viewer.js?v=mobile1" defer></script>
+<script src="assets/viewer-enhancements.js?v=mobile1" defer></script>
+<link rel="stylesheet" href="assets/current-responsive.css?v=1">
+<script src="assets/current-responsive.js?v=1" defer></script>
 </head>
-<body>
+<body class="current-viewer">
 <a href="#vp" class="skip-link">Salta al visualizzatore 3D</a>
 <div class="shell">
 <header><div class="brand"><div class="logo">◈</div><div class="heading">TORRE H-7 <span>· anteprima interattiva</span></div></div>
- <nav class="toplinks"><a href="README.md">Il progetto</a><a href="docs/H7_C120_N1_PROTOTIPO_2026-11-24.md">Prototipo n1</a><a href="n1-p01.svg">Tavola P0.1</a><a href="n1-p02.svg">Universal Mount P0.2</a><a href="n1-p03.svg">ServiceDock P0.3</a><a href="airrail.html">AirRail P0.4</a><a href="powerrail.html">PowerRail P0.5</a><a href="netrail.html">NetRail P0.6</a><a href="docs/H7_R81_CANONE_2026-11-24.md">Canone C120</a><a href="docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md">R-8 geometria</a><a href="docs/H7_R81_UNIVERSAL_2026-11-24.md">R-8.1 C120</a><a href="r8.html">R-8 92 mm storico</a><a href="fb1.html">FB-1 storico</a><a href="r3.html">R-3 storico</a><a href="r2.html">R-2 storico</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">H-7 R-8.1 · DAS H-4</span></nav>
- <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Apri controlli" aria-expanded="false" aria-controls="left-panel">☰</button>
+ <details class="docs-menu"><summary>Documentazione</summary><nav class="toplinks"><a href="README.md">Il progetto</a><a href="docs/H7_C120_N1_PROTOTIPO_2026-11-24.md">Prototipo n1</a><a href="n1-p01.svg">Tavola P0.1</a><a href="n1-p02.svg">Universal Mount P0.2</a><a href="n1-p03.svg">ServiceDock P0.3</a><a href="airrail.html">AirRail P0.4</a><a href="powerrail.html">PowerRail P0.5</a><a href="netrail.html">NetRail P0.6</a><a href="docs/H7_R81_CANONE_2026-11-24.md">Canone C120</a><a href="docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md">R-8 geometria</a><a href="docs/H7_R81_UNIVERSAL_2026-11-24.md">R-8.1 C120</a><a href="r8.html">R-8 92 mm storico</a><a href="fb1.html">FB-1 storico</a><a href="r3.html">R-3 storico</a><a href="r2.html">R-2 storico</a><a href="registro.html">Misure</a><a href="schema-r1.html">Schema tecnico</a><span id="variant-pill">H-7 R-8.1 · DAS H-4</span></nav></details>
+ <button type="button" class="menu-toggle" id="menu-toggle" aria-label="Apri controlli" aria-expanded="false" aria-controls="left-panel">☰ Strati</button>
 </header><main class="layout">
 <aside class="left compact" id="left-panel" aria-label="Controlli dell'anteprima" tabindex="-1" data-compact-menu="true">
-  <div class="side-head"><span class="stack-symbol">◇</span><div><strong>Strati</strong><small>Nascondi dall'esterno verso l'interno</small></div><button type="button" class="text-action" id="layers-reset" title="Ripristina gli strati" aria-label="Ripristina gli strati">↺</button></div>
+  <div class="side-head"><button type="button" id="mobile-close" aria-label="Chiudi controlli">✕</button><span class="stack-symbol">◇</span><div><strong>Strati</strong><small>Nascondi dall'esterno verso l'interno</small></div><button type="button" class="text-action" id="layers-reset" title="Ripristina gli strati" aria-label="Ripristina gli strati">↺</button></div>
   <details class="layer-group" data-layer-group="contesto" open><summary><span class="stack-symbol">◫</span>Ambiente<span class="caret">⌄</span><button type="button" class="group-master on" data-group-toggle="contesto" role="checkbox" aria-label="Ambiente: seleziona o deseleziona tutti gli strati" aria-checked="true" title="Mostra o nascondi tutti gli strati del capitolo Ambiente"><span class="group-master-label">Tutti</span><span class="group-master-track" aria-hidden="true"></span></button></summary><div class="layer-rows">
 <div class="layer-row"><span>Pareti</span><button type="button" class="switch on" data-layer="pareti" role="switch" aria-label="Pareti" aria-checked="true" title="Mostra o nascondi: Pareti"></button></div>
 <div class="layer-row"><span>Finestra</span><button type="button" class="switch on" data-layer="finestra" role="switch" aria-label="Finestra" aria-checked="true" title="Mostra o nascondi: Finestra"></button></div>
@@ -148,6 +150,7 @@
   <button type="button" class="quick" id="focus-selected" title="Isola e centra la selezione" aria-label="Isola e centra la selezione">◎ Focus</button>
  </div>
  <div class="quicktools" id="quicktools" role="toolbar" aria-label="Controlli rapidi di navigazione">
+<select id="scene-quick" aria-label="Scegli vista"><option value="room">Stanza</option><option value="tower">Torre</option><option value="cabinet">Su HAUGA</option><option value="standalone">Autonoma</option><option value="module">Modulo</option><option value="storage">DAS H-4</option><option value="workstation">Bracci</option><option value="desk">Scrivania</option><option value="haugadetail">Mobile</option><option value="thermal">Ventilazione</option><option value="rear">Retro</option><option value="ups">UPS</option></select>
   <button class="quick small-zoom" id="qminus" title="Riduci" aria-label="Riduci">−</button><button class="quick small-zoom" id="qplus" title="Ingrandisci" aria-label="Ingrandisci">+</button>
   <button class="quick" id="qfit" title="Centra e adatta (F)" aria-label="Centra e adatta">◎ Centra</button>
   <button class="quick" data-cam-preset="room" title="Vista stanza">⌂</button>

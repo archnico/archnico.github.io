@@ -1034,7 +1034,7 @@ function redraw(){const width=make(),b=basis(),cx=FB.first+state.focusIndex*FB.p
   const pts=[];for(const f of faces){if(isVisibleGroup(f.group) && !['GRID','DIM','CLEAR','FLOORREF'].includes(f.group) && !(state.scene==='room' && ['WALL','WALLCUT','FLOOR'].includes(f.group)))for(const p of f.p)pts.push(projection(p));}
   if(pts.length){let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
    for(const p of pts){minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);}
-   const top=W<600?65:75,bottom=W<600?76:70,pad=W<600?16:50;
+   const top=H<350?40:W<600?65:75,bottom=H<350?52:W<600?76:70,pad=W<600?16:50;
    const scale=Math.min((W-2*pad)/Math.max(1,maxX-minX),(H-top-bottom)/Math.max(1,maxY-minY));
    cam.base=Math.max(.05,scale)*state.zoom;
    cam.ox=-(minX+maxX-W)/2*cam.base;
@@ -1103,7 +1103,7 @@ function redraw(){const width=make(),b=basis(),cx=FB.first+state.focusIndex*FB.p
  const orig={x:W-69,y:76},axis=[[80,0,0,'X','#f5aa62'],[0,80,0,'Y','#6dd9d0'],[0,0,80,'Z','#93b3ef']];
  for(const ax of axis){let p=projection([cam.center[0]+ax[0],cam.center[1]+ax[1],cam.center[2]+ax[2]]),c=projection(cam.center);let dx=(p.x-c.x)*.45,dy=(p.y-c.y)*.45;let k=25/Math.max(5,Math.hypot(dx,dy));dx*=k;dy*=k;ctx.strokeStyle=ax[4];ctx.fillStyle=ax[4];ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(orig.x,orig.y);ctx.lineTo(orig.x+dx,orig.y+dy);ctx.stroke();ctx.font='700 11px system-ui';ctx.fillText(ax[3],orig.x+dx*1.29,orig.y+dy*1.29)}
 }
-function dimensions(){const r=vp.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
+function dimensions(){const r=vp.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,matchMedia('(pointer:coarse)').matches?1.5:2);W=Math.max(1,r.width);H=Math.max(1,r.height);canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);redraw()}
 function clearSelection(){state.selected=null;state.selectedName='';$('inspector').hidden=true;tip.style.opacity=0;redraw()}
 function select(id,name='',at=null){state.selected=id;state.selectedName=name;
  const chosenModule=/^(?:P|A|PCB)([1-7])$/.exec(id);if(chosenModule)state.focusIndex=Number(chosenModule[1])-1;
@@ -1280,12 +1280,48 @@ for(const id of ['labels','xray','disks','wiring','grid','dims','clearance','coo
   if(id==='xray')document.body.classList.toggle('xray-on',state.xray);
   redraw();
 };
-vp.addEventListener('pointerdown',e=>{if(e.target.closest('#quicktools'))return;if(e.button!==0)return;vp.setPointerCapture(e.pointerId);drag={sx:e.clientX,sy:e.clientY,yaw:state.yaw,pitch:state.pitch,moved:false};vp.classList.add('dragging')});
-vp.addEventListener('pointermove',e=>{
- if(drag){const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;if(Math.abs(dx)+Math.abs(dy)>4)drag.moved=true;state.yaw=drag.yaw-dx*.007;state.pitch=clamp(drag.pitch+dy*.006,-.22,1.54);redraw();tip.style.opacity=0}
+// Unified gesture state: orbit, pinch and tap are mutually exclusive.
+const activePointers=new Map();
+let pinchDistance=0, gestureMoved=false, lastTapTime=0, lastTapPoint=null, orbitFrame=0;
+function requestOrbitDraw(){if(!orbitFrame)orbitFrame=requestAnimationFrame(()=>{orbitFrame=0;redraw()})}
+function distanceBetween(){const pts=[...activePointers.values()];return pts.length===2?Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y):0}
+function orbitStart(p){drag={sx:p.x,sy:p.y,yaw:state.yaw,pitch:state.pitch,moved:false}}
+vp.addEventListener('pointerdown',e=>{
+ if(e.target!==canvas||e.button!==0||document.querySelector('.left.open'))return;
+ vp.setPointerCapture(e.pointerId);activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activePointers.size===1){gestureMoved=false;orbitStart(activePointers.get(e.pointerId))}
+ else {gestureMoved=true;drag=null;pinchDistance=distanceBetween()}
+ vp.classList.add('dragging');
 });
-vp.addEventListener('pointerup',e=>{if(!drag)return;let clicked=!drag.moved;drag=null;vp.classList.remove('dragging');if(clicked){const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;let backdrop=null;for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x,y)){const h=pick[i];if(h.group==='WALL'||h.group==='WALLCUT'||h.group==='FLOOR'){backdrop=backdrop||h;continue;}select(h.group,h.name,{x,y});return}}if(backdrop){select(backdrop.group,backdrop.name,{x,y});return}clearSelection()}});
-vp.addEventListener('pointercancel',()=>{drag=null;vp.classList.remove('dragging')});vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});
+vp.addEventListener('pointermove',e=>{
+ if(!activePointers.has(e.pointerId))return;
+ activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activePointers.size===2){const d=distanceBetween();if(pinchDistance>0&&d>0)state.zoom=clamp(state.zoom*d/pinchDistance,.45,3.3);pinchDistance=d;gestureMoved=true;requestOrbitDraw();return}
+ if(activePointers.size!==1||!drag)return;
+ const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+ if(Math.abs(dx)+Math.abs(dy)>6){drag.moved=true;gestureMoved=true}
+ if(gestureMoved){state.yaw=drag.yaw-dx*.007;state.pitch=clamp(drag.pitch+dy*.006,-.22,1.54);requestOrbitDraw();tip.style.opacity=0}
+});
+function endGesture(e,cancelled=false){
+ if(!activePointers.has(e.pointerId))return;
+ activePointers.delete(e.pointerId);pinchDistance=0;
+ if(activePointers.size){gestureMoved=true;if(activePointers.size===1)orbitStart([...activePointers.values()][0]);else drag=null;return}
+ drag=null;vp.classList.remove('dragging');
+ if(cancelled||gestureMoved){lastTapTime=0;return}
+ const rect=vp.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top;
+ if(orbitFrame){cancelAnimationFrame(orbitFrame);orbitFrame=0;redraw()}
+ const now=performance.now();
+ if(e.pointerType==='touch'&&lastTapPoint&&now-lastTapTime<350&&Math.hypot(x-lastTapPoint.x,y-lastTapPoint.y)<24){
+ lastTapTime=0;if(state.selected){$('focus-selected').click();return}}
+ lastTapTime=now;lastTapPoint={x,y};
+ let backdrop=null;
+ for(let i=pick.length-1;i>=0;i--){if(ctx.isPointInPath(pick[i].path,x*dpr,y*dpr)){const h=pick[i];if(['WALL','WALLCUT','FLOOR'].includes(h.group)){backdrop=backdrop||h;continue}select(h.group,h.name,{x,y});return}}
+ if(backdrop)select(backdrop.group,backdrop.name,{x,y});else clearSelection();
+}
+vp.addEventListener('pointerup',e=>endGesture(e));
+vp.addEventListener('pointercancel',e=>endGesture(e,true));
+vp.addEventListener('lostpointercapture',e=>endGesture(e,true));
+vp.addEventListener('pointerleave',()=>{tip.style.opacity=0});
 vp.addEventListener('wheel',e=>{if(e.target.closest('#quicktools'))return;e.preventDefault();state.zoom=clamp(state.zoom*Math.exp(-e.deltaY*.0012),.45,3.3);redraw()},{passive:false});
 window.addEventListener('keydown',e=>{if(e.target&&e.target.tagName==='INPUT')return;const k=e.key.toLowerCase();if(k==='escape'){clearSelection();return}if(k==='r'){scene('tower');view('iso')}if(k==='1')view('iso');if(k==='2')view('top');if(k==='x'){state.xray=!state.xray;$('xray').classList.toggle('on',state.xray);document.body.classList.toggle('xray-on',state.xray);redraw();return}if(k==='+')state.zoom=clamp(state.zoom*1.15,.45,3.3);if(k==='-')state.zoom=clamp(state.zoom/1.15,.45,3.3);redraw()});
 function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.cooling],['qups',state.showUPS]]){const el=$(id);el.classList.toggle('active',val);el.setAttribute('aria-pressed',String(val))}}
