@@ -16,6 +16,10 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Studio termogeometrico e protocollo n1](docs/H7_R7_AIRFLOW_2026-11-24.md): candidato 38°/170 mm, luce locale 23,96 mm contro 11,88 mm a 42°/164; basamento invariato, margini in profondità stretti. AirRail modulare, estrazione superiore da collaudare. Nessun cambio al render, nessuna CFD o approvazione produzione.
 
+## R-7 Airflow Wide — candidato principale
+
+[Studio Wide e tolleranze](docs/H7_R7_AIRFLOW_WIDE_2026-11-24.md): basamento candidato 1325 × 310, sette carrier a 36° / passo 175 mm, luce locale nominale 31,58 mm. Alternative 35° e 37°. Sfruttamento piano quasi integrale, margini da misurare; render storico e main invariati. NO-GO alla produzione.
+
 ## Come si presenta
 
 La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
