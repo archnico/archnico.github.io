@@ -1,0 +1,5 @@
+node,nic,negotiated_mbps,usb_root_max_mbps,storage_usb_mbps,actual_lan_MBps,actual_storage_MBps,switch_port,status
+n0,Intel I219-V,,10000,,,,,ethernet_down_wifi_up
+n1,Realtek RTL8111 family,1000,5000,,,,,read_only
+n2,Realtek RTL8111 family,1000,5000,480,,,,4TB_USB2
+n3,Realtek RTL810xE,100,5000,5000,,,,8TB_USB3_wifi_also_up

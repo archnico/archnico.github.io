@@ -603,5 +603,34 @@
     "source": "docs/H7_C120_P05_POWERRAIL_2026-11-24.md",
     "calculator": "powerrail.html",
     "survey": "powerrail-survey.csv"
+  },
+  "phase1_p06_netrail": {
+    "status": "network functional study; no change or benchmark",
+    "topology": "star, H4 USB on n2",
+    "link_mbps": {
+      "n0": null,
+      "n1": 1000,
+      "n2": 1000,
+      "n3": 100
+    },
+    "usb_root_max_mbps": {
+      "n0": 10000,
+      "n1": 5000,
+      "n2": 5000,
+      "n3": 5000
+    },
+    "storage_usb_mbps": {
+      "n2": 480,
+      "n3": 5000
+    },
+    "mtu": 1500,
+    "switch_ports_min_full_7_plus_router": 8,
+    "switch_ports_candidate_growth": 16,
+    "network_upgrade_approved": false,
+    "actual_throughput_measured": false,
+    "manufacturing_approved": false,
+    "source": "docs/H7_C120_P06_NETRAIL_2026-11-24.md",
+    "calculator": "netrail.html",
+    "survey": "netrail-survey.csv"
   }
 }
