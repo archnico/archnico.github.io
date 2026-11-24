@@ -20,13 +20,13 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Studio Wide e tolleranze](docs/H7_R7_AIRFLOW_WIDE_2026-11-24.md): basamento candidato 1325 × 310, sette carrier a 36° / passo 175 mm, luce locale nominale 31,58 mm. Alternative 35° e 37°. Sfruttamento piano quasi integrale, margini da misurare; render storico e main invariati. NO-GO alla produzione.
 
-## R-8 Straight Wide — nuova direzione principale (studio)
+## R-8 Straight Wide — geometria di riferimento (studio)
 
-[Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](index.html), [FB-1 storico](fb1.html). NO-GO produzione.
+[Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](r8.html), [FB-1 storico](fb1.html). NO-GO produzione.
 
 ## R-8.1 Universal — alimentazione, cavi e carrier
 
-[Studio C120 e protocollo n1](docs/H7_R81_UNIVERSAL_2026-11-24.md): involucro candidato 120 × 284 × 280, passo 190, luce guida 52 mm, adattatori metallici per 92 mm. PSU commerciali indipendenti preferibilmente su supporto ventilato separato dal top. Per n1 studiare tasca cavi interna; il 3D R-8 92/196 resta riferimento visuale, non CAD C120. NO-GO fabbricazione.
+[Studio C120 e protocollo n1](docs/H7_R81_UNIVERSAL_2026-11-24.md): involucro candidato 120 × 284 × 280, passo 190, luce guida 52 mm, adattatori metallici per 92 mm. PSU commerciali indipendenti preferibilmente su supporto ventilato separato dal top. Per n1 studiare tasca cavi interna; [anteprima 3D C120](index.html) aggiornata; [R-8 92/196 storico](r8.html). Modello concettuale, non CAD esecutivo. NO-GO fabbricazione.
 
 ## Come si presenta
 
@@ -91,7 +91,7 @@ di riferimento.
 
 ## Esplorare l'anteprima
 
-**[Apri il render 3D interattivo R-8](index.html)**. A sinistra trovi capitoli a strati, ciascuno con **Tutti** per mostrare o nascondere il gruppo. Puoi selezionare un pezzo, attivare la semitrasparenza, usare i comandi di smontaggio e scegliere prospettive dedicate per stanza, Torre, HAUGA, DAS H-4, scrivania e bracci dei monitor.
+**[Apri il render 3D interattivo R-8.1 C120](index.html)**. A sinistra trovi capitoli a strati, ciascuno con **Tutti** per mostrare o nascondere il gruppo. Puoi selezionare un pezzo, attivare la semitrasparenza, usare i comandi di smontaggio e scegliere prospettive dedicate per stanza, Torre, HAUGA, DAS H-4, scrivania e bracci dei monitor.
 
 **Nota geometrica storica:** la [vista FB-1 a 42°](fb1.html), con ingombri illustrativi 1310 × 318 mm, è un'ipotesi grafica funzionale ai confronti e **non una quota canonizzata per costruire**. In parallelo l'**[approfondimento ingegneristico R-5](docs/H7_R5_PETTINE_INGEGNERIA_2026-11-23.md)** indica **25° / passo 108 mm** come candidato geometrico alternativo su cartucce ipotetiche 80 × 251 mm. Le due versioni non vanno confuse: il primo dato guida il render, il secondo una simulazione comparativa da falsificare con l'hardware reale. Nessuna configurazione è approvata per la costruzione. La R-4 resta confronto storico per la massa (15,046 kg teorici, in uno scenario non rappresentativo della massa finale).
 

@@ -4,7 +4,7 @@ import blundercheck_fb1 as old
 from pathlib import Path
 T=Path(__file__).resolve().parents[1]
 old.JS=T/'assets/straight-viewer.js'
-old.HTML=T/'index.html'
+old.HTML=T/'r8.html'
 # Existing instrumentation uses the legacy filename. Supply a matching
 # temporary HTML via the audit helper by allowing either filename there.
 for scene,focus,wings in [('tower',0,False),('rear',0,False),('thermal',0,False),('standalone',0,False),('standalone',0,True)]+[('module',i,False) for i in range(7)]:

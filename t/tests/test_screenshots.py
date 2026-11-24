@@ -14,7 +14,7 @@ import tempfile
 from pathlib import Path
 
 T = Path(__file__).resolve().parents[1]
-JS = T / "assets/straight-viewer.js"
+JS = T / "assets/universal-viewer.js"
 HTML = T / "index.html"
 OUT = T / "tests" / "screenshots"
 OUT.mkdir(exist_ok=True)

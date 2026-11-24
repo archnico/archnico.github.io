@@ -302,7 +302,7 @@
       45,
       265
     ],
-    "render": "index.html",
+    "render": "r8.html",
     "historical_render": "fb1.html",
     "manufacturing_approved": false,
     "source": "docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md"
@@ -324,8 +324,9 @@
     "guide_gap_mm": 52,
     "psu_preference": "independent ventilated support, location unverified",
     "n1_cable_pocket_candidate_mm": 65,
-    "render": "R8_92_196_reference_not_R81",
+    "render": "index.html",
     "source": "docs/H7_R81_UNIVERSAL_2026-11-24.md",
-    "manufacturing_approved": false
+    "manufacturing_approved": false,
+    "render_status": "C120 concept; PCB/PSU/cables not surveyed"
   }
 }
