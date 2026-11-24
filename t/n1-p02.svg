@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1050" height="720" viewBox="0 0 1050 720">
+<rect width="1050" height="720" fill="#f7f9fa"/>
+<g font-family="sans-serif" fill="#23343c">
+<text x="35" y="42" font-size="29">C120/n1 · P0.2 Universal Mount</text>
+<text x="35" y="68" font-size="14">Studio di ingombri — nessuna posizione fori o giunti approvata</text>
+<text x="35" y="110" font-size="20">Vista lato posteriore · v/h</text>
+<rect x="35.0" y="140.0" width="426.0" height="420.0" fill="none" stroke="#526874" stroke-dasharray="5 4"/>
+<rect x="35.0" y="537.5" width="426.0" height="22.5" fill="#879ba6" stroke="#526874" />
+<rect x="56.75" y="155.0" width="22.5" height="382.5" fill="#849ba9" stroke="#526874" />
+<rect x="416.75" y="155.0" width="22.5" height="382.5" fill="#849ba9" stroke="#526874" />
+<rect x="79.25" y="155.0" width="337.5" height="22.5" fill="#849ba9" stroke="#526874" />
+<path d="M68.0 526.25L428.0 166.25" stroke="#71808a" stroke-width="1.7" stroke-dasharray="6 4"/>
+<path d="M428.0 526.25L68.0 166.25" stroke="#71808a" stroke-width="1.7" stroke-dasharray="6 4"/>
+<rect x="56.75" y="440.0" width="382.5" height="30.0" fill="#d6a052" stroke="#526874" fill-opacity=".8"/>
+<rect x="56.75" y="327.5" width="382.5" height="30.0" fill="#d6a052" stroke="#526874" fill-opacity=".8"/>
+<rect x="56.75" y="215.0" width="382.5" height="30.0" fill="#d6a052" stroke="#526874" fill-opacity=".8"/>
+<rect x="101.0" y="170.0" width="262.5" height="339.0" fill="#3a9980" stroke="#526874" fill-opacity=".22" stroke-dasharray="3 2"/>
+<text x="108" y="220" font-size="14">PCB n1: solo contorno</text>
+<text x="108" y="240" font-size="14">Traversine: posizioni illustrative</text>
+<text x="35" y="590" font-size="14">Diagonali tratteggiate: attacchi e incrocio non risolti.</text>
+<text x="35" y="610" font-size="14">Nessun foro PCB dedotto da questa tavola.</text>
+<text x="510" y="110" font-size="20">Sezione u · budget spessore C120</text>
+<rect x="525" y="150" width="480" height="85" fill="none" stroke="#526874" stroke-dasharray="5 4"/>
+<rect x="525" y="150" width="60" height="85" fill="#849ba9" stroke="#526874" />
+<rect x="585" y="150" width="40" height="85" fill="#d6a052" stroke="#526874" />
+<rect x="625" y="150" width="42.0" height="85" fill="#d5dce0" stroke="#526874" />
+<rect x="667.0" y="150" width="6.4" height="85" fill="#328473" stroke="#526874" />
+<rect x="673.4" y="150" width="311.6" height="85" fill="#d4eee5" stroke="#526874" />
+<rect x="985" y="150" width="20" height="85" fill="#f2d2d2" stroke="#526874" />
+<text x="685" y="187" font-size="17">77,9 mm lordi</text>
+<text x="685" y="207" font-size="14">componenti + cavi</text>
+<text x="525" y="260" font-size="14">15 mm montante · 10 mm traversina</text>
+<text x="525" y="281" font-size="14">10,5 mm distanziale ipotetico · 1,6 PCB</text>
+<text x="525" y="302" font-size="14">5 mm riserva opposta; non clearance termica</text>
+<text x="510" y="345" font-size="20">Ritenute: 4 punti positivi</text>
+<rect x="650" y="370" width="120" height="170" fill="#d9e9e6" stroke="#526874" stroke-dasharray="4 3"/>
+<circle cx="650" cy="390" r="7" fill="#bd7839" stroke="#80552e"/>
+<circle cx="650" cy="520" r="7" fill="#bd7839" stroke="#80552e"/>
+<circle cx="770" cy="390" r="7" fill="#bd7839" stroke="#80552e"/>
+<circle cx="770" cy="520" r="7" fill="#bd7839" stroke="#80552e"/>
+<text x="790" y="405" font-size="14">Posizioni indicative</text>
+<text x="790" y="425" font-size="14">Ferramenta da scegliere</text>
+<text x="790" y="445" font-size="14">Rimuovere prima dello sweep</text>
+<text x="510" y="575" font-size="14">Non usare la dima per foratura o acquisto.</text>
+<text x="35" y="668" font-size="18">NO-GO fabbricazione · G0 fisico, fit, struttura, elettrico e termica aperti</text>
+</g></svg>

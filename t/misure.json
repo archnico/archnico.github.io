@@ -485,5 +485,35 @@
     "bom": "n1-p01-bom.csv",
     "drawing": "n1-p01.svg",
     "manufacturing_approved": false
+  },
+  "phase1_n1_p02": {
+    "status": "universal mount study; no physical approval",
+    "alternatives": [
+      "A0 OEM metal tray",
+      "A1 adjustable rear metal frame"
+    ],
+    "carrier_mm": [
+      120,
+      284,
+      280
+    ],
+    "A1_post_length_mm": 255,
+    "A1_top_crossmember_mm": 225,
+    "A1_rail_nominal_mm": [
+      20,
+      10,
+      255
+    ],
+    "A1_rail_qty_candidate": 3,
+    "A1_board_front_u_mm": -22.9,
+    "A1_component_gross_mm": {
+      "W120": 77.9,
+      "W92": 49.9
+    },
+    "positive_retainer_qty_candidate": 4,
+    "manufacturing_approved": false,
+    "source": "docs/H7_C120_N1_P02_MOUNT_2026-11-24.md",
+    "drawing": "n1-p02.svg",
+    "delta_bom": "n1-p02-delta.csv"
   }
 }

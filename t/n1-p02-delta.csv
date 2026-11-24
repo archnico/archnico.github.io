@@ -1,0 +1,8 @@
+id,component,qty,length_mm,status
+A11,rear_upright_L15,2,255,candidate_A1_only
+A12,top_crossmember_L15,1,225,candidate_A1_only
+A13,adjustable_rail_20x10,3,255,candidate_A1_only
+A14,metal_diagonal_or_diaphragm,,,pending_A1_only
+R01,positive_metal_retainer,4,,replaces_P01_qty2_pending
+A02,OEM_compatible_standoffs,,,physical_survey
+A15,adjustable_IO_support,1,,physical_survey
