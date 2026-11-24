@@ -12,6 +12,10 @@ Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora
 
 La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier metallico permanente con traversine riposizionabili, adattatori minimi e target Mini-ITX / Micro-ATX 244 × 244. Candidato 92 × 284 × 280 mm: pianta R-6 invariata, altezza maggiorata da verificare. PSU indipendenti e riutilizzabili soltanto se compatibili; niente hot swap. Prima del congelamento si collaudano n1 e una dima inerte 244 × 244. **NO-GO alla serie; il render 3D non rappresenta ancora R-7.**
 
+## R-7 Airflow — ventilazione (studio)
+
+[Studio termogeometrico e protocollo n1](docs/H7_R7_AIRFLOW_2026-11-24.md): candidato 38°/170 mm, luce locale 23,96 mm contro 11,88 mm a 42°/164; basamento invariato, margini in profondità stretti. AirRail modulare, estrazione superiore da collaudare. Nessun cambio al render, nessuna CFD o approvazione produzione.
+
 ## Come si presenta
 
 La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.
