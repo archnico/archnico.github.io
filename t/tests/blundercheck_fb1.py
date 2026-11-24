@@ -29,7 +29,7 @@ JS = T / "assets/viewer.js"
 HTML = T / "index.html"
 
 
-def recorded_boxes(scene='tower', focus=0):
+def recorded_boxes(scene='tower', focus=0, standpads=False):
     chrome = shutil.which("chromium")
     if not chrome:
         raise RuntimeError("Install Chromium to audit actual viewer geometry")
@@ -45,8 +45,11 @@ def recorded_boxes(scene='tower', focus=0):
         (" rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);",
          " rotBox(p[0],p[1],z+lifted+exploded+adapterLift,w,d,h,FB.angle,color,group,name,opa);"
          " __auditBoxes[__auditBoxes.length-1].bay=i;"),
-        ("\n})();", "\nwindow.__auditBoxesMake=function(scene,focus){state.focusIndex=focus||0;state.scene=scene;__auditBoxes.length=0;"
-          "make();return __auditBoxes;};\n})();"),
+        (" for(const l of labels)l.pos[2]-=90;\n floorStandingKit(FB.length);",
+         " for(const l of labels)l.pos[2]-=90;\n // Capture the REAL drawn Z after the standalone lift-down operation.\n"
+         " __auditBoxes.forEach(box=>{box.z-=90;});\n floorStandingKit(FB.length);"),
+        ("\n})();", "\nwindow.__auditBoxesMake=function(scene,focus,standpads){state.focusIndex=focus||0;state.scene=scene;"
+          "state.standpads=!!standpads;__auditBoxes.length=0;make();return __auditBoxes;};\n})();"),
     ]
     for needle, replacement in changes:
         if original.count(needle) != 1:
@@ -65,7 +68,7 @@ def recorded_boxes(scene='tower', focus=0):
             .replace('</body>',
                      f'<pre id="audit-out"></pre><script>window.addEventListener("load",()=>{{'
                      'document.getElementById("audit-out").textContent='
-                     f'JSON.stringify(window.__auditBoxesMake("{scene}",{focus}));'
+                     f'JSON.stringify(window.__auditBoxesMake("{scene}",{focus},{str(standpads).lower()}));'
                      '});</script></body>'))
         run = subprocess.run(
             [chrome, "--headless", "--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu",
@@ -113,18 +116,22 @@ def assert_clear(description, pairs, max_hits=25):
 
 
 def structural_groups():
-    return {"FRAME", "FBCRADLE", "FBGUIDE", "LIGHTSUPPORT", "LIGHTPAD", "FOOT"}
+    # Unlike the historical test, include *all* floor-base solids.  The former
+    # fixed-structure whitelist silently excluded STANDCROSS and all outriggers.
+    return {"FRAME", "FBCRADLE", "FBGUIDE", "LIGHTSUPPORT", "LIGHTPAD", "FOOT",
+            "STANDRAIL", "STANDCROSS", "STANDPAD", "STANDRUBBER", "STANDJOINT"}
 
 
-def audit_scene(scene, focus=0):
-    boxes = recorded_boxes(scene, focus)
+def audit_scene(scene, focus=0, standpads=False):
+    boxes = recorded_boxes(scene, focus, standpads)
     boards = [o for o in boxes if o["name"].startswith("Scheda madre illustrativa")]
     ssd = [o for o in boxes if o["group"] == "SSD"]
     cheek = [o for o in boxes if "Fianco e guida rimovibile" in o["name"]]
     fixed_struct = [o for o in boxes if o["group"] in structural_groups()]
     supply = [o for o in boxes if o["name"].startswith("Alimentatore")]
 
-    print(f"\n--- Scene {scene}" + (f" focus={focus+1}" if focus else "") + f" ---")
+    print(f"\n--- Scene {scene}" + (f" focus={focus+1}" if focus else "") +
+          (" wings=ON" if standpads else " wings=OFF") + f" ---")
     print(f"{len(boxes)} solids, {len(boards)} board(s), {len(ssd)} SSD(s), "
           f"{len(fixed_struct)} fixed-structure solids")
 
@@ -139,6 +146,28 @@ def audit_scene(scene, focus=0):
         assert len(fbc) == 56, f"expected 56 FBCRADLE boxes, got {len(fbc)}"
     elif scene == "module":
         assert len(boards) == 1, "detail scene must show exactly one illustrative motherboard"
+    elif scene == "standalone":
+        # Actual floor variant lowering: the canvas renderer lowers ALL board
+        # solids by 90mm.  Tests now capture the same coordinates (not stale z).
+        assert len(boards) == 7
+        assert all(abs(b["z"] - 71) < .05 for b in boards), (
+            "standalone PCB must be lowered from z=161 to z=71")
+        # No second pair of long skids/crossbars at floor height.  The SAME
+        # upper seven-cross-tie ladder rests on SIX compact shoes at z=-5..1.
+        assert not any(o["group"] in ("STANDCROSS", "STANDRAIL") for o in boxes), (
+            "redundant floor beam reintroduced; could appear to cross a PCB")
+        shoes = [o for o in boxes if o["group"] == "STANDJOINT"]
+        assert len(shoes) == 6, f"expected 6 low load-transfer shoes, got {len(shoes)}"
+        assert all(abs(s["z"] + 5) < .05 and abs(s["z"] + s["h"] - 1) < .05
+                   for s in shoes), "shoe must sit below lowered FRAME bottom z=1"
+        wings = [o for o in boxes if o["group"] == "STANDPAD"]
+        assert len(wings) == (4 if standpads else 0), (
+            "optional wings must be controlled by the toggle")
+        assert all(not intersects(board, foot) for board in boards
+                   for foot in boxes if foot["group"].startswith("STAND")), (
+            "standalone board vs shoe/wings intersection")
+        print("OK: lowered PCB z=71..251 mm; six foot plates z=-5..1 mm;"
+              " no floor beams or crossbars; optional wings tested")
 
     # Core requirement: motherboards never intersect fixed structure.
     assert_clear(f"motherboards vs ALL fixed structural objects ({scene})",
@@ -168,7 +197,10 @@ def audit_scene(scene, focus=0):
     CONNECTED_JOINTS = {frozenset(("LIGHTSUPPORT", "FRAME")),
                         frozenset(("LIGHTPAD", "FRAME")),
                         frozenset(("FBGUIDE", "FRAME")),
-                        frozenset(("FBCRADLE", "FRAME"))}
+                        frozenset(("FBCRADLE", "FRAME")),
+                        # Any real wing connection still needs a fastening
+                        # design: the illustrated wing merely touches the shoe.
+                        }
     assert_clear(f"fixed-structure parts vs each other ({scene})",
                  ((a, b) for i, a in enumerate(fixed_struct)
                   for b in fixed_struct[i + 1:]
@@ -199,7 +231,8 @@ def main():
         audit_scene("module", focus=i)
     audit_scene("rear")
     audit_scene("thermal")
-    audit_scene("standalone")
+    audit_scene("standalone", standpads=False)
+    audit_scene("standalone", standpads=True)
 
     # Independent checks of critical nominal-only clearances.
     angle = math.radians(42)

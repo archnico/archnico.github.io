@@ -124,7 +124,7 @@ function openPreset(preset){
 document.querySelectorAll('[data-preset]').forEach(el=>el.onclick=()=>openPreset(el.dataset.preset));
 
 let W=0,H=0,dpr=1,faces=[],lines=[],labels=[],pick=[],drag=null,partsFingerprint='';
-const partDescriptions={FBGUIDE:'Guide laterali FISSE dei sette cassetti, non parte dei moduli',FBCRADLE:'Sedi inferiori e traverse di carico FISSE, schema da collaudare',STANDRAIL:'Due longheroni metallici a terra (studio)',STANDCROSS:'Tre traverse basse per ripartire il carico (studio)',STANDPAD:'Pattini stabilizzatori aggiuntivi, opzionali (studio)',STANDRUBBER:'Appoggi antiscivolo sul pavimento (studio)',STANDJOINT:'Piastre di collegamento rimovibili (studio)',FLOORREF:'Suolo di riferimento, NON una piastra in legno',USBDRIVE:'HDD USB esterni: 8 TB su n3 / 4 TB su n2, migrazione non eseguita',DAS4:'DAS a 4 bay SATA indipendenti · inizialmente vuoto',HUB4:'Hub alimentato 4 porte USB · espandibile',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F2:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F3:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F4:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F5:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F6:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',FANMOUNT:'Staffe segnaposto per ventole compute: modello reale, fissaggio e griglia dita da validare',FANPOWER:'Cablaggi ventole 12 V: nessun HDD in H-7 da raffreddare qui',DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
+const partDescriptions={FBGUIDE:'Guide laterali FISSE dei sette cassetti, non parte dei moduli',FBCRADLE:'Sedi inferiori e traverse di carico FISSE, schema da collaudare',STANDRAIL:'Elemento di studio superato: nessun doppio longherone a terra',STANDCROSS:'Elemento di studio superato: nessuna seconda traversa a pavimento',STANDPAD:'Pattini stabilizzatori aggiuntivi, opzionali (studio)',STANDRUBBER:'Appoggi antiscivolo sul pavimento (studio)',STANDJOINT:'Piastre di collegamento rimovibili (studio)',FLOORREF:'Suolo di riferimento, NON una piastra in legno',USBDRIVE:'HDD USB esterni: 8 TB su n3 / 4 TB su n2, migrazione non eseguita',DAS4:'DAS a 4 bay SATA indipendenti · inizialmente vuoto',HUB4:'Hub alimentato 4 porte USB · espandibile',DASCABLE:'Collegamento dati alla Torre verso n2',USBC:'Sei USB-C sul lato sinistro della scrivania',KEYBOARD:'Tastiera',MOUSE:'Mouse',PHONE:'Telefono su leggio',PHONESTAND:'Leggio smartphone',LAPTOPSTAND:'Leggio laptop',WINDOW:'Finestra 210 × 160 cm',F1:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F2:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F3:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F4:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F5:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',F6:'Icona 67 mm segnaposto: nessun HDD in H-7, P14 140 mm non entra in 92 mm',FANMOUNT:'Staffe segnaposto per ventole compute: modello reale, fissaggio e griglia dita da validare',FANPOWER:'Cablaggi ventole 12 V: nessun HDD in H-7 da raffreddare qui',DESKSATLEFT:'Satellite audio 3 · multilivello',DESKSATRIGHT:'Satellite audio 4 · multilivello',WHITECAB:'HAUGA · pannelli',HAUGABACK:'HAUGA · schienale',HAUGASHELF:'HAUGA · ripiano e divisorio',HAUGAOPEN:'HAUGA · vani aperti',HAUGAGUIDE:'HAUGA · guide cassetti',HAUGADRAWER:'HAUGA · due cassetti',HAUGAKNOB:'HAUGA · quattro pomelli',LIP:'HAUGA · spalletta a U',ADAPTER:'Kit storico R-1 NON utilizzabile',PORTAL:'Portale R-2 portante a pavimento',PORTALBRACE:'Controventi laterali portale',PORTALFOOT:'Piedi portale esterni al mobile',PORTALLOCK:'Agganci Torre-portale removibili',LIGHTSUPPORT:'R-3 rialzi metallici su piano HAUGA',LIGHTPAD:'R-3 basi ripartizione carico',LIGHTBASE:'R-3 base reticolare alleggerita',STANDPAD:'Pattino opzionale Torre',OUTLETAC:'Presa elettrica 230 V',OUTLETLAN:'Presa Ethernet RJ45',ACDUCT:'Canaletta elettrica',NETDUCT:'Canaletta LAN',ACFLEX:'Bretella AC',NETPATCH:'Bretella Ethernet',CHAIR:'Sedia gaming a 5 razze',DESK:'Scrivania 45°',RACK:'Mobile multilivello',PRINTER:'Stampante',RACKMODEM:'Modem/router',AUDIOLEFT:'Satellite audio 1',AUDIORIGHT:'Satellite audio 2',SUBWOOFER:'Subwoofer',UPS:'UPS indipendente',MONVGA:'Monitor Acer VGA',MONHDMI:'Monitor HDMI',MONMID:'Terzo monitor intermedio',ARMLEFT:'Braccio VESA sinistro',ARMCENTER:'Braccio VESA centrale',ARMRIGHT:'Braccio VESA destro',POWER:'Alimentazioni Torre',IO:'Porte I/O',STORAGE:'Banchi dischi',FOOT:'Piedi centrali',FLOOR:'Pavimento',WALL:'Pareti',GUIDE:'Guide alte',DOCK:'Sedi a U inferiori',FRAME:'Telaio',LOCK:'Fermi',BACKBONE:'Schienale',GUIDEFRAME:'Traverse superiori'};
 // Round 6: engineering metadata (concept only) attached to selectable groups.
 // Values are placeholders until real measurements; never a fabrication spec.
 const PART_META={
@@ -674,39 +674,43 @@ function lipDetailScene(){
 // The base components are shifted downward so they touch the lowered frame at z=1
 // without solid intersections; this is still a concept, not a validated load-bearing base.
 function floorStandingKit(length){
- const skids=[-32,332],stations=[88,655,1222];
- // Datum floor only: does NOT represent a structural slab. Components are shifted
- // downward so that the lowered tower frame (z=1..19) rests on top without solid
- // intersections; this is still a concept, not a validated load-bearing base.
- const floorZ=-13;
+ // The H-7 upper ladder frame is ALREADY load-bearing in the drawing.
+ // A second pair of 1.3m floor skids was redundant and appeared to run through
+ // the PCB from oblique camera angles. Use six compact floor shoes instead.
+ // All six shoes contact the lowered FRAME at z=1; NO elevated floor crossbar.
+ const stations=[88,655,1222], floorZ=-7;
  faces.push({p:[[-85,-176,floorZ],[length+85,-176,floorZ],[length+85,508,floorZ],[-85,508,floorZ]],
   color:'#193b42',group:'FLOORREF',name:'Pavimento di riferimento, non piastra di legno',
   opa:.18,emphasis:false,normal:[0,0,1]});
  for(let x=0;x<=length;x+=200)wire([[x,-160,floorZ+1],[x,490,floorZ+1]],'#426267',.65,'FLOORREF',[],.32);
  for(const y of [-100,0,100,200,300,400])wire([[-70,y,floorZ+1],[length+70,y,floorZ+1]],'#426267',.65,'FLOORREF',[],.32);
- // Low metal skids, rubber feet and joints form a stack ending at z=1 so the
- // lowered tower frame (bottom z=1) sits on top without solid intersections.
- for(const y of skids){
-  pushBox(19,y,floorZ+1,length-38,20,7,'#6e999b','STANDRAIL','Longherone metallico basso da collaudare, nessuna betulla',1);
-  for(const x of stations){
-   pushBox(x-33,y-8,floorZ,66,36,1,'#253f47','STANDRUBBER','Pattino elastomerico sul pavimento, carico/attrito da misurare',.99);
-   pushBox(x-26,y-5,floorZ+8,52,30,4,'#bcac83','STANDJOINT','Giunto smontabile tra profilati, bulloneria da definire',1);
-  }
+ // Candidate stand contact polygon -43..375 = ~418 mm front/rear.
+ // Each shoe touches the underside of an upper frame longitudinal (y=14/286)
+ // at z=1. The 6mm plate and 2mm anti-slip pad are VISUAL ONLY.
+ for(const x of stations)for(const [y,depth] of [[-43,100],[261,114]]){
+   pushBox(x-35,y,floorZ,70,depth,2,'#253f47','STANDRUBBER',
+     'Contatto elastomerico a terra: dimensioni e attrito da misurare',1);
+   pushBox(x-35,y,floorZ+2,70,depth,6,'#55777b','STANDJOINT',
+     'Scarpa rigida bassa: appoggia il telaio principale a z=1, fori e rigidezza NON definiti',1);
  }
- for(const x of stations)
-  pushBox(x-10,-29,floorZ+12,20,388,2,C.frame2,'STANDCROSS','Traversa bassa di ripartizione tra i due longheroni',1);
- // Four optional front/rear anti-tip wings, not a certified restraint.
+ // Extra anti-tip wings are optional and OFF in the default view.
+ // They only meet the six shoes edge-to-edge: connector/bolts are NOT modeled.
+ // Only four hypothetical extensions at the ends (not a claimed need).
  if(state.standpads)for(const x of [88,1222]){
-   pushBox(x-47,-125,floorZ+1,94,104,7,'#638e94','STANDPAD','Ala frontale stabilizzatrice rimovibile, studio',.97);
-   pushBox(x-47,350,floorZ+1,94,130,7,'#638e94','STANDPAD','Ala posteriore stabilizzatrice rimovibile, studio',.97);
-   pushBox(x-34,-130,floorZ,68,38,1,'#273f46','STANDRUBBER','Appoggio esterno ala anteriore, da collaudare',.98);
-   pushBox(x-34,448,floorZ,68,38,1,'#273f46','STANDRUBBER','Appoggio esterno ala posteriore, da collaudare',.98);
+   pushBox(x-47,-130,floorZ+2,94,87,6,'#638e94','STANDPAD',
+     'Ala opzionale anteriore, collegamento alla scarpa ancora da progettare',.97);
+   pushBox(x-47,375,floorZ+2,94,111,6,'#638e94','STANDPAD',
+     'Ala opzionale posteriore, collegamento alla scarpa ancora da progettare',.97);
+   pushBox(x-34,-130,floorZ,68,87,2,'#273f46','STANDRUBBER',
+     'Contatto opzionale anteriore · attrito da verificare',.98);
+   pushBox(x-34,375,floorZ,68,111,2,'#273f46','STANDRUBBER',
+     'Contatto opzionale posteriore · attrito da verificare',.98);
  }
  if(state.dims){
   dimension([0,-42,0],[length,-42,0],'1310 mm · L CORPO',[0,-55,0],'#c9e5df');
-  dimension([length,-42,0],[length,376,0],'~418 mm · APPOGGI BASE',[90,0,0],'#d6cc9d');
+  dimension([length,-43,0],[length,375,0],'~418 mm · SCARPE BASE',[90,0,0],'#d6cc9d');
   if(state.standpads)dimension([length+20,-130,0],[length+20,486,0],'~616 mm · ALI APERTE',[130,0,0],'#efba78');
-  text3([length/2,475,265],'AUTONOMA · PIEDI RIMOVIBILI / NO MOBILI · SOLO STUDIO',C.accent,10,'DIM');
+  text3([length/2,475,265],'AUTONOMA · 6 SCARPE BASSE · ALI SOLO SE NECESSARIE · NO-GO STRUTTURA',C.accent,10,'DIM');
  }
 }
 function standaloneTower(){
@@ -1115,11 +1119,11 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='LIP'){t='Spalletta a U del mobile';d='Risalto su tre lati, alto 90 mm e spesso 10 mm misurati. Progetto R-2: nessun carico o fissaggio della Torre su HAUGA. Il telaio portante è esterno e arriva a pavimento.';tt=['H90 e spessore 10 mm misurati','non portante per Torre','nessuna vite aggiuntiva']}
  else if(id==='LIGHTBASE'){t='Base reticolare alleggerita R-3';d='Travi reticolari sottili e correnti sul perimetro al posto della pesante piastra piena da 18 mm. La geometria è un concept: non provata a flessione, giunti, vibrazione e resistenza a estrazione dei moduli. Richiesto CAD e collaudo con carico inerte.';tt=['mass budget ~1,8 kg','base autoportante a pavimento','non stampare senza verifica'];}
  else if(id==='LIGHTSUPPORT'){t='Sei rialzi metallici smontabili FB-1';d='Supporti di studio ~107 mm, posati sul piano interno HAUGA, senza caricare la spalletta da 90 mm. Da verificare antiscivolo, fissaggi al telaio, reazioni e massa totale entro 20 kg.';tt=['6 appoggi','nessuna vite nel mobile','collaudo necessario'];}
- else if(id==='STANDRAIL'){t='Base autonoma · due longheroni a pavimento';d='Due correnti metallici bassi allineati alla H-7 e separati da traverse. La Torre viene abbassata rispetto alla versione su HAUGA senza cambiare i sette moduli. Il profilo, il fissaggio ai giunti e la portata non sono ancora verificati.';tt=['nessun mobile necessario','solo alluminio/acciaio','base da collaudare'];}
- else if(id==='STANDCROSS'){t='Base autonoma · tre traverse';d='Tre sezioni basse collegano i due longheroni e distribuiscono il peso della Torre. Le connessioni illustrate non sostituiscono verifiche di flessione, torsione, concentrazione degli sforzi e risonanza.';tt=['3 traverse','giunti smontabili','calcoli da eseguire'];}
- else if(id==='STANDPAD'){t='Ali stabilizzatrici opzionali';d='Quattro pattini frontali e posteriori removibili, mostrati aperti. Aumentano il poligono di appoggio ma NON sostituiscono una verifica antiribaltamento con carico reale; non sono fissaggi di sicurezza certificati.';tt=['4 ali opzionali','maggiore profondità','sicurezza da verificare'];}
- else if(id==='STANDRUBBER'){t='Punti di contatto a pavimento';d='Appoggi antiscivolo sotto i longheroni e le ali opzionali. Bisogna determinare attrito e carico puntuale secondo il pavimento reale e decidere se servono vincoli indipendenti a parete o a pavimento.';tt=['nessun truciolare HAUGA','attrito da testare','piano livellato'];}
- else if(id==='STANDJOINT'){t='Giunti smontabili della base a terra';d='Staffette illustrative in corrispondenza delle traverse e dei sei punti di trasferimento del peso. Fissaggio e robustezza devono essere progettati; l’incastro non è una prova meccanica.';tt=['traverse e longheroni','bulloneria da definire','nessun legno'];}
+ else if(id==='STANDRAIL'){t='Longheroni aggiuntivi eliminati';d='La base autonoma riutilizza il telaio a scala H-7 senza una seconda coppia di longheroni a pavimento. Sotto il telaio sono ora raffigurate sei scarpe di appoggio. La portata reale deve essere verificata.';tt=['nessun doppio longherone','6 scarpe basse','rigidezza da collaudare'];}
+ else if(id==='STANDCROSS'){t='Traverse inferiori aggiuntive eliminate';d='Non vengono più raffigurate traverse a pavimento che sembrino passare davanti alle motherboard. Rimangono le sette traverse del telaio superiore, fisicamente sotto le cartucce. Torsione e flessione rimangono da verificare.';tt=['nessuna traversa aggiuntiva a terra','7 traversi nel telaio','calcoli aperti'];}
+ else if(id==='STANDPAD'){t='Ali stabilizzatrici opzionali';d='Quattro pattini frontali e posteriori removibili, disattivati per impostazione iniziale. Sono un possibile aumento della base di appoggio, NON componenti obbligatori: solo le misure di masse, baricentro e urti possono determinarne la necessità.';tt=['4 ali opzionali','inizialmente nascoste','antiribaltamento NON verificato'];}
+ else if(id==='STANDRUBBER'){t='Appoggi antiscivolo delle sei scarpe';d='Sottili contatti elastomerici schematici tra pavimento e scarpe rigide, oltre ai contatti delle ali se attivate. Attrito, cedevolezza e carichi puntuali devono essere misurati prima di usare la Torre sul pavimento.';tt=['6 scarpe basse','attrito non misurato','pavimento da verificare'];}
+ else if(id==='STANDJOINT'){t='Sei scarpe rigide di appoggio a pavimento';d='Sei piattelli bassi sotto i due longheroni del telaio H-7; lo trasferimento del peso avviene tramite contatto al livello z=1 mm, non tramite nuove travi che attraversano la prospettiva delle motherboard. Spessori, bulloneria, rigidità e materiali sono di studio.';tt=['6 scarpe di appoggio','nessuna trave aggiuntiva','carichi da misurare'];}
  else if(id==='FLOORREF'){t='Suolo di riferimento';d='Il piano e la griglia rappresentano il pavimento nella vista autonoma: non sono una piastra aggiunta né un elemento di supporto. La Torre è sostenuta dai profilati metallici e dai piedi antiscivolo.';tt=['riferimento visivo','non strutturale'];}
  else if(id==='LIGHTPAD'){t='Piattelli di ripartizione FB-1';d='Sei basi indicative 72 × 54 mm su HAUGA; verificare materiale, posizione rispetto ai pannelli portanti, deformazione, attrito e carico concentrato.';tt=['top max 20 kg','test a carico inerte','non sulla spalletta'];}
  else if(id==='PORTAL'){t='Portale R-2 con quattro montanti a terra';d='Supporto indipendente studiato attorno al mobile: quattro montanti 40×40, due traversi superiori a campata intera, piastra 1130×450 e bracci laterali. Bordo basso dei traversi a 560 mm: 20 mm teorici liberi sopra HAUGA. Larghezza telaio 1470 mm richiede 50 mm per lato, ma le scarpe richiedono 55 mm + tolleranze: riservare almeno 60 mm per lato. Nessuna vite nel mobile né carico sul piano IKEA. Necessari verifiche di spazio, vibrazione, flessione, ribaltamento e controventi; possibili vincoli al muro indipendenti.';tt=['portata HAUGA: 20 kg, non impiegata','R-2 senza viti nel mobile','portale 1470 mm','solo studio']}
@@ -1183,7 +1187,7 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
  else if(mode==='cabinet'||mode==='light'||mode==='storage'){state.yaw=1.34;state.pitch=.52;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='lipdetail'||mode==='haugadetail'){state.yaw=1.48;state.pitch=.62;state.xray=false;$('xray').classList.remove('on')}
  else if(mode==='ups'){state.yaw=2.32;state.pitch=.42}
- else if(mode==='standalone'){state.yaw=2.68;state.pitch=.38;state.standpads=true;$('standpads').classList.add('on');$('standpads').setAttribute('aria-pressed','true')}
+ else if(mode==='standalone'){state.yaw=2.68;state.pitch=.72;state.standpads=false;$('standpads').classList.remove('on');$('standpads').setAttribute('aria-pressed','false')}
  else if(mode==='rear'){state.yaw=0;state.pitch=.28}
  else if(mode==='module'){state.yaw=2.3;state.pitch=.36;}
  else if(mode==='desk'){state.yaw=.82;state.pitch=.57;}
@@ -1198,7 +1202,7 @@ function scene(mode){if(state.scene==='thermal'&&mode!=='thermal'){state.airflow
   storage:['TORRINO H-4 · 4 BAY + HUB 4 PORTE','DAS SATA inizialmente vuoto · 8 TB e 4 TB esterni USB nell’hub · n2 host'],
   desk:['POSTAZIONE · LAPTOP E TELEFONO SU LEGGIO','Tastiera, mouse e sei USB-C a sinistra · due cavi collegati'],
   thermal:['VENTILAZIONE · 4 VENTOLE CANDIDATE','Schema da verificare sul prototipo · nessuna simulazione CFD'],
-  standalone:['TORRE H-7 · AUTONOMA A TERRA','Stessi sette moduli FB-1 · base metallica bassa + pattini aggiuntivi · stabilità da collaudare'],
+  standalone:['TORRE H-7 · AUTONOMA A TERRA','Stessi sette moduli FB-1 · sei scarpe basse · ali opzionali attivabili · stabilità da collaudare'],
   tower:['TORRE H-7 · FB-1 A SPINA DI PESCE','Sette cartucce · collisioni modello controllate · PSU NON dimensionati · non esecutivo'],
   rear:['RETRO · fascia delle prese libera','X basse sotto le porte; appoggio cassetti sulle sedi inferiori'],
   module:['CARTUCCIA FB-1 · DETTAGLIO MODULARE','Distanziali schematici · motherboard e alimentatore reali da misurare'],

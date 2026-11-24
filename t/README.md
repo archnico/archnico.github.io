@@ -28,7 +28,7 @@ La stanza è circa **5 × 5 × 3 m**, con un solo angolo smussato, finestra 210 
 
 La **[vista autonoma](index.html#autonoma)** è una configurazione alternativa della **stessa Torre H-7**, non un secondo computer e non un basamento sul mobile: tutti e sette i moduli FB-1 restano identici e il telaio metallico viene rappresentato più basso, **senza i sei rialzi da 109 mm necessari soltanto per superare la spalletta HAUGA**.
 
-Il prototipo grafico della base comprende **due longheroni metallici bassi**, **tre traverse di ripartizione**, **appoggi elastomerici** e **quattro ali stabilizzatrici rimovibili** (mostrate aperte inizialmente; si possono nascondere nel pannello Strumenti). Gli elementi sono selezionabili e la *Base autonoma* è uno strato indipendente con comando «Tutti» nel capitolo Torre. La vista include un piano di riferimento che **non è un pannello fisico di legno**. La profondità nominale del supporto senza ali è **circa 418 mm** e con ali aperte **circa 616 mm**: non deve essere confusa con l'**impronta illustrativa 1310 × 318 mm** dei sette moduli sul mobile. Tutte le quote sono preliminari e cambieranno dopo rilievo dei cavi e delle schede.
+Il prototipo grafico della base comprende **il medesimo telaio a scala con sette traverse sotto le cartucce**, **sei scarpe rigide basse con suola elastomerica** (nessuna seconda coppia di longheroni né traverse a pavimento che si sovrappongano alle schede nel render) e **quattro ali stabilizzatrici rimovibili** (inizialmente nascoste, attivabili nel pannello Strumenti; la loro necessità è da dimostrare con un controllo di stabilità). Gli elementi sono selezionabili e la *Base autonoma* è uno strato indipendente con comando «Tutti» nel capitolo Torre. La vista include un piano di riferimento che **non è un pannello fisico di legno**. La profondità nominale del supporto senza ali è **circa 418 mm** e con ali aperte **circa 616 mm**: non deve essere confusa con l'**impronta illustrativa 1310 × 318 mm** dei sette moduli sul mobile. Tutte le quote sono preliminari e cambieranno dopo rilievo dei cavi e delle schede.
 
 **Sicurezza:** questa rappresentazione non dimostra che la Torre sia antiribaltamento né che i giunti sopportino il peso. Mancano ancora masse pesate, posizione del baricentro, attrito sul pavimento, carichi dinamici e definizione di una ritenuta indipendente dal mobile. La variante autonoma **non è ancora una soluzione costruttiva autorizzata**.
 
@@ -66,6 +66,8 @@ In questa sessione sono state aggiunte annotazioni di percorso di carico nelle v
 Torre e Modulo (modalità Quote), confermata l'assenza di PSU fittizi e di HDD in
 H-7, e documentati i blocchi aperti. I test SAT esistenti restano la verifica
 di riferimento.
+
+**Revisione autonoma 24/11:** in seguito a una verifica della vista da telefono, eliminati i longheroni e le traverse supplementari a terra che producevano false sovrapposizioni con le PCB. Il modello conserva il telaio superiore e mostra sei scarpe basse; le ali stabilizzatrici sono **opzionali e inizialmente nascoste**, non considerate inutili finché non si misura il baricentro. È stata corretta anche la strumentazione del blundercheck per includere la traslazione verticale e la base: [rapporto di correzione e limiti](docs/BLUNDERcheck_STANDALONE_2026-11-24.md).
 
 ## Esplorare l'anteprima
 
