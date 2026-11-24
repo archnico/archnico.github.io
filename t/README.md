@@ -6,6 +6,8 @@ Abbiamo una scorta di **computer usati**: alcuni già identificati, altri ancora
 
 > **Novità R-6 Metal-Lite (23/11, studio successivo alla FB-1).** La [nuova pianta parametrica](r6.html) e il [dossier R-6](docs/H7_R6_METAL_LITE_2026-11-23.md) riprogettano le sette cartucce come telai aperti in alluminio, sostituendo i lunghi sostegni stampati con guide metalliche leggere e componenti PETG piccoli. **Obiettivo 0,7–1,2 kg PETG**; sagoma di studio 1310×305 mm. La FB-1 illustrata più sotto resta il **render 3D storico**, non un disegno da fabbricare. Nessun acquisto o stampa autorizzati prima dei rilievi e collaudi.
 
+**Integrazione del 24/11:** i due rami notturni geometria e UX sono stati verificati insieme; [leggi il rapporto tecnico e i test](docs/INTEGRAZIONE_H7_FB1_2026-11-24.md). Le quote rimangono di studio e il progetto resta NO-GO alla stampa.
+
 ## Come si presenta
 
 La **Torre H-7** poggia sul mobile bianco IKEA HAUGA. Sette cartucce con ingombro esterno uniforme sono inclinate rispetto al fronte, così il telaio sfrutta la larghezza del mobile rispettandone la profondità ridotta. Ogni nodo conserva il proprio SSD di avvio. I dettagli dei dissipatori, degli alimentatori e dei fori delle schede non ancora censite sono ancora illustrativi; non vanno scambiati per CAD esecutivo.

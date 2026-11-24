@@ -992,8 +992,8 @@ function make(){faces=[];lines=[];labels=[];let width=356+state.n*96,limit=178+s
  if(state.scene==='ups'){
   // Detail focuses UPS and one neighbouring structural end-frame; no enclosure is placed on UPS.
   pushBox(width-25,16,21,18,405,25,C.frame,'FRAME','Fianco esterno della Torre senza collegamento di carico all’UPS',.99);
-  pushBox(width-28,20,34,18,365,9,C.frame2,'FRAME','Struttura di confine PC / banco dischi',.96);
-  diskBank('right',state.n,width);
+  pushBox(width-28,20,34,18,365,9,C.frame2,'FRAME','Elemento di contesto: fianco del telaio H-7, nessun banco HDD',.96);
+  // H-7 carries no HDD. Legacy diskBank() was removed: UPS is separate from the DAS H-4.
   upsSidecar(width);
   return width;
  }
@@ -1246,7 +1246,7 @@ $('close-inspector').onclick=clearSelection;
 $('part-picker').onchange=e=>{if(e.target.value)select(e.target.value);else clearSelection()};
 $('showUPS').onclick=()=>{state.showUPS=!state.showUPS;$('showUPS').classList.toggle('on',state.showUPS);state.layers.ups=state.showUPS;syncLayerControls();if(state.scene==='ups'&&!state.showUPS)scene('tower');else redraw();};
 $('load').oninput=e=>{state.loadEstimate=Number(e.target.value);const v=state.loadEstimate;$('load-label').textContent=`${v} / 900 W`;$('load-bar').style.width=(v/9)+'%';$('load-bar').classList.toggle('over',v>650);$('load-warning').textContent=v>900?'Supera la potenza massima nominale.':v>650?'Zona da verificare: minore riserva per picchi/autonomia; non è una misura reale.':'Valore di prova: serve misurare a muro il carico reale e gli spunti prima della scelta definitiva.';};
-$('fit').onclick=()=>{state.zoom=1;redraw()};
+if($('fit')) $('fit').onclick=()=>{state.zoom=1;redraw()}; // UX layout may omit the legacy fit button
 function updateLocks(){
  $('extract').disabled=state.locked;
  $('explode').disabled=state.locked;
@@ -1320,7 +1320,8 @@ function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.c
  if(aside && !document.getElementById('blocker-panel')){
   const details=document.createElement('details');
   details.id='blocker-panel';
-  details.open=true;
+  // Keep the left navigation useful: technical blockers are opt-in details.
+  details.open=false;
   details.style.cssText='margin:0 0 10px;padding:10px 12px;border:1px solid #b78a5c;background:#2a2116;border-radius:10px;';
   const summary=document.createElement('summary');
   summary.textContent='BLOCCHI INGEGNERISTICI (NO-GO)';

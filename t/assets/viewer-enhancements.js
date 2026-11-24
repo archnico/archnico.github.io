@@ -179,17 +179,26 @@
   }
 
   /* ---------- help panel ---------- */
+  // Save the trigger synchronously BEFORE moving focus into the dialog.
+  // A MutationObserver runs after focus has moved and would remember the close
+  // button rather than the original trigger, breaking keyboard focus restore.
+  let lastFocusBeforeHelp = null;
   function toggleHelp(force) {
     if (!helpPanel) return;
     const show = force === undefined ? helpPanel.hidden : !!force;
+    if (show && helpPanel.hidden) lastFocusBeforeHelp = document.activeElement || helpBtn;
     helpPanel.hidden = !show;
     if (helpBtn) {
       helpBtn.setAttribute('aria-expanded', String(show));
       helpBtn.classList.toggle('active', show);
     }
     if (show) {
-      const close = helpPanel.querySelector('.close');
-      if (close) close.focus();
+      helpPanel.querySelector('.close')?.focus();
+    } else {
+      const previous = lastFocusBeforeHelp;
+      lastFocusBeforeHelp = null;
+      if (previous?.isConnected && typeof previous.focus === 'function') previous.focus();
+      else helpBtn?.focus();
     }
   }
   if (helpBtn) helpBtn.addEventListener('click', () => toggleHelp());
@@ -385,23 +394,7 @@
   const labelObserver = new MutationObserver(() => labelControls());
   labelObserver.observe(document.body, { childList: true, subtree: true });
 
-  // Focus management for the help dialog via observers (non-invasive).
-  let lastFocusBeforeHelp = null;
-  if (helpPanel) {
-    const helpObserver = new MutationObserver(() => {
-      if (!helpPanel.hidden) {
-        lastFocusBeforeHelp = document.activeElement;
-        const close = helpPanel.querySelector('.close');
-        if (close) setTimeout(() => close.focus(), 0);
-      } else {
-        if (lastFocusBeforeHelp && typeof lastFocusBeforeHelp.focus === 'function') {
-          lastFocusBeforeHelp.focus();
-        }
-        lastFocusBeforeHelp = null;
-      }
-    });
-    helpObserver.observe(helpPanel, { attributes: true, attributeFilter: ['hidden'] });
-  }
+  // Focus restore is handled synchronously by toggleHelp; no delayed observer.
   // Simple focus trap inside help panel.
   document.addEventListener('keydown', e => {
     if (!helpPanel || helpPanel.hidden || e.key !== 'Tab') return;
