@@ -14,7 +14,7 @@ import tempfile
 from pathlib import Path
 
 T = Path(__file__).resolve().parents[1]
-JS = T / "assets/viewer.js"
+JS = T / "assets/straight-viewer.js"
 HTML = T / "index.html"
 OUT = T / "tests" / "screenshots"
 OUT.mkdir(exist_ok=True)
@@ -61,7 +61,7 @@ def screenshot(scene, focus_index=0, size_name="default"):
         audit_html.write_text(
             HTML.read_text()
             .replace('href="assets/viewer.css"', f'href="{(T / "assets/viewer.css").as_uri()}"')
-            .replace('src="assets/viewer.js"', f'src="{audit_js.as_uri()}"')
+            .replace(f'src="assets/{JS.name}"', f'src="{audit_js.as_uri()}"')
         )
         png = OUT / f"{scene}_{focus_index}_{size_name}.png"
         subprocess.run(

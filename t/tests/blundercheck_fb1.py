@@ -26,7 +26,7 @@ from pathlib import Path
 
 T = Path(__file__).resolve().parents[1]
 JS = T / "assets/viewer.js"
-HTML = T / "index.html"
+HTML = T / "fb1.html"
 
 
 def recorded_boxes(scene='tower', focus=0, standpads=False):
@@ -64,7 +64,7 @@ def recorded_boxes(scene='tower', focus=0, standpads=False):
         audit_html.write_text(
             HTML.read_text()
             .replace('href="assets/viewer.css"', f'href="{(T / "assets/viewer.css").as_uri()}"')
-            .replace('src="assets/viewer.js"', f'src="{audit_js.as_uri()}"')
+            .replace(f'src="assets/{JS.name}"', f'src="{audit_js.as_uri()}"')
             .replace('</body>',
                      f'<pre id="audit-out"></pre><script>window.addEventListener("load",()=>{{'
                      'document.getElementById("audit-out").textContent='

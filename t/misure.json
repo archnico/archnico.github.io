@@ -219,8 +219,15 @@
     "focus": "refine technical details, semantic picking, xray visibility, model tests, engineering metadata",
     "geometry_changed": false,
     "new_solids": 0,
-    "tests_added": ["t/tests/test_round6_model.py"],
-    "ux": ["part search filter", "xray keyboard shortcut X", "engineering metadata in inspector", "reduced motion"],
+    "tests_added": [
+      "t/tests/test_round6_model.py"
+    ],
+    "ux": [
+      "part search filter",
+      "xray keyboard shortcut X",
+      "engineering metadata in inspector",
+      "reduced motion"
+    ],
     "status": "concept, non esecutivo"
   },
   "standalone_floor_variant_2026_11_23": {
@@ -246,16 +253,58 @@
     "focus": "full second-order review: all scenes, historical regression, boundary and rotation cases, blockers prominent in UI and docs",
     "geometry_changed": false,
     "new_solids": 0,
-    "tests_added": ["t/tests/test_round7_review.py"],
-    "ux": ["prominent NO-GO blocker panel", "B keyboard shortcut"],
+    "tests_added": [
+      "t/tests/test_round7_review.py"
+    ],
+    "ux": [
+      "prominent NO-GO blocker panel",
+      "B keyboard shortcut"
+    ],
     "status": "concept, non esecutivo"
   },
   "round8_2026_11_23": {
     "focus": "final engineering review and compact handoff for 06:00 integrator: files changed, tests run, unresolved risks, actionable to-measure list",
     "geometry_changed": false,
     "new_solids": 0,
-    "tests_added": ["t/tests/test_round8_review.py"],
-    "ux": ["compact handoff panel", "clipboard summary", "no geometry change"],
+    "tests_added": [
+      "t/tests/test_round8_review.py"
+    ],
+    "ux": [
+      "compact handoff panel",
+      "clipboard summary",
+      "no geometry change"
+    ],
     "status": "concept, non esecutivo, NO-GO stampa"
+  },
+  "straight_wide_r8": {
+    "status": "primary_design_candidate_not_executable",
+    "base_mm": [
+      1325,
+      310
+    ],
+    "carrier_envelope_mm": [
+      92,
+      284,
+      280
+    ],
+    "angle_deg": 0,
+    "pitch_mm": 196,
+    "center_x_first_mm": 74.5,
+    "center_y_mm": 155,
+    "guide_envelope_width_mm": 110,
+    "guide_gap_mm": 86,
+    "support_stations_x_mm": [
+      100,
+      662.5,
+      1225
+    ],
+    "support_rows_y_mm": [
+      45,
+      265
+    ],
+    "render": "index.html",
+    "historical_render": "fb1.html",
+    "manufacturing_approved": false,
+    "source": "docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md"
   }
 }
