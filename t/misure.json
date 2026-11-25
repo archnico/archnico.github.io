@@ -54,7 +54,29 @@
   "room": {
     "approx_width": 5000,
     "approx_depth": 5000,
-    "ceiling_height": 3000
+    "ceiling_height": 3000,
+    "layout_2026_11_25": {
+      "status": "user-requested wall swap; coordinates illustrative, not measured",
+      "window_wall": "x=0",
+      "window_y_mm": [
+        2400,
+        4500
+      ],
+      "hauga_wall": "y=0",
+      "hauga_origin_mm": [
+        1970,
+        225
+      ],
+      "rack_origin_mm": [
+        225,
+        1450
+      ],
+      "drawer_origin_mm": [
+        225,
+        1990
+      ],
+      "usb_route": "wall-side schematic; length and active extension to validate"
+    }
   },
   "tower": {
     "module_count": 7,
