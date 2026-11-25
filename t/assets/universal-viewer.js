@@ -886,6 +886,7 @@ function roomScene(){
  if(state.dims)dimension([350,95,0],[1350,95,0],'~1000 mm · presa dal fine smusso',[0,0,75],'#89c9de');
  // Scrivania orientata a 45° verso l'angolo smussato.
  const ang=-Math.PI/4, dcx=1180,dcy=1120, deskTop=M.desk.height-32;
+ const ccx=1730,ccy=1700;
  rotBox(dcx,dcy,deskTop,M.desk.width,M.desk.depth,32,ang,'#8a6247','DESK','Scrivania L1000 P550 H800 mm: misure utente 23/11/2026',.98,true);
  const pt=(lx,ly)=>[dcx+lx*Math.cos(ang)-ly*Math.sin(ang),dcy+lx*Math.sin(ang)+ly*Math.cos(ang)];
  for(const lx of [-(M.desk.width/2-70),M.desk.width/2-70])for(const ly of [-(M.desk.depth/2-65),M.desk.depth/2-65]){const [px,py]=pt(lx,ly);rotBox(px,py,0,60,60,deskTop,ang,'#65432d','DESK','Gamba della scrivania',.98)}
@@ -915,20 +916,20 @@ function roomScene(){
  const [px,py]=pt(280,70);
   // Laptop aperto sul leggio, telefono su leggio, tastiera, mouse e sei prese USB-C.
   const [lx,ly]=pt(225,85);
-  rotBox(lx,ly,800,320,215,14,ang,'#99a7a8','LAPTOPSTAND','Leggio per laptop aperto',.99);
-  rotBox(lx,ly,840,302,188,12,ang,'#637681','LAPTOPSTAND','Piano inclinato del leggio',1);
-  rotBox(lx,ly,853,340,225,13,ang,'#303840','LAPTOP','Base del laptop aperto',1);
-  const screenBase=pt(225,192),u=[Math.cos(ang),Math.sin(ang)];
-  polyPrism([
-    [screenBase[0]-u[0]*170,screenBase[1]-u[1]*170,866],
-    [screenBase[0]+u[0]*170,screenBase[1]+u[1]*170,866],
-    [screenBase[0]+u[0]*170,screenBase[1]+u[1]*170,1087],
-    [screenBase[0]-u[0]*170,screenBase[1]-u[1]*170,1087],
-    [screenBase[0]-u[0]*170-4,screenBase[1]-u[1]*170+4,866],
-    [screenBase[0]+u[0]*170-4,screenBase[1]+u[1]*170+4,866],
-    [screenBase[0]+u[0]*170-4,screenBase[1]+u[1]*170+4,1087],
-    [screenBase[0]-u[0]*170-4,screenBase[1]-u[1]*170+4,1087]
-  ],'#345a70','LAPTOP','Schermo aperto sul leggio',1);
+  // Local +Y faces the seated user; hinge is on the opposite (-Y) edge.
+  const laptopAngle=Math.atan2(-(ccx-lx),ccy-ly);
+  const lp=(x,y)=>[lx+x*Math.cos(laptopAngle)-y*Math.sin(laptopAngle),ly+x*Math.sin(laptopAngle)+y*Math.cos(laptopAngle)];
+  rotBox(lx,ly,800,320,215,14,laptopAngle,'#99a7a8','LAPTOPSTAND','Leggio orientato verso la sedia',.99);
+  rotBox(lx,ly,840,302,188,12,laptopAngle,'#637681','LAPTOPSTAND','Piano del leggio',1);
+  rotBox(lx,ly,853,340,225,13,laptopAngle,'#303840','LAPTOP','Base del laptop aperto, tastiera verso la sedia',1);
+  const [hxLaptop,hyLaptop]=lp(0,-107);
+  rotBox(hxLaptop,hyLaptop,866,340,9,221,laptopAngle,'#303840','LAPTOP','Scocca schermo, cerniera sul lato opposto alla sedia',1);
+  const [sxLaptop,syLaptop]=lp(0,-101);
+  rotBox(sxLaptop,syLaptop,875,318,3,203,laptopAngle,'#345a70','LAPTOP','Display rivolto verso la sedia',1);
+  const [kxLaptop,kyLaptop]=lp(0,-22);
+  rotBox(kxLaptop,kyLaptop,866,298,96,2,laptopAngle,'#18242d','LAPTOP','Tastiera integrata',1);
+  const [txLaptop,tyLaptop]=lp(0,72);
+  rotBox(txLaptop,tyLaptop,866,104,54,2,laptopAngle,'#596872','LAPTOP','Touchpad sul lato utente',1);
   const [phx,phy]=pt(-205,73);
   rotBox(phx,phy,800,93,122,13,ang,'#aab6b6','PHONESTAND','Leggio telefono',1);
   rotBox(phx,phy,850,76,28,20,ang,'#6b828a','PHONESTAND','Sostegno smartphone',1);
@@ -956,7 +957,7 @@ function roomScene(){
  // La scheda del prodotto Amazon non e' stata associata in modo verificato a questo modello:
  // ingombri prudenziali, sedia reale da identificare con precisione.
  // Il fronte locale della seduta è -Y; orientarlo verso il centro del monitor HDMI (690,600).
- const ccx=1730,ccy=1700,chairAngle=Math.atan2(690-ccx,ccy-600);
+ const chairAngle=Math.atan2(690-ccx,ccy-600);
  const cpt=(lx,ly)=>[ccx+lx*Math.cos(chairAngle)-ly*Math.sin(chairAngle),ccy+lx*Math.sin(chairAngle)+ly*Math.cos(chairAngle)];
  // Base stellare con CINQUE razze e cinque ruote; piantone centrale.
  pushBox(ccx-49,ccy-49,64,98,98,60,'#56606b','CHAIR','Mozzo a cinque razze della sedia',1);
@@ -1198,7 +1199,7 @@ function select(id,name='',at=null){state.selected=id;state.selectedName=name;
   else if(id==='MONHDMI'){t='Monitor centrale HDMI';d='Schermo principale fissato a parete con braccio articolato, più grande degli altri due, centrato davanti alla posizione di lavoro. Larghezza illustrativa circa 740 mm, compatibile con un TV/monitor intorno ai 32 pollici.';tt=['monitor principale','~32”']}
   else if(id==='MONVGA'){t='Monitor sinistro VGA';d='Monitor Acer V193W identificato dai dati EDID del nodo n1. Larghezza esterna verificata circa 442 mm. Nella proposta è il pannello secondario sinistro, sospeso con braccio a muro.';tt=['Acer V193W','~442 mm']}
   else if(id==='MONMID'){t='Terzo monitor intermedio';d='Schermo di dimensioni intermedie tra il VGA Acer e il monitor/TV HDMI: stima progettuale circa 590 mm di larghezza, equivalente grossomodo a un 24–25 pollici; è fissato a parete tramite braccio.';tt=['~24–25”','dimensione intermedia']}
-  else if(id==='LAPTOP'){t='Laptop aperto sul leggio';d='Laptop su supporto inclinato da scrivania; posizione schematica, cablaggio verso il pannello USB-C da verificare.';tt=['leggio','scrivania']}
+  else if(id==='LAPTOP'){t='Laptop aperto sul leggio';d='Laptop su leggio con display e tastiera orientati verso il centro della sedia; posizione schematica, cablaggio verso il pannello USB-C da verificare.';tt=['leggio','scrivania']}
   else if(id==='AUDIOCENTER'){t='Speaker centrale da scrivania';d='Piccolo speaker orizzontale sotto il monitor principale, stimato circa 240 × 80 × 75 mm. Aiuta a concentrare l’audio vicino all’utente senza rubare troppo spazio.';tt=['24 × 8 × 7,5 cm','stima']}
   else if(id==='DESKSATLEFT'){t='Satellite 3 · multilivello';d='Satellite piccolo precedentemente sulla scrivania, ora sul ripiano superiore.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
   else if(id==='DESKSATRIGHT'){t='Satellite 4 · multilivello';d='Altro satellite piccolo, ora sul ripiano superiore; il piano della scrivania resta libero.';tt=['7 × 9 × 17,5 cm','ripiano superiore']}
@@ -1415,7 +1416,7 @@ function syncQuick(){for(const [id,val] of [['qdims',state.dims],['qfan',state.c
  }
  window.addEventListener('keydown',function(e){if(e.target&&e.target.tagName==='INPUT')return;if(e.key.toLowerCase()==='b'){const d=document.getElementById('blocker-panel');if(d)d.open=!d.open;}});
 }
-new ResizeObserver(dimensions).observe(vp);dimensions();scene(({'#tower':'tower','#autonoma':'standalone','#standalone':'standalone','#room':'room','#haugadetail':'haugadetail','#hauga':'haugadetail','#cabinet':'cabinet'})[location.hash]||'room');syncQuick();
+new ResizeObserver(dimensions).observe(vp);dimensions();scene(({'#tower':'tower','#autonoma':'standalone','#standalone':'standalone','#room':'room','#haugadetail':'haugadetail','#hauga':'haugadetail','#cabinet':'cabinet','#desk':'desk'})[location.hash]||'room');syncQuick();
 // Round 8: compact handoff panel (UX, no geometry/SAT impact).
 {
   const aside=document.querySelector('aside.left');
