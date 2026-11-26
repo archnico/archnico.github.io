@@ -1,0 +1,30 @@
+dummy A
+Total rendering time: 0:00:01.672
+Current top level object is empty.
+dummy B
+Total rendering time: 0:00:01.105
+Current top level object is empty.
+Q510 A
+Total rendering time: 0:00:01.569
+Current top level object is empty.
+Q510 B
+Total rendering time: 0:00:01.148
+Current top level object is empty.
+Q910 A
+Total rendering time: 0:00:01.635
+Current top level object is empty.
+Q910 B
+Total rendering time: 0:00:01.282
+Current top level object is empty.
+Q520 A
+Total rendering time: 0:00:01.680
+Current top level object is empty.
+Q520 B
+Total rendering time: 0:00:01.331
+Current top level object is empty.
+Q920 A
+Total rendering time: 0:00:01.533
+Current top level object is empty.
+Q920 B
+Total rendering time: 0:00:01.130
+Current top level object is empty.

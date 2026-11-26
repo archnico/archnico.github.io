@@ -1,0 +1,1 @@
+PASS: rear 95, adjacent 97.5, guide 30.5, top 186.5, exception, invalid rectangle

@@ -1,6 +1,8 @@
 # n4 — Modulo pioniere · H-7 R-8.1 / P0.1
 26 novembre 2026 · Progetto parametrico, **NO-GO fabbricazione definitiva / accensione in Torre**.
 
+**Revisione successiva:** [P0.2 — VESA, selle alleggerite, tavola quotata e calcolatore termico](p02/README.md) · [Render A/B](p02/index.html). Questo documento resta P0.1 storico.
+
 ## Scelta progettuale
 n4 è il primo nodo da collaudare senza toccare n1. Conservare il Fujitsu nel case OEM, PSU interno, alimentazione commerciale originale, SSD SATA solo dopo inventario/backup. Il carrier resta C120 universale; nessuna modifica al passo 190 o alla base 1325×310. Proposta di fase al canone del 24/11: **n4 prima, n1 resta in servizio**. Ruolo iniziale worker ausiliario; GUI solo dopo benchmark. Una sede all'estremità è il primo candidato, non un'assegnazione irrevocabile.
 

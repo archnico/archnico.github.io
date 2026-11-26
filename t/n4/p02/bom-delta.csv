@@ -1,0 +1,12 @@
+variant,id,qty,section_mm,length_mm,condition
+common,U01,2,20x20x1.5 tube,104,sella
+common,U02,4,10x16x2 pad,,zone robuste non ventilate
+A,U21,2,L25x15x2 Al,225,asole TBD OEM
+A,U22,4,metal end joint,,attacco A1 da progettare dopo scelta stock
+A,U23,1,OEM VESA cover,,viti e ganci verificati
+B,U31,2,12x15x1.5 tube Al,195,dima 190 altezza case
+B,U32,2,foot plate 15x19x2,,giunto positivo alla sella
+B,U33,2,bent removable fingers,,25 mm leg and 8 mm tip nominal
+B,U34,2,10x10x1.5 tube Al,104,fermi assiali
+B,U35,4,8 mm metal corner stops,,zone OEM da rilevare
+B,U36,4,lateral metal padded stops,,corsa registrabile

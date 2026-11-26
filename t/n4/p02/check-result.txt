@@ -1,0 +1,10 @@
+A bounds [-59.0, -127.5, 1.5] [52.0, 127.5, 181.0] vol cm3 78.26 Al-equivalent g 211.3
+B bounds [-52.0, -141.5, 1.5] [55.0, 68.0, 218.5] vol cm3 74.35 Al-equivalent g 200.7
+A_metal bounds [-59.0, -127.5, 1.5] [52.0, 127.5, 181.0] vol cm3 76.98 Al-equivalent g 207.9
+B_metal bounds [-52.0, -141.5, 1.5] [55.0, 68.0, 218.5] vol cm3 70.51 Al-equivalent g 190.4
+P0.1 -> B full-CAD volume reduction % 10.2
+Metal + pads at 1.2 g/cm3 A/B g 209.4 195.0
+A L25x15x2 I 1345.0 sigma MPa 14.07 deflection mm 0.075
+B rejected L15x10x1.5 I 284.44 sigma MPa 146.29 deflection mm 3.428
+B selected 12x15x1.5 I 1431.0 sigma MPa 23.45 deflection mm 0.681
+All geometry envelope checks passed; ideal bending screen only, joints and alloy to validate.
