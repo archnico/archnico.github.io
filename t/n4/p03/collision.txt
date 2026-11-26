@@ -1,0 +1,60 @@
+dummy A collision
+Total rendering time: 0:00:02.001
+Current top level object is empty.
+dummy A tool_collision
+Total rendering time: 0:00:02.530
+Current top level object is empty.
+dummy B collision
+Total rendering time: 0:00:01.716
+Current top level object is empty.
+dummy B tool_collision
+Total rendering time: 0:00:01.942
+Current top level object is empty.
+Q510 A collision
+Total rendering time: 0:00:01.997
+Current top level object is empty.
+Q510 A tool_collision
+Total rendering time: 0:00:02.310
+Current top level object is empty.
+Q510 B collision
+Total rendering time: 0:00:01.687
+Current top level object is empty.
+Q510 B tool_collision
+Total rendering time: 0:00:01.920
+Current top level object is empty.
+Q910 A collision
+Total rendering time: 0:00:02.226
+Current top level object is empty.
+Q910 A tool_collision
+Total rendering time: 0:00:02.455
+Current top level object is empty.
+Q910 B collision
+Total rendering time: 0:00:01.747
+Current top level object is empty.
+Q910 B tool_collision
+Total rendering time: 0:00:01.940
+Current top level object is empty.
+Q520 A collision
+Total rendering time: 0:00:01.947
+Current top level object is empty.
+Q520 A tool_collision
+Total rendering time: 0:00:02.673
+Current top level object is empty.
+Q520 B collision
+Total rendering time: 0:00:01.562
+Current top level object is empty.
+Q520 B tool_collision
+Total rendering time: 0:00:02.276
+Current top level object is empty.
+Q920 A collision
+Total rendering time: 0:00:01.903
+Current top level object is empty.
+Q920 A tool_collision
+Total rendering time: 0:00:02.516
+Current top level object is empty.
+Q920 B collision
+Total rendering time: 0:00:01.564
+Current top level object is empty.
+Q920 B tool_collision
+Total rendering time: 0:00:02.222
+Current top level object is empty.

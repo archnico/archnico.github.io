@@ -1,0 +1,18 @@
+dummy A lift
+Total rendering time: 0:00:07.779
+Current top level object is empty.
+Q510 A lift
+Total rendering time: 0:00:07.236
+Current top level object is empty.
+Q520 A lift
+Total rendering time: 0:00:07.567
+Current top level object is empty.
+dummy B lift
+Total rendering time: 0:00:07.115
+Current top level object is empty.
+Q510 B lift
+Total rendering time: 0:00:08.462
+Current top level object is empty.
+Q520 B lift
+Total rendering time: 0:00:07.025
+Current top level object is empty.

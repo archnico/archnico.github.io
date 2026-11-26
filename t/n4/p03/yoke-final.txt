@@ -1,0 +1,18 @@
+dummy A yoke
+Total rendering time: 0:00:10.347
+Current top level object is empty.
+Q510 A yoke
+Total rendering time: 0:00:09.339
+Current top level object is empty.
+Q520 A yoke
+Total rendering time: 0:00:18.036
+Current top level object is empty.
+dummy B yoke
+Total rendering time: 0:00:10.293
+Current top level object is empty.
+Q510 B yoke
+Total rendering time: 0:00:08.809
+Current top level object is empty.
+Q520 B yoke
+Total rendering time: 0:00:09.826
+Current top level object is empty.

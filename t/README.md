@@ -32,6 +32,8 @@ Il primo C120 può essere collaudato con il Fujitsu proveniente dall'archivio di
 
 **P0.2 n4:** [Confronto VESA A / selle B](n4/p02/index.html) · [tavola dimensionale](n4/p02/tavola.svg) · [calcolatore griglie](n4/p02/thermal.html) · [dossier](n4/p02/README.md). Dieci controlli booleani su dima e quattro modelli; montanti B a tubolare 12×15×1,5 dopo screening di flessione. Rilievo hardware e validazione G0–G4 ancora aperti; nessun cambio C120 o n1.
 
+**P0.3 n4:** [ServiceDock, ritenuta e estrazione](n4/p03/index.html) · [dossier](n4/p03/README.md) · [CAD](n4/p03/service-dock.scad). Quattro M5 candidate, corsa verticale 110 mm, riserva sopra Z0 di 460 mm, tolleranze interattive e 33 verifiche geometriche. Banco isolato; nessun hardware approvato e n1 intatto.
+
 ## Fase 1 — prototipo n1
 
 **P0.6 NetRail:** [dossier](docs/H7_C120_P06_NETRAIL_2026-11-24.md) · [calcolatore](netrail.html) · [rilievi CSV](netrail-survey.csv). n2 4TB su USB2, n3 Ethernet 100M e HDD su USB3; nessun cambio rete.

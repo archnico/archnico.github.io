@@ -1,0 +1,20 @@
+ID;Elemento;Qta;Quota;Stato
+SD01;Profilo serie 5 20x20;2;380 mm;Candidato
+SD02;Profilo serie 5 20x20;2;270 mm;Candidato
+SD03;Profilo serie 5 20x20;2;340 mm;Candidato
+SD04;Profilo serie 5 20x20;2;284 mm;Candidato
+SD05;Guida metallica;4;6x25x120;Lega giunti e fori da validare
+SD06;Staffa inferiore;4;18x25 piede spessore 4;Giunto da validare
+SD07;Vite ritenuta M5 testa bombata;4;L da rilevare;Grade e coppia TBD
+SD08;Rondella;4;OD max 10;Spessore e resistenza TBD
+SD09;Dado T cava 5 M5;8;benchmark 0.0.370.01;Compatibilita e ingaggio da verificare
+SD10;Vite guida M4;8;L da rilevare;Filetto e serraggio TBD
+SD11;Vite staffa M5;4;L da rilevare;Filetto e serraggio TBD
+SD12;Pattino guida;4;0.5x25x90;Opzionale non portante
+SD13;Braccio fermo B;4;8x10x1.5 L parametrica;Giunto da validare
+SD14;Linguetta B;4;8x2x12;Contatto e posa da verificare
+SD15;Gamba portale;4;12x12x1.5 L318;NON per sollevamento reale
+SD16;Traversa portale;2;12x12x1.5 L162;Giunto da validare
+SD17;Inserto rinforzo;4;zona 20 mm;Geometria e assemblaggio TBD
+SD18;Perno con ritegno positivo;4;diametro candidato 5;Portata e bloccaggio TBD
+SD19;Giunti telaio e fissaggio banco;1;set;Definire con sistema reale

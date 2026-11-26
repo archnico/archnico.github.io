@@ -3,6 +3,8 @@
 
 [Anteprima A/B](index.html) · [Tavola quotata](tavola.svg) · [Calcolatore griglie](thermal.html) · [CAD parametrico](u-fujitsu.scad) · [P0.1 storico](../README.md).
 
+**Revisione successiva:** [P0.3 — ServiceDock, giunti e estrazione verticale](../p03/README.md) · [Anteprima](../p03/index.html).
+
 ## Decisione
 Il carrier universale resta il P0.1: 120×284×280, base 1325×310, passo 190, guide 138. Non serve aggiungere un secondo telaio per il Fujitsu. L'adattatore di n4 diventa un kit removibile in due varianti **alternative** e non cumulabili. Progettazione a freddo indipendente da n1.
 - A prioritaria: cover OEM VESA 100 originale se integra e approvata per questa configurazione verticale. Apertura in centro, due traversine e due selle.
