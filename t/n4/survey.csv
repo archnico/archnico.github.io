@@ -1,0 +1,22 @@
+campo,unita,valore,metodo
+modello,,,etichetta fotografia
+seriale,,,registro locale non pubblico
+larghezza_verticale,mm,,calibro inclusi piedini
+profondita,mm,,includere sporgenze senza cavi
+altezza_verticale,mm,,includere piedini e cover
+massa,kg,,bilancia
+griglie_sei_facce,,,foto ortogonali con righello e quote UV
+orientamento_pulsante,,,foto case in verticale
+appoggi_ammessi,,,mappa zone robuste e non ventilate
+cover_VESA,,,foto interno esterno ganci e sganci
+fori_VESA_interasse,mm,,misure OEM non forare chassis
+offset_cover_e_filettatura,mm,,verifica istruzioni viti OEM
+service_cover_sweep,mm,,misurare a freddo
+AC_plug_profondita_e_curva,mm,,misurare cavo reale
+RJ45_plug_linguetta_e_curva,mm,,misurare con accesso dito
+DVI_plug_curva,mm,,misurare cavo reale
+DP_HDMI_plug_curva,mm,,misurare cavo reale
+USB_audio_plug_curva,mm,,misurare cavi reali
+clearance_parete_e_top,mm,,dalla griglia effettiva
+CPU_RAM_storage,,,inventory a freddo e dopo avvio
+baseline_temperature_e_clock,,,log OEM con ambiente e workload

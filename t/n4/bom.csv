@@ -1,0 +1,22 @@
+id,gruppo,descrizione,quantita,lunghezza_mm,nota
+C01,C120,Al L15x15x1.5 longheroni,2,284,P0.1
+C02,C120,Al L15x15x1.5 testate,2,90,P0.1
+C03,C120,Al L15x15x1.5 montanti,2,255,P0.2
+C04,C120,Al L15x15x1.5 traversa alta,1,225,P0.2
+C05,C120,controvento metallico,1,330,lunghezza utile e terminali da verificare
+C06,C120,giunti metallici e maniglia,1,,distinta finale dopo selezione prodotto
+G01,guida,Al piattina 6x25,4,100,P0.1
+G02,guida,ritenute positive con sicura,4,,P0.2 attacchi TBD
+U01,U comune,tubo Al 20x20x1.5,2,104,selle registrabili
+U02,U comune,pad elastomerico 10x16x2,4,,durezza e compatibilita OEM TBD
+U03,U B,ganasce laterali metalliche e pad,4,,attacco regolabile
+U04,U B,ponticelli 6x20 Al,2,104,supporto dei fermi assiali
+U05,U B,fermi assiali e pad,2,,posizioni da rilievo
+U06,U B,montanti 12x5 con dita metalliche positive e pad,2,190,altezza da rilievo
+U07,U A,cover VESA OEM e minuteria,1,,solo se disponibile e compatibile
+U08,U A,traversine aperte metalliche e 4 riscontri,2,225,quote e attacco VESA reali TBD
+B01,banco,profilato 2020,2,380,P0.1
+B02,banco,profilato 2020,2,270,P0.1
+B03,banco,profilato 2020,2,340,P0.1
+B04,banco,profilato 2020,2,240,P0.1
+B05,banco,squadrette e bulloneria,1,,secondo sistema scelto

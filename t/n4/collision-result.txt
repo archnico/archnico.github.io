@@ -1,0 +1,25 @@
+model dummy (0.05 mm inward tolerance on each case face)
+CGAL Polyhedrons in cache: 30
+CGAL cache size in bytes: 2107584
+Total rendering time: 0:00:01.012
+Current top level object is empty.
+model Q510 (0.05 mm inward tolerance on each case face)
+CGAL Polyhedrons in cache: 30
+CGAL cache size in bytes: 2107584
+Total rendering time: 0:00:00.892
+Current top level object is empty.
+model Q910 (0.05 mm inward tolerance on each case face)
+CGAL Polyhedrons in cache: 30
+CGAL cache size in bytes: 2107584
+Total rendering time: 0:00:00.961
+Current top level object is empty.
+model Q520 (0.05 mm inward tolerance on each case face)
+CGAL Polyhedrons in cache: 30
+CGAL cache size in bytes: 2107584
+Total rendering time: 0:00:00.842
+Current top level object is empty.
+model Q920 (0.05 mm inward tolerance on each case face)
+CGAL Polyhedrons in cache: 30
+CGAL cache size in bytes: 2107584
+Total rendering time: 0:00:00.931
+Current top level object is empty.

@@ -26,6 +26,10 @@ La [specifica R-7](docs/H7_R7_LONG_LIFE_2026-11-24.md) introduce un carrier meta
 
 [Dimostrazione geometrica e limiti](docs/H7_R8_STRAIGHT_WIDE_2026-11-24.md): 0° / passo 196 mm, base 1325 × 310, luce locale con guide 86 mm; margini conservativi nominali 19,5/13 mm. Resta da verificare hardware completo, cablaggio, PSU, stabilità e temperatura. R-7 Wide 36° resta confronto; [anteprima R-8](r8.html), [FB-1 storico](fb1.html). NO-GO produzione.
 
+## Proposta di modulo pioniere n4 — Fujitsu ESPRIMO (26/11)
+
+Il primo C120 può essere collaudato con il Fujitsu proveniente dall'archivio di Udine, mantenendo n1 intatto e operativo. **[Anteprima n4 / esploso / sette sedi](n4/index.html)** · [Dossier P0.1](n4/README.md) · [CAD](n4/n4.scad) · [Dima](n4/dummy.stl) · [Render](n4/assembly.png) · [Distinta](n4/bom.csv). Identificazione provvisoria Q510/Q910/Q520/Q920, dima 65×195×190, 82 mm tasca cavi e verifica geometrica nominale positiva. Il requisito Fujitsu di 200 mm dalle griglie impedisce di certificare la popolazione adiacente: NO-GO finché non rilevata e verificata. Il canone C120 non cambia.
+
 ## Fase 1 — prototipo n1
 
 **P0.6 NetRail:** [dossier](docs/H7_C120_P06_NETRAIL_2026-11-24.md) · [calcolatore](netrail.html) · [rilievi CSV](netrail-survey.csv). n2 4TB su USB2, n3 Ethernet 100M e HDD su USB3; nessun cambio rete.
